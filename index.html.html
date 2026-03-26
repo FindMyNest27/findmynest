@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FindMyNest™ — NZ's Newest Rental Marketplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --orange:       #E8724A;
+      --orange-deep:  #C85A2E;
+      --orange-light: #F0956E;
+      --cream:        #FAF0DC;
+      --cream-dark:   #F2E4C4;
+      --brown:        #3D1F0D;
+      --brown-mid:    #6B3A1F;
+      --white:        #FFFFFF;
+      --grey-light:   #F7F3EE;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--brown);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(250,240,220,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(232,114,74,0.15);
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px; text-decoration: none;
+    }
+    .nav-logo img { height: 52px; width: 52px; object-fit: contain; }
+    .nav-logo-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.3rem; font-weight: 600;
+      color: var(--brown);
+    }
+    .nav-logo-text span { color: var(--orange); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none; color: var(--brown-mid);
+      font-size: 0.95rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+
+    .nav-cta {
+      background: var(--orange); color: var(--white) !important;
+      padding: 10px 24px; border-radius: 50px;
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--orange-deep) !important; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.07;
+      background: var(--orange);
+      animation: float 8s ease-in-out infinite;
+    }
+    .hero-bg-circle:nth-child(1) { width: 600px; height: 600px; top: -200px; right: -150px; }
+    .hero-bg-circle:nth-child(2) { width: 400px; height: 400px; bottom: -100px; left: -100px; animation-delay: -3s; }
+    .hero-bg-circle:nth-child(3) { width: 200px; height: 200px; top: 200px; left: 10%; animation-delay: -5s; opacity: 0.05; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-20px) scale(1.02); }
+    }
+
+    .hero-content {
+      max-width: 1100px; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+      position: relative; z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(232,114,74,0.12);
+      border: 1px solid rgba(232,114,74,0.3);
+      padding: 6px 16px; border-radius: 50px;
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--orange-deep);
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--orange);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.5; transform:scale(1.4); }
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+    .hero-title span { color: var(--orange); }
+
+    .hero-sub {
+      font-size: 1.1rem; line-height: 1.7;
+      color: var(--brown-mid); font-weight: 400;
+      margin-bottom: 40px;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    .hero-actions {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+
+    .btn-primary {
+      background: var(--orange); color: var(--white);
+      padding: 14px 32px; border-radius: 50px;
+      font-size: 1rem; font-weight: 600;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(232,114,74,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--orange-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(232,114,74,0.4);
+    }
+
+    .btn-secondary {
+      background: transparent; color: var(--brown);
+      padding: 14px 32px; border-radius: 50px;
+      font-size: 1rem; font-weight: 600;
+      text-decoration: none; border: 2px solid rgba(61,31,13,0.2);
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--orange); color: var(--orange);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 48px;
+      animation: fadeUp 0.6s ease 0.4s both;
+    }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700; color: var(--orange);
+    }
+    .hero-stat-label { font-size: 0.8rem; color: var(--brown-mid); font-weight: 500; }
+
+    /* Hero visual card */
+    .hero-visual {
+      position: relative;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    .hero-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 24px 64px rgba(61,31,13,0.12);
+      position: relative;
+    }
+
+    .hero-card-img {
+      width: 100%; height: 200px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--orange-light), var(--orange-deep));
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-card-img-inner {
+      font-size: 4rem;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+    }
+    .hero-card-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(255,255,255,0.95);
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 600; color: var(--orange-deep);
+    }
+
+    .hero-card-info { margin-bottom: 16px; }
+    .hero-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 600; color: var(--brown);
+      margin-bottom: 4px;
+    }
+    .hero-card-loc { font-size: 0.85rem; color: var(--brown-mid); }
+
+    .hero-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .hero-card-price {
+      font-size: 1.4rem; font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      color: var(--orange);
+    }
+    .hero-card-price span { font-size: 0.8rem; font-weight: 400; color: var(--brown-mid); }
+    .hero-card-btn {
+      background: var(--orange); color: var(--white);
+      border: none; padding: 10px 20px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .hero-card-btn:hover { background: var(--orange-deep); }
+
+    /* Floating pill badges */
+    .hero-float {
+      position: absolute;
+      background: var(--white);
+      border-radius: 50px;
+      padding: 10px 18px;
+      box-shadow: 0 8px 28px rgba(61,31,13,0.12);
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--brown);
+      display: flex; align-items: center; gap: 8px;
+      animation: floatBadge 4s ease-in-out infinite;
+    }
+    .hero-float-1 { top: -20px; right: -20px; animation-delay: 0s; }
+    .hero-float-2 { bottom: 40px; left: -30px; animation-delay: -2s; }
+    .hero-float-icon { font-size: 1rem; }
+    @keyframes floatBadge {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── SEARCH BAR ── */
+    .search-section {
+      background: var(--white);
+      padding: 48px;
+      margin: 0 48px;
+      border-radius: 28px;
+      box-shadow: 0 8px 40px rgba(61,31,13,0.08);
+      transform: translateY(-40px);
+      position: relative; z-index: 10;
+    }
+
+    .search-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 600;
+      color: var(--brown); margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .search-tabs {
+      display: flex; gap: 8px; margin-bottom: 24px;
+      justify-content: center;
+    }
+    .search-tab {
+      padding: 8px 24px; border-radius: 50px;
+      border: 2px solid transparent;
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+      background: var(--grey-light); color: var(--brown-mid);
+    }
+    .search-tab.active {
+      background: var(--orange); color: var(--white);
+      border-color: var(--orange);
+    }
+
+    .search-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 12px; align-items: end;
+    }
+
+    .search-field label {
+      display: block; font-size: 0.78rem; font-weight: 600;
+      color: var(--brown-mid); margin-bottom: 6px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .search-field input, .search-field select {
+      width: 100%; padding: 14px 18px;
+      border: 2px solid var(--cream-dark);
+      border-radius: 14px; font-size: 0.95rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--brown); background: var(--grey-light);
+      outline: none; transition: border-color 0.2s;
+    }
+    .search-field input:focus, .search-field select:focus {
+      border-color: var(--orange);
+    }
+
+    .search-btn {
+      background: var(--orange); color: var(--white);
+      border: none; padding: 14px 32px;
+      border-radius: 14px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(232,114,74,0.3);
+    }
+    .search-btn:hover { background: var(--orange-deep); transform: translateY(-1px); }
+
+    /* ── HOW IT WORKS ── */
+    .section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.8rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--orange); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700; color: var(--brown);
+      margin-bottom: 16px; line-height: 1.2;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--brown-mid);
+      max-width: 560px; line-height: 1.7;
+    }
+
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 32px; margin-top: 56px;
+    }
+
+    .step-card {
+      background: var(--white);
+      border-radius: 24px; padding: 36px;
+      position: relative; overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 2px solid transparent;
+    }
+    .step-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(61,31,13,0.1);
+      border-color: rgba(232,114,74,0.2);
+    }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; font-weight: 700;
+      color: rgba(232,114,74,0.12);
+      position: absolute; top: 16px; right: 24px;
+      line-height: 1;
+    }
+    .step-icon {
+      width: 56px; height: 56px;
+      background: rgba(232,114,74,0.1);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 20px;
+    }
+    .step-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 600;
+      color: var(--brown); margin-bottom: 12px;
+    }
+    .step-desc { font-size: 0.92rem; color: var(--brown-mid); line-height: 1.65; }
+
+    /* ── LISTINGS ── */
+    .listings-section {
+      background: var(--grey-light);
+      padding: 80px 0;
+    }
+    .listings-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 48px;
+    }
+    .listings-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between; margin-bottom: 40px;
+    }
+    .listings-link {
+      color: var(--orange); text-decoration: none;
+      font-weight: 600; font-size: 0.95rem;
+      display: flex; align-items: center; gap: 6px;
+      transition: gap 0.2s;
+    }
+    .listings-link:hover { gap: 10px; }
+
+    .listings-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .listing-card {
+      background: var(--white);
+      border-radius: 20px; overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .listing-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(61,31,13,0.12);
+    }
+
+    .listing-img {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      position: relative;
+    }
+    .listing-img-1 { background: linear-gradient(135deg, #F9C784, #E8724A); }
+    .listing-img-2 { background: linear-gradient(135deg, #C8E6C9, #81C784); }
+    .listing-img-3 { background: linear-gradient(135deg, #BBDEFB, #64B5F6); }
+
+    .listing-tag {
+      position: absolute; top: 14px; left: 14px;
+      background: rgba(255,255,255,0.95);
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--brown);
+    }
+    .listing-tag.new { background: var(--orange); color: var(--white); }
+
+    .listing-body { padding: 22px; }
+    .listing-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700; color: var(--orange);
+      margin-bottom: 4px;
+    }
+    .listing-price span { font-size: 0.8rem; font-weight: 400; color: var(--brown-mid); font-family: 'DM Sans', sans-serif; }
+    .listing-title {
+      font-weight: 600; font-size: 1rem;
+      color: var(--brown); margin-bottom: 6px;
+    }
+    .listing-loc { font-size: 0.85rem; color: var(--brown-mid); margin-bottom: 16px; }
+    .listing-features {
+      display: flex; gap: 16px;
+      font-size: 0.82rem; color: var(--brown-mid); font-weight: 500;
+    }
+    .listing-feat { display: flex; align-items: center; gap: 4px; }
+
+    /* ── WHY US ── */
+    .why-section {
+      background: var(--brown);
+      padding: 100px 48px;
+      position: relative; overflow: hidden;
+    }
+    .why-section::before {
+      content: '';
+      position: absolute; top: -100px; right: -100px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: rgba(232,114,74,0.08);
+    }
+
+    .why-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+
+    .why-label { color: var(--orange); }
+    .why-title { color: var(--cream); }
+    .why-sub { color: rgba(250,240,220,0.65); }
+
+    .why-list { margin-top: 40px; display: flex; flex-direction: column; gap: 20px; }
+
+    .why-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 20px 24px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.2s;
+    }
+    .why-item:hover { background: rgba(232,114,74,0.08); }
+
+    .why-item-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(232,114,74,0.15);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .why-item-title {
+      font-weight: 600; color: var(--cream); margin-bottom: 4px;
+    }
+    .why-item-desc {
+      font-size: 0.88rem; color: rgba(250,240,220,0.55); line-height: 1.55;
+    }
+
+    .why-visual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .why-stat-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; padding: 28px 24px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .why-stat-card:hover { background: rgba(232,114,74,0.1); }
+    .why-stat-card:first-child { grid-column: span 2; }
+    .why-stat-big {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 700; color: var(--orange);
+      margin-bottom: 6px;
+    }
+    .why-stat-text { font-size: 0.88rem; color: rgba(250,240,220,0.55); }
+
+    /* ── FOR LANDLORDS ── */
+    .landlord-section { padding: 100px 48px; }
+    .landlord-inner { max-width: 1200px; margin: 0 auto; }
+
+    .landlord-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center; margin-top: 56px;
+    }
+
+    .landlord-features { display: flex; flex-direction: column; gap: 24px; }
+    .landlord-feat {
+      display: flex; gap: 16px;
+      padding: 20px; border-radius: 16px;
+      transition: background 0.2s;
+    }
+    .landlord-feat:hover { background: var(--white); }
+    .landlord-feat-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(232,114,74,0.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .landlord-feat-title { font-weight: 600; color: var(--brown); margin-bottom: 4px; }
+    .landlord-feat-desc { font-size: 0.88rem; color: var(--brown-mid); line-height: 1.55; }
+
+    .landlord-cta-box {
+      background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+      border-radius: 28px; padding: 48px;
+      text-align: center; color: var(--white);
+      box-shadow: 0 20px 56px rgba(232,114,74,0.3);
+    }
+    .landlord-cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700; margin-bottom: 12px;
+    }
+    .landlord-cta-sub { font-size: 0.95rem; opacity: 0.85; margin-bottom: 32px; line-height: 1.6; }
+    .btn-white {
+      background: var(--white); color: var(--orange-deep);
+      padding: 14px 36px; border-radius: 50px;
+      font-weight: 700; font-size: 1rem;
+      text-decoration: none; display: inline-block;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
+
+    .free-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.35);
+      padding: 6px 16px; border-radius: 50px;
+      font-size: 0.8rem; font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--brown);
+      padding: 64px 48px 32px;
+      color: rgba(250,240,220,0.6);
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .footer-brand-name span { color: var(--orange); }
+    .footer-brand-desc { font-size: 0.88rem; line-height: 1.6; margin-bottom: 20px; }
+    .footer-tm { font-size: 0.75rem; opacity: 0.5; }
+
+    .footer-col-title {
+      font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--cream); margin-bottom: 16px;
+    }
+    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col-links a {
+      text-decoration: none; color: rgba(250,240,220,0.55);
+      font-size: 0.88rem; transition: color 0.2s;
+    }
+    .footer-col-links a:hover { color: var(--orange); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.82rem;
+    }
+    .footer-bottom a { color: var(--orange); text-decoration: none; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 32px; right: 32px;
+      background: var(--brown); color: var(--cream);
+      padding: 16px 24px; border-radius: 16px;
+      font-size: 0.9rem; font-weight: 500;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      transform: translateY(100px); opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 1000;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .hero-content { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { display: none; }
+      .search-section { margin: 0 24px; padding: 32px 24px; }
+      .search-bar { grid-template-columns: 1fr; }
+      .section { padding: 60px 24px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .listings-grid { grid-template-columns: 1fr; }
+      .why-inner { grid-template-columns: 1fr; }
+      .why-visual { display: none; }
+      .landlord-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .listings-inner { padding: 0 24px; }
+      .listings-section { padding: 60px 0; }
+      .why-section { padding: 60px 24px; }
+      .landlord-section { padding: 60px 24px; }
+      footer { padding: 48px 24px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="data:image/png;base64,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" alt="FindMyNest Logo" style="height:52px;width:52px;object-fit:contain;"/>
+      <span class="nav-logo-text">FindMy<span>Nest</span>™</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#listings">Listings</a></li>
+      <li><a href="#landlords">For Landlords</a></li>
+      <li><a href="#" onclick="openModal('authModal');return false;" class="nav-cta">Sign Up / Log In</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-circle"></div>
+    <div class="hero-bg-circle"></div>
+    <div class="hero-bg-circle"></div>
+
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          NZ's Newest Rental Marketplace
+        </div>
+        <h1 class="hero-title">
+          Find your<br/><span>perfect nest</span><br/>in New Zealand
+        </h1>
+        <p class="hero-sub">
+          The fairer, simpler way to rent in New Zealand. Built for Kiwi landlords and renters — no ridiculous fees, no drama. Just finding great nests. 🥝
+        </p>
+        <div class="hero-actions">
+          <a href="#" onclick="openAllListings();return false;" class="btn-primary">Browse Listings</a>
+          <a href="#" onclick="openModal('authModal');return false;" class="btn-secondary">List Your Property →</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">Free</div>
+            <div class="hero-stat-label">To list for now</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">100%</div>
+            <div class="hero-stat-label">Kiwi built</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">NZ</div>
+            <div class="hero-stat-label">Owned & operated</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-float hero-float-1">
+          <span class="hero-float-icon">🥝</span> Sweet as, bro!
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-img listing-img-1">
+            <div class="hero-card-badge">⭐ Featured</div>
+            <span class="hero-card-img-inner">🏡</span>
+          </div>
+          <div class="hero-card-info">
+            <div class="hero-card-title">Modern 3-Bed Family Home</div>
+            <div class="hero-card-loc">📍 Mount Maunganui, Tauranga</div>
+          </div>
+          <div class="hero-card-footer">
+            <div class="hero-card-price">$750<span>/week</span></div>
+            <button class="hero-card-btn">View Nest →</button>
+          </div>
+        </div>
+        <div class="hero-float hero-float-2">
+          <span class="hero-float-icon">🏡</span> Find your kiwi nest today!
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <div class="search-section">
+    <div class="search-title">🔍 Find your next nest</div>
+    <div class="search-tabs">
+      <button class="search-tab active" onclick="setTab(this)">Rent</button>
+      <button class="search-tab" onclick="setTab(this)">Flatmates</button>
+    </div>
+    <div class="search-bar">
+      <div class="search-field">
+        <label>Location</label>
+        <input type="text" placeholder="e.g. Tauranga, Auckland..."/>
+      </div>
+      <div class="search-field">
+        <label>Property Type</label>
+        <select>
+          <option>Any type</option>
+          <option>House</option>
+          <option>Apartment</option>
+          <option>Unit</option>
+          <option>Townhouse</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label>Bedrooms</label>
+        <select>
+          <option>Any bedrooms</option>
+          <option>1 bedroom</option>
+          <option>2 bedrooms</option>
+          <option>3 bedrooms</option>
+          <option>4+ bedrooms</option>
+        </select>
+      </div>
+      <button class="search-btn" onclick="openAllListings()">Search Nests</button>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-label">Simple as that</div>
+    <h2 class="section-title">How FindMyNest works</h2>
+    <p class="section-sub">Whether you're a landlord or renter, we've made the whole thing ridiculously easy.</p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">📝</div>
+        <div class="step-title">Create your listing</div>
+        <p class="step-desc">Landlords sign up free and list their property in minutes. Add photos, set your price, and you're live. No complicated forms, no hidden fees.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">🔍</div>
+        <div class="step-title">Renters find their nest</div>
+        <p class="step-desc">Renters browse thousands of listings across New Zealand. Filter by location, price, bedrooms and more. Find the perfect nest fast.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">🤝</div>
+        <div class="step-title">Connect & move in</div>
+        <p class="step-desc">Message landlords directly, arrange viewings, and seal the deal. We keep it simple, transparent and stress-free for everyone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTINGS -->
+  <section class="listings-section" id="listings">
+    <div class="listings-inner">
+      <div class="listings-header">
+        <div>
+          <div class="section-label">Fresh listings</div>
+          <h2 class="section-title">Latest Nests in NZ</h2>
+        </div>
+        <a href="#" onclick="openAllListings();return false;" class="listings-link">View all listings →</a>
+      </div>
+
+      <!-- Dynamic listings container -->
+      <div id="listingsContainer">
+        <!-- Empty state shown when no listings exist -->
+        <div id="emptyState" style="text-align:center;padding:64px 32px;background:var(--white);border-radius:24px;">
+          <div style="font-size:4rem;margin-bottom:16px;">🏡</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--brown);margin-bottom:12px;">Be the first to list your nest!</div>
+          <p style="color:var(--brown-mid);font-size:1rem;line-height:1.7;max-width:480px;margin:0 auto 32px;">We're just getting started — be one of the first landlords on FindMyNest and get your property in front of thousands of Kiwi renters. It's completely free! 🥝</p>
+          <a href="#" onclick="openModal('authModal');return false;" class="btn-primary">List My Property Free →</a>
+        </div>
+        <!-- Listings will be injected here by JavaScript -->
+        <div id="listingsGrid" class="listings-grid" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-section">
+    <div class="why-inner">
+      <div>
+        <div class="section-label why-label">Why FindMyNest</div>
+        <h2 class="section-title why-title">Built for Kiwis.<br/>Priced fairly.<br/>Finally.</h2>
+        <p class="section-sub why-sub">We got tired of watching landlords get squeezed by big platforms with ever-rising fees. So we built something better.</p>
+
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-item-icon">💸</div>
+            <div>
+              <div class="why-item-title">Free to list — for now</div>
+              <div class="why-item-desc">We're new and we mean it. List your property completely free while we build our community. No catch.</div>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-item-icon">🥝</div>
+            <div>
+              <div class="why-item-title">100% New Zealand owned</div>
+              <div class="why-item-desc">Built in NZ, for NZ. We understand the Kiwi rental market because we live in it too.</div>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-item-icon">⚡</div>
+            <div>
+              <div class="why-item-title">Simple and fast</div>
+              <div class="why-item-desc">List in minutes, not hours. No complicated processes, no unnecessary steps. Just get your nest out there.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-visual">
+        <div class="why-stat-card">
+          <div class="why-stat-big">Free</div>
+          <div class="why-stat-text">Listing for our first 6 months — no fees at all</div>
+        </div>
+        <div class="why-stat-card">
+          <div class="why-stat-big">🥝</div>
+          <div class="why-stat-text">Proudly Kiwi built & operated</div>
+        </div>
+        <div class="why-stat-card">
+          <div class="why-stat-big">vs</div>
+          <div class="why-stat-text">The big platforms charge $89+/week. We don't.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR LANDLORDS -->
+  <section class="landlord-section" id="landlords">
+    <div class="landlord-inner">
+      <div class="section-label">For landlords</div>
+      <h2 class="section-title">Your property deserves<br/>a better platform</h2>
+
+      <div class="landlord-grid">
+        <div class="landlord-features">
+          <div class="landlord-feat">
+            <div class="landlord-feat-icon">🆓</div>
+            <div>
+              <div class="landlord-feat-title">Free listings right now</div>
+              <div class="landlord-feat-desc">We're giving landlords 6 months completely free. Get your property in front of thousands of renters at zero cost.</div>
+            </div>
+          </div>
+          <div class="landlord-feat">
+            <div class="landlord-feat-icon">📸</div>
+            <div>
+              <div class="landlord-feat-title">Beautiful, simple listings</div>
+              <div class="landlord-feat-desc">Upload photos, write your description, set your price. Your listing looks great on any device automatically.</div>
+            </div>
+          </div>
+          <div class="landlord-feat">
+            <div class="landlord-feat-icon">💬</div>
+            <div>
+              <div class="landlord-feat-title">Direct renter messaging</div>
+              <div class="landlord-feat-desc">Renters contact you directly through the platform. No middlemen, no delays, no drama.</div>
+            </div>
+          </div>
+          <div class="landlord-feat">
+            <div class="landlord-feat-icon">📊</div>
+            <div>
+              <div class="landlord-feat-title">Listing dashboard</div>
+              <div class="landlord-feat-desc">See how many people have viewed your listing, manage enquiries, and update your property details any time.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="landlord-cta-box">
+          <div class="free-badge">🎉 100% Free Right Now</div>
+          <div class="landlord-cta-title">Ready to list your nest?</div>
+          <p class="landlord-cta-sub">Join FindMyNest today and get your property in front of thousands of Kiwi renters — completely free while we launch.</p>
+          <a href="#" onclick="closeModal();openModal('authModal');" class="btn-white">List My Property Free →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-name">FindMy<span>Nest</span>™</div>
+          <p class="footer-brand-desc">NZ's newest rental marketplace. Built for Kiwi landlords and renters who deserve better. Always fairer. Always.</p>
+          <div class="footer-tm">FindMyNest™ — Trademark pending in New Zealand</div>
+          <div style="margin-top:16px;display:flex;gap:12px;">
+            <a href="https://www.instagram.com" target="_blank" style="color:rgba(250,240,220,0.5);text-decoration:none;font-size:0.82rem;transition:color 0.2s;" onmouseover="this.style.color='#E8724A'" onmouseout="this.style.color='rgba(250,240,220,0.5)'">Instagram</a>
+            <a href="https://www.facebook.com" target="_blank" style="color:rgba(250,240,220,0.5);text-decoration:none;font-size:0.82rem;transition:color 0.2s;" onmouseover="this.style.color='#E8724A'" onmouseout="this.style.color='rgba(250,240,220,0.5)'">Facebook</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Renters</div>
+          <ul class="footer-col-links">
+            <li><a href="#listings">Browse Listings</a></li>
+            <li><a href="#" onclick="openModal('regionModal');return false;">Search by Region</a></li>
+            <li><a href="#" onclick="openModal('flatmatesModal');return false;">Flatmates</a></li>
+            <li><a href="#" onclick="openModal('rentingGuideModal');return false;">Renting Guide</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Landlords</div>
+          <ul class="footer-col-links">
+            <li><a href="#landlords">List a Property</a></li>
+            <li><a href="#" onclick="openModal('dashboardModal');return false;">Landlord Dashboard</a></li>
+            <li><a href="#" onclick="openModal('pricingModal');return false;">Pricing</a></li>
+            <li><a href="#" onclick="openModal('landlordGuideModal');return false;">Landlord Guide</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-col-links">
+            <li><a href="#" onclick="openModal('aboutModal');return false;">About Us</a></li>
+            <li><a href="#" onclick="openModal('contactModal');return false;">Contact</a></li>
+            <li><a href="#" onclick="openModal('privacyModal');return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="openModal('termsModal');return false;">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 FindMyNest™. All rights reserved. Made with ❤️ in New Zealand 🥝</span>
+        <span>Built on <a href="https://findmynest.co.nz">findmynest.co.nz</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── MODALS ── -->
+  <div id="modalOverlay" onclick="closeModal()" style="display:none;position:fixed;inset:0;background:rgba(61,31,13,0.6);z-index:500;backdrop-filter:blur(4px);"></div>
+
+  <style>
+    .modal {
+      display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+      z-index:600;background:var(--white);border-radius:24px;padding:48px;
+      max-width:560px;width:90%;max-height:80vh;overflow-y:auto;
+      box-shadow:0 32px 80px rgba(61,31,13,0.2);
+    }
+    .modal-title {
+      font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;
+      color:var(--brown);margin-bottom:16px;
+    }
+    .modal-body { font-size:0.95rem;color:var(--brown-mid);line-height:1.7; }
+    .modal-close {
+      position:absolute;top:20px;right:24px;background:none;border:none;
+      font-size:1.4rem;cursor:pointer;color:var(--brown-mid);
+      transition:color 0.2s;
+    }
+    .modal-close:hover { color:var(--orange); }
+    .modal-badge {
+      display:inline-block;background:rgba(232,114,74,0.1);
+      border:1px solid rgba(232,114,74,0.3);
+      color:var(--orange-deep);padding:6px 16px;border-radius:50px;
+      font-size:0.8rem;font-weight:600;margin-bottom:20px;
+    }
+    .modal-divider { border:none;border-top:1px solid var(--cream-dark);margin:20px 0; }
+    .pricing-card {
+      background:var(--grey-light);border-radius:16px;padding:24px;margin:12px 0;
+      border:2px solid transparent;transition:border-color 0.2s;
+    }
+    .pricing-card:hover { border-color:rgba(232,114,74,0.3); }
+    .pricing-card-title { font-weight:700;color:var(--brown);margin-bottom:4px;font-size:1rem; }
+    .pricing-card-price { font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--orange);font-weight:700; }
+    .pricing-card-price span { font-size:0.8rem;font-family:'DM Sans',sans-serif;color:var(--brown-mid);font-weight:400; }
+    .pricing-card-desc { font-size:0.85rem;color:var(--brown-mid);margin-top:6px;line-height:1.5; }
+    .coming-soon-banner {
+      background:linear-gradient(135deg,var(--orange),var(--orange-deep));
+      color:white;border-radius:14px;padding:16px 20px;margin-bottom:20px;
+      font-size:0.88rem;line-height:1.6;
+    }
+  </style>
+
+  <!-- PRICING MODAL -->
+  <div id="pricingModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">🎉 Free During Launch</div>
+    <div class="modal-title">Pricing</div>
+    <div class="coming-soon-banner">
+      <strong>🚀 Free during launch!</strong> We're currently free for all landlords while we build our community. No credit card needed, no hidden fees, no catch.
+    </div>
+    <div class="modal-body">
+      <p>Listing on FindMyNest is <strong>completely free</strong> during our launch period. We want to build a platform the NZ rental community loves before we introduce any fees.</p>
+      <hr class="modal-divider"/>
+      <p>In approximately <strong>6 months from launch</strong>, we'll introduce fair, transparent pricing. When that time comes, we'll give all existing users plenty of notice in advance so there are no surprises.</p>
+      <hr class="modal-divider"/>
+      <p style="font-size:0.82rem;color:var(--brown-mid);">📩 Have questions about pricing? Get in touch at <a href="mailto:hello@findmynest.co.nz" style="color:var(--orange);">hello@findmynest.co.nz</a> and we'll be happy to chat.</p>
+    </div>
+  </div>
+
+  <!-- ABOUT MODAL -->
+  <div id="aboutModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">🥝 Our Story</div>
+    <div class="modal-title">About FindMyNest™</div>
+    <div class="modal-body">
+      <p>FindMyNest was born out of frustration. Watching landlords get squeezed with fee hike after fee hike from the big platforms, we decided enough was enough.</p>
+      <hr class="modal-divider"/>
+      <p>We're a proudly <strong>New Zealand owned and operated</strong> business, built right here in Aotearoa for Kiwi landlords and renters. We understand the NZ rental market because we live in it too.</p>
+      <hr class="modal-divider"/>
+      <p>Our mission is simple — <strong>make renting fairer for everyone.</strong> Landlords deserve a platform that doesn't punish them for growing. Renters deserve a platform that's easy, fast and free to use.</p>
+      <hr class="modal-divider"/>
+      <p>FindMyNest™ is currently in its launch phase. We're building our community of landlords and renters across New Zealand. Join us early and help shape what FindMyNest becomes.</p>
+      <p style="margin-top:16px;"><strong>FindMyNest™</strong> — Trademark pending in New Zealand.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT MODAL -->
+  <div id="contactModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">📬 Get in Touch</div>
+    <div class="modal-title">Contact Us</div>
+    <div class="modal-body">
+      <p>We'd love to hear from you — whether you're a landlord wanting to list, a renter looking for help, or just want to say kia ora!</p>
+      <hr class="modal-divider"/>
+      <p>📧 <strong>Email:</strong> <a href="mailto:hello@findmynest.co.nz" style="color:var(--orange);">hello@findmynest.co.nz</a></p>
+      <hr class="modal-divider"/>
+      <p>📍 <strong>Based in:</strong> Tauranga, Bay of Plenty, New Zealand 🥝</p>
+      <hr class="modal-divider"/>
+      <p>🕐 <strong>Response time:</strong> We aim to respond to all enquiries within 1 business day.</p>
+      <hr class="modal-divider"/>
+      <p style="font-size:0.85rem;color:var(--brown-mid);">For media enquiries or partnership opportunities, please email us with the subject line "Partnership" or "Media" and we'll get back to you promptly.</p>
+    </div>
+  </div>
+
+  <!-- RENTING GUIDE MODAL -->
+  <div id="rentingGuideModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">📖 For Renters</div>
+    <div class="modal-title">Renting Guide</div>
+    <div class="modal-body">
+      <p>New to renting in New Zealand? Here's everything you need to know to find your perfect nest.</p>
+      <hr class="modal-divider"/>
+      <p><strong>🔍 Searching for a Property</strong><br/>Use our search to filter by location, price, bedrooms and property type. Save listings you love and come back to them any time.</p>
+      <hr class="modal-divider"/>
+      <p><strong>📝 Applying for a Rental</strong><br/>When you find a property you love, contact the landlord directly through FindMyNest. Have your ID, proof of income and references ready to go.</p>
+      <hr class="modal-divider"/>
+      <p><strong>📋 Your Rights as a Tenant</strong><br/>Under the Residential Tenancies Act, you have strong rights as a renter in NZ. Landlords must provide a healthy, safe home that meets Healthy Homes Standards.</p>
+      <hr class="modal-divider"/>
+      <p><strong>💰 Bond & Rent</strong><br/>Bond is capped at 4 weeks rent and must be lodged with Tenancy Services. Rent can only be increased once every 12 months with 60 days notice.</p>
+      <hr class="modal-divider"/>
+      <p style="font-size:0.82rem;color:var(--brown-mid);">For official tenancy information visit <a href="https://www.tenancy.govt.nz" target="_blank" style="color:var(--orange);">tenancy.govt.nz</a></p>
+    </div>
+  </div>
+
+  <!-- LANDLORD GUIDE MODAL -->
+  <div id="landlordGuideModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">🏠 For Landlords</div>
+    <div class="modal-title">Landlord Guide</div>
+    <div class="modal-body">
+      <p>Everything you need to know to list your property and find great tenants on FindMyNest.</p>
+      <hr class="modal-divider"/>
+      <p><strong>📸 Creating a Great Listing</strong><br/>Good photos make all the difference. Use natural light, tidy the space first, and take photos of every room. Listings with 6+ photos get significantly more enquiries.</p>
+      <hr class="modal-divider"/>
+      <p><strong>💲 Setting the Right Rent</strong><br/>Research similar properties in your area before setting your price. Overpriced listings stay vacant longer — a competitive rent means faster tenants.</p>
+      <hr class="modal-divider"/>
+      <p><strong>✅ Healthy Homes Standards</strong><br/>All rentals in NZ must comply with Healthy Homes Standards covering heating, insulation, ventilation, moisture and drainage. Non-compliance can result in fines up to $7,200.</p>
+      <hr class="modal-divider"/>
+      <p><strong>📋 Tenancy Agreements</strong><br/>Always have a written tenancy agreement. You can use the standard Tenancy Services agreement or a solicitor-prepared one.</p>
+      <hr class="modal-divider"/>
+      <p style="font-size:0.82rem;color:var(--brown-mid);">For official landlord information visit <a href="https://www.tenancy.govt.nz" target="_blank" style="color:var(--orange);">tenancy.govt.nz</a></p>
+    </div>
+  </div>
+
+  <!-- REGION MODAL -->
+  <div id="regionModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">📍 Browse by Region</div>
+    <div class="modal-title">Search by Region</div>
+    <div class="modal-body">
+      <p>FindMyNest listings coming soon across all regions of New Zealand 🥝</p>
+      <hr class="modal-divider"/>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+        <div onclick="showToast('Auckland listings coming soon! 🏠')" style="background:var(--grey-light);border-radius:12px;padding:14px 16px;cursor:pointer;transition:background 0.2s;font-weight:500;color:var(--brown);" onmouseover="this.style.background='rgba(232,114,74,0.1)'" onmouseout="this.style.background='var(--grey-light)'">📍 Auckland</div>
+        <div onclick="showToast('Wellington listings coming soon! 🏠')" style="background:var(--grey-light);border-radius:12px;padding:14px 16px;cursor:pointer;transition:background 0.2s;font-weight:500;color:var(--brown);" onmouseover="this.style.background='rgba(232,114,74,0.1)'" onmouseout="this.style.background='var(--grey-light)'">📍 Wellington</div>
+        <div onclick="showToast('Christchurch listings coming soon! 🏠')" style="background:var(--grey-light);border-radius:12px;padding:14px 16px;cursor:pointer;transition:background 0.2s;font-weight:500;color:var(--brown);" onmouseover="this.style.background='rgba(232,114,74,0.1)'" onmouseout="this.style.background='var(--grey-light)'">📍 Christchurch</div>
+        <div onclick="showToast('Tauranga listings coming soon! 🏠')" style="background:var(--grey-light);border-radius:12px;padding:14px 16px;cursor:pointer;transition:background 0.2s;font-weight:500;color:var(--brown);" onmouseover="this.style.background='rgba(232,114,74,0.1)'" onmouseout="this.style.background='var(--grey-light)'">📍 Tauranga</div>
+        <div onclick="showToast('Hamilton listings coming soon! 🏠')" style="background:var(--grey-light);border-radius:12px;padding:14px 16px;cursor:pointer;transition:background 0.2s;font-weight:500;color:var(--brown);" onmouseover="this.style.background='rgba(232,114,74,0.1)'" onmouseout="this.style.background='var(--grey-light)'">📍 Hamilton</div>
+        <div onclick="showToast('Dunedin listings coming soon! 🏠')" style="background:var(--grey-light);border-radius:12px;padding:14px 16px;cursor:pointer;transition:background 0.2s;font-weight:500;color:var(--brown);" onmouseover="this.style.background='rgba(232,114,74,0.1)'" onmouseout="this.style.background='var(--grey-light)'">📍 Dunedin</div>
+        <div onclick="showToast('Queenstown listings coming soon! 🏠')" style="background:var(--grey-light);border-radius:12px;padding:14px 16px;cursor:pointer;transition:background 0.2s;font-weight:500;color:var(--brown);" onmouseover="this.style.background='rgba(232,114,74,0.1)'" onmouseout="this.style.background='var(--grey-light)'">📍 Queenstown</div>
+        <div onclick="showToast('All regions coming soon! 🏠')" style="background:var(--grey-light);border-radius:12px;padding:14px 16px;cursor:pointer;transition:background 0.2s;font-weight:500;color:var(--brown);" onmouseover="this.style.background='rgba(232,114,74,0.1)'" onmouseout="this.style.background='var(--grey-light)'">📍 All Regions</div>
+      </div>
+      <p style="margin-top:16px;font-size:0.82rem;color:var(--brown-mid);">We're growing fast! Sign up as a landlord to list your property in your region today.</p>
+    </div>
+  </div>
+
+  <!-- FLATMATES MODAL -->
+  <div id="flatmatesModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">🏠 Flatmates</div>
+    <div class="modal-title">Find a Flatmate</div>
+    <div class="modal-body">
+      <p>Looking for a flatmate or a room to rent? Our flatmates section is coming very soon! 🚀</p>
+      <hr class="modal-divider"/>
+      <p>We're building a dedicated space where you can:</p>
+      <ul style="margin:12px 0 12px 20px;line-height:2;">
+        <li>List a room in your home</li>
+        <li>Find flatmates in your city</li>
+        <li>Search by suburb, price and move-in date</li>
+        <li>Message potential flatmates directly</li>
+      </ul>
+      <hr class="modal-divider"/>
+      <p style="font-size:0.85rem;color:var(--brown-mid);">Want to be the first to know when flatmates launches? Email us at <a href="mailto:hello@findmynest.co.nz" style="color:var(--orange);">hello@findmynest.co.nz</a></p>
+    </div>
+  </div>
+
+  <!-- DASHBOARD MODAL -->
+  <div id="dashboardModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">📊 Coming Soon</div>
+    <div class="modal-title">Landlord Dashboard</div>
+    <div class="modal-body">
+      <p>Your full landlord dashboard is currently in development and coming very soon! 🚀</p>
+      <hr class="modal-divider"/>
+      <p>Your dashboard will let you:</p>
+      <ul style="margin:12px 0 12px 20px;line-height:2;">
+        <li>Manage all your property listings</li>
+        <li>View and respond to renter enquiries</li>
+        <li>Track listing views and performance</li>
+        <li>Update photos, pricing and availability</li>
+        <li>Manage your account and billing</li>
+      </ul>
+      <hr class="modal-divider"/>
+      <p style="font-size:0.85rem;color:var(--brown-mid);">In the meantime, email us at <a href="mailto:hello@findmynest.co.nz" style="color:var(--orange);">hello@findmynest.co.nz</a> to get your property listed today!</p>
+    </div>
+  </div>
+
+  <!-- PRIVACY MODAL -->
+  <div id="privacyModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">🔒 Privacy</div>
+    <div class="modal-title">Privacy Policy</div>
+    <div class="modal-body">
+      <p><strong>Last updated: 2026</strong></p>
+      <hr class="modal-divider"/>
+      <p><strong>What we collect</strong><br/>When you use FindMyNest, we may collect your name, email address, phone number, and property details you provide when listing or enquiring about properties.</p>
+      <hr class="modal-divider"/>
+      <p><strong>How we use your information</strong><br/>Your information is used solely to operate the FindMyNest platform — connecting landlords with renters. We do not sell your data to third parties.</p>
+      <hr class="modal-divider"/>
+      <p><strong>Your rights</strong><br/>Under the New Zealand Privacy Act 2020, you have the right to access and correct any personal information we hold about you. Contact us at <a href="mailto:hello@findmynest.co.nz" style="color:var(--orange);">hello@findmynest.co.nz</a> to exercise these rights.</p>
+      <hr class="modal-divider"/>
+      <p><strong>Cookies</strong><br/>We use cookies to improve your experience on our website. You can disable cookies in your browser settings at any time.</p>
+      <hr class="modal-divider"/>
+      <p style="font-size:0.82rem;color:var(--brown-mid);">This privacy policy is subject to the New Zealand Privacy Act 2020. For questions contact hello@findmynest.co.nz</p>
+    </div>
+  </div>
+
+  <!-- TERMS MODAL -->
+  <div id="termsModal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">📜 Legal</div>
+    <div class="modal-title">Terms of Use</div>
+    <div class="modal-body">
+      <p><strong>Last updated: 2026</strong></p>
+      <hr class="modal-divider"/>
+      <p><strong>Acceptance of Terms</strong><br/>By using FindMyNest, you agree to these terms. If you do not agree, please do not use our platform.</p>
+      <hr class="modal-divider"/>
+      <p><strong>Use of Platform</strong><br/>FindMyNest is a marketplace connecting landlords and renters in New Zealand. Users must be 18 or over. All listings must be accurate, genuine and comply with New Zealand law.</p>
+      <hr class="modal-divider"/>
+      <p><strong>Landlord Responsibilities</strong><br/>Landlords are responsible for ensuring their properties comply with the Residential Tenancies Act 1986, Healthy Homes Standards, and all applicable NZ legislation.</p>
+      <hr class="modal-divider"/>
+      <p><strong>Renter Responsibilities</strong><br/>Renters must provide accurate information in applications. FindMyNest is a listing platform only — tenancy agreements are between landlords and renters directly.</p>
+      <hr class="modal-divider"/>
+      <p><strong>Limitation of Liability</strong><br/>FindMyNest acts as a marketplace only and is not a party to any tenancy agreement. We are not liable for disputes between landlords and renters.</p>
+      <hr class="modal-divider"/>
+      <p style="font-size:0.82rem;color:var(--brown-mid);">These terms are governed by New Zealand law. Contact hello@findmynest.co.nz with any questions.</p>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById('modalOverlay').style.display = 'block';
+      document.getElementById(id).style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('modalOverlay').style.display = 'none';
+      document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+  </script>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span id="toast-msg">Coming soon!</span>
+  </div>
+
+  <script>
+    function setTab(el) {
+      document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.step-card, .listing-card, .why-item, .landlord-feat').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+
+  <!-- LANDLORD SIGNUP MODAL -->
+  <div id="signupModal" class="modal" style="max-width:640px;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">🏠 Free to List</div>
+    <div class="modal-title">List Your Property</div>
+    <p style="color:var(--brown-mid);font-size:0.95rem;margin-bottom:24px;line-height:1.6;">Fill in your property details below and your listing will appear live on FindMyNest immediately. Completely free! 🥝</p>
+
+    <form id="listingForm" onsubmit="submitListing(event)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+
+        <!-- Landlord Name -->
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Your Full Name *</label>
+          <input type="text" id="f_name" required placeholder="e.g. John Smith" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Email Address *</label>
+          <input type="email" id="f_email" required placeholder="you@email.com" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Phone Number *</label>
+          <input type="tel" id="f_phone" required placeholder="e.g. 021 123 4567" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Property Title -->
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Property Title *</label>
+          <input type="text" id="f_title" required placeholder="e.g. Sunny 3-Bed Family Home in Papamoa" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Suburb -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Suburb *</label>
+          <input type="text" id="f_suburb" required placeholder="e.g. Mount Maunganui" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- City -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">City / Region *</label>
+          <select id="f_city" required style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'">
+            <option value="">Select region...</option>
+            <option>Auckland</option>
+            <option>Wellington</option>
+            <option>Christchurch</option>
+            <option>Tauranga</option>
+            <option>Hamilton</option>
+            <option>Dunedin</option>
+            <option>Queenstown</option>
+            <option>Napier / Hastings</option>
+            <option>Palmerston North</option>
+            <option>Nelson</option>
+            <option>Rotorua</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <!-- Rent per week -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Rent Per Week (NZD) *</label>
+          <input type="number" id="f_rent" required placeholder="e.g. 650" min="1" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Property Type -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Property Type *</label>
+          <select id="f_type" required style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'">
+            <option value="">Select type...</option>
+            <option>House</option>
+            <option>Apartment</option>
+            <option>Unit</option>
+            <option>Townhouse</option>
+            <option>Flat</option>
+            <option>Room</option>
+            <option>Studio</option>
+          </select>
+        </div>
+
+        <!-- Bedrooms -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Bedrooms *</label>
+          <select id="f_beds" required style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+            <option value="">Select...</option>
+            <option>1</option><option>2</option><option>3</option>
+            <option>4</option><option>5</option><option>6+</option>
+          </select>
+        </div>
+
+        <!-- Bathrooms -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Bathrooms *</label>
+          <select id="f_baths" required style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+            <option value="">Select...</option>
+            <option>1</option><option>2</option><option>3</option><option>4+</option>
+          </select>
+        </div>
+
+        <!-- Parking -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Parking Spaces</label>
+          <select id="f_park" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+            <option value="0">No parking</option>
+            <option>1</option><option>2</option><option>3+</option>
+          </select>
+        </div>
+
+        <!-- Available From -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Available From *</label>
+          <input type="date" id="f_avail" required style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Pets -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Pets Allowed?</label>
+          <select id="f_pets" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+            <option value="No">No pets</option>
+            <option value="Yes">Pets welcome 🐾</option>
+            <option value="Negotiable">Negotiable</option>
+          </select>
+        </div>
+
+        <!-- Furnished -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Furnished?</label>
+          <select id="f_furnished" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+            <option value="Unfurnished">Unfurnished</option>
+            <option value="Furnished">Furnished</option>
+            <option value="Partially Furnished">Partially Furnished</option>
+          </select>
+        </div>
+
+        <!-- Description -->
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Property Description *</label>
+          <textarea id="f_desc" required rows="4" placeholder="Describe your property — highlights, features, neighbourhood, what makes it special..." style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;resize:vertical;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"></textarea>
+        </div>
+
+      </div>
+
+      <p style="font-size:0.78rem;color:var(--brown-mid);margin-bottom:20px;line-height:1.5;">By submitting this form you confirm the listing is accurate and agree to our <a href="#" onclick="closeModal();setTimeout(()=>openModal('termsModal'),300);return false;" style="color:var(--orange);">Terms of Use</a> and <a href="#" onclick="closeModal();setTimeout(()=>openModal('privacyModal'),300);return false;" style="color:var(--orange);">Privacy Policy</a>.</p>
+
+      <button type="submit" class="btn-primary" style="width:100%;justify-content:center;display:block;text-align:center;">
+        List My Property Free — Sweet as! 🥝
+      </button>
+    </form>
+  </div>
+
+  <!-- ALL LISTINGS PAGE MODAL -->
+  <div id="allListingsModal" class="modal" style="max-width:800px;width:95%;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">🏠 Live Listings</div>
+    <div class="modal-title">All Nests in NZ</div>
+    <div id="allListingsContent">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <script>
+  // ── SUPABASE CONFIG ──
+  const SUPABASE_URL = 'https://vbkmfloxweczyvpfbsdh.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_o924DWR9Ugr81klc_BhETg_CBVxcli2';
+
+  async function supabase(method, table, data = null, filter = '') {
+    const url = `${SUPABASE_URL}/rest/v1/${table}${filter}`;
+    const headers = {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': method === 'POST' ? 'return=representation' : '',
+    };
+    const res = await fetch(url, {
+      method,
+      headers,
+      body: data ? JSON.stringify(data) : null,
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(err);
+    }
+    return method === 'GET' ? res.json() : res;
+  }
+
+  async function submitListing(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = 'Submitting... 🥝';
+    btn.disabled = true;
+
+    const listing = {
+      name: document.getElementById('f_name').value,
+      email: document.getElementById('f_email').value,
+      phone: document.getElementById('f_phone').value,
+      title: document.getElementById('f_title').value,
+      suburb: document.getElementById('f_suburb').value,
+      city: document.getElementById('f_city').value,
+      rent: parseFloat(document.getElementById('f_rent').value),
+      type: document.getElementById('f_type').value,
+      beds: document.getElementById('f_beds').value,
+      baths: document.getElementById('f_baths').value,
+      park: document.getElementById('f_park').value,
+      avail: document.getElementById('f_avail').value || null,
+      pets: document.getElementById('f_pets').value,
+      furnished: document.getElementById('f_furnished').value,
+      description: document.getElementById('f_desc').value,
+      status: 'active',
+    };
+
+    try {
+      await supabase('POST', 'listings', listing);
+      document.getElementById('listingForm').reset();
+      closeModal();
+      showToast('🥝 Ka pai! Your listing is live!');
+      await renderListings();
+    } catch(err) {
+      showToast('⚠️ Something went wrong. Please try again.');
+      console.error(err);
+    } finally {
+      btn.textContent = 'List My Property Free — Sweet as! 🥝';
+      btn.disabled = false;
+    }
+  }
+
+  // Colour cycling for listing cards
+  const cardColours = [
+    'linear-gradient(135deg,#F9C784,#E8724A)',
+    'linear-gradient(135deg,#C8E6C9,#81C784)',
+    'linear-gradient(135deg,#BBDEFB,#64B5F6)',
+    'linear-gradient(135deg,#F8BBD9,#F06292)',
+    'linear-gradient(135deg,#FFE0B2,#FFA726)',
+    'linear-gradient(135deg,#E1BEE7,#AB47BC)',
+  ];
+
+  function listingCardHTML(l, i) {
+    return `
+      <div class="listing-card" onclick="viewListing('${l.id}')" style="cursor:pointer;">
+        <div class="listing-img" style="background:${cardColours[i % cardColours.length]};height:200px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;">
+          <div class="listing-tag new">NEW</div>
+          🏡
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$${Number(l.rent).toLocaleString()}<span>/week</span></div>
+          <div class="listing-title">${l.title}</div>
+          <div class="listing-loc">📍 ${l.suburb}, ${l.city}</div>
+          <div class="listing-features">
+            <span class="listing-feat">🛏 ${l.beds} bed${l.beds>1?'s':''}</span>
+            <span class="listing-feat">🚿 ${l.baths} bath${l.baths>1?'s':''}</span>
+            ${l.pets==='Yes'?'<span class="listing-feat">🐾 Pets ok</span>':''}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  async function renderListings() {
+    const emptyState = document.getElementById('emptyState');
+    const grid = document.getElementById('listingsGrid');
+    try {
+      const listings = await supabase('GET', 'listings', null, '?order=created_at.desc&limit=3&status=eq.active');
+      if (!listings.length) {
+        emptyState.style.display = 'block';
+        grid.style.display = 'none';
+        return;
+      }
+      emptyState.style.display = 'none';
+      grid.style.display = 'grid';
+      grid.innerHTML = listings.map((l,i) => listingCardHTML(l,i)).join('');
+    } catch(err) {
+      console.error('Could not load listings:', err);
+      emptyState.style.display = 'block';
+      grid.style.display = 'none';
+    }
+  }
+
+  async function viewListing(id) {
+    try {
+      const results = await supabase('GET', 'listings', null, `?id=eq.${id}`);
+      const l = results[0];
+      if (!l) return;
+      document.getElementById('allListingsContent').innerHTML = `
+        <div style="background:var(--grey-light);border-radius:16px;padding:24px;margin-bottom:20px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--brown);margin-bottom:8px;">${l.title}</div>
+          <div style="color:var(--brown-mid);margin-bottom:16px;">📍 ${l.suburb}, ${l.city}</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
+            <div style="background:white;border-radius:10px;padding:12px;text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--orange);font-weight:700;">$${Number(l.rent).toLocaleString()}</div><div style="font-size:0.75rem;color:var(--brown-mid);">/week</div></div>
+            <div style="background:white;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:1.1rem;font-weight:600;color:var(--brown);">${l.beds} 🛏</div><div style="font-size:0.75rem;color:var(--brown-mid);">Bedrooms</div></div>
+            <div style="background:white;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:1.1rem;font-weight:600;color:var(--brown);">${l.baths} 🚿</div><div style="font-size:0.75rem;color:var(--brown-mid);">Bathrooms</div></div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+            <span style="background:rgba(232,114,74,0.1);color:var(--orange-deep);padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;">${l.type}</span>
+            <span style="background:rgba(232,114,74,0.1);color:var(--orange-deep);padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;">${l.furnished}</span>
+            <span style="background:rgba(232,114,74,0.1);color:var(--orange-deep);padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;">Pets: ${l.pets}</span>
+            ${l.park&&l.park!='0'?`<span style="background:rgba(232,114,74,0.1);color:var(--orange-deep);padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;">${l.park} car park${l.park>1?'s':''}</span>`:''}
+            ${l.avail?`<span style="background:rgba(232,114,74,0.1);color:var(--orange-deep);padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;">Available: ${l.avail}</span>`:''}
+          </div>
+          <p style="color:var(--brown-mid);line-height:1.7;font-size:0.95rem;">${l.description}</p>
+        </div>
+        <div style="background:var(--grey-light);border-radius:16px;padding:20px;">
+          <div style="font-weight:700;color:var(--brown);margin-bottom:8px;">📞 Contact Landlord</div>
+          <p style="color:var(--brown-mid);font-size:0.9rem;margin-bottom:12px;">Get in touch directly with the landlord to arrange a viewing.</p>
+          <a href="tel:${l.phone}" class="btn-primary" style="display:inline-block;margin-right:10px;">📞 Call ${l.name}</a>
+          <a href="mailto:${l.email}" class="btn-secondary" style="display:inline-block;">✉️ Email</a>
+        </div>
+        <p style="font-size:0.75rem;color:var(--brown-mid);margin-top:12px;line-height:1.5;">FindMyNest is a listing platform only. Please arrange your own legal advice before signing any tenancy agreement.</p>
+      `;
+      openModal('allListingsModal');
+    } catch(err) {
+      showToast('Could not load listing. Please try again.');
+      console.error(err);
+    }
+  }
+
+  async function openAllListings() {
+    try {
+      const listings = await supabase('GET', 'listings', null, '?order=created_at.desc&status=eq.active');
+      if (!listings.length) {
+        showToast('No listings yet — be the first! 🥝');
+        openModal('signupModal');
+        return;
+      }
+      document.getElementById('allListingsContent').innerHTML = `
+        <div style="display:grid;gap:16px;">
+          ${listings.map(l => `
+            <div onclick="viewListing('${l.id}')" style="background:var(--grey-light);border-radius:14px;padding:20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(232,114,74,0.08)'" onmouseout="this.style.background='var(--grey-light)'">
+              <div>
+                <div style="font-weight:600;color:var(--brown);margin-bottom:4px;">${l.title}</div>
+                <div style="font-size:0.85rem;color:var(--brown-mid);">📍 ${l.suburb}, ${l.city} &nbsp;•&nbsp; 🛏 ${l.beds} bed &nbsp;•&nbsp; 🚿 ${l.baths} bath</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;margin-left:16px;">
+                <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--orange);">$${Number(l.rent).toLocaleString()}<span style="font-size:0.75rem;font-family:'DM Sans',sans-serif;color:var(--brown-mid);font-weight:400;">/wk</span></div>
+                <div style="font-size:0.75rem;color:var(--brown-mid);">Listed ${new Date(l.created_at).toLocaleDateString('en-NZ')}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      openModal('allListingsModal');
+    } catch(err) {
+      showToast('Could not load listings. Please try again.');
+      console.error(err);
+    }
+  }
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', renderListings);
+  </script>
+
+
+  <!-- ── AUTH MODAL — ARE YOU A LANDLORD OR RENTER? ── -->
+  <div id="authModal" class="modal" style="max-width:520px;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="authStep1">
+      <div style="text-align:center;padding:16px 0 32px;">
+        <div style="font-size:3rem;margin-bottom:12px;">🥝</div>
+        <div class="modal-title" style="text-align:center;">Welcome to FindMyNest™</div>
+        <p style="color:var(--brown-mid);font-size:0.95rem;line-height:1.6;margin-bottom:32px;">Tell us who you are so we can get you set up!</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div onclick="showLandlordAuth()" style="background:var(--grey-light);border-radius:20px;padding:32px 20px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;text-align:center;" onmouseover="this.style.borderColor='#E8724A';this.style.background='rgba(232,114,74,0.06)'" onmouseout="this.style.borderColor='transparent';this.style.background='var(--grey-light)'">
+            <div style="font-size:2.5rem;margin-bottom:12px;">🏠</div>
+            <div style="font-weight:700;color:var(--brown);font-size:1.1rem;margin-bottom:6px;">I'm a Landlord</div>
+            <div style="font-size:0.82rem;color:var(--brown-mid);line-height:1.5;">I want to list my property and find great tenants</div>
+          </div>
+          <div onclick="showRenterAuth()" style="background:var(--grey-light);border-radius:20px;padding:32px 20px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;text-align:center;" onmouseover="this.style.borderColor='#E8724A';this.style.background='rgba(232,114,74,0.06)'" onmouseout="this.style.borderColor='transparent';this.style.background='var(--grey-light)'">
+            <div style="font-size:2.5rem;margin-bottom:12px;">🔍</div>
+            <div style="font-weight:700;color:var(--brown);font-size:1.1rem;margin-bottom:6px;">I'm a Renter</div>
+            <div style="font-size:0.82rem;color:var(--brown-mid);line-height:1.5;">I'm looking for a property to rent in New Zealand</div>
+          </div>
+        </div>
+        <p style="margin-top:24px;font-size:0.85rem;color:var(--brown-mid);">Already have an account? <a href="#" onclick="showLandlordLogin()" style="color:var(--orange);font-weight:600;">Log in here</a></p>
+      </div>
+    </div>
+
+    <!-- LANDLORD SIGNUP -->
+    <div id="landlordSignup" style="display:none;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+        <button onclick="showAuthStep1()" style="background:none;border:none;cursor:pointer;color:var(--brown-mid);font-size:1.2rem;">←</button>
+        <div>
+          <div class="modal-badge" style="margin-bottom:0;">🏠 Landlord Sign Up</div>
+        </div>
+      </div>
+      <div class="modal-title">Create your landlord account</div>
+      <p style="color:var(--brown-mid);font-size:0.9rem;margin-bottom:24px;">Free to sign up. Free to list. Always.</p>
+      <form id="landlordSignupForm" onsubmit="submitLandlordSignup(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div style="grid-column:span 2;">
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Full Name *</label>
+            <input type="text" id="ls_name" required placeholder="e.g. John Smith" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Email Address *</label>
+            <input type="email" id="ls_email" required placeholder="you@email.com" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Phone Number *</label>
+            <input type="tel" id="ls_phone" required placeholder="e.g. 021 123 4567" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Password *</label>
+            <input type="password" id="ls_password" required placeholder="Min 8 characters" minlength="8" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Confirm Password *</label>
+            <input type="password" id="ls_password2" required placeholder="Repeat password" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+        </div>
+        <div style="background:var(--grey-light);border-radius:12px;padding:14px;margin-bottom:16px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+            <input type="checkbox" id="ls_terms" required style="margin-top:3px;accent-color:var(--orange);flex-shrink:0;"/>
+            <span style="font-size:0.82rem;color:var(--brown-mid);line-height:1.5;">I agree to the <a href="#" onclick="closeModal();setTimeout(()=>openModal('landlordTermsModal'),300);return false;" style="color:var(--orange);font-weight:600;">Landlord Terms & Conditions</a> and <a href="#" onclick="closeModal();setTimeout(()=>openModal('privacyModal'),300);return false;" style="color:var(--orange);font-weight:600;">Privacy Policy</a></span>
+          </label>
+        </div>
+        <button type="submit" id="ls_submit" class="btn-primary" style="width:100%;text-align:center;display:block;">Create My Free Account 🥝</button>
+        <p style="text-align:center;margin-top:14px;font-size:0.82rem;color:var(--brown-mid);">Already have an account? <a href="#" onclick="showLandlordLogin()" style="color:var(--orange);font-weight:600;">Log in</a></p>
+      </form>
+    </div>
+
+    <!-- LANDLORD LOGIN -->
+    <div id="landlordLogin" style="display:none;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+        <button onclick="showAuthStep1()" style="background:none;border:none;cursor:pointer;color:var(--brown-mid);font-size:1.2rem;">←</button>
+        <div class="modal-badge" style="margin-bottom:0;">🏠 Landlord Login</div>
+      </div>
+      <div class="modal-title">Welcome back!</div>
+      <p style="color:var(--brown-mid);font-size:0.9rem;margin-bottom:24px;">Log in to manage your listings.</p>
+      <form id="landlordLoginForm" onsubmit="submitLandlordLogin(event)">
+        <div style="display:grid;gap:14px;margin-bottom:14px;">
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Email Address *</label>
+            <input type="email" id="ll_email" required placeholder="you@email.com" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Password *</label>
+            <input type="password" id="ll_password" required placeholder="Your password" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+        </div>
+        <button type="submit" id="ll_submit" class="btn-primary" style="width:100%;text-align:center;display:block;">Log In 🏠</button>
+        <p style="text-align:center;margin-top:14px;font-size:0.82rem;color:var(--brown-mid);">Don't have an account? <a href="#" onclick="showLandlordAuth()" style="color:var(--orange);font-weight:600;">Sign up free</a></p>
+      </form>
+    </div>
+
+    <!-- RENTER SIGNUP -->
+    <div id="renterSignup" style="display:none;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+        <button onclick="showAuthStep1()" style="background:none;border:none;cursor:pointer;color:var(--brown-mid);font-size:1.2rem;">←</button>
+        <div class="modal-badge" style="margin-bottom:0;">🔍 Renter Sign Up</div>
+      </div>
+      <div class="modal-title">Find your perfect nest</div>
+      <p style="color:var(--brown-mid);font-size:0.9rem;margin-bottom:24px;">Sign up free and get notified when new listings match what you're looking for! 🥝</p>
+      <form id="renterSignupForm" onsubmit="submitRenterSignup(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div style="grid-column:span 2;">
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Full Name *</label>
+            <input type="text" id="rs_name" required placeholder="e.g. Jane Smith" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Email Address *</label>
+            <input type="email" id="rs_email" required placeholder="you@email.com" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Phone Number</label>
+            <input type="tel" id="rs_phone" placeholder="e.g. 021 123 4567" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Looking in *</label>
+            <select id="rs_city" required style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+              <option value="">Select region...</option>
+              <option>Auckland</option><option>Wellington</option>
+              <option>Christchurch</option><option>Tauranga</option>
+              <option>Hamilton</option><option>Dunedin</option>
+              <option>Queenstown</option><option>Napier / Hastings</option>
+              <option>Palmerston North</option><option>Nelson</option>
+              <option>Rotorua</option><option>Anywhere in NZ</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Budget Min ($/wk)</label>
+            <input type="number" id="rs_budget_min" placeholder="e.g. 400" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Budget Max ($/wk)</label>
+            <input type="number" id="rs_budget_max" placeholder="e.g. 700" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Bedrooms Needed</label>
+            <select id="rs_beds" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+              <option value="">Any</option>
+              <option>1</option><option>2</option><option>3</option>
+              <option>4</option><option>5+</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Move in Date</label>
+            <input type="date" id="rs_movedate" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div style="grid-column:span 2;">
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Pets?</label>
+            <select id="rs_pets" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+              <option value="No">No pets</option>
+              <option value="Yes">I have pets 🐾</option>
+            </select>
+          </div>
+        </div>
+        <div style="background:var(--grey-light);border-radius:12px;padding:14px;margin-bottom:16px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+            <input type="checkbox" id="rs_terms" required style="margin-top:3px;accent-color:var(--orange);flex-shrink:0;"/>
+            <span style="font-size:0.82rem;color:var(--brown-mid);line-height:1.5;">I agree to the <a href="#" onclick="closeModal();setTimeout(()=>openModal('termsModal'),300);return false;" style="color:var(--orange);font-weight:600;">Terms & Conditions</a> and <a href="#" onclick="closeModal();setTimeout(()=>openModal('privacyModal'),300);return false;" style="color:var(--orange);font-weight:600;">Privacy Policy</a></span>
+          </label>
+        </div>
+        <button type="submit" id="rs_submit" class="btn-primary" style="width:100%;text-align:center;display:block;">Sign Up Free 🔍</button>
+      </form>
+    </div>
+
+    <!-- LANDLORD DASHBOARD (shown after login) -->
+    <div id="landlordDashboard" style="display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <div>
+          <div class="modal-badge" style="margin-bottom:4px;">🏠 My Dashboard</div>
+          <div id="dash_welcome" style="font-size:1.1rem;font-weight:700;color:var(--brown);"></div>
+        </div>
+        <button onclick="logoutLandlord()" style="background:none;border:1px solid var(--cream-dark);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:0.82rem;color:var(--brown-mid);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--orange)';this.style.color='var(--orange)'" onmouseout="this.style.borderColor='var(--cream-dark)';this.style.color='var(--brown-mid)'">Log out</button>
+      </div>
+      <button onclick="showAddListing()" class="btn-primary" style="width:100%;text-align:center;display:block;margin-bottom:20px;">+ Add New Listing</button>
+      <div style="font-weight:700;color:var(--brown);margin-bottom:12px;">Your Listings</div>
+      <div id="myListings" style="display:grid;gap:10px;">
+        <div style="text-align:center;padding:24px;color:var(--brown-mid);font-size:0.9rem;">Loading your listings... 🥝</div>
+      </div>
+    </div>
+
+    <!-- ADD LISTING FORM (inside dashboard) -->
+    <div id="addListingForm" style="display:none;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <button onclick="showDashboard()" style="background:none;border:none;cursor:pointer;color:var(--brown-mid);font-size:1.2rem;">←</button>
+        <div class="modal-badge" style="margin-bottom:0;">+ New Listing</div>
+      </div>
+      <div class="modal-title" style="font-size:1.4rem;">Add a new listing</div>
+      <form id="listingForm" onsubmit="submitListing(event)" style="margin-top:16px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+          <div style="grid-column:span 2;">
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Property Title *</label>
+            <input type="text" id="f_title" required placeholder="e.g. Sunny 3-Bed Family Home in Papamoa" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Suburb *</label>
+            <input type="text" id="f_suburb" required placeholder="e.g. Mount Maunganui" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">City / Region *</label>
+            <select id="f_city" required style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+              <option value="">Select region...</option>
+              <option>Auckland</option><option>Wellington</option>
+              <option>Christchurch</option><option>Tauranga</option>
+              <option>Hamilton</option><option>Dunedin</option>
+              <option>Queenstown</option><option>Napier / Hastings</option>
+              <option>Palmerston North</option><option>Nelson</option>
+              <option>Rotorua</option><option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Rent Per Week (NZD) *</label>
+            <input type="number" id="f_rent" required placeholder="e.g. 650" min="1" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Property Type *</label>
+            <select id="f_type" required style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+              <option value="">Select type...</option>
+              <option>House</option><option>Apartment</option><option>Unit</option>
+              <option>Townhouse</option><option>Flat</option><option>Room</option><option>Studio</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Bedrooms *</label>
+            <select id="f_beds" required style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+              <option value="">Select...</option>
+              <option>1</option><option>2</option><option>3</option>
+              <option>4</option><option>5</option><option>6+</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Bathrooms *</label>
+            <select id="f_baths" required style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+              <option value="">Select...</option>
+              <option>1</option><option>2</option><option>3</option><option>4+</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Parking Spaces</label>
+            <select id="f_park" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+              <option value="0">No parking</option>
+              <option>1</option><option>2</option><option>3+</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Available From *</label>
+            <input type="date" id="f_avail" required style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Pets Allowed?</label>
+            <select id="f_pets" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+              <option value="No">No pets</option>
+              <option value="Yes">Pets welcome 🐾</option>
+              <option value="Negotiable">Negotiable</option>
+            </select>
+          </div>
+          <div style="grid-column:span 2;">
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Furnished?</label>
+            <select id="f_furnished" style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+              <option value="Unfurnished">Unfurnished</option>
+              <option value="Furnished">Furnished</option>
+              <option value="Partially Furnished">Partially Furnished</option>
+            </select>
+          </div>
+          <div style="grid-column:span 2;">
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;">Property Description *</label>
+            <textarea id="f_desc" required rows="4" placeholder="Describe your property — highlights, features, neighbourhood, what makes it special..." style="width:100%;padding:11px 15px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.93rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;resize:vertical;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"></textarea>
+          </div>
+        </div>
+        <button type="submit" id="listing_submit" class="btn-primary" style="width:100%;text-align:center;display:block;">List My Property — Sweet as! 🥝</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LANDLORD TERMS MODAL -->
+  <div id="landlordTermsModal" class="modal" style="max-width:600px;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">📋 Landlord Terms</div>
+    <div class="modal-title">Landlord Terms & Conditions</div>
+    <div class="modal-body">
+      <p><strong>Last updated: 2026 — FindMyNest™</strong></p>
+      <hr class="modal-divider"/>
+      <p><strong>1. Platform Use</strong><br/>FindMyNest is a listing marketplace that connects landlords and renters in New Zealand. By creating an account you agree to use the platform lawfully and in good faith.</p>
+      <hr class="modal-divider"/>
+      <p><strong>2. Listing Accuracy</strong><br/>All property listings must be accurate, genuine and not misleading. You must only list properties you own or are authorised to list. Fraudulent or misleading listings will result in immediate account termination.</p>
+      <hr class="modal-divider"/>
+      <p><strong>3. Legal Compliance</strong><br/>As a landlord you are solely responsible for ensuring your property and tenancy comply with all applicable New Zealand legislation including the Residential Tenancies Act 1986, Healthy Homes Standards 2019, Building Act 2004 and Privacy Act 2020.</p>
+      <hr class="modal-divider"/>
+      <p><strong>4. Healthy Homes Standards</strong><br/>All rental properties in NZ must meet Healthy Homes Standards covering heating, insulation, ventilation, moisture control and draught stopping. Non-compliance may result in fines of up to $7,200 per breach.</p>
+      <hr class="modal-divider"/>
+      <p><strong>5. No Agency Relationship</strong><br/>FindMyNest is a listing platform only and is not a licensed real estate agent. We do not act on your behalf, negotiate tenancies or handle payments. You deal directly with renters at all times.</p>
+      <hr class="modal-divider"/>
+      <p><strong>6. Listing Management</strong><br/>You may add, edit or remove your listings at any time through your dashboard. You are responsible for keeping your listings up to date and removing them promptly when a property is let.</p>
+      <hr class="modal-divider"/>
+      <p><strong>7. Privacy & Data</strong><br/>Your personal information is stored securely and used solely to operate your FindMyNest account. We do not sell your data. See our Privacy Policy for full details.</p>
+      <hr class="modal-divider"/>
+      <p><strong>8. Pricing</strong><br/>Listing is currently free during our launch period. When paid plans are introduced, existing users will receive advance notice. Continued use after pricing changes constitutes acceptance of new terms.</p>
+      <hr class="modal-divider"/>
+      <p><strong>9. Termination</strong><br/>FindMyNest reserves the right to suspend or terminate accounts that breach these terms, post fraudulent listings or misuse the platform.</p>
+      <hr class="modal-divider"/>
+      <p><strong>10. Governing Law</strong><br/>These terms are governed by New Zealand law. Any disputes shall be resolved under New Zealand jurisdiction.</p>
+      <hr class="modal-divider"/>
+      <p style="font-size:0.82rem;color:var(--brown-mid);">Questions? Contact us at <a href="mailto:hello@findmynest.co.nz" style="color:var(--orange);">hello@findmynest.co.nz</a></p>
+    </div>
+  </div>
+
+  <script>
+  // ── AUTH NAVIGATION ──
+  function showAuthStep1() {
+    document.getElementById('authStep1').style.display = 'block';
+    document.getElementById('landlordSignup').style.display = 'none';
+    document.getElementById('landlordLogin').style.display = 'none';
+    document.getElementById('renterSignup').style.display = 'none';
+    document.getElementById('landlordDashboard').style.display = 'none';
+    document.getElementById('addListingForm').style.display = 'none';
+  }
+  function showLandlordAuth() {
+    document.getElementById('authStep1').style.display = 'none';
+    document.getElementById('landlordSignup').style.display = 'block';
+    document.getElementById('landlordLogin').style.display = 'none';
+    document.getElementById('renterSignup').style.display = 'none';
+    document.getElementById('landlordDashboard').style.display = 'none';
+    document.getElementById('addListingForm').style.display = 'none';
+  }
+  function showLandlordLogin() {
+    document.getElementById('authStep1').style.display = 'none';
+    document.getElementById('landlordSignup').style.display = 'none';
+    document.getElementById('landlordLogin').style.display = 'block';
+    document.getElementById('renterSignup').style.display = 'none';
+    document.getElementById('landlordDashboard').style.display = 'none';
+    document.getElementById('addListingForm').style.display = 'none';
+  }
+  function showRenterAuth() {
+    document.getElementById('authStep1').style.display = 'none';
+    document.getElementById('landlordSignup').style.display = 'none';
+    document.getElementById('landlordLogin').style.display = 'none';
+    document.getElementById('renterSignup').style.display = 'block';
+    document.getElementById('landlordDashboard').style.display = 'none';
+    document.getElementById('addListingForm').style.display = 'none';
+  }
+  function showDashboard() {
+    document.getElementById('authStep1').style.display = 'none';
+    document.getElementById('landlordSignup').style.display = 'none';
+    document.getElementById('landlordLogin').style.display = 'none';
+    document.getElementById('renterSignup').style.display = 'none';
+    document.getElementById('landlordDashboard').style.display = 'block';
+    document.getElementById('addListingForm').style.display = 'none';
+    loadMyListings();
+  }
+  function showAddListing() {
+    document.getElementById('landlordDashboard').style.display = 'none';
+    document.getElementById('addListingForm').style.display = 'block';
+  }
+
+  // ── SIMPLE PASSWORD HASH (not cryptographic - for demo) ──
+  async function hashPassword(password) {
+    const msgBuffer = new TextEncoder().encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  // ── LANDLORD SIGNUP ──
+  async function submitLandlordSignup(e) {
+    e.preventDefault();
+    const password = document.getElementById('ls_password').value;
+    const password2 = document.getElementById('ls_password2').value;
+    if (password !== password2) { showToast('⚠️ Passwords do not match!'); return; }
+
+    const btn = document.getElementById('ls_submit');
+    btn.textContent = 'Creating account... 🥝';
+    btn.disabled = true;
+
+    try {
+      const password_hash = await hashPassword(password);
+      const landlord = {
+        name: document.getElementById('ls_name').value,
+        email: document.getElementById('ls_email').value.toLowerCase(),
+        phone: document.getElementById('ls_phone').value,
+        password_hash,
+        status: 'active'
+      };
+      await supabase('POST', 'landlords', landlord);
+      const results = await supabase('GET', 'landlords', null, `?email=eq.${landlord.email}`);
+      const saved = results[0];
+      localStorage.setItem('fmn_landlord', JSON.stringify({id: saved.id, name: saved.name, email: saved.email}));
+      document.getElementById('landlordSignupForm').reset();
+      showToast('🥝 Ka pai! Account created!');
+      document.getElementById('dash_welcome').textContent = `Kia ora, ${saved.name}! 🥝`;
+      showDashboard();
+    } catch(err) {
+      if (err.message.includes('duplicate') || err.message.includes('unique')) {
+        showToast('⚠️ That email is already registered. Please log in.');
+        showLandlordLogin();
+      } else {
+        showToast('⚠️ Something went wrong. Please try again.');
+      }
+      console.error(err);
+    } finally {
+      btn.textContent = 'Create My Free Account 🥝';
+      btn.disabled = false;
+    }
+  }
+
+  // ── LANDLORD LOGIN ──
+  async function submitLandlordLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('ll_submit');
+    btn.textContent = 'Logging in... 🥝';
+    btn.disabled = true;
+    try {
+      const email = document.getElementById('ll_email').value.toLowerCase();
+      const password = document.getElementById('ll_password').value;
+      const password_hash = await hashPassword(password);
+      const results = await supabase('GET', 'landlords', null, `?email=eq.${email}&password_hash=eq.${password_hash}`);
+      if (!results.length) {
+        showToast('⚠️ Incorrect email or password.');
+        btn.textContent = 'Log In 🏠';
+        btn.disabled = false;
+        return;
+      }
+      const landlord = results[0];
+      localStorage.setItem('fmn_landlord', JSON.stringify({id: landlord.id, name: landlord.name, email: landlord.email}));
+      document.getElementById('ll_email').value = '';
+      document.getElementById('ll_password').value = '';
+      showToast(`🥝 Kia ora ${landlord.name}! Welcome back!`);
+      document.getElementById('dash_welcome').textContent = `Kia ora, ${landlord.name}! 🥝`;
+      showDashboard();
+    } catch(err) {
+      showToast('⚠️ Something went wrong. Please try again.');
+      console.error(err);
+    } finally {
+      btn.textContent = 'Log In 🏠';
+      btn.disabled = false;
+    }
+  }
+
+  // ── LANDLORD LOGOUT ──
+  function logoutLandlord() {
+    localStorage.removeItem('fmn_landlord');
+    closeModal();
+    showToast('👋 Logged out successfully!');
+  }
+
+  // ── CHECK IF LANDLORD LOGGED IN ──
+  function getLandlord() {
+    try { return JSON.parse(localStorage.getItem('fmn_landlord')); } catch(e) { return null; }
+  }
+
+  // ── OPEN AUTH MODAL - CHECK IF ALREADY LOGGED IN ──
+  function openAuthModal() {
+    const landlord = getLandlord();
+    openModal('authModal');
+    if (landlord) {
+      document.getElementById('dash_welcome').textContent = `Kia ora, ${landlord.name}! 🥝`;
+      showDashboard();
+    } else {
+      showAuthStep1();
+    }
+  }
+
+  // ── LOAD MY LISTINGS ──
+  async function loadMyListings() {
+    const landlord = getLandlord();
+    if (!landlord) return;
+    const container = document.getElementById('myListings');
+    try {
+      const listings = await supabase('GET', 'listings', null, `?landlord_id=eq.${landlord.id}&order=created_at.desc`);
+      if (!listings.length) {
+        container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--brown-mid);font-size:0.9rem;">You have no listings yet. Click "Add New Listing" to get started! 🏠</div>';
+        return;
+      }
+      container.innerHTML = listings.map(l => `
+        <div style="background:var(--grey-light);border-radius:12px;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;">
+          <div style="flex:1;">
+            <div style="font-weight:600;color:var(--brown);margin-bottom:3px;">${l.title}</div>
+            <div style="font-size:0.82rem;color:var(--brown-mid);">📍 ${l.suburb}, ${l.city} &nbsp;•&nbsp; $${Number(l.rent).toLocaleString()}/wk &nbsp;•&nbsp; 🛏 ${l.beds} bed</div>
+          </div>
+          <button onclick="removeListing('${l.id}')" style="background:none;border:1px solid #ffcccc;color:#c0392b;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:0.78rem;font-weight:600;white-space:nowrap;transition:all 0.2s;flex-shrink:0;" onmouseover="this.style.background='#ffeeee'" onmouseout="this.style.background='none'">Remove ✕</button>
+        </div>
+      `).join('');
+    } catch(err) {
+      container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--brown-mid);">Could not load listings. Please try again.</div>';
+      console.error(err);
+    }
+  }
+
+  // ── REMOVE LISTING ──
+  async function removeListing(id) {
+    if (!confirm('Are you sure you want to remove this listing?')) return;
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/listings?id=eq.${id}`, {
+        method: 'DELETE',
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+      });
+      showToast('🗑️ Listing removed!');
+      loadMyListings();
+      renderListings();
+    } catch(err) {
+      showToast('⚠️ Could not remove listing. Try again.');
+      console.error(err);
+    }
+  }
+
+  // ── SUBMIT LISTING (now requires landlord account) ──
+  async function submitListing(e) {
+    e.preventDefault();
+    const landlord = getLandlord();
+    if (!landlord) { showToast('Please log in first!'); showLandlordLogin(); return; }
+
+    const btn = document.getElementById('listing_submit');
+    btn.textContent = 'Listing your property... 🥝';
+    btn.disabled = true;
+
+    const listing = {
+      name: landlord.name,
+      email: landlord.email,
+      phone: '',
+      title: document.getElementById('f_title').value,
+      suburb: document.getElementById('f_suburb').value,
+      city: document.getElementById('f_city').value,
+      rent: parseFloat(document.getElementById('f_rent').value),
+      type: document.getElementById('f_type').value,
+      beds: document.getElementById('f_beds').value,
+      baths: document.getElementById('f_baths').value,
+      park: document.getElementById('f_park').value,
+      avail: document.getElementById('f_avail').value || null,
+      pets: document.getElementById('f_pets').value,
+      furnished: document.getElementById('f_furnished').value,
+      description: document.getElementById('f_desc').value,
+      status: 'active',
+      landlord_id: landlord.id,
+    };
+
+    try {
+      await supabase('POST', 'listings', listing);
+      document.getElementById('listingForm').reset();
+      showToast('🥝 Ka pai! Your listing is live!');
+      showDashboard();
+      await renderListings();
+    } catch(err) {
+      showToast('⚠️ Something went wrong. Please try again.');
+      console.error(err);
+    } finally {
+      btn.textContent = 'List My Property — Sweet as! 🥝';
+      btn.disabled = false;
+    }
+  }
+
+  // ── RENTER SIGNUP ──
+  async function submitRenterSignup(e) {
+    e.preventDefault();
+    const btn = document.getElementById('rs_submit');
+    btn.textContent = 'Signing up... 🥝';
+    btn.disabled = true;
+    try {
+      const renter = {
+        name: document.getElementById('rs_name').value,
+        email: document.getElementById('rs_email').value.toLowerCase(),
+        phone: document.getElementById('rs_phone').value || null,
+        city: document.getElementById('rs_city').value,
+        budget_min: parseFloat(document.getElementById('rs_budget_min').value) || null,
+        budget_max: parseFloat(document.getElementById('rs_budget_max').value) || null,
+        beds_needed: document.getElementById('rs_beds').value || null,
+        move_date: document.getElementById('rs_movedate').value || null,
+        pets: document.getElementById('rs_pets').value,
+        status: 'active'
+      };
+      await supabase('POST', 'renters', renter);
+      document.getElementById('renterSignupForm').reset();
+      closeModal();
+      showToast('🥝 Ka pai! We'll notify you of matching listings!');
+    } catch(err) {
+      if (err.message.includes('duplicate') || err.message.includes('unique')) {
+        showToast('⚠️ That email is already registered!');
+      } else {
+        showToast('⚠️ Something went wrong. Please try again.');
+      }
+      console.error(err);
+    } finally {
+      btn.textContent = 'Sign Up Free 🔍';
+      btn.disabled = false;
+    }
+  }
+
+  // ── UPDATE NAV BUTTON BASED ON LOGIN STATE ──
+  function updateNavButton() {
+    const landlord = getLandlord();
+    const navBtn = document.querySelector('.nav-cta');
+    if (navBtn) {
+      if (landlord) {
+        navBtn.textContent = `My Dashboard 🏠`;
+      } else {
+        navBtn.textContent = 'Sign Up / Log In';
+      }
+    }
+  }
+
+  // Override openModal for authModal to check login state
+  const _origOpenModal = openModal;
+  function openModal(id) {
+    if (id === 'authModal') {
+      openAuthModal();
+      return;
+    }
+    _origOpenModal(id);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderListings();
+    updateNavButton();
+  });
+  </script>
+
+</body>
+</html>
