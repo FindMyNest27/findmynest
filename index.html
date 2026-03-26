@@ -676,7 +676,7 @@
       <li><a href="#how">How it works</a></li>
       <li><a href="#listings">Listings</a></li>
       <li><a href="#landlords">For Landlords</a></li>
-      <li><a href="#" class="nav-cta">List Your Property</a></li>
+      <li><a href="#" onclick="openModal('signupModal');return false;" class="nav-cta">List Your Property</a></li>
     </ul>
   </nav>
 
@@ -699,8 +699,8 @@
           The fairer, simpler way to rent in New Zealand. Built for Kiwi landlords and renters — no ridiculous fees, no drama. Just finding great nests. 🥝
         </p>
         <div class="hero-actions">
-          <a href="#listings" class="btn-primary">Browse Listings</a>
-          <a href="#landlords" class="btn-secondary">List Your Property →</a>
+          <a href="#" onclick="openAllListings();return false;" class="btn-primary">Browse Listings</a>
+          <a href="#" onclick="openModal('signupModal');return false;" class="btn-secondary">List Your Property →</a>
         </div>
         <div class="hero-stats">
           <div>
@@ -720,7 +720,7 @@
 
       <div class="hero-visual">
         <div class="hero-float hero-float-1">
-          <span class="hero-float-icon">🏠</span> New listing in Tauranga!
+          <span class="hero-float-icon">🥝</span> Sweet as, bro!
         </div>
         <div class="hero-card">
           <div class="hero-card-img listing-img-1">
@@ -737,7 +737,7 @@
           </div>
         </div>
         <div class="hero-float hero-float-2">
-          <span class="hero-float-icon">✅</span> 100% Free to list!
+          <span class="hero-float-icon">🏡</span> Find your kiwi nest today!
         </div>
       </div>
     </div>
@@ -775,7 +775,7 @@
           <option>4+ bedrooms</option>
         </select>
       </div>
-      <button class="search-btn" onclick="showToast('🔍 Search coming soon!')">Search Nests</button>
+      <button class="search-btn" onclick="openAllListings()">Search Nests</button>
     </div>
   </div>
 
@@ -813,62 +813,22 @@
       <div class="listings-header">
         <div>
           <div class="section-label">Fresh listings</div>
-          <h2 class="section-title">Latest nests in NZ</h2>
+          <h2 class="section-title">Latest Nests in NZ</h2>
         </div>
-        <a href="#" class="listings-link" onclick="showToast('Full listings coming soon! 🏠')">View all listings →</a>
+        <a href="#" onclick="openAllListings();return false;" class="listings-link">View all listings →</a>
       </div>
 
-      <div class="listings-grid">
-        <div class="listing-card">
-          <div class="listing-img listing-img-1">
-            <div class="listing-tag new">NEW</div>
-            🏡
-          </div>
-          <div class="listing-body">
-            <div class="listing-price">$650<span>/week</span></div>
-            <div class="listing-title">Sunny 3-Bedroom Family Home</div>
-            <div class="listing-loc">📍 Papamoa, Tauranga</div>
-            <div class="listing-features">
-              <span class="listing-feat">🛏 3 beds</span>
-              <span class="listing-feat">🚿 2 baths</span>
-              <span class="listing-feat">🚗 2 parks</span>
-            </div>
-          </div>
+      <!-- Dynamic listings container -->
+      <div id="listingsContainer">
+        <!-- Empty state shown when no listings exist -->
+        <div id="emptyState" style="text-align:center;padding:64px 32px;background:var(--white);border-radius:24px;">
+          <div style="font-size:4rem;margin-bottom:16px;">🏡</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--brown);margin-bottom:12px;">Be the first to list your nest!</div>
+          <p style="color:var(--brown-mid);font-size:1rem;line-height:1.7;max-width:480px;margin:0 auto 32px;">We're just getting started — be one of the first landlords on FindMyNest and get your property in front of thousands of Kiwi renters. It's completely free! 🥝</p>
+          <a href="#" onclick="openModal('signupModal');return false;" class="btn-primary">List My Property Free →</a>
         </div>
-
-        <div class="listing-card">
-          <div class="listing-img listing-img-2">
-            <div class="listing-tag">Available Now</div>
-            🏢
-          </div>
-          <div class="listing-body">
-            <div class="listing-price">$480<span>/week</span></div>
-            <div class="listing-title">Modern 2-Bed City Apartment</div>
-            <div class="listing-loc">📍 CBD, Auckland</div>
-            <div class="listing-features">
-              <span class="listing-feat">🛏 2 beds</span>
-              <span class="listing-feat">🚿 1 bath</span>
-              <span class="listing-feat">🌇 City views</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="listing-card">
-          <div class="listing-img listing-img-3">
-            <div class="listing-tag">Pet Friendly</div>
-            🏠
-          </div>
-          <div class="listing-body">
-            <div class="listing-price">$550<span>/week</span></div>
-            <div class="listing-title">Cosy 2-Bed Unit with Garden</div>
-            <div class="listing-loc">📍 Riccarton, Christchurch</div>
-            <div class="listing-features">
-              <span class="listing-feat">🛏 2 beds</span>
-              <span class="listing-feat">🚿 1 bath</span>
-              <span class="listing-feat">🐾 Pets ok</span>
-            </div>
-          </div>
-        </div>
+        <!-- Listings will be injected here by JavaScript -->
+        <div id="listingsGrid" class="listings-grid" style="display:none;"></div>
       </div>
     </div>
   </section>
@@ -965,7 +925,7 @@
           <div class="free-badge">🎉 100% Free Right Now</div>
           <div class="landlord-cta-title">Ready to list your nest?</div>
           <p class="landlord-cta-sub">Join FindMyNest today and get your property in front of thousands of Kiwi renters — completely free while we launch.</p>
-          <a href="#" class="btn-white" onclick="showToast('Sign up coming very soon! 🚀')">List My Property Free →</a>
+          <a href="#" onclick="closeModal();openModal('signupModal');" class="btn-white">List My Property Free →</a>
         </div>
       </div>
     </div>
@@ -1309,5 +1269,356 @@
       observer.observe(el);
     });
   </script>
+
+  <!-- LANDLORD SIGNUP MODAL -->
+  <div id="signupModal" class="modal" style="max-width:640px;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">🏠 Free to List</div>
+    <div class="modal-title">List Your Property</div>
+    <p style="color:var(--brown-mid);font-size:0.95rem;margin-bottom:24px;line-height:1.6;">Fill in your property details below and your listing will appear live on FindMyNest immediately. Completely free! 🥝</p>
+
+    <form id="listingForm" onsubmit="submitListing(event)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+
+        <!-- Landlord Name -->
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Your Full Name *</label>
+          <input type="text" id="f_name" required placeholder="e.g. John Smith" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Email Address *</label>
+          <input type="email" id="f_email" required placeholder="you@email.com" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Phone Number *</label>
+          <input type="tel" id="f_phone" required placeholder="e.g. 021 123 4567" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Property Title -->
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Property Title *</label>
+          <input type="text" id="f_title" required placeholder="e.g. Sunny 3-Bed Family Home in Papamoa" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Suburb -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Suburb *</label>
+          <input type="text" id="f_suburb" required placeholder="e.g. Mount Maunganui" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- City -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">City / Region *</label>
+          <select id="f_city" required style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'">
+            <option value="">Select region...</option>
+            <option>Auckland</option>
+            <option>Wellington</option>
+            <option>Christchurch</option>
+            <option>Tauranga</option>
+            <option>Hamilton</option>
+            <option>Dunedin</option>
+            <option>Queenstown</option>
+            <option>Napier / Hastings</option>
+            <option>Palmerston North</option>
+            <option>Nelson</option>
+            <option>Rotorua</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <!-- Rent per week -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Rent Per Week (NZD) *</label>
+          <input type="number" id="f_rent" required placeholder="e.g. 650" min="1" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Property Type -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Property Type *</label>
+          <select id="f_type" required style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'">
+            <option value="">Select type...</option>
+            <option>House</option>
+            <option>Apartment</option>
+            <option>Unit</option>
+            <option>Townhouse</option>
+            <option>Flat</option>
+            <option>Room</option>
+            <option>Studio</option>
+          </select>
+        </div>
+
+        <!-- Bedrooms -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Bedrooms *</label>
+          <select id="f_beds" required style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+            <option value="">Select...</option>
+            <option>1</option><option>2</option><option>3</option>
+            <option>4</option><option>5</option><option>6+</option>
+          </select>
+        </div>
+
+        <!-- Bathrooms -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Bathrooms *</label>
+          <select id="f_baths" required style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+            <option value="">Select...</option>
+            <option>1</option><option>2</option><option>3</option><option>4+</option>
+          </select>
+        </div>
+
+        <!-- Parking -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Parking Spaces</label>
+          <select id="f_park" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+            <option value="0">No parking</option>
+            <option>1</option><option>2</option><option>3+</option>
+          </select>
+        </div>
+
+        <!-- Available From -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Available From *</label>
+          <input type="date" id="f_avail" required style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"/>
+        </div>
+
+        <!-- Pets -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Pets Allowed?</label>
+          <select id="f_pets" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+            <option value="No">No pets</option>
+            <option value="Yes">Pets welcome 🐾</option>
+            <option value="Negotiable">Negotiable</option>
+          </select>
+        </div>
+
+        <!-- Furnished -->
+        <div>
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Furnished?</label>
+          <select id="f_furnished" style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;box-sizing:border-box;">
+            <option value="Unfurnished">Unfurnished</option>
+            <option value="Furnished">Furnished</option>
+            <option value="Partially Furnished">Partially Furnished</option>
+          </select>
+        </div>
+
+        <!-- Description -->
+        <div style="grid-column:span 2;">
+          <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-mid);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Property Description *</label>
+          <textarea id="f_desc" required rows="4" placeholder="Describe your property — highlights, features, neighbourhood, what makes it special..." style="width:100%;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--brown);background:var(--grey-light);outline:none;resize:vertical;box-sizing:border-box;" onfocus="this.style.borderColor='#E8724A'" onblur="this.style.borderColor='var(--cream-dark)'"></textarea>
+        </div>
+
+      </div>
+
+      <p style="font-size:0.78rem;color:var(--brown-mid);margin-bottom:20px;line-height:1.5;">By submitting this form you confirm the listing is accurate and agree to our <a href="#" onclick="closeModal();setTimeout(()=>openModal('termsModal'),300);return false;" style="color:var(--orange);">Terms of Use</a> and <a href="#" onclick="closeModal();setTimeout(()=>openModal('privacyModal'),300);return false;" style="color:var(--orange);">Privacy Policy</a>.</p>
+
+      <button type="submit" class="btn-primary" style="width:100%;justify-content:center;display:block;text-align:center;">
+        List My Property Free — Sweet as! 🥝
+      </button>
+    </form>
+  </div>
+
+  <!-- ALL LISTINGS PAGE MODAL -->
+  <div id="allListingsModal" class="modal" style="max-width:800px;width:95%;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-badge">🏠 Live Listings</div>
+    <div class="modal-title">All Nests in NZ</div>
+    <div id="allListingsContent">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <script>
+  // ── SUPABASE CONFIG ──
+  const SUPABASE_URL = vbkmfloxweczyvpfbsdh;
+  const SUPABASE_KEY = sb_publishable_o924DWR9Ugr81klc_BhETg_CBVxcli2;
+
+  async function supabase(method, table, data = null, filter = '') {
+    const url = `${SUPABASE_URL}/rest/v1/${table}${filter}`;
+    const headers = {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': method === 'POST' ? 'return=representation' : '',
+    };
+    const res = await fetch(url, {
+      method,
+      headers,
+      body: data ? JSON.stringify(data) : null,
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(err);
+    }
+    return method === 'GET' ? res.json() : res;
+  }
+
+  async function submitListing(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = 'Submitting... 🥝';
+    btn.disabled = true;
+
+    const listing = {
+      name: document.getElementById('f_name').value,
+      email: document.getElementById('f_email').value,
+      phone: document.getElementById('f_phone').value,
+      title: document.getElementById('f_title').value,
+      suburb: document.getElementById('f_suburb').value,
+      city: document.getElementById('f_city').value,
+      rent: parseFloat(document.getElementById('f_rent').value),
+      type: document.getElementById('f_type').value,
+      beds: document.getElementById('f_beds').value,
+      baths: document.getElementById('f_baths').value,
+      park: document.getElementById('f_park').value,
+      avail: document.getElementById('f_avail').value || null,
+      pets: document.getElementById('f_pets').value,
+      furnished: document.getElementById('f_furnished').value,
+      description: document.getElementById('f_desc').value,
+      status: 'active',
+    };
+
+    try {
+      await supabase('POST', 'listings', listing);
+      document.getElementById('listingForm').reset();
+      closeModal();
+      showToast('🥝 Ka pai! Your listing is live!');
+      await renderListings();
+    } catch(err) {
+      showToast('⚠️ Something went wrong. Please try again.');
+      console.error(err);
+    } finally {
+      btn.textContent = 'List My Property Free — Sweet as! 🥝';
+      btn.disabled = false;
+    }
+  }
+
+  // Colour cycling for listing cards
+  const cardColours = [
+    'linear-gradient(135deg,#F9C784,#E8724A)',
+    'linear-gradient(135deg,#C8E6C9,#81C784)',
+    'linear-gradient(135deg,#BBDEFB,#64B5F6)',
+    'linear-gradient(135deg,#F8BBD9,#F06292)',
+    'linear-gradient(135deg,#FFE0B2,#FFA726)',
+    'linear-gradient(135deg,#E1BEE7,#AB47BC)',
+  ];
+
+  function listingCardHTML(l, i) {
+    return `
+      <div class="listing-card" onclick="viewListing('${l.id}')" style="cursor:pointer;">
+        <div class="listing-img" style="background:${cardColours[i % cardColours.length]};height:200px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;">
+          <div class="listing-tag new">NEW</div>
+          🏡
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$${Number(l.rent).toLocaleString()}<span>/week</span></div>
+          <div class="listing-title">${l.title}</div>
+          <div class="listing-loc">📍 ${l.suburb}, ${l.city}</div>
+          <div class="listing-features">
+            <span class="listing-feat">🛏 ${l.beds} bed${l.beds>1?'s':''}</span>
+            <span class="listing-feat">🚿 ${l.baths} bath${l.baths>1?'s':''}</span>
+            ${l.pets==='Yes'?'<span class="listing-feat">🐾 Pets ok</span>':''}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  async function renderListings() {
+    const emptyState = document.getElementById('emptyState');
+    const grid = document.getElementById('listingsGrid');
+    try {
+      const listings = await supabase('GET', 'listings', null, '?order=created_at.desc&limit=3&status=eq.active');
+      if (!listings.length) {
+        emptyState.style.display = 'block';
+        grid.style.display = 'none';
+        return;
+      }
+      emptyState.style.display = 'none';
+      grid.style.display = 'grid';
+      grid.innerHTML = listings.map((l,i) => listingCardHTML(l,i)).join('');
+    } catch(err) {
+      console.error('Could not load listings:', err);
+      emptyState.style.display = 'block';
+      grid.style.display = 'none';
+    }
+  }
+
+  async function viewListing(id) {
+    try {
+      const results = await supabase('GET', 'listings', null, `?id=eq.${id}`);
+      const l = results[0];
+      if (!l) return;
+      document.getElementById('allListingsContent').innerHTML = `
+        <div style="background:var(--grey-light);border-radius:16px;padding:24px;margin-bottom:20px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--brown);margin-bottom:8px;">${l.title}</div>
+          <div style="color:var(--brown-mid);margin-bottom:16px;">📍 ${l.suburb}, ${l.city}</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
+            <div style="background:white;border-radius:10px;padding:12px;text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--orange);font-weight:700;">$${Number(l.rent).toLocaleString()}</div><div style="font-size:0.75rem;color:var(--brown-mid);">/week</div></div>
+            <div style="background:white;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:1.1rem;font-weight:600;color:var(--brown);">${l.beds} 🛏</div><div style="font-size:0.75rem;color:var(--brown-mid);">Bedrooms</div></div>
+            <div style="background:white;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:1.1rem;font-weight:600;color:var(--brown);">${l.baths} 🚿</div><div style="font-size:0.75rem;color:var(--brown-mid);">Bathrooms</div></div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+            <span style="background:rgba(232,114,74,0.1);color:var(--orange-deep);padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;">${l.type}</span>
+            <span style="background:rgba(232,114,74,0.1);color:var(--orange-deep);padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;">${l.furnished}</span>
+            <span style="background:rgba(232,114,74,0.1);color:var(--orange-deep);padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;">Pets: ${l.pets}</span>
+            ${l.park&&l.park!='0'?`<span style="background:rgba(232,114,74,0.1);color:var(--orange-deep);padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;">${l.park} car park${l.park>1?'s':''}</span>`:''}
+            ${l.avail?`<span style="background:rgba(232,114,74,0.1);color:var(--orange-deep);padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;">Available: ${l.avail}</span>`:''}
+          </div>
+          <p style="color:var(--brown-mid);line-height:1.7;font-size:0.95rem;">${l.description}</p>
+        </div>
+        <div style="background:var(--grey-light);border-radius:16px;padding:20px;">
+          <div style="font-weight:700;color:var(--brown);margin-bottom:8px;">📞 Contact Landlord</div>
+          <p style="color:var(--brown-mid);font-size:0.9rem;margin-bottom:12px;">Get in touch directly with the landlord to arrange a viewing.</p>
+          <a href="tel:${l.phone}" class="btn-primary" style="display:inline-block;margin-right:10px;">📞 Call ${l.name}</a>
+          <a href="mailto:${l.email}" class="btn-secondary" style="display:inline-block;">✉️ Email</a>
+        </div>
+        <p style="font-size:0.75rem;color:var(--brown-mid);margin-top:12px;line-height:1.5;">FindMyNest is a listing platform only. Please arrange your own legal advice before signing any tenancy agreement.</p>
+      `;
+      openModal('allListingsModal');
+    } catch(err) {
+      showToast('Could not load listing. Please try again.');
+      console.error(err);
+    }
+  }
+
+  async function openAllListings() {
+    try {
+      const listings = await supabase('GET', 'listings', null, '?order=created_at.desc&status=eq.active');
+      if (!listings.length) {
+        showToast('No listings yet — be the first! 🥝');
+        openModal('signupModal');
+        return;
+      }
+      document.getElementById('allListingsContent').innerHTML = `
+        <div style="display:grid;gap:16px;">
+          ${listings.map(l => `
+            <div onclick="viewListing('${l.id}')" style="background:var(--grey-light);border-radius:14px;padding:20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(232,114,74,0.08)'" onmouseout="this.style.background='var(--grey-light)'">
+              <div>
+                <div style="font-weight:600;color:var(--brown);margin-bottom:4px;">${l.title}</div>
+                <div style="font-size:0.85rem;color:var(--brown-mid);">📍 ${l.suburb}, ${l.city} &nbsp;•&nbsp; 🛏 ${l.beds} bed &nbsp;•&nbsp; 🚿 ${l.baths} bath</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;margin-left:16px;">
+                <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--orange);">$${Number(l.rent).toLocaleString()}<span style="font-size:0.75rem;font-family:'DM Sans',sans-serif;color:var(--brown-mid);font-weight:400;">/wk</span></div>
+                <div style="font-size:0.75rem;color:var(--brown-mid);">Listed ${new Date(l.created_at).toLocaleDateString('en-NZ')}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      openModal('allListingsModal');
+    } catch(err) {
+      showToast('Could not load listings. Please try again.');
+      console.error(err);
+    }
+  }
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', renderListings);
+  </script>
+
 </body>
 </html>
