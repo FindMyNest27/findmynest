@@ -1440,7 +1440,9 @@ async function loadAllListingsPage(){
     list.map(function(l,i){
       return '<div class="all-list-item" onclick="viewListing(\''+l.id+'\')">'+
         '<div style="display:flex;gap:16px;align-items:center;">'+
-        '<div style="width:56px;height:56px;border-radius:12px;background:'+CLRS[i%CLRS.length]+';display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">🏡</div>'+
+        (l.photo_urls&&l.photo_urls.length
+          ?'<img src="'+l.photo_urls[0]+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;flex-shrink:0;" onerror="this.style.background=\x27#F2E4C4\x27"/>'
+          :'<div style="width:56px;height:56px;border-radius:12px;background:'+CLRS[i%CLRS.length]+';display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">🏡</div>')+
         '<div><div style="font-weight:700;margin-bottom:3px;">'+l.title+'</div>'+
         '<div style="font-size:.82rem;color:#6B3A1F;">📍 '+l.suburb+', '+l.city+' &nbsp;•&nbsp; 🛏 '+l.beds+' bed &nbsp;•&nbsp; 🚿 '+l.baths+' bath</div>'+
         '<div style="font-size:.78rem;color:#6B3A1F;margin-top:3px;">'+l.type+' &nbsp;•&nbsp; '+l.furnished+(l.pets==='Yes'?' &nbsp;•&nbsp; 🐾 Pets ok':'')+'</div></div></div>'+
@@ -1459,6 +1461,7 @@ async function viewListing(id){
     var res=await sbq('GET','listings',null,'?id=eq.'+id);
     var l=res[0];if(!l)return;
     document.getElementById('detailContent').innerHTML=
+      renderListingPhotos(l.photo_urls)+
       '<div class="mbadge">🏠 Property Details</div>'+
       '<div class="mtit" style="margin-bottom:4px;">'+l.title+'</div>'+
       '<div style="color:#6B3A1F;margin-bottom:14px;">📍 '+l.suburb+', '+l.city+'</div>'+
@@ -1492,8 +1495,11 @@ async function renderListings(){
     if(!list||!list.length){empty.style.display='block';grid.style.display='none';return;}
     empty.style.display='none';grid.style.display='grid';
     grid.innerHTML=list.map(function(l,i){
-      return '<div class="lc" onclick="viewListing(\''+l.id+'\')">'+
-        '<div class="lim" style="background:'+CLRS[i%CLRS.length]+';"><div class="lt ltn">NEW</div>🏡</div>'+
+      var hasPhoto=l.photo_urls&&l.photo_urls.length;
+      var photoHtml=hasPhoto
+        ?'<div class="lim" style="padding:0;overflow:hidden;"><img src="'+l.photo_urls[0]+'" style="width:100%;height:100%;object-fit:cover;display:block;"/></div>'
+        :'<div class="lim" style="background:'+CLRS[i%CLRS.length]+';"><div class="lt ltn">NEW</div>🏡</div>';
+      return '<div class="lc" onclick="viewListing(\''+l.id+'\')">'+photoHtml+
         '<div class="lb"><div class="lpr">$'+Number(l.rent).toLocaleString()+'<span>/week</span></div>'+
         '<div class="ltit">'+l.title+'</div>'+
         '<div class="lloc">📍 '+l.suburb+', '+l.city+'</div>'+
@@ -1508,7 +1514,15 @@ function initHero(list){
   var i=0;
   function show(l,idx){
     var ci=document.getElementById('hci');if(!ci)return;
-    ci.style.background=CLRS[idx%CLRS.length];
+    if(l.photo_urls&&l.photo_urls.length){
+      ci.style.background='#3D1F0D';
+      ci.style.backgroundImage='url('+l.photo_urls[0]+')';
+      ci.style.backgroundSize='cover';
+      ci.style.backgroundPosition='center';
+    } else {
+      ci.style.backgroundImage='';
+      ci.style.background=CLRS[idx%CLRS.length];
+    }
     document.getElementById('hcb').textContent='NEW 🥝';
     document.getElementById('hct').textContent=l.title;
     document.getElementById('hcl').textContent='📍 '+l.suburb+', '+l.city;
