@@ -951,6 +951,19 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div class="ff s2"><label>Description *</label><textarea id="el_d" rows="4" placeholder="Describe your property..."></textarea></div>
     <div class="ff s2"><label>Status</label><select id="el_st"><option value="active">Active — visible to renters</option><option value="inactive">Inactive — hidden from search</option></select></div>
   </div>
+    <div class="ff s2" style="margin-top:4px;">
+      <label>Current Photos</label>
+      <div id="el_current_photos" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;"></div>
+      <label style="margin-top:8px;">Add New Photos</label>
+      <div class="photo-upload-area" onclick="document.getElementById('el_new_photos_input').click()" style="padding:14px;">
+        <div style="font-size:1.5rem;margin-bottom:4px;">📷</div>
+        <div style="font-weight:600;color:#6B3A1F;font-size:.82rem;">Click to add more photos</div>
+        <div style="font-size:.72rem;color:#A07850;margin-top:2px;">Up to 6 total · Max 5MB each</div>
+        <input type="file" id="el_new_photos_input" accept="image/jpeg,image/jpg,image/png,image/webp,image/heic" multiple/>
+      </div>
+      <div id="el_new_photos_grid" class="photo-grid"></div>
+      <div id="el_photos_bar" class="upload-progress" style="width:0;display:none;"></div>
+    </div>
   <button class="bful" id="el_submit" style="margin-top:16px;">Save Changes ✓</button>
 </div>
 
@@ -1940,6 +1953,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initPhotoUploader('rl_photos', 6);
   initAvatarUploader('fp_avatar', '?');
   initAvatarUploader('rs_avatar', '?');
+  photoFiles['el_new_photos'] = [];
 });
 
 // ── SHOW PHOTOS IN LISTING DETAIL VIEW ───────────────────────────────────────
@@ -2144,11 +2158,110 @@ async function openEditListing(id) {
     setSelectVal('el_pt', l.pets      || 'No');
     setSelectVal('el_fu', l.furnished || 'Unfurnished');
     setSelectVal('el_st', l.status    || 'active');
+    // Load existing photos — store URLs in data attribute for tracking
+    var cp = document.getElementById('el_current_photos');
+    cp.setAttribute('data-urls', JSON.stringify(l.photo_urls || []));
+    renderEditCurrentPhotos(l.photo_urls || []);
+    // Reset new photos uploader
+    photoFiles['el_new_photos'] = [];
+    renderEditNewGrid();
     openModal('editListingMod');
   } catch(e) {
     showToast('⚠️ Could not load listing details.');
   }
 }
+
+// Render existing photos with remove buttons
+function renderEditCurrentPhotos(urls) {
+  var c = document.getElementById('el_current_photos');
+  if (!c) return;
+  if (!urls || !urls.length) {
+    c.innerHTML = '<div style="color:#A07850;font-size:.8rem;font-style:italic;">No photos yet.</div>';
+    return;
+  }
+  c.innerHTML = urls.map(function(url, i) {
+    return '<div class="photo-thumb" style="position:relative;">' +
+      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" onerror="this.parentElement.style.display=\x27none\x27"/>' +
+      '<button class="rm-photo" onclick="removeEditPhoto(' + i + ')" title="Remove photo">✕</button>' +
+      '<div class="photo-num">' + (i+1) + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+// Remove an existing photo from the edit list (marks for deletion, saves on submit)
+function removeEditPhoto(index) {
+  var id = document.getElementById('el_id').value;
+  // Read current photos from DOM count
+  var thumbs = document.getElementById('el_current_photos').querySelectorAll('.photo-thumb');
+  // We track existing URLs in a data attribute on the container
+  var container = document.getElementById('el_current_photos');
+  var urls = JSON.parse(container.getAttribute('data-urls') || '[]');
+  if (!urls.length) {
+    // Build from img srcs
+    thumbs.forEach(function(t) { var img = t.querySelector('img'); if(img) urls.push(img.src); });
+  }
+  urls.splice(index, 1);
+  container.setAttribute('data-urls', JSON.stringify(urls));
+  renderEditCurrentPhotosFromData(urls);
+}
+
+function renderEditCurrentPhotosFromData(urls) {
+  var c = document.getElementById('el_current_photos');
+  if (!urls.length) {
+    c.innerHTML = '<div style="color:#A07850;font-size:.8rem;font-style:italic;">No photos yet.</div>';
+    c.setAttribute('data-urls', '[]');
+    return;
+  }
+  c.innerHTML = urls.map(function(url, i) {
+    return '<div class="photo-thumb" style="position:relative;">' +
+      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" onerror="this.parentElement.style.display=\x27none\x27"/>' +
+      '<button class="rm-photo" onclick="removeEditPhoto(' + i + ')" title="Remove photo">✕</button>' +
+      '<div class="photo-num">' + (i+1) + '</div>' +
+      '</div>';
+  }).join('');
+  c.setAttribute('data-urls', JSON.stringify(urls));
+}
+
+// Render the new-photos-to-add grid
+function renderEditNewGrid() {
+  var files = photoFiles['el_new_photos'] || [];
+  var grid = document.getElementById('el_new_photos_grid');
+  if (!grid) return;
+  if (!files.length) { grid.innerHTML = ''; return; }
+  grid.innerHTML = files.map(function(f, i) {
+    var url = URL.createObjectURL(f);
+    return '<div class="photo-thumb">' +
+      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;"/>' +
+      '<button class="rm-photo" onclick="removeEditNewPhoto(' + i + ')">✕</button>' +
+      '<div class="photo-num">+' + (i+1) + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function removeEditNewPhoto(index) {
+  if (photoFiles['el_new_photos']) {
+    photoFiles['el_new_photos'].splice(index, 1);
+    renderEditNewGrid();
+  }
+}
+
+// Init new photo input for edit modal
+document.getElementById('el_new_photos_input').addEventListener('change', function(e) {
+  var container = document.getElementById('el_current_photos');
+  var existingUrls = JSON.parse(container.getAttribute('data-urls') || '[]');
+  if (!existingUrls.length) {
+    // count from thumbs
+    container.querySelectorAll('img').forEach(function(img) { if(img.src) existingUrls.push(img.src); });
+  }
+  var currentNew = photoFiles['el_new_photos'] || [];
+  var total = existingUrls.length + currentNew.length;
+  var remaining = 6 - total;
+  if (remaining <= 0) { showToast('Maximum 6 photos allowed. Remove some first.'); return; }
+  var files = Array.from(e.target.files).slice(0, remaining).filter(function(f) { return f.size <= 5242880; });
+  photoFiles['el_new_photos'] = currentNew.concat(files);
+  renderEditNewGrid();
+  this.value = '';
+});
 
 function setSelectVal(id, val) {
   var sel = document.getElementById(id);
@@ -2174,6 +2287,16 @@ async function doEditListing() {
   var btn = document.getElementById('el_submit');
   btn.textContent = 'Saving...'; btn.disabled = true;
   try {
+    // Gather kept existing photos
+    var container = document.getElementById('el_current_photos');
+    var keptUrls = JSON.parse(container.getAttribute('data-urls') || '[]');
+    if (!keptUrls.length) {
+      container.querySelectorAll('img').forEach(function(img) { if(img.src) keptUrls.push(img.src); });
+    }
+    // Upload any new photos
+    var u2 = getUser();
+    var newUrls = await uploadPhotos('el_new_photos','listing-photos','listings/'+(u2?u2.id:'edit'));
+    var allPhotos = keptUrls.concat(newUrls).slice(0,6);
     await sbq('PATCH','listings',{
       title:t, suburb:s, city:c, rent:parseFloat(r),
       type:ty, beds:b, baths:ba,
@@ -2182,7 +2305,8 @@ async function doEditListing() {
       pets:document.getElementById('el_pt').value,
       furnished:document.getElementById('el_fu').value,
       description:d,
-      status:st
+      status:st,
+      photo_urls:allPhotos
     },'?id=eq.'+id);
     showToast('✅ Listing updated!');
     closeAllModals();
