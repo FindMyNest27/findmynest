@@ -545,6 +545,90 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <p>Browse the latest rental properties across Aotearoa. Updated in real time.</p>
       <button class="bw" id="listingsSignupBtn">List Your Property Free →</button>
     </div>
+    <!-- FILTER PANEL -->
+    <div id="filterPanel" style="background:#fff;border-radius:18px;padding:20px 24px;margin-bottom:24px;box-shadow:0 4px 20px rgba(61,31,13,.06);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="font-weight:700;font-size:.95rem;color:#3D1F0D;">🔍 Refine Search</div>
+        <button onclick="clearFilters()" style="background:none;border:none;color:#E8724A;font-size:.82rem;font-weight:600;cursor:pointer;">Clear all</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
+        <div class="ff" style="margin:0;">
+          <label>City</label>
+          <select id="filt_city" onchange="onCityFilterChange()">
+            <option value="">Any city</option>
+            <option>Auckland</option><option>Wellington</option><option>Christchurch</option>
+            <option>Tauranga</option><option>Hamilton</option><option>Dunedin</option>
+            <option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option>
+            <option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option>
+            <option>Napier</option><option>Hastings</option><option>New Plymouth</option>
+            <option>Nelson</option><option>Blenheim</option><option>Invercargill</option>
+            <option>Timaru</option><option>Gisborne</option><option>Rotorua</option>
+          </select>
+        </div>
+        <div class="ff" style="margin:0;">
+          <label>Suburb</label>
+          <select id="filt_suburb" onchange="applyFilters()">
+            <option value="">Any suburb</option>
+          </select>
+        </div>
+        <div class="ff" style="margin:0;">
+          <label>Bedrooms</label>
+          <select id="filt_beds" onchange="applyFilters()">
+            <option value="">Any</option>
+            <option value="1">1 bedroom</option>
+            <option value="2">2 bedrooms</option>
+            <option value="3">3 bedrooms</option>
+            <option value="4">4 bedrooms</option>
+            <option value="5+">5+ bedrooms</option>
+          </select>
+        </div>
+        <div class="ff" style="margin:0;">
+          <label>Bathrooms</label>
+          <select id="filt_baths" onchange="applyFilters()">
+            <option value="">Any</option>
+            <option value="1">1 bathroom</option>
+            <option value="2">2 bathrooms</option>
+            <option value="3+">3+ bathrooms</option>
+          </select>
+        </div>
+        <div class="ff" style="margin:0;">
+          <label>Type</label>
+          <select id="filt_type" onchange="applyFilters()">
+            <option value="">Any type</option>
+            <option>House</option><option>Apartment</option><option>Townhouse</option>
+            <option>Unit</option><option>Studio</option><option>Room</option>
+          </select>
+        </div>
+        <div class="ff" style="margin:0;">
+          <label>Max Rent $/wk</label>
+          <select id="filt_rent" onchange="applyFilters()">
+            <option value="">Any price</option>
+            <option value="300">Under $300</option>
+            <option value="400">Under $400</option>
+            <option value="500">Under $500</option>
+            <option value="600">Under $600</option>
+            <option value="800">Under $800</option>
+            <option value="1000">Under $1,000</option>
+          </select>
+        </div>
+        <div class="ff" style="margin:0;">
+          <label>Pets</label>
+          <select id="filt_pets" onchange="applyFilters()">
+            <option value="">Any</option>
+            <option value="Yes">Pets OK</option>
+          </select>
+        </div>
+        <div class="ff" style="margin:0;">
+          <label>Furnished</label>
+          <select id="filt_furn" onchange="applyFilters()">
+            <option value="">Any</option>
+            <option value="Furnished">Furnished</option>
+            <option value="Unfurnished">Unfurnished</option>
+          </select>
+        </div>
+      </div>
+      <div id="filtCount" style="margin-top:12px;font-size:.82rem;color:#6B3A1F;"></div>
+    </div>
     <div id="allListingsContent"></div>
   </div>
 </div>
@@ -634,7 +718,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div class="add-form-grid">
           <div class="ff s2"><label>Title *</label><input id="f_t" placeholder="e.g. Sunny 3BR House in Tauranga"/></div>
           <div class="ff"><label>Suburb *</label><input id="f_s" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'f_s_list')"/><datalist id="f_s_list"></datalist></div>
-          <div class="ff"><label>City *</label><select id="f_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Other</option></select></div>
+          <div class="ff"><label>City *</label><select id="f_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="f_r" type="number" placeholder="550"/></div>
           <div class="ff"><label>Type *</label><select id="f_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
           <div class="ff"><label>Bedrooms *</label><select id="f_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
@@ -768,7 +852,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div class="ff s2"><label>Full Name *</label><input id="rs_n" placeholder="e.g. Jane Smith"/></div>
       <div class="ff"><label>Email *</label><input id="rs_e" type="email" placeholder="you@email.com"/></div>
       <div class="ff"><label>Phone</label><input id="rs_ph" placeholder="021 123 4567"/></div>
-      <div class="ff s2"><label>Looking in *</label><select id="rs_c"><option value="">Select region...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Anywhere in NZ</option></select></div>
+      <div class="ff s2"><label>Looking in *</label><select id="rs_c"><option value="">Select region...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Anywhere in NZ</option></select></div>
       <div class="ff"><label>Min Budget $/wk</label><input id="rs_min" type="number" placeholder="400"/></div>
       <div class="ff"><label>Max Budget $/wk</label><input id="rs_max" type="number" placeholder="700"/></div>
       <div class="ff"><label>Bedrooms needed</label><select id="rs_b"><option value="">Any</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
@@ -805,7 +889,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div class="add-form-grid">
           <div class="ff s2"><label>Title *</label><input id="af_t" placeholder="e.g. Modern 2BR in Mount Maunganui"/></div>
           <div class="ff"><label>Suburb *</label><input id="af_s" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'af_s_list')"/><datalist id="af_s_list"></datalist></div>
-          <div class="ff"><label>City *</label><select id="af_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Other</option></select></div>
+          <div class="ff"><label>City *</label><select id="af_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="af_r" type="number" placeholder="550"/></div>
           <div class="ff"><label>Type *</label><select id="af_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
           <div class="ff"><label>Bedrooms *</label><select id="af_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
@@ -847,7 +931,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
     <div class="ff s2"><label>Listing Title *</label><input id="rl_title" placeholder="e.g. Sunny room in shared Tauranga house"/></div>
     <div class="ff"><label>Suburb *</label><input id="rl_suburb" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'rl_suburb_list')"/><datalist id="rl_suburb_list"></datalist></div>
-    <div class="ff"><label>City *</label><select id="rl_city"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Other</option></select></div>
+    <div class="ff"><label>City *</label><select id="rl_city"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
     <div class="ff"><label>Weekly Rent $ *</label><input id="rl_rent" type="number" placeholder="e.g. 200"/></div>
     <div class="ff"><label>Bills Included?</label><select id="rl_bills"><option value="No">Not included</option><option value="Yes">All included</option><option value="Partial">Partially included</option></select></div>
     <div class="ff"><label>Bond (weeks)</label><select id="rl_bond"><option value="2">2 weeks</option><option value="4">4 weeks</option><option value="0">No bond</option></select></div>
@@ -898,7 +982,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div class="ff"><label>Age *</label><input id="fp_age" type="number" placeholder="e.g. 26" min="18" max="99"/></div>
     <div class="ff"><label>Gender</label><select id="fp_gender"><option value="Prefer not to say">Prefer not to say</option><option value="Male">Male</option><option value="Female">Female</option><option value="Non-binary">Non-binary</option></select></div>
     <div class="ff"><label>Occupation *</label><input id="fp_occ" placeholder="e.g. Nurse, Student, Software Developer"/></div>
-    <div class="ff"><label>Looking in *</label><select id="fp_city"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Anywhere in NZ</option></select></div>
+    <div class="ff"><label>Looking in *</label><select id="fp_city"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Anywhere in NZ</option></select></div>
     <div class="ff"><label>Preferred Suburb</label><input id="fp_suburb" placeholder="Optional — e.g. Ponsonby"/></div>
     <div class="ff"><label>Min Budget $/wk</label><input id="fp_bmin" type="number" placeholder="150"/></div>
     <div class="ff"><label>Max Budget $/wk *</label><input id="fp_bmax" type="number" placeholder="300"/></div>
@@ -939,7 +1023,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
     <div class="ff s2"><label>Title *</label><input id="el_t" placeholder="e.g. Sunny 3BR House in Tauranga"/></div>
     <div class="ff"><label>Suburb *</label><input id="el_s" placeholder="e.g. Mount Maunganui" oninput="acSuggest(this,'el_s_list')" autocomplete="off"/><datalist id="el_s_list"></datalist></div>
-    <div class="ff"><label>City *</label><select id="el_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Other</option></select></div>
+    <div class="ff"><label>City *</label><select id="el_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
     <div class="ff"><label>Weekly Rent ($) *</label><input id="el_r" type="number" placeholder="550"/></div>
     <div class="ff"><label>Type *</label><select id="el_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
     <div class="ff"><label>Bedrooms *</label><select id="el_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
@@ -2075,6 +2159,37 @@ var NZ_SUBURBS = [
   // Queenstown
   'Queenstown Central, Queenstown','Frankton, Queenstown','Arrowtown, Queenstown',
   'Fernhill, Queenstown','Sunshine Bay, Queenstown','Wanaka, Otago',
+  // Whangarei
+  'Whangarei Central, Whangarei','Tikipunga, Whangarei','Kamo, Whangarei',
+  'Regent, Whangarei','Raumanga, Whangarei','Maunu, Whangarei','Onerahi, Whangarei',
+  'Ruakaka, Whangarei','Mangakahia, Whangarei',
+  // Northland
+  'Kaitaia, Kaitaia','Kerikeri, Kerikeri','Paihia, Northland','Kawakawa, Northland',
+  'Mangonui, Northland','Dargaville, Northland','Wellsford, Northland',
+  // Palmerston North
+  'Palmerston North Central, Palmerston North','Hokowhitu, Palmerston North',
+  'Milson, Palmerston North','Kelvin Grove, Palmerston North','Terrace End, Palmerston North',
+  'Aokautere, Palmerston North','Awapuni, Palmerston North',
+  // Napier / Hastings
+  'Napier Central, Napier','Taradale, Napier','Greenmeadows, Napier','Marewa, Napier',
+  'Hastings Central, Hastings','Flaxmere, Hastings','Havelock North, Hastings',
+  // New Plymouth
+  'New Plymouth Central, New Plymouth','Strandon, New Plymouth','Spotswood, New Plymouth',
+  'Inglewood, New Plymouth','Waitara, New Plymouth',
+  // Nelson / Blenheim
+  'Nelson Central, Nelson','Richmond, Nelson','Stoke, Nelson','Atawhai, Nelson',
+  'Blenheim Central, Blenheim','Springlands, Blenheim','Witherlea, Blenheim',
+  // Invercargill
+  'Invercargill Central, Invercargill','Bluff, Invercargill','Waikiwi, Invercargill',
+  'Gore, Southland',
+  // Whanganui
+  'Whanganui Central, Whanganui','Gonville, Whanganui','Castlecliff, Whanganui',
+  // Gisborne
+  'Gisborne Central, Gisborne','Elgin, Gisborne','Kaiti, Gisborne',
+  // Timaru
+  'Timaru Central, Timaru','Highfield, Timaru','Washdyke, Timaru',
+  // Rotorua
+  'Rotorua Central, Rotorua','Ngongotaha, Rotorua','Holdens Bay, Rotorua','Fenton Park, Rotorua',
 ];
 
 var acTimers = {};
