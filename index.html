@@ -304,6 +304,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 .ac-item:hover{background:#FFF8F4;}
 .ac-item:last-child{border-bottom:none;}
 .ac-sub{font-size:.75rem;color:#6B3A1F;margin-top:2px;}
+
+.edb{background:none;border:1px solid #D4B896;color:#6B3A1F;border-radius:8px;padding:5px 11px;cursor:pointer;font-size:.74rem;font-weight:600;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.edb:hover{background:#FAF0DC;border-color:#E8724A;color:#E8724A}
 </style>
 </head>
 <body>
@@ -925,6 +928,32 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <button class="bful" id="fp_submit" style="margin-top:16px;">Create My Profile 🧑</button>
 </div>
 
+
+<!-- EDIT LISTING MODAL -->
+<div class="mod" id="editListingMod" style="max-width:600px;width:96%;max-height:90vh;overflow-y:auto;">
+  <button class="mcl" id="editListingClose">✕</button>
+  <input type="hidden" id="el_id"/>
+  <div class="mbadge" style="background:#3D1F0D;color:#FAF0DC;">✏️ Edit Listing</div>
+  <div class="mtit" style="margin-bottom:4px;">Edit your listing</div>
+  <p class="msub" style="margin-bottom:16px;">Update any details below and save.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div class="ff s2"><label>Title *</label><input id="el_t" placeholder="e.g. Sunny 3BR House in Tauranga"/></div>
+    <div class="ff"><label>Suburb *</label><input id="el_s" placeholder="e.g. Mount Maunganui" oninput="acSuggest(this,'el_s_list')" autocomplete="off"/><datalist id="el_s_list"></datalist></div>
+    <div class="ff"><label>City *</label><select id="el_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Other</option></select></div>
+    <div class="ff"><label>Weekly Rent ($) *</label><input id="el_r" type="number" placeholder="550"/></div>
+    <div class="ff"><label>Type *</label><select id="el_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
+    <div class="ff"><label>Bedrooms *</label><select id="el_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+    <div class="ff"><label>Bathrooms *</label><select id="el_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
+    <div class="ff"><label>Parking</label><select id="el_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
+    <div class="ff"><label>Available From</label><input id="el_av" type="date"/></div>
+    <div class="ff"><label>Pets</label><select id="el_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
+    <div class="ff"><label>Furnished</label><select id="el_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
+    <div class="ff s2"><label>Description *</label><textarea id="el_d" rows="4" placeholder="Describe your property..."></textarea></div>
+    <div class="ff s2"><label>Status</label><select id="el_st"><option value="active">Active — visible to renters</option><option value="inactive">Inactive — hidden from search</option></select></div>
+  </div>
+  <button class="bful" id="el_submit" style="margin-top:16px;">Save Changes ✓</button>
+</div>
+
 <!-- DETAIL MODAL -->
 <div class="mod" id="detailMod" style="max-width:540px;width:95%;">
   <button class="mcl" id="detailClose">✕</button>
@@ -1127,9 +1156,13 @@ document.getElementById('footerTerms').addEventListener('click',function(){openM
 // SUPABASE
 async function sbq(method,table,data,filter){
   filter=filter||'';
+  var headers={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+  if(method==='POST') headers['Prefer']='return=representation';
+  if(method==='PATCH') headers['Prefer']='return=representation';
+  if(method==='DELETE') headers['Prefer']='return=representation';
   var res=await fetch(SB_URL+'/rest/v1/'+table+filter,{
     method:method,
-    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':method==='POST'?'return=representation':''},
+    headers:headers,
     body:data?JSON.stringify(data):null
   });
   if(!res.ok){var e=await res.text();throw new Error(e);}
@@ -1283,7 +1316,7 @@ async function loadAgentListings(){
       return '<div style="background:#FAF0DC;border-radius:14px;padding:18px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">'+
         '<div><div style="font-weight:700;color:#3D1F0D;margin-bottom:4px;">'+l.title+'</div>'+
         '<div style="font-size:.82rem;color:#6B3A1F;">'+l.suburb+', '+l.city+' · $'+l.rent+'/wk · '+l.beds+' bed · '+l.type+'</div></div>'+
-        '<button onclick="doRemoveListing('+l.id+',\x27agent\x27)" style="background:none;border:1.5px solid #C85A2E;color:#C85A2E;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.8rem;">Remove</button>'+
+        '<div style="display:flex;gap:6px;"><button class="edb" onclick="openEditListing(\x27'+l.id+'\x27)">Edit ✏️</button><button onclick="doRemoveListing('+l.id+',\x27agent\x27)" style="background:none;border:1.5px solid #C85A2E;color:#C85A2E;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.8rem;">Remove</button></div>'+
         '</div>';
     }).join('');
   }catch(e){c.innerHTML='<div style="text-align:center;padding:18px;color:#C85A2E;">Error loading listings.</div>';}
@@ -1355,7 +1388,7 @@ async function loadMyListings(){
     document.getElementById('dashListingCount').textContent=list.length;
     if(!list.length){c.innerHTML='<div style="text-align:center;padding:32px;color:#6B3A1F;font-size:.9rem;">No listings yet — click Add Listing above! 🏠</div>';return;}
     c.innerHTML=list.map(function(l){
-      return '<div class="mlrow"><div><div class="mltit">'+l.title+'</div><div class="mlmet">📍 '+l.suburb+', '+l.city+' &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk &nbsp;•&nbsp; 🛏 '+l.beds+' bed</div></div><button class="rmb" onclick="doRemove(\x27'+l.id+'\x27)">Remove ✕</button></div>';
+      return '<div class="mlrow"><div><div class="mltit">'+l.title+'</div><div class="mlmet">📍 '+l.suburb+', '+l.city+' &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk &nbsp;•&nbsp; 🛏 '+l.beds+' bed &nbsp;•&nbsp; '+l.type+'</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button class="edb" onclick="openEditListing(\x27'+l.id+'\x27)">Edit ✏️</button><button class="rmb" onclick="doRemove(\x27'+l.id+'\x27)">Remove ✕</button></div></div>';
     }).join('');
   }catch(err){c.innerHTML='<div style="text-align:center;padding:18px;color:#6B3A1F;">Could not load listings.</div>';}
 }
@@ -2083,6 +2116,91 @@ function acSuggest(input, listId) {
     });
   }, 0);
 }
+
+
+
+// ════════════════════════════════════════════
+// EDIT LISTING
+// ════════════════════════════════════════════
+
+async function openEditListing(id) {
+  try {
+    var res = await sbq('GET','listings',null,'?id=eq.'+id);
+    if (!res || !res.length) { showToast('⚠️ Could not load listing.'); return; }
+    var l = res[0];
+    // Populate the form
+    document.getElementById('el_id').value  = l.id;
+    document.getElementById('el_t').value   = l.title   || '';
+    document.getElementById('el_s').value   = l.suburb  || '';
+    document.getElementById('el_r').value   = l.rent    || '';
+    document.getElementById('el_d').value   = l.description || '';
+    document.getElementById('el_av').value  = l.avail   || '';
+    // Selects — match by value
+    setSelectVal('el_c',  l.city      || '');
+    setSelectVal('el_ty', l.type      || '');
+    setSelectVal('el_b',  l.beds      || '');
+    setSelectVal('el_ba', l.baths     || '');
+    setSelectVal('el_pk', l.park      || 'None');
+    setSelectVal('el_pt', l.pets      || 'No');
+    setSelectVal('el_fu', l.furnished || 'Unfurnished');
+    setSelectVal('el_st', l.status    || 'active');
+    openModal('editListingMod');
+  } catch(e) {
+    showToast('⚠️ Could not load listing details.');
+  }
+}
+
+function setSelectVal(id, val) {
+  var sel = document.getElementById(id);
+  if (!sel) return;
+  for (var i = 0; i < sel.options.length; i++) {
+    if (sel.options[i].value === val) { sel.selectedIndex = i; return; }
+  }
+}
+
+async function doEditListing() {
+  var id  = document.getElementById('el_id').value;
+  var t   = document.getElementById('el_t').value.trim();
+  var s   = document.getElementById('el_s').value.trim();
+  var c   = document.getElementById('el_c').value;
+  var r   = document.getElementById('el_r').value;
+  var ty  = document.getElementById('el_ty').value;
+  var b   = document.getElementById('el_b').value;
+  var ba  = document.getElementById('el_ba').value;
+  var d   = document.getElementById('el_d').value.trim();
+  var av  = document.getElementById('el_av').value;
+  var st  = document.getElementById('el_st').value;
+  if (!t||!s||!c||!r||!ty||!b||!ba||!d) { showToast('⚠️ Please fill in all required fields.'); return; }
+  var btn = document.getElementById('el_submit');
+  btn.textContent = 'Saving...'; btn.disabled = true;
+  try {
+    await sbq('PATCH','listings',{
+      title:t, suburb:s, city:c, rent:parseFloat(r),
+      type:ty, beds:b, baths:ba,
+      park:document.getElementById('el_pk').value,
+      avail:av||null,
+      pets:document.getElementById('el_pt').value,
+      furnished:document.getElementById('el_fu').value,
+      description:d,
+      status:st
+    },'?id=eq.'+id);
+    showToast('✅ Listing updated!');
+    closeAllModals();
+    // Refresh whichever dashboard is active
+    var u = getUser();
+    if (u && u.type === 'agent') { loadAgentListings(); } else { loadMyListings(); }
+    renderListings();
+  } catch(err) {
+    console.error('Edit error:', err);
+    showToast('⚠️ Could not save changes. Please try again.');
+  } finally {
+    btn.textContent = 'Save Changes ✓'; btn.disabled = false;
+  }
+}
+
+// Wire up edit modal buttons
+document.getElementById('editListingClose').addEventListener('click', closeAllModals);
+document.getElementById('el_submit').addEventListener('click', doEditListing);
 
 
 </script>
