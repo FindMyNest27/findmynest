@@ -281,6 +281,21 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   .ff.s2{grid-column:span 1}
   .renter-pref{grid-template-columns:1fr 1fr}
 }
+
+/* PHOTO UPLOAD */
+.photo-upload-area{border:2px dashed #E8D5B0;border-radius:14px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;background:#FDFAF5;margin-bottom:4px}
+.photo-upload-area:hover{border-color:#E8724A;background:#FFF8F4}
+.photo-upload-area input[type=file]{display:none}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.photo-thumb{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#F2E4C4}
+.photo-thumb img{width:100%;height:100%;object-fit:cover}
+.photo-thumb .rm-photo{position:absolute;top:4px;right:4px;background:rgba(61,31,13,.7);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:.75rem;display:flex;align-items:center;justify-content:center;line-height:1}
+.photo-thumb .photo-num{position:absolute;bottom:4px;left:4px;background:rgba(61,31,13,.6);color:#fff;border-radius:4px;padding:1px 5px;font-size:.65rem;font-weight:700}
+.upload-progress{height:3px;background:#E8724A;border-radius:2px;transition:width .3s;margin-top:6px}
+.avatar-upload{display:flex;align-items:center;gap:16px;margin-bottom:4px}
+.avatar-preview{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#E8724A,#C85A2E);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#fff;overflow:hidden;flex-shrink:0;cursor:pointer;border:3px solid #E8D5B0;transition:border-color .2s}
+.avatar-preview:hover{border-color:#E8724A}
+.avatar-preview img{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -293,6 +308,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <ul class="nls">
     <li><a id="navHow">How it works</a></li>
     <li><a id="navListings">Listings</a></li>
+    <li><a id="navFlatmates">Flatmates</a></li>
     <li><a id="navLandlords">For Landlords</a></li>
     <li><button class="ncta" id="navBtn">Sign Up / Log In</button></li>
   </ul>
@@ -336,8 +352,8 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 <div class="ss">
   <div class="stit">🔍 Find your next nest</div>
   <div class="stabs">
-    <button class="stab active" onclick="setTab(this)">Rent</button>
-    <button class="stab" onclick="setTab(this)">Flatmates</button>
+    <button class="stab active" onclick="setTab(this,'rent')">Rent</button>
+    <button class="stab" onclick="setTab(this,'flatmates')">Flatmates</button>
   </div>
   <div class="sbar">
     <div class="sf"><label>Location</label><input type="text" placeholder="e.g. Tauranga, Auckland..."/></div>
@@ -401,7 +417,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div class="llandit"><div class="llandico">🆓</div><div><div class="llanditit">Free listings right now</div><div class="llandi2">List completely free during our launch period.</div></div></div>
         <div class="llandit"><div class="llandico">💬</div><div><div class="llanditit">Direct renter contact</div><div class="llandi2">Renters contact you directly. No middlemen, no delays.</div></div></div>
         <div class="llandit"><div class="llandico">📊</div><div><div class="llanditit">Your own dashboard</div><div class="llandi2">Add or remove listings any time. Full control, always.</div></div></div>
-        <div class="llandit"><div class="llandico">⚖️</div><div><div class="llanditit">NZ compliant</div><div class="llandi2">Built around NZ tenancy law. RTA 1986 and Healthy Homes ready.</div></div></div>
       </div>
       <div class="ctab">
         <div class="fbadge">🎉 100% Free Right Now</div>
@@ -456,6 +471,55 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   </div>
 </footer>
 </div><!-- end homePage -->
+
+<!-- ===== FLATMATES FULL PAGE ===== -->
+<div class="fpage" id="flatmatesPage">
+  <div class="fp-nav">
+    <button class="fp-back" id="flatmatesBack"><span>←</span> Back to Home</button>
+    <span class="nlt">FindMy<span style="color:#E8724A;">Nest</span>™ · Flatmates</span>
+    <button class="ncta" id="flatmatesAuthBtn">Sign Up / Log In</button>
+  </div>
+  <div class="fp-content">
+
+    <!-- HERO -->
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="slb">Find your people</div>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.4rem);font-weight:600;line-height:1.1;margin-bottom:16px;">Find a flatmate.<br/>Find a room.</h1>
+      <p style="color:#6B3A1F;max-width:520px;margin:0 auto 32px;line-height:1.7;">Browse rooms for rent or post your flatmate profile and let the right people find you — completely free.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <button class="bp" id="fmShowRooms">Browse Rooms →</button>
+        <button class="bs" id="fmShowProfiles">Browse Flatmate Profiles</button>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div style="display:flex;gap:0;background:#F2E4C4;border-radius:14px;padding:4px;margin-bottom:32px;max-width:400px;">
+      <button id="fmTabRooms" onclick="fmTab('rooms')" style="flex:1;padding:10px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.88rem;background:#E8724A;color:#fff;transition:all .2s;">🏠 Rooms</button>
+      <button id="fmTabProfiles" onclick="fmTab('profiles')" style="flex:1;padding:10px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.88rem;background:transparent;color:#6B3A1F;transition:all .2s;">🧑 Flatmates</button>
+    </div>
+
+    <!-- POST BUTTONS -->
+    <div style="display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;align-items:center;">
+      <button class="bp" id="fmListRoom">+ List a Room</button>
+      <button class="bs" id="fmCreateProfile" style="border-color:#6B3A1F;color:#6B3A1F;">+ Create Flatmate Profile</button>
+    </div>
+    <!-- CONTEXTUAL HINT — shows when user clicks a button without being logged in -->
+    <div id="fmHint" style="display:none;background:#FFF8F4;border:1.5px solid #F2D4C0;border-radius:14px;padding:16px 20px;margin-bottom:24px;font-size:.88rem;color:#6B3A1F;line-height:1.6;">
+      <span id="fmHintMsg"></span>
+    </div>
+
+    <!-- ROOMS SECTION -->
+    <div id="fmRoomsSection">
+      <div id="fmRoomsList"><div style="text-align:center;padding:40px;color:#6B3A1F;">Loading rooms... 🥝</div></div>
+    </div>
+
+    <!-- PROFILES SECTION -->
+    <div id="fmProfilesSection" style="display:none;">
+      <div id="fmProfilesList"><div style="text-align:center;padding:40px;color:#6B3A1F;">Loading flatmate profiles... 🥝</div></div>
+    </div>
+
+  </div>
+</div>
 
 <!-- ===== LISTINGS FULL PAGE ===== -->
 <div class="fpage" id="listingsPage">
@@ -517,7 +581,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div class="landlord-feat"><div class="landlord-feat-ico">🆓</div><div><div class="landlord-feat-title">Free listings right now</div><p class="landlord-feat-desc">List your property completely free during our launch period. No hidden fees, no commission, no surprises.</p></div></div>
       <div class="landlord-feat"><div class="landlord-feat-ico">💬</div><div><div class="landlord-feat-title">Direct renter contact</div><p class="landlord-feat-desc">Renters contact you directly via email. No middlemen, no delays, no lost messages.</p></div></div>
       <div class="landlord-feat"><div class="landlord-feat-ico">📊</div><div><div class="landlord-feat-title">Your own dashboard</div><p class="landlord-feat-desc">Add or remove listings any time from your personal dashboard. Full control, always.</p></div></div>
-      <div class="landlord-feat"><div class="landlord-feat-ico">⚖️</div><div><div class="landlord-feat-title">NZ compliant</div><p class="landlord-feat-desc">Built around NZ tenancy law — RTA 1986 and Healthy Homes Standards compliance built in.</p></div></div>
       <div class="landlord-feat"><div class="landlord-feat-ico">🔒</div><div><div class="landlord-feat-title">Your data is safe</div><p class="landlord-feat-desc">We take privacy seriously. Your data is never sold. NZ Privacy Act 2020 compliant.</p></div></div>
       <div class="landlord-feat"><div class="landlord-feat-ico">🥝</div><div><div class="landlord-feat-title">100% Kiwi owned</div><p class="landlord-feat-desc">Built in Tauranga, NZ. We understand the Kiwi rental market because we live it too.</p></div></div>
     </div>
@@ -570,6 +633,17 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Pets</label><select id="f_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
           <div class="ff"><label>Furnished</label><select id="f_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
           <div class="ff s2"><label>Description *</label><textarea id="f_d" rows="4" placeholder="Describe your property — location highlights, features, nearby amenities..."></textarea></div>
+    <div class="ff s2">
+      <label>Property Photos (up to 6)</label>
+      <div class="photo-upload-area" onclick="document.getElementById('ll_photos_input').click()">
+        <div style="font-size:2rem;margin-bottom:6px;">📷</div>
+        <div style="font-weight:600;color:#6B3A1F;font-size:.88rem;">Click to add photos</div>
+        <div style="font-size:.75rem;color:#A07850;margin-top:4px;">JPEG, PNG or WEBP · Max 5MB each</div>
+        <input type="file" id="ll_photos_input" accept="image/jpeg,image/jpg,image/png,image/webp,image/heic" multiple/>
+      </div>
+      <div id="ll_photos_grid" class="photo-grid"></div>
+      <div id="ll_photos_bar" class="upload-progress" style="width:0;display:none;"></div>
+    </div>
         </div>
         <div style="display:flex;gap:10px;">
           <button class="bful" id="addListingSubmit" style="max-width:240px;">List My Property 🥝</button>
@@ -730,6 +804,17 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Pets</label><select id="af_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
           <div class="ff"><label>Furnished</label><select id="af_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
           <div class="ff s2"><label>Description *</label><textarea id="af_d" rows="4" placeholder="Describe the property..."></textarea></div>
+    <div class="ff s2">
+      <label>Property Photos (up to 6)</label>
+      <div class="photo-upload-area" onclick="document.getElementById('al_photos_input').click()">
+        <div style="font-size:2rem;margin-bottom:6px;">📷</div>
+        <div style="font-weight:600;color:#6B3A1F;font-size:.88rem;">Click to add photos</div>
+        <div style="font-size:.75rem;color:#A07850;margin-top:4px;">JPEG, PNG or WEBP · Max 5MB each</div>
+        <input type="file" id="al_photos_input" accept="image/jpeg,image/jpg,image/png,image/webp,image/heic" multiple/>
+      </div>
+      <div id="al_photos_grid" class="photo-grid"></div>
+      <div id="al_photos_bar" class="upload-progress" style="width:0;display:none;"></div>
+    </div>
         </div>
         <div style="display:flex;gap:10px;">
           <button class="bful" id="agentAddListingSubmit" style="max-width:240px;">Submit Listing 🏢</button>
@@ -739,6 +824,97 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div id="agentListings"><div style="text-align:center;padding:32px;color:#6B3A1F;font-size:.9rem;">Loading listings... 🥝</div></div>
     </div>
   </div>
+</div>
+
+
+<!-- ROOM LISTING MODAL -->
+<div class="mod" id="roomListMod" style="max-width:600px;width:96%;max-height:90vh;overflow-y:auto;">
+  <button class="mcl" id="roomListClose">✕</button>
+  <div class="mbadge" style="background:#E8724A;color:#fff;">🏠 List a Room</div>
+  <div class="mtit">Add your room listing</div>
+  <p class="msub">Free to list during our launch. 🥝</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+    <div class="ff s2"><label>Listing Title *</label><input id="rl_title" placeholder="e.g. Sunny room in shared Tauranga house"/></div>
+    <div class="ff"><label>Suburb *</label><input id="rl_suburb" placeholder="e.g. Mount Maunganui"/></div>
+    <div class="ff"><label>City *</label><select id="rl_city"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Other</option></select></div>
+    <div class="ff"><label>Weekly Rent $ *</label><input id="rl_rent" type="number" placeholder="e.g. 200"/></div>
+    <div class="ff"><label>Bills Included?</label><select id="rl_bills"><option value="No">Not included</option><option value="Yes">All included</option><option value="Partial">Partially included</option></select></div>
+    <div class="ff"><label>Bond (weeks)</label><select id="rl_bond"><option value="2">2 weeks</option><option value="4">4 weeks</option><option value="0">No bond</option></select></div>
+    <div class="ff"><label>Room Type</label><select id="rl_rtype"><option value="Single">Single room</option><option value="Double">Double room</option><option value="Master">Master with ensuite</option><option value="Studio">Self-contained studio</option></select></div>
+    <div class="ff"><label>Furnished?</label><select id="rl_furn"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partial">Partially furnished</option></select></div>
+    <div class="ff"><label>Total Rooms in House</label><select id="rl_rooms"><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6+">6+</option></select></div>
+    <div class="ff"><label>Current Flatmates</label><select id="rl_flatmates"><option value="0">Just me (no flatmates yet)</option><option value="1">1 flatmate</option><option value="2">2 flatmates</option><option value="3">3 flatmates</option><option value="4+">4+ flatmates</option></select></div>
+    <div class="ff"><label>Available From *</label><input id="rl_avail" type="date"/></div>
+    <div class="ff"><label>Minimum Stay</label><select id="rl_stay"><option value="Any">No minimum</option><option value="1 month">1 month</option><option value="3 months">3 months</option><option value="6 months">6 months</option><option value="12 months">12 months</option></select></div>
+  </div>
+
+  <div style="margin:18px 0 8px;font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:#3D1F0D;">Ideal Flatmate</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div class="ff"><label>Preferred Gender</label><select id="rl_gender"><option value="Any">No preference</option><option value="Male">Male preferred</option><option value="Female">Female preferred</option><option value="Non-binary">Non-binary preferred</option></select></div>
+    <div class="ff"><label>Age Range</label><select id="rl_age"><option value="Any">No preference</option><option value="18-25">18–25</option><option value="25-35">25–35</option><option value="35+">35+</option></select></div>
+    <div class="ff"><label>Pets OK?</label><select id="rl_pets"><option value="No">No pets</option><option value="Yes">Pets welcome</option><option value="Discuss">Open to discussion</option></select></div>
+    <div class="ff"><label>Smoking OK?</label><select id="rl_smoke"><option value="No">No smoking</option><option value="Outside">Outside only</option><option value="Yes">Yes</option></select></div>
+    <div class="ff"><label>Couples OK?</label><select id="rl_couples"><option value="No">No couples</option><option value="Yes">Couples welcome</option></select></div>
+    <div class="ff"><label>Students OK?</label><select id="rl_students"><option value="Yes">Yes</option><option value="No">No students</option></select></div>
+    <div class="ff s2"><label>House Vibe</label><select id="rl_vibe"><option value="Quiet & tidy">Quiet & tidy</option><option value="Social & outgoing">Social & outgoing</option><option value="Professional & working">Professional & working</option><option value="Mixed & relaxed">Mixed & relaxed</option><option value="Student house">Student house</option></select></div>
+    <div class="ff s2"><label>About Your Current Flatmates</label><textarea id="rl_about_fm" rows="2" placeholder="e.g. We're two working professionals who enjoy cooking together on weekends and keeping the house clean. Looking for someone with a similar vibe..."></textarea></div>
+    <div class="ff s2"><label>Property Description *</label><textarea id="rl_desc" rows="3" placeholder="Describe the room and house — location, features, nearby transport, what makes it a great place to live..."></textarea></div>
+    <div class="ff s2">
+      <label>Room & House Photos (up to 6)</label>
+      <div class="photo-upload-area" onclick="document.getElementById('rl_photos_input').click()">
+        <div style="font-size:2rem;margin-bottom:6px;">📷</div>
+        <div style="font-weight:600;color:#6B3A1F;font-size:.88rem;">Click to add photos</div>
+        <div style="font-size:.75rem;color:#A07850;margin-top:4px;">JPEG, PNG or WEBP · Max 5MB each</div>
+        <input type="file" id="rl_photos_input" accept="image/jpeg,image/jpg,image/png,image/webp,image/heic" multiple/>
+      </div>
+      <div id="rl_photos_grid" class="photo-grid"></div>
+      <div id="rl_photos_bar" class="upload-progress" style="width:0;display:none;"></div>
+    </div>
+  </div>
+  <button class="bful" id="rl_submit" style="margin-top:16px;">List My Room Free 🥝</button>
+</div>
+
+<!-- FLATMATE PROFILE MODAL -->
+<div class="mod" id="fmProfileMod" style="max-width:600px;width:96%;max-height:90vh;overflow-y:auto;">
+  <button class="mcl" id="fmProfileClose">✕</button>
+  <div class="mbadge">🧑 Flatmate Profile</div>
+  <div class="mtit">Create your flatmate profile</div>
+  <p class="msub">Tell room listers about yourself so they can find you. Always free.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+    <div class="ff s2"><label>Full Name *</label><input id="fp_name" placeholder="e.g. Alex Smith"/></div>
+    <div class="ff"><label>Email *</label><input id="fp_email" type="email" placeholder="you@email.com"/></div>
+    <div class="ff"><label>Phone</label><input id="fp_phone" placeholder="021 123 4567"/></div>
+    <div class="ff"><label>Age *</label><input id="fp_age" type="number" placeholder="e.g. 26" min="18" max="99"/></div>
+    <div class="ff"><label>Gender</label><select id="fp_gender"><option value="Prefer not to say">Prefer not to say</option><option value="Male">Male</option><option value="Female">Female</option><option value="Non-binary">Non-binary</option></select></div>
+    <div class="ff"><label>Occupation *</label><input id="fp_occ" placeholder="e.g. Nurse, Student, Software Developer"/></div>
+    <div class="ff"><label>Looking in *</label><select id="fp_city"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Anywhere in NZ</option></select></div>
+    <div class="ff"><label>Preferred Suburb</label><input id="fp_suburb" placeholder="Optional — e.g. Ponsonby"/></div>
+    <div class="ff"><label>Min Budget $/wk</label><input id="fp_bmin" type="number" placeholder="150"/></div>
+    <div class="ff"><label>Max Budget $/wk *</label><input id="fp_bmax" type="number" placeholder="300"/></div>
+    <div class="ff"><label>Move-in Date *</label><input id="fp_move" type="date"/></div>
+    <div class="ff"><label>Length of Stay</label><select id="fp_stay"><option value="Flexible">Flexible</option><option value="Short term (1-3 months)">Short term (1–3 months)</option><option value="Medium (3-6 months)">Medium (3–6 months)</option><option value="Long term (6+ months)">Long term (6+ months)</option></select></div>
+    <div class="ff"><label>I Have Pets?</label><select id="fp_pets"><option value="No">No pets</option><option value="Yes">Yes, I have pets</option></select></div>
+    <div class="ff"><label>I Smoke?</label><select id="fp_smoke"><option value="No">Non-smoker</option><option value="Outside">Outside only</option><option value="Yes">Yes</option></select></div>
+    <div class="ff"><label>Moving as a Couple?</label><select id="fp_couple"><option value="No">Just me</option><option value="Yes">Couple</option></select></div>
+    <div class="ff"><label>References Available?</label><select id="fp_refs"><option value="Yes">Yes — happy to provide</option><option value="No">Not currently</option></select></div>
+    <div class="ff s2"><label>About Me *</label><textarea id="fp_about" rows="3" placeholder="Tell potential flatmates about yourself — your lifestyle, work, hobbies, what kind of flatmate you are..."></textarea></div>
+    <div class="ff s2"><label>My Ideal Flatmates & Home</label><textarea id="fp_ideal" rows="2" placeholder="e.g. I'd love to live with other young professionals in a clean, social house. Happy to have house dinners occasionally but also respect everyone's space..."></textarea></div>
+    <div class="ff s2">
+      <label>Profile Photo (optional)</label>
+      <div class="avatar-upload">
+        <div class="avatar-preview" id="fp_avatar_preview" onclick="document.getElementById('fp_avatar_input').click()">
+          <span id="fp_avatar_initial">'?'</span>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:.88rem;color:#3D1F0D;margin-bottom:4px;">Upload a photo</div>
+          <div style="font-size:.78rem;color:#6B3A1F;line-height:1.5;">Helps landlords and flatmates feel confident.<br/>Max 3MB · JPEG or PNG</div>
+          <input type="file" id="fp_avatar_input" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none"/>
+        </div>
+      </div>
+      <div id="fp_avatar_bar" class="upload-progress" style="width:0;display:none;"></div>
+    </div>
+  </div>
+  <button class="bful" id="fp_submit" style="margin-top:16px;">Create My Profile 🧑</button>
 </div>
 
 <!-- DETAIL MODAL -->
@@ -1032,7 +1208,8 @@ async function doRenterSignup(){
     var bmax=parseFloat(document.getElementById('rs_max').value)||null;
     var beds=document.getElementById('rs_b').value||null;
     await sbq('POST','renters',{name:n,email:e,phone:document.getElementById('rs_ph').value||null,city:c,budget_min:bmin,budget_max:bmax,beds_needed:beds,move_date:document.getElementById('rs_d').value||null,pets:document.getElementById('rs_pt').value,status:'active'});
-    setUser({id:e,name:n,email:e,type:'renter',city:c,budget_max:bmax,beds_needed:beds});
+    var rsAvatarUrl = await uploadAvatar('rs_avatar','profile-photos','avatars');
+    setUser({id:e,name:n,email:e,type:'renter',city:c,budget_max:bmax,beds_needed:beds,photo_url:rsAvatarUrl});
     showToast('🥝 Ka pai! Welcome to FindMyNest!');
     closeAllModals();
     updateNav();
@@ -1120,7 +1297,8 @@ async function doAgentAddListing(){
   if(!t||!s||!c||!r||!ty||!b||!ba||!d||!av){showToast('⚠️ Please fill in all required fields.');return;}
   var btn=document.getElementById('agentAddListingSubmit');btn.textContent='Listing...';btn.disabled=true;
   try{
-    await sbq('POST','listings',{name:u.name,email:u.email,phone:u.phone||'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('af_pk').value,avail:av,pets:document.getElementById('af_pt').value,furnished:document.getElementById('af_fu').value,description:d,status:'active',landlord_id:u.id,is_agency:true,agency_name:u.company});
+    var alPhotoUrls = await uploadPhotos('al_photos','listing-photos','listings/'+u.id);
+    await sbq('POST','listings',{name:u.name,email:u.email,phone:u.phone||'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('af_pk').value,avail:av,pets:document.getElementById('af_pt').value,furnished:document.getElementById('af_fu').value,description:d,status:'active',landlord_id:u.id,is_agency:true,agency_name:u.company,photo_urls:alPhotoUrls});
     ['af_t','af_s','af_r','af_d','af_av'].forEach(function(id){document.getElementById(id).value='';});
     document.getElementById('agentAddListingSection').style.display='none';
     showToast('🏢 Ka pai! Listing is live!');
@@ -1146,7 +1324,8 @@ async function doAddListing(){
   if(!t||!s||!c||!r||!ty||!b||!ba||!d||!av){showToast('⚠️ Please fill in all required fields.');return;}
   var btn=document.getElementById('addListingSubmit');btn.textContent='Listing...';btn.disabled=true;
   try{
-    await sbq('POST','listings',{name:u.name,email:u.email,phone:'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('f_pk').value,avail:av,pets:document.getElementById('f_pt').value,furnished:document.getElementById('f_fu').value,description:d,status:'active',landlord_id:u.id});
+    var llPhotoUrls = await uploadPhotos('ll_photos','listing-photos','listings/'+u.id);
+    await sbq('POST','listings',{name:u.name,email:u.email,phone:'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('f_pk').value,avail:av,pets:document.getElementById('f_pt').value,furnished:document.getElementById('f_fu').value,description:d,status:'active',landlord_id:u.id,photo_urls:llPhotoUrls});
     ['f_t','f_s','f_r','f_d','f_av'].forEach(function(id){document.getElementById(id).value='';});
     ['f_c','f_ty','f_b','f_ba'].forEach(function(id){document.getElementById(id).selectedIndex=0;});
     document.getElementById('addListingSection').style.display='none';
@@ -1188,7 +1367,7 @@ async function loadRenterListings(){
     var list=await sbq('GET','listings',null,'?order=created_at.desc&status=eq.active&limit=6');
     if(!list||!list.length){c.innerHTML='<div style="text-align:center;padding:18px;color:#6B3A1F;">No listings yet — check back soon! 🥝</div>';return;}
     c.innerHTML=list.map(function(l,i){
-      return '<div class="mlrow" style="cursor:pointer;" onclick="viewListing(\''+l.id+'\')"><div><div class="mltit">'+l.title+'</div><div class="mlmet">📍 '+l.suburb+', '+l.city+' &nbsp;•&nbsp; 🛏 '+l.beds+' bed &nbsp;•&nbsp; 🚿 '+l.baths+' bath</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-family:\'Playfair Display\',serif;font-size:1.1rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div><div style="font-size:.72rem;color:#6B3A1F;">/week</div></div></div>';
+      return '<div class="mlrow" style="cursor:pointer;" onclick="viewListing(\''+l.id+'\')"><div><div class="mltit">'+l.title+'</div><div class="mlmet">📍 '+l.suburb+', '+l.city+' &nbsp;•&nbsp; 🛏 '+l.beds+' bed &nbsp;•&nbsp; 🚿 '+l.baths+' bath</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:1.1rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div><div style="font-size:.72rem;color:#6B3A1F;">/week</div></div></div>';
     }).join('');
   }catch(err){c.innerHTML='<div style="text-align:center;padding:18px;color:#6B3A1F;">Could not load listings.</div>';}
 }
@@ -1200,7 +1379,7 @@ async function loadAllListingsPage(){
   try{
     var list=await sbq('GET','listings',null,'?order=created_at.desc&status=eq.active');
     if(!list||!list.length){
-      c.innerHTML='<div style="text-align:center;padding:56px;background:#fff;border-radius:20px;"><div style="font-size:3rem;margin-bottom:16px;">🏡</div><div style="font-family:\'Playfair Display\',serif;font-size:1.4rem;font-weight:700;margin-bottom:10px;">No listings yet!</div><p style="color:#6B3A1F;margin-bottom:24px;">Be the first to list your property on FindMyNest.</p><button class="bp" onclick="openAuth()">List My Property Free →</button></div>';
+      c.innerHTML='<div style="text-align:center;padding:56px;background:#fff;border-radius:20px;"><div style="font-size:3rem;margin-bottom:16px;">🏡</div><div style="font-size:1.4rem;font-weight:700;margin-bottom:10px;">No listings yet!</div><p style="color:#6B3A1F;margin-bottom:24px;">Be the first to list your property on FindMyNest.</p><button class="bp" onclick="openAuth()">List My Property Free →</button></div>';
       return;
     }
     c.innerHTML='<div style="margin-bottom:16px;color:#6B3A1F;font-size:.88rem;">'+list.length+' listing'+(list.length!==1?'s':'')+' available</div>'+
@@ -1212,7 +1391,7 @@ async function loadAllListingsPage(){
         '<div style="font-size:.82rem;color:#6B3A1F;">📍 '+l.suburb+', '+l.city+' &nbsp;•&nbsp; 🛏 '+l.beds+' bed &nbsp;•&nbsp; 🚿 '+l.baths+' bath</div>'+
         '<div style="font-size:.78rem;color:#6B3A1F;margin-top:3px;">'+l.type+' &nbsp;•&nbsp; '+l.furnished+(l.pets==='Yes'?' &nbsp;•&nbsp; 🐾 Pets ok':'')+'</div></div></div>'+
         '<div style="text-align:right;flex-shrink:0;">'+
-        '<div style="font-family:\'Playfair Display\',serif;font-size:1.3rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div>'+
+        '<div style="font-size:1.3rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div>'+
         '<div style="font-size:.74rem;color:#6B3A1F;">/week</div>'+
         (l.avail?'<div style="font-size:.72rem;color:#6B3A1F;margin-top:4px;">From '+l.avail+'</div>':'')+
         '</div></div>';
@@ -1230,9 +1409,9 @@ async function viewListing(id){
       '<div class="mtit" style="margin-bottom:4px;">'+l.title+'</div>'+
       '<div style="color:#6B3A1F;margin-bottom:14px;">📍 '+l.suburb+', '+l.city+'</div>'+
       '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:13px;">'+
-      '<div style="background:#F7F3EE;border-radius:10px;padding:11px;text-align:center;"><div style="font-family:\'Playfair Display\',serif;font-size:1.15rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div><div style="font-size:.7rem;color:#6B3A1F;">/week</div></div>'+
-      '<div style="background:#F7F3EE;border-radius:10px;padding:11px;text-align:center;"><div style="font-family:\'Playfair Display\',serif;font-size:1.15rem;font-weight:700;color:#E8724A;">'+l.beds+' 🛏</div><div style="font-size:.7rem;color:#6B3A1F;">Bedrooms</div></div>'+
-      '<div style="background:#F7F3EE;border-radius:10px;padding:11px;text-align:center;"><div style="font-family:\'Playfair Display\',serif;font-size:1.15rem;font-weight:700;color:#E8724A;">'+l.baths+' 🚿</div><div style="font-size:.7rem;color:#6B3A1F;">Bathrooms</div></div></div>'+
+      '<div style="background:#F7F3EE;border-radius:10px;padding:11px;text-align:center;"><div style="font-size:1.15rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div><div style="font-size:.7rem;color:#6B3A1F;">/week</div></div>'+
+      '<div style="background:#F7F3EE;border-radius:10px;padding:11px;text-align:center;"><div style="font-size:1.15rem;font-weight:700;color:#E8724A;">'+l.beds+' 🛏</div><div style="font-size:.7rem;color:#6B3A1F;">Bedrooms</div></div>'+
+      '<div style="background:#F7F3EE;border-radius:10px;padding:11px;text-align:center;"><div style="font-size:1.15rem;font-weight:700;color:#E8724A;">'+l.baths+' 🚿</div><div style="font-size:.7rem;color:#6B3A1F;">Bathrooms</div></div></div>'+
       '<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px;">'+
       '<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">'+l.type+'</span>'+
       '<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">'+l.furnished+'</span>'+
@@ -1288,6 +1467,489 @@ function initHero(list){
 }
 
 document.addEventListener('DOMContentLoaded',function(){renderListings();updateNav();});
+
+
+// ════════════════════════════════════════════
+// FLATMATES SECTION
+// ════════════════════════════════════════════
+
+// Tab switching on flatmates page
+function fmTab(tab){
+  var rooms=document.getElementById('fmRoomsSection');
+  var profiles=document.getElementById('fmProfilesSection');
+  var btnR=document.getElementById('fmTabRooms');
+  var btnP=document.getElementById('fmTabProfiles');
+  if(tab==='rooms'){
+    rooms.style.display='block';profiles.style.display='none';
+    btnR.style.background='#E8724A';btnR.style.color='#fff';
+    btnP.style.background='transparent';btnP.style.color='#6B3A1F';
+  }else{
+    rooms.style.display='none';profiles.style.display='block';
+    btnR.style.background='transparent';btnR.style.color='#6B3A1F';
+    btnP.style.background='#E8724A';btnP.style.color='#fff';
+    loadFlatmateProfiles();
+  }
+}
+
+// Load rooms on flatmates page
+async function loadRoomListings(){
+  var c=document.getElementById('fmRoomsList');
+  try{
+    var rooms=await sbq('GET','room_listings',null,'?status=eq.active&order=id.desc');
+    if(!rooms.length){
+      c.innerHTML='<div style="text-align:center;padding:48px;color:#6B3A1F;"><div style="font-size:3rem;margin-bottom:12px;">🏠</div><div style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">No rooms listed yet!</div><p>Be the first to list your room.</p></div>';
+      return;
+    }
+    c.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;">' +
+      rooms.map(function(r){
+        return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);cursor:pointer;" onclick="viewRoom('+r.id+')">' + roomCardPhoto(r.photo_urls) +
+          '<div style="padding:18px;">' +
+          '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">' +
+          '<div style="font-weight:700;font-size:.95rem;color:#3D1F0D;line-height:1.3;">'+r.title+'</div>' +
+          '<div style="font-size:1.3rem;font-weight:700;color:#E8724A;white-space:nowrap;margin-left:8px;">$'+r.rent_per_week+'<span style="font-size:.7rem;font-weight:400;color:#6B3A1F;">/wk</span></div>' +
+          '</div>' +
+          '<div style="font-size:.8rem;color:#6B3A1F;margin-bottom:10px;">📍 '+r.suburb+', '+r.city+'</div>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">' +
+          '<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+r.room_type+'</span>' +
+          '<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+r.current_flatmates+' flatmate'+(r.current_flatmates!=1?'s':'')+'</span>' +
+          '<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+(r.bills_included==='Yes'?'Bills incl.':'Bills excl.')+'</span>' +
+          '<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+r.house_vibe+'</span>' +
+          '</div>' +
+          '<div style="font-size:.82rem;color:#6B3A1F;line-height:1.5;margin-bottom:12px;">'+(r.description?r.description.substring(0,100)+'...':'')+'</div>' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+          '<div style="font-size:.75rem;color:#6B3A1F;">Available: '+(r.available_from?new Date(r.available_from).toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric'}):'Now')+'</div>' +
+          '<button class="bp" style="font-size:.78rem;padding:7px 14px;">View Room →</button>' +
+          '</div></div></div>';
+      }).join('') + '</div>';
+  }catch(e){c.innerHTML='<div style="text-align:center;padding:24px;color:#C85A2E;">Error loading rooms.</div>';}
+}
+
+// Load flatmate profiles
+async function loadFlatmateProfiles(){
+  var c=document.getElementById('fmProfilesList');
+  try{
+    var profiles=await sbq('GET','flatmate_profiles',null,'?status=eq.active&order=id.desc');
+    if(!profiles.length){
+      c.innerHTML='<div style="text-align:center;padding:48px;color:#6B3A1F;"><div style="font-size:3rem;margin-bottom:12px;">🧑</div><div style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">No flatmate profiles yet!</div><p>Create a profile to be found by room listers.</p></div>';
+      return;
+    }
+    c.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">' +
+      profiles.map(function(p){
+        return '<div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 4px 20px rgba(61,31,13,.08);cursor:pointer;" onclick="viewProfile('+p.id+')">' +
+          '<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">' +
+          fmAvatar(p.photo_url,p.name,52,'1.4rem') +
+          '<div><div style="font-weight:700;color:#3D1F0D;">'+p.name+'</div><div style="font-size:.8rem;color:#6B3A1F;">'+p.age+' · '+p.occupation+'</div></div>' +
+          '</div>' +
+          '<div style="font-size:.8rem;color:#6B3A1F;margin-bottom:8px;">📍 Looking in '+p.city+(p.suburb_pref?' · '+p.suburb_pref:'')+'</div>' +
+          '<div style="font-size:.8rem;color:#6B3A1F;margin-bottom:10px;">💰 Budget: $'+p.budget_max+'/wk max</div>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;">' +
+          '<span style="background:#FAF0DC;border-radius:50px;padding:3px 9px;font-size:.72rem;font-weight:600;color:#6B3A1F;">'+p.stay_length+'</span>' +
+          (p.has_pets==='Yes'?'<span style="background:#FAF0DC;border-radius:50px;padding:3px 9px;font-size:.72rem;font-weight:600;color:#6B3A1F;">Has pets</span>':'') +
+          (p.smoker!=='No'?'<span style="background:#FAF0DC;border-radius:50px;padding:3px 9px;font-size:.72rem;font-weight:600;color:#6B3A1F;">Smoker</span>':'') +
+          '<span style="background:'+(p.references_available==='Yes'?'#E8F5E9':'#FAF0DC')+';border-radius:50px;padding:3px 9px;font-size:.72rem;font-weight:600;color:#6B3A1F;">'+(p.references_available==='Yes'?'✓ References available':'')+'</span>' +
+          '</div>' +
+          '<div style="font-size:.82rem;color:#6B3A1F;line-height:1.5;margin-bottom:12px;font-style:italic;">"'+(p.about_me?p.about_me.substring(0,90)+'...':'')+'"</div>' +
+          '<button class="bp" style="font-size:.78rem;padding:7px 14px;width:100%;">View Profile →</button>' +
+          '</div>';
+      }).join('') + '</div>';
+  }catch(e){c.innerHTML='<div style="text-align:center;padding:24px;color:#C85A2E;">Error loading profiles.</div>';}
+}
+
+// View single room
+async function viewRoom(id){
+  try{
+    var rooms=await sbq('GET','room_listings',null,'?id=eq.'+id);
+    var r=rooms[0];
+    var dm=document.getElementById('detailContent');
+    dm.innerHTML=
+      '<div style="margin-bottom:20px;"><div style="font-size:.8rem;font-weight:700;color:#E8724A;margin-bottom:6px;">🏠 ROOM LISTING</div>'+
+      '<div style="font-size:1.5rem;font-weight:700;margin-bottom:4px;">'+r.title+'</div>'+
+      '<div style="color:#6B3A1F;font-size:.9rem;">📍 '+r.suburb+', '+r.city+'</div></div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">'+
+      '<div style="background:#FAF0DC;border-radius:12px;padding:14px;text-align:center;"><div style="font-size:1.6rem;font-weight:700;color:#E8724A;">$'+r.rent_per_week+'</div><div style="font-size:.75rem;color:#6B3A1F;">per week</div></div>'+
+      '<div style="background:#FAF0DC;border-radius:12px;padding:14px;text-align:center;"><div style="font-weight:700;color:#3D1F0D;">'+r.room_type+'</div><div style="font-size:.75rem;color:#6B3A1F;">Room type</div></div>'+
+      '<div style="background:#FAF0DC;border-radius:12px;padding:14px;text-align:center;"><div style="font-weight:700;color:#3D1F0D;">'+r.current_flatmates+' flatmate'+(r.current_flatmates!=1?'s':'')+'</div><div style="font-size:.75rem;color:#6B3A1F;">Currently in house</div></div>'+
+      '<div style="background:#FAF0DC;border-radius:12px;padding:14px;text-align:center;"><div style="font-weight:700;color:#3D1F0D;">'+r.bills_included+'</div><div style="font-size:.75rem;color:#6B3A1F;">Bills included</div></div>'+
+      '</div>'+
+      '<div style="margin-bottom:16px;"><div style="font-weight:700;font-size:.9rem;margin-bottom:8px;color:#3D1F0D;">About the room</div><p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;">'+r.description+'</p></div>'+
+      (r.about_flatmates?'<div style="margin-bottom:16px;"><div style="font-weight:700;font-size:.9rem;margin-bottom:8px;color:#3D1F0D;">About your flatmates</div><p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;">'+r.about_flatmates+'</p></div>':'')+
+      '<div style="background:#FAF0DC;border-radius:14px;padding:16px;margin-bottom:20px;">'+
+      '<div style="font-weight:700;font-size:.88rem;margin-bottom:10px;color:#3D1F0D;">Ideal flatmate</div>'+
+      '<div style="display:flex;flex-wrap:wrap;gap:8px;">'+
+      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">👤 '+r.flatmate_gender+'</span>'+
+      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🐾 Pets: '+r.pets_ok+'</span>'+
+      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🚬 Smoking: '+r.smoking_ok+'</span>'+
+      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">💑 Couples: '+r.couples_ok+'</span>'+
+      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🎓 Students: '+r.students_ok+'</span>'+
+      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🏠 Vibe: '+r.house_vibe+'</span>'+
+      '</div></div>'+
+      '<div style="font-size:.85rem;color:#6B3A1F;margin-bottom:16px;">Available: '+(r.available_from?new Date(r.available_from).toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric'}):'Now')+' · Min stay: '+r.min_stay+'</div>'+
+      '<a href="mailto:'+r.lister_email+'?subject=Enquiry: '+encodeURIComponent(r.title)+'" style="display:block;background:#E8724A;color:#fff;text-align:center;padding:13px;border-radius:50px;font-weight:700;text-decoration:none;font-size:.95rem;">📧 Enquire About This Room</a>';
+    openModal('detailMod');
+  }catch(e){showToast('Error loading room details.');}
+}
+
+// View single profile
+async function viewProfile(id){
+  try{
+    var profiles=await sbq('GET','flatmate_profiles',null,'?id=eq.'+id);
+    var p=profiles[0];
+    var dm=document.getElementById('detailContent');
+    dm.innerHTML=
+      '<div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">'+
+      fmAvatar(p.photo_url,p.name,68,'2rem')+
+      '<div><div style="font-size:1.5rem;font-weight:700;">'+p.name+'</div>'+
+      '<div style="color:#6B3A1F;font-size:.9rem;">'+p.age+' years old · '+p.occupation+'</div></div></div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">'+
+      '<div style="background:#FAF0DC;border-radius:12px;padding:14px;text-align:center;"><div style="font-weight:700;color:#3D1F0D;">$'+p.budget_max+'/wk max</div><div style="font-size:.75rem;color:#6B3A1F;">Budget</div></div>'+
+      '<div style="background:#FAF0DC;border-radius:12px;padding:14px;text-align:center;"><div style="font-weight:700;color:#3D1F0D;">'+p.city+'</div><div style="font-size:.75rem;color:#6B3A1F;">Looking in</div></div>'+
+      '<div style="background:#FAF0DC;border-radius:12px;padding:14px;text-align:center;"><div style="font-weight:700;color:#3D1F0D;">'+(p.move_date?new Date(p.move_date).toLocaleDateString('en-NZ',{day:'numeric',month:'short'}):'Flexible')+'</div><div style="font-size:.75rem;color:#6B3A1F;">Move-in date</div></div>'+
+      '<div style="background:#FAF0DC;border-radius:12px;padding:14px;text-align:center;"><div style="font-weight:700;color:#3D1F0D;">'+p.stay_length+'</div><div style="font-size:.75rem;color:#6B3A1F;">Length of stay</div></div>'+
+      '</div>'+
+      '<div style="margin-bottom:16px;"><div style="font-weight:700;font-size:.9rem;margin-bottom:8px;color:#3D1F0D;">About me</div><p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;font-style:italic;">"'+p.about_me+'"</p></div>'+
+      (p.ideal_flatmates?'<div style="margin-bottom:16px;"><div style="font-weight:700;font-size:.9rem;margin-bottom:8px;color:#3D1F0D;">My ideal home & flatmates</div><p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;">'+p.ideal_flatmates+'</p></div>':'')+
+      '<div style="background:#FAF0DC;border-radius:14px;padding:16px;margin-bottom:20px;">'+
+      '<div style="display:flex;flex-wrap:wrap;gap:8px;">'+
+      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">👤 '+p.gender+'</span>'+
+      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🐾 Pets: '+p.has_pets+'</span>'+
+      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🚬 Smoker: '+p.smoker+'</span>'+
+      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">💑 '+p.couple+'</span>'+
+      (p.references_available==='Yes'?'<span style="background:#E8F5E9;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#2e7d32;">✓ References available</span>':'')+
+      '</div></div>'+
+      '<a href="mailto:'+p.email+'?subject=Room enquiry from FindMyNest" style="display:block;background:#3D1F0D;color:#FAF0DC;text-align:center;padding:13px;border-radius:50px;font-weight:700;text-decoration:none;font-size:.95rem;">📧 Contact '+p.name+'</a>';
+    openModal('detailMod');
+  }catch(e){showToast('Error loading profile.');}
+}
+
+// SUBMIT ROOM LISTING
+async function submitRoomListing(){
+  var u=getUser();
+  if(!u){showToast('Please sign up or log in first!');closeAllModals();openAuth();return;}
+  var title=document.getElementById('rl_title').value.trim();
+  var suburb=document.getElementById('rl_suburb').value.trim();
+  var city=document.getElementById('rl_city').value;
+  var rent=document.getElementById('rl_rent').value;
+  var avail=document.getElementById('rl_avail').value;
+  var desc=document.getElementById('rl_desc').value.trim();
+  if(!title||!suburb||!city||!rent||!avail||!desc){showToast('⚠️ Please fill in all required fields.');return;}
+  var btn=document.getElementById('rl_submit');btn.textContent='Listing...';btn.disabled=true;
+  try{
+    var rlPhotoUrls = await uploadPhotos('rl_photos','listing-photos','rooms/'+Date.now());
+    await sbq('POST','room_listings',{
+      lister_email:u.email,lister_name:u.name,title:title,suburb:suburb,city:city,
+      rent_per_week:parseFloat(rent),
+      bills_included:document.getElementById('rl_bills').value,
+      bond_weeks:parseInt(document.getElementById('rl_bond').value)||2,
+      room_type:document.getElementById('rl_rtype').value,
+      furnished:document.getElementById('rl_furn').value,
+      total_rooms:parseInt(document.getElementById('rl_rooms').value)||null,
+      current_flatmates:parseInt(document.getElementById('rl_flatmates').value)||0,
+      flatmate_gender:document.getElementById('rl_gender').value,
+      flatmate_age_min:null,flatmate_age_max:null,
+      pets_ok:document.getElementById('rl_pets').value,
+      smoking_ok:document.getElementById('rl_smoke').value,
+      couples_ok:document.getElementById('rl_couples').value,
+      students_ok:document.getElementById('rl_students').value,
+      house_vibe:document.getElementById('rl_vibe').value,
+      available_from:avail,
+      min_stay:document.getElementById('rl_stay').value,
+      description:desc,
+      about_flatmates:document.getElementById('rl_about_fm').value.trim()||null,
+      status:'active',photo_urls:rlPhotoUrls
+    });
+    showToast('🥝 Ka pai! Your room is listed!');
+    closeAllModals();
+    loadRoomListings();
+  }catch(e){showToast('⚠️ Something went wrong. Please try again.');}
+  finally{btn.textContent='List My Room Free 🥝';btn.disabled=false;}
+}
+
+// SUBMIT FLATMATE PROFILE
+async function submitFlatmateProfile(){
+  var name=document.getElementById('fp_name').value.trim();
+  var email=document.getElementById('fp_email').value.trim().toLowerCase();
+  var age=document.getElementById('fp_age').value;
+  var occ=document.getElementById('fp_occ').value.trim();
+  var city=document.getElementById('fp_city').value;
+  var bmax=document.getElementById('fp_bmax').value;
+  var move=document.getElementById('fp_move').value;
+  var about=document.getElementById('fp_about').value.trim();
+  if(!name||!email||!age||!occ||!city||!bmax||!move||!about){showToast('⚠️ Please fill in all required fields.');return;}
+  var btn=document.getElementById('fp_submit');btn.textContent='Creating...';btn.disabled=true;
+  try{
+    var fpAvatarUrl = await uploadAvatar('fp_avatar','profile-photos','avatars');
+    await sbq('POST','flatmate_profiles',{
+      email:email,name:name,phone:document.getElementById('fp_phone').value.trim()||null,
+      age:parseInt(age),gender:document.getElementById('fp_gender').value,
+      occupation:occ,city:city,
+      suburb_pref:document.getElementById('fp_suburb').value.trim()||null,
+      budget_min:parseFloat(document.getElementById('fp_bmin').value)||null,
+      budget_max:parseFloat(bmax),
+      move_date:move,
+      stay_length:document.getElementById('fp_stay').value,
+      has_pets:document.getElementById('fp_pets').value,
+      smoker:document.getElementById('fp_smoke').value,
+      couple:document.getElementById('fp_couple').value,
+      about_me:about,
+      ideal_flatmates:document.getElementById('fp_ideal').value.trim()||null,
+      references_available:document.getElementById('fp_refs').value,
+      photo_url:fpAvatarUrl,
+      status:'active'
+    });
+    showToast('🥝 Ka pai! Your flatmate profile is live!');
+    closeAllModals();
+    fmTab('profiles');
+  }catch(e){
+    if(e.message.indexOf('duplicate')>-1||e.message.indexOf('unique')>-1){showToast('⚠️ A profile with this email already exists.');}
+    else showToast('⚠️ Something went wrong. Please try again.');
+  }
+  finally{btn.textContent='Create My Profile 🧑';btn.disabled=false;}
+}
+
+// Wire up flatmates nav, page buttons and modals
+document.getElementById('navFlatmates').addEventListener('click',function(){
+  loadRoomListings();
+  showPage('flatmatesPage');
+});
+document.getElementById('flatmatesBack').addEventListener('click',hideAllPages);
+document.getElementById('flatmatesAuthBtn').addEventListener('click',openAuth);
+document.getElementById('fmListRoom').addEventListener('click',function(){
+  var u=getUser();
+  if(!u){
+    showFmHint(
+      '🏠 <strong>To list a room, sign up as a Landlord.</strong> Landlord accounts can post both whole properties and flatmate rooms from their dashboard. <a onclick="openAuth()" style="color:#E8724A;font-weight:700;cursor:pointer;">Sign up or log in →</a>'
+    );
+    return;
+  }
+  hideFmHint();
+  openModal('roomListMod');
+});
+document.getElementById('fmCreateProfile').addEventListener('click',function(){
+  var u=getUser();
+  if(!u){
+    showFmHint(
+      '🔍 <strong>To create a flatmate profile, sign up as a Renter.</strong> Renter accounts can browse listings, save favourites and create a flatmate profile. <a onclick="openAuth()" style="color:#E8724A;font-weight:700;cursor:pointer;">Sign up or log in →</a>'
+    );
+    return;
+  }
+  hideFmHint();
+  openModal('fmProfileMod');
+});
+
+function showFmHint(msg){
+  var h=document.getElementById('fmHint');
+  var m=document.getElementById('fmHintMsg');
+  if(h&&m){m.innerHTML=msg;h.style.display='block';h.scrollIntoView({behavior:'smooth',block:'nearest'});}
+}
+function hideFmHint(){
+  var h=document.getElementById('fmHint');
+  if(h)h.style.display='none';
+}
+document.getElementById('fmShowRooms').addEventListener('click',function(){fmTab('rooms');});
+document.getElementById('fmShowProfiles').addEventListener('click',function(){fmTab('profiles');loadFlatmateProfiles();});
+document.getElementById('roomListClose').addEventListener('click',closeAllModals);
+document.getElementById('fmProfileClose').addEventListener('click',closeAllModals);
+document.getElementById('rl_submit').addEventListener('click',submitRoomListing);
+document.getElementById('fp_submit').addEventListener('click',submitFlatmateProfile);
+
+// Fix setTab to handle flatmates search tab
+function setTab(btn,type){
+  document.querySelectorAll('.stab').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  if(type==='flatmates'){
+    loadRoomListings();
+    showPage('flatmatesPage');
+  }
+}
+
+
+
+// ════════════════════════════════════════════
+// PHOTO UPLOAD SYSTEM (Supabase Storage)
+// ════════════════════════════════════════════
+
+var SB_STORAGE = 'https://vbkmfloxweczyvpfbsdh.supabase.co/storage/v1';
+
+// State: store selected files per uploader ID
+var photoFiles = {};
+var avatarFile = {};
+
+// ── MULTI-PHOTO UPLOADER ──────────────────────────────────────────────────────
+function initPhotoUploader(uid, maxPhotos) {
+  maxPhotos = maxPhotos || 6;
+  photoFiles[uid] = [];
+  var input = document.getElementById(uid + '_input');
+  if (!input) return;
+  input.addEventListener('change', function(e) {
+    var files = Array.from(e.target.files);
+    var remaining = maxPhotos - photoFiles[uid].length;
+    if (remaining <= 0) { showToast('Maximum ' + maxPhotos + ' photos allowed.'); return; }
+    files = files.slice(0, remaining);
+    // Validate size
+    var valid = files.filter(function(f) { return f.size <= 5242880; });
+    if (valid.length < files.length) showToast('⚠️ Some photos exceeded 5MB and were skipped.');
+    photoFiles[uid] = photoFiles[uid].concat(valid);
+    renderPhotoGrid(uid, maxPhotos);
+    input.value = '';
+  });
+}
+
+function renderPhotoGrid(uid, maxPhotos) {
+  var grid = document.getElementById(uid + '_grid');
+  if (!grid) return;
+  var files = photoFiles[uid] || [];
+  var html = '';
+  files.forEach(function(f, i) {
+    var url = URL.createObjectURL(f);
+    html += '<div class="photo-thumb">' +
+      '<img src="' + url + '" alt="Photo ' + (i+1) + '"/>' +
+      '<button class="rm-photo" onclick="removePhoto(\x27' + uid + '\x27,' + i + ')">✕</button>' +
+      '<div class="photo-num">' + (i+1) + '</div>' +
+      '</div>';
+  });
+  // Add slot if under max
+  if (files.length < maxPhotos) {
+    html += '<div class="photo-thumb" style="border:2px dashed #E8D5B0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#FDFAF5;" onclick="document.getElementById(\x27' + uid + '_input\x27).click()">' +
+      '<div style="text-align:center;color:#A07850;font-size:.75rem;"><div style="font-size:1.4rem;">+</div>Add</div></div>';
+  }
+  grid.innerHTML = html;
+  // Update upload area text
+  var area = grid.previousElementSibling;
+  if (area && area.classList.contains('photo-upload-area')) {
+    area.style.display = files.length >= maxPhotos ? 'none' : 'flex';
+    area.style.flexDirection = 'column';
+    area.style.alignItems = 'center';
+  }
+}
+
+function removePhoto(uid, index) {
+  if (photoFiles[uid]) {
+    photoFiles[uid].splice(index, 1);
+    renderPhotoGrid(uid, 6);
+  }
+}
+
+// ── AVATAR UPLOADER ───────────────────────────────────────────────────────────
+function initAvatarUploader(uid, initialChar) {
+  avatarFile[uid] = null;
+  var input = document.getElementById(uid + '_input');
+  var preview = document.getElementById(uid + '_preview');
+  var initial = document.getElementById(uid + '_initial');
+  if (!input) return;
+  input.addEventListener('change', function(e) {
+    var f = e.target.files[0];
+    if (!f) return;
+    if (f.size > 3145728) { showToast('⚠️ Profile photo must be under 3MB.'); return; }
+    avatarFile[uid] = f;
+    var url = URL.createObjectURL(f);
+    if (initial) initial.style.display = 'none';
+    var img = preview.querySelector('img');
+    if (!img) { img = document.createElement('img'); preview.appendChild(img); }
+    img.src = url;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;border-radius:50%;';
+    preview.style.position = 'relative';
+  });
+}
+
+// ── UPLOAD FILES TO SUPABASE STORAGE ─────────────────────────────────────────
+async function uploadPhotos(uid, bucket, folder) {
+  var files = photoFiles[uid] || [];
+  if (!files.length) return [];
+  var urls = [];
+  var bar = document.getElementById(uid + '_bar');
+  if (bar) { bar.style.display = 'block'; bar.style.width = '0%'; }
+  for (var i = 0; i < files.length; i++) {
+    var f = files[i];
+    var ext = f.name.split('.').pop().toLowerCase() || 'jpg';
+    var path = folder + '/' + Date.now() + '_' + i + '.' + ext;
+    var res = await fetch(SB_STORAGE + '/object/' + bucket + '/' + path, {
+      method: 'POST',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': f.type, 'x-upsert': 'true' },
+      body: f
+    });
+    if (res.ok) {
+      urls.push(SB_STORAGE + '/object/public/' + bucket + '/' + path);
+    }
+    if (bar) bar.style.width = Math.round(((i+1)/files.length)*100) + '%';
+  }
+  if (bar) setTimeout(function() { bar.style.display = 'none'; bar.style.width = '0%'; }, 800);
+  return urls;
+}
+
+async function uploadAvatar(uid, bucket, folder) {
+  var f = avatarFile[uid];
+  if (!f) return null;
+  var ext = f.name.split('.').pop().toLowerCase() || 'jpg';
+  var path = folder + '/' + Date.now() + '.' + ext;
+  var bar = document.getElementById(uid + '_bar');
+  if (bar) { bar.style.display = 'block'; bar.style.width = '50%'; }
+  var res = await fetch(SB_STORAGE + '/object/' + bucket + '/' + path, {
+    method: 'POST',
+    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': f.type, 'x-upsert': 'true' },
+    body: f
+  });
+  if (bar) { bar.style.width = '100%'; setTimeout(function() { bar.style.display = 'none'; }, 800); }
+  return res.ok ? SB_STORAGE + '/object/public/' + bucket + '/' + path : null;
+}
+
+// Init all uploaders when DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+  initPhotoUploader('ll_photos', 6);
+  initPhotoUploader('al_photos', 6);
+  initPhotoUploader('rl_photos', 6);
+  initAvatarUploader('fp_avatar', '?');
+  initAvatarUploader('rs_avatar', '?');
+});
+
+// ── SHOW PHOTOS IN LISTING DETAIL VIEW ───────────────────────────────────────
+function renderListingPhotos(photos) {
+  if (!photos || !photos.length) return '';
+  if (photos.length === 1) {
+    return '<div style="margin-bottom:18px;border-radius:14px;overflow:hidden;aspect-ratio:16/9;">' +
+      '<img src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display=\x27none\x27"/></div>';
+  }
+  var html = '<div style="margin-bottom:18px;">';
+  // Main photo
+  html += '<div style="border-radius:14px;overflow:hidden;aspect-ratio:16/9;margin-bottom:8px;">' +
+    '<img id="mainPhoto" src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;"/></div>';
+  // Thumbnails
+  html += '<div style="display:grid;grid-template-columns:repeat(' + Math.min(photos.length,5) + ',1fr);gap:6px;">';
+  photos.slice(0, 5).forEach(function(url, i) {
+    html += '<div style="aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid ' + (i===0?'#E8724A':'transparent') + ';" onclick="switchPhoto(\x27' + url + '\x27,this)">' +
+      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display=\x27none\x27"/></div>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function switchPhoto(url, thumb) {
+  document.getElementById('mainPhoto').src = url;
+  document.querySelectorAll('[onclick*="switchPhoto"]').forEach(function(t) { t.style.borderColor = 'transparent'; });
+  thumb.style.borderColor = '#E8724A';
+}
+
+// ── AVATAR HELPER ────────────────────────────────────────────────────────────
+function fmAvatar(url, name, size, fontSize) {
+  var initial = name ? name.charAt(0).toUpperCase() : '?';
+  var fallback = '<div style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:linear-gradient(135deg,#E8724A,#C85A2E);display:flex;align-items:center;justify-content:center;font-size:'+fontSize+';flex-shrink:0;color:#fff;">'+initial+'</div>';
+  if (!url) return fallback;
+  return '<img src="'+url+'" style="width:'+size+'px;height:'+size+'px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\x27none\x27" />';
+}
+
+// ── LISTING CARDS: show first photo as thumbnail ──────────────────────────────
+function listingCardPhoto(photos) {
+  if (!photos || !photos.length) return '<div style="background:linear-gradient(135deg,#F2E4C4,#E8D5B0);height:160px;border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏡</div>';
+  return '<div style="height:160px;border-radius:12px 12px 0 0;overflow:hidden;">' +
+    '<img src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\x27\x27"/></div>';
+}
+
+function roomCardPhoto(photos) {
+  if (!photos || !photos.length) return '<div style="background:linear-gradient(135deg,#F2E4C4,#E8D5B0);height:140px;border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center;font-size:2rem;">🏠</div>';
+  return '<div style="height:140px;border-radius:12px 12px 0 0;overflow:hidden;">' +
+    '<img src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\x27\x27"/></div>';
+}
+
+
 </script>
 </body>
 </html>
