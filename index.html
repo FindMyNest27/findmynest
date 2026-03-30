@@ -1345,16 +1345,18 @@ async function doRenterSignup(){
     var bmin=parseFloat(document.getElementById('rs_min').value)||null;
     var bmax=parseFloat(document.getElementById('rs_max').value)||null;
     var beds=document.getElementById('rs_b').value||null;
-    await sbq('POST','renters',{name:n,email:e,phone:document.getElementById('rs_ph').value||null,city:c,budget_min:bmin,budget_max:bmax,beds_needed:beds,move_date:document.getElementById('rs_d').value||null,pets:document.getElementById('rs_pt').value,status:'active'});
-    var rsAvatarUrl = await uploadAvatar('rs_avatar','profile-photos','avatars');
+    var phone=document.getElementById('rs_ph').value.trim()||'';
+    var rsAvatarUrl=await uploadAvatar('rs_avatar','profile-photos','avatars');
+    await sbq('POST','renters',{name:n,email:e,phone:phone,city:c,budget_min:bmin,budget_max:bmax,beds_needed:beds,move_date:document.getElementById('rs_d').value||null,pets:document.getElementById('rs_pt').value,photo_url:rsAvatarUrl||null,status:'active'});
     setUser({id:e,name:n,email:e,type:'renter',city:c,budget_max:bmax,beds_needed:beds,photo_url:rsAvatarUrl});
     showToast('🥝 Ka pai! Welcome to FindMyNest!');
     closeAllModals();
     updateNav();
     openDashboard();
   }catch(err){
-    if(err.message.indexOf('duplicate')>-1||err.message.indexOf('unique')>-1)showToast('⚠️ Email already registered!');
-    else showToast('⚠️ Something went wrong. Please try again.');
+    console.error('Renter signup error:',err);
+    if(err.message.indexOf('duplicate')>-1||err.message.indexOf('unique')>-1){showToast('⚠️ That email is already registered. Try logging in instead.');showStep('stepLL');}
+    else showToast('⚠️ Something went wrong: '+err.message);
   }finally{btn.textContent='Sign Up Free 🔍';btn.disabled=false;}
 }
 
