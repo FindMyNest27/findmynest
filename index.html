@@ -321,6 +321,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <li><a id="navListings">Listings</a></li>
     <li><a id="navFlatmates">Flatmates</a></li>
     <li><a id="navLandlords">For Landlords</a></li>
+    <li><a id="navContact" style="color:#E8724A;font-weight:600;">Contact Us</a></li>
     <li><button class="ncta" id="navBtn">Sign Up / Log In</button></li>
   </ul>
 </nav>
@@ -693,7 +694,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div class="landlord-feat"><div class="landlord-feat-ico">🆓</div><div><div class="landlord-feat-title">Free listings right now</div><p class="landlord-feat-desc">List your property completely free during our launch period. No hidden fees, no commission, no surprises.</p></div></div>
       <div class="landlord-feat"><div class="landlord-feat-ico">💬</div><div><div class="landlord-feat-title">Direct renter contact</div><p class="landlord-feat-desc">Renters contact you directly via email. No middlemen, no delays, no lost messages.</p></div></div>
       <div class="landlord-feat"><div class="landlord-feat-ico">📊</div><div><div class="landlord-feat-title">Your own dashboard</div><p class="landlord-feat-desc">Add or remove listings any time from your personal dashboard. Full control, always.</p></div></div>
-      <div class="landlord-feat"><div class="landlord-feat-ico">🔒</div><div><div class="landlord-feat-title">Your data is safe</div><p class="landlord-feat-desc">We take privacy seriously. Your data is never sold. NZ Privacy Act 2020 compliant.</p></div></div>
       <div class="landlord-feat"><div class="landlord-feat-ico">🥝</div><div><div class="landlord-feat-title">100% Kiwi owned</div><p class="landlord-feat-desc">Built in Tauranga, NZ. We understand the Kiwi rental market because we live it too.</p></div></div>
     </div>
     <div style="background:#F7F3EE;border-radius:20px;padding:36px;margin-bottom:24px;">
@@ -1086,7 +1086,34 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 <!-- INFO MODALS -->
 <div class="mod" id="pricingMod"><button class="mcl" id="pricingClose">✕</button><div class="mbadge">🎉 Free During Launch</div><div class="mtit">Pricing</div><div class="mbody"><p>Listing on FindMyNest is <strong>completely free</strong> during our launch period.</p><hr class="mdiv"/><p>In approximately <strong>6 months from launch</strong>, we'll introduce fair, transparent pricing. All existing users will receive plenty of advance notice.</p><hr class="mdiv"/><p style="font-size:.8rem;color:#6B3A1F;">Questions? Email <a href="mailto:hello@findmynest.co.nz" style="color:#E8724A;">hello@findmynest.co.nz</a></p></div></div>
 <div class="mod" id="aboutMod"><button class="mcl" id="aboutClose">✕</button><div class="mbadge">🥝 Our Story</div><div class="mtit">About FindMyNest™</div><div class="mbody"><p>FindMyNest was born out of frustration. Watching landlords get squeezed with fee hike after fee hike from the big platforms, we decided enough was enough.</p><hr class="mdiv"/><p>We're a proudly <strong>New Zealand owned and operated</strong> business built right here in Aotearoa.</p><hr class="mdiv"/><p>Our mission is simple — <strong>make renting fairer for everyone.</strong></p></div></div>
-<div class="mod" id="contactMod"><button class="mcl" id="contactClose">✕</button><div class="mbadge">📬 Get in Touch</div><div class="mtit">Contact Us</div><div class="mbody"><p>📧 <a href="mailto:hello@findmynest.co.nz" style="color:#E8724A;">hello@findmynest.co.nz</a></p><hr class="mdiv"/><p>📍 Tauranga, Bay of Plenty, New Zealand 🥝</p><hr class="mdiv"/><p>🕐 We aim to respond within 1 business day.</p></div></div>
+<div class="mod" id="contactMod" style="max-width:520px;width:95%;">
+  <button class="mcl" id="contactClose">✕</button>
+  <div class="mbadge">📬 Get in Touch</div>
+  <div class="mtit">Contact Us</div>
+  <p class="msub">We'd love to hear from you — questions, feedback or just a kia ora. 🥝</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+    <div class="ff"><label>Your Name *</label><input id="ct_name" placeholder="e.g. Sarah Smith"/></div>
+    <div class="ff"><label>Email *</label><input id="ct_email" type="email" placeholder="you@email.com"/></div>
+    <div class="ff s2"><label>Subject</label>
+      <select id="ct_subject">
+        <option value="General Enquiry">General Enquiry</option>
+        <option value="I want to list my property">I want to list my property</option>
+        <option value="Technical issue">Technical issue</option>
+        <option value="Press or media">Press or media</option>
+        <option value="Partnership">Partnership enquiry</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="ff s2"><label>Message *</label><textarea id="ct_message" rows="5" placeholder="Tell us what's on your mind..." style="resize:vertical;"></textarea></div>
+  </div>
+  <button class="bful" id="ct_submit" style="margin-top:16px;">Send Message 📬</button>
+  <div id="ct_success" style="display:none;text-align:center;padding:24px;">
+    <div style="font-size:2.5rem;margin-bottom:10px;">🥝</div>
+    <div style="font-weight:700;font-size:1.1rem;color:#3D1F0D;margin-bottom:6px;">Message sent!</div>
+    <p style="color:#6B3A1F;font-size:.9rem;">Thanks for getting in touch. We'll get back to you within one business day.</p>
+  </div>
+  <p style="text-align:center;font-size:.78rem;color:#A07850;margin-top:14px;">Or email us directly at <a href="mailto:hello@findmynest.co.nz" style="color:#E8724A;">hello@findmynest.co.nz</a></p>
+</div>
 <div class="mod" id="rentingMod"><button class="mcl" id="rentingClose">✕</button><div class="mbadge">📖 For Renters</div><div class="mtit">Renting Guide</div><div class="mbody"><p><strong>🔍 Searching</strong><br/>Filter by location, price, bedrooms and type.</p><hr class="mdiv"/><p><strong>📋 Your Rights</strong><br/>Under the Residential Tenancies Act you have strong rights as a renter in NZ.</p><hr class="mdiv"/><p><strong>💰 Bond & Rent</strong><br/>Bond is capped at 4 weeks rent. Rent can only increase once every 12 months.</p><hr class="mdiv"/><p style="font-size:.8rem;color:#6B3A1F;">Visit <a href="https://www.tenancy.govt.nz" target="_blank" style="color:#E8724A;">tenancy.govt.nz</a> for official info.</p></div></div>
 <div class="mod" id="landlordMod"><button class="mcl" id="landlordClose">✕</button><div class="mbadge">🏠 For Landlords</div><div class="mtit">Landlord Guide</div><div class="mbody"><p><strong>📸 Great Photos</strong><br/>Use natural light. Listings with 6+ photos get far more enquiries.</p><hr class="mdiv"/><p><strong>✅ Healthy Homes</strong><br/>All rentals must comply with Healthy Homes Standards. Non-compliance = fines up to $7,200.</p><hr class="mdiv"/><p style="font-size:.8rem;color:#6B3A1F;">Visit <a href="https://www.tenancy.govt.nz" target="_blank" style="color:#E8724A;">tenancy.govt.nz</a> for official info.</p></div></div>
 <div class="mod" id="regionMod"><button class="mcl" id="regionClose">✕</button><div class="mbadge">📍 Browse by Region</div><div class="mtit">Search by Region</div><div class="mbody"><p>Listings coming soon across all NZ regions! 🥝</p><hr class="mdiv"/><div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:8px;"><div onclick="showToast('Auckland coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Auckland</div><div onclick="showToast('Wellington coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Wellington</div><div onclick="showToast('Christchurch coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Christchurch</div><div onclick="showToast('Tauranga coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Tauranga</div><div onclick="showToast('Hamilton coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Hamilton</div><div onclick="showToast('Dunedin coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Dunedin</div></div></div></div>
@@ -2598,6 +2625,62 @@ async function removeMyRoom(id) {
     loadMyRoomListings();
   } catch(e) { showToast('⚠️ Something went wrong.'); }
 }
+
+
+
+// ════════════════════════════════════════════
+// CONTACT FORM
+// ════════════════════════════════════════════
+
+document.getElementById('navContact').addEventListener('click', function(){ openModal('contactMod'); });
+
+document.getElementById('ct_submit').addEventListener('click', async function() {
+  var name    = document.getElementById('ct_name').value.trim();
+  var email   = document.getElementById('ct_email').value.trim().toLowerCase();
+  var subject = document.getElementById('ct_subject').value;
+  var message = document.getElementById('ct_message').value.trim();
+  if (!name || !email || !message) { showToast('⚠️ Please fill in all required fields.'); return; }
+  var btn = document.getElementById('ct_submit');
+  btn.textContent = 'Sending...'; btn.disabled = true;
+  try {
+    // Save to Supabase contact_submissions table
+    var dbRes = await sbq('POST','contact_submissions',{
+      name: name, email: email,
+      subject: subject, message: message
+    });
+    // Also send via Formspree for email delivery
+    var res = await fetch('https://formspree.io/f/xvzvagzv', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name: name, email: email, subject: subject, message: message, _replyto: email })
+    });
+    if (!res.ok) throw new Error('Failed');
+    // Show success state
+    document.getElementById('ct_submit').style.display = 'none';
+    document.getElementById('ct_success').style.display = 'block';
+    ['ct_name','ct_email','ct_message'].forEach(function(id){ document.getElementById(id).value = ''; });
+    // Reset after 4 seconds so modal is ready for next use
+    setTimeout(function() {
+      document.getElementById('ct_submit').style.display = 'block';
+      document.getElementById('ct_submit').textContent = 'Send Message 📬';
+      document.getElementById('ct_submit').disabled = false;
+      document.getElementById('ct_success').style.display = 'none';
+    }, 4000);
+  } catch(err) {
+    showToast('⚠️ Something went wrong. Please email us at hello@findmynest.co.nz');
+    btn.textContent = 'Send Message 📬'; btn.disabled = false;
+  }
+});
+
+// Reset contact modal when closed
+document.getElementById('contactClose').removeEventListener('click', closeAllModals);
+document.getElementById('contactClose').addEventListener('click', function() {
+  document.getElementById('ct_success').style.display = 'none';
+  document.getElementById('ct_submit').style.display = 'block';
+  document.getElementById('ct_submit').textContent = 'Send Message 📬';
+  document.getElementById('ct_submit').disabled = false;
+  closeAllModals();
+});
 
 
 </script>
