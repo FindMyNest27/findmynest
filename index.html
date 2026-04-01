@@ -813,8 +813,12 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Type *</label><select id="f_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
           <div class="ff"><label>Bedrooms *</label><select id="f_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
           <div class="ff"><label>Bathrooms *</label><select id="f_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
+          <div class="ff"><label>Parking</label><select id="f_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
+          <div class="ff"><label>Pets</label><select id="f_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
+          <div class="ff"><label>Furnished</label><select id="f_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
+          <div class="ff"><label>Available From *</label><input id="f_av" type="date"/></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="f_r" type="number" placeholder="550"/></div>
-          <div class="ff s2" style="margin-top:-4px;">
+          <div class="ff s2" style="margin-top:4px;">
             <button type="button" class="rent-est-btn" id="f_est_btn" onclick="getRentEstimate('f')">📊 Get AI Rent Estimate for this Area</button>
             <div class="rent-est" id="f_est_panel">
               <div class="rent-est-title" id="f_est_location">📍 Area Rental Insights</div>
@@ -827,10 +831,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
               ⚠️ <strong>Estimates only.</strong> AI rent estimates are based on general NZ market knowledge and FindMyNest listing data. Always do your own research to verify current market rates before setting your rent.
             </div>
           </div>
-          <div class="ff"><label>Parking</label><select id="f_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
-          <div class="ff"><label>Available From *</label><input id="f_av" type="date"/></div>
-          <div class="ff"><label>Pets</label><select id="f_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
-          <div class="ff"><label>Furnished</label><select id="f_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
           <div class="ff s2">
             <label style="display:flex;align-items:center;justify-content:space-between;">
               Description *
@@ -1009,8 +1009,12 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Type *</label><select id="af_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
           <div class="ff"><label>Bedrooms *</label><select id="af_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
           <div class="ff"><label>Bathrooms *</label><select id="af_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
+          <div class="ff"><label>Parking</label><select id="af_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
+          <div class="ff"><label>Pets</label><select id="af_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
+          <div class="ff"><label>Furnished</label><select id="af_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
+          <div class="ff"><label>Available From *</label><input id="af_av" type="date"/></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="af_r" type="number" placeholder="550"/></div>
-          <div class="ff s2" style="margin-top:-4px;">
+          <div class="ff s2" style="margin-top:4px;">
             <button type="button" class="rent-est-btn" id="af_est_btn" onclick="getRentEstimate('af')">📊 Get AI Rent Estimate for this Area</button>
             <div class="rent-est" id="af_est_panel">
               <div class="rent-est-title" id="af_est_location">📍 Area Rental Insights</div>
@@ -1023,10 +1027,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
               ⚠️ <strong>Estimates only.</strong> AI rent estimates are based on general NZ market knowledge and FindMyNest listing data. Always do your own research to verify current market rates before setting your rent.
             </div>
           </div>
-          <div class="ff"><label>Parking</label><select id="af_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
-          <div class="ff"><label>Available From *</label><input id="af_av" type="date"/></div>
-          <div class="ff"><label>Pets</label><select id="af_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
-          <div class="ff"><label>Furnished</label><select id="af_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
           <div class="ff s2">
             <label style="display:flex;align-items:center;justify-content:space-between;">
               Description *
@@ -2986,17 +2986,34 @@ async function generateRoomDescription() {
 // AI RENT ESTIMATOR
 // ════════════════════════════════════════════
 
+// Track estimate state per form prefix
+var estState = {};
+
 async function getRentEstimate(prefix) {
   var fieldMap = {
-    f:  { suburb: 'f_s', city: 'f_c', type: 'f_ty', btn: 'f_est_btn', panel: 'f_est_panel', location: 'f_est_location', stats: 'f_est_stats', insight: 'f_est_insight' },
-    af: { suburb: 'af_s', city: 'af_c', type: 'af_ty', btn: 'af_est_btn', panel: 'af_est_panel', location: 'af_est_location', stats: 'af_est_stats', insight: 'af_est_insight' }
+    f:  { suburb: 'f_s', city: 'f_c', type: 'f_ty', park: 'f_pk', pets: 'f_pt', furn: 'f_fu', beds: 'f_b', baths: 'f_ba', btn: 'f_est_btn', panel: 'f_est_panel', location: 'f_est_location', stats: 'f_est_stats', insight: 'f_est_insight' },
+    af: { suburb: 'af_s', city: 'af_c', type: 'af_ty', park: 'af_pk', pets: 'af_pt', furn: 'af_fu', beds: 'af_b', baths: 'af_ba', btn: 'af_est_btn', panel: 'af_est_panel', location: 'af_est_location', stats: 'af_est_stats', insight: 'af_est_insight' }
   };
   var f = fieldMap[prefix];
   var suburb = document.getElementById(f.suburb).value.trim();
   var city   = document.getElementById(f.city).value;
   var type   = document.getElementById(f.type).value;
+  var park   = document.getElementById(f.park).value;
+  var pets   = document.getElementById(f.pets).value;
+  var furn   = document.getElementById(f.furn).value;
+  var beds   = document.getElementById(f.beds).value;
+  var baths  = document.getElementById(f.baths).value;
 
   if (!city) { showToast('⚠️ Please select a city first!'); return; }
+
+  // Build a signature of current form state
+  var sig = [suburb, city, type, park, pets, furn, beds, baths].join('|');
+
+  // If estimate already generated for same details — don't regenerate
+  if (estState[prefix] && estState[prefix].sig === sig && estState[prefix].done) {
+    showToast('ℹ️ Estimate already generated for these details. Change the fields to get a new estimate.');
+    return;
+  }
 
   var btn    = document.getElementById(f.btn);
   var panel  = document.getElementById(f.panel);
@@ -3015,14 +3032,13 @@ async function getRentEstimate(prefix) {
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/rent-estimate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ suburb: suburb || null, city: city, type: type || null })
+      body: JSON.stringify({ suburb: suburb || null, city: city, type: type || null, park: park, pets: pets, furnished: furn, beds: beds, baths: baths })
     });
     var data = await res.json();
 
     var location = data.location || (suburb || city);
     locEl.textContent = '📍 Rental insights — ' + location + (type ? ' · ' + type : '');
 
-    // Show our own listings data if available
     if (data.ownData && data.ownData.count > 0) {
       var od = data.ownData;
       statsEl.innerHTML =
@@ -3038,11 +3054,36 @@ async function getRentEstimate(prefix) {
       insightEl.innerHTML = '<strong style="color:#3D1F0D;">🤖 AI Market Insight:</strong><br/>' + data.insight + '<br/><span style="font-size:.72rem;color:#A07850;display:block;margin-top:8px;">⚠️ Estimates only — based on general NZ market knowledge and FindMyNest listings. Always verify current market rates independently.</span>';
     }
 
+    // Mark as done for this state — lock the button
+    estState[prefix] = { sig: sig, done: true };
+    btn.textContent = '✅ Estimate loaded — change details to refresh';
+
+    // Watch for form changes to re-enable the button
+    ['suburb','city','type','park','pets','furn','beds','baths'].forEach(function(key) {
+      var el = document.getElementById(f[key]);
+      if (el) el.addEventListener('change', function() {
+        var newSig = [
+          document.getElementById(f.suburb).value.trim(),
+          document.getElementById(f.city).value,
+          document.getElementById(f.type).value,
+          document.getElementById(f.park).value,
+          document.getElementById(f.pets).value,
+          document.getElementById(f.furn).value,
+          document.getElementById(f.beds).value,
+          document.getElementById(f.baths).value
+        ].join('|');
+        if (estState[prefix] && newSig !== estState[prefix].sig) {
+          estState[prefix].done = false;
+          btn.disabled = false;
+          btn.textContent = '📊 Get Updated Estimate';
+        }
+      }, { once: true });
+    });
+
   } catch(err) {
     insightEl.textContent = 'Could not load estimate. Please try again.';
-  } finally {
     btn.disabled = false;
-    btn.innerHTML = '📊 Get AI Rent Estimate for this Area';
+    btn.textContent = '📊 Get AI Rent Estimate for this Area';
   }
 }
 
