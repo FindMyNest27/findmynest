@@ -93,7 +93,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hst{display:flex;gap:28px}
 .sn{font-family:"Playfair Display",serif;font-size:1.7rem;font-weight:700;color:#E8724A}
 .sl{font-size:.76rem;color:#6B3A1F}
-.hv{position:relative}
+.hv{position:relative;display:flex;flex-direction:column;align-items:center}
 .hcard{background:#fff;border-radius:22px;padding:22px;box-shadow:0 20px 56px rgba(61,31,13,.12)}
 .hci{width:100%;height:186px;border-radius:14px;background:linear-gradient(135deg,#F9C784,#E8724A);display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;overflow:hidden;transition:background .5s}
 .hcii{font-size:3.2rem}
@@ -105,8 +105,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hcp span{font-size:.74rem;font-weight:400;color:#6B3A1F;font-family:"Plus Jakarta Sans",sans-serif}
 .hcbtn{background:#E8724A;color:#fff;border:none;padding:8px 17px;border-radius:50px;font-size:.8rem;font-weight:600;cursor:pointer;transition:background .2s}
 .hcbtn:hover{background:#C85A2E}
-.fb{position:absolute;background:#fff;border-radius:50px;padding:9px 16px;box-shadow:0 8px 28px rgba(61,31,13,.15);font-size:.76rem;font-weight:700;color:#3D1F0D;display:flex;align-items:center;gap:8px;animation:fba 3s ease-in-out infinite;z-index:2}
-.fb1{top:-10px;right:16px}.fb2{bottom:-10px;left:16px;animation-delay:-2s}
+.fb{background:#fff;border-radius:50px;padding:9px 16px;box-shadow:0 8px 28px rgba(61,31,13,.15);font-size:.76rem;font-weight:700;color:#3D1F0D;display:inline-flex;align-items:center;gap:8px;animation:fba 3s ease-in-out infinite}
+.fb1{align-self:flex-end;margin-bottom:10px}.fb2{align-self:flex-start;margin-top:10px;animation-delay:-2s}
 @keyframes fba{0%{transform:translateY(0) rotate(-3deg)}25%{transform:translateY(-10px) rotate(2deg)}50%{transform:translateY(-14px) rotate(-2deg)}75%{transform:translateY(-6px) rotate(3deg)}100%{transform:translateY(0) rotate(-3deg)}}
 .ss{background:#fff;padding:36px 44px;margin:0 44px;border-radius:22px;box-shadow:0 8px 40px rgba(61,31,13,.08);transform:translateY(-32px);position:relative;z-index:10}
 .stit{font-family:"Playfair Display",serif;font-size:1.35rem;font-weight:600;margin-bottom:18px;text-align:center}
@@ -307,6 +307,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 
 .edb{background:none;border:1px solid #D4B896;color:#6B3A1F;border-radius:8px;padding:5px 11px;cursor:pointer;font-size:.74rem;font-weight:600;white-space:nowrap;transition:all .2s;flex-shrink:0}
 .edb:hover{background:#FAF0DC;border-color:#E8724A;color:#E8724A}
+
+.ai-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:50px;padding:9px 18px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.ai-btn:hover{opacity:.9;transform:translateY(-1px)}
+.ai-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.ai-hint{font-size:.75rem;color:#8b5cf6;margin-top:5px;display:none;}
 </style>
 </head>
 <body>
@@ -320,7 +325,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <li><a id="navHow">How it works</a></li>
     <li><a id="navListings">Listings</a></li>
     <li><a id="navFlatmates">Flatmates</a></li>
-    <li><a id="navLandlords">For Landlords</a></li>
+    <li><a id="navLandlords">For Landlords &amp; Agents</a></li>
     <li><a id="navContact" style="color:#E8724A;font-weight:600;">Contact Us</a></li>
     <li><button class="ncta" id="navBtn">Sign Up / Log In</button></li>
   </ul>
@@ -684,29 +689,83 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <button class="ncta" id="landlordsAuthBtn">Sign Up / Log In</button>
   </div>
   <div class="fp-content">
-    <div class="landlord-hero">
-      <div class="fbadge">🎉 100% Free to List Right Now</div>
-      <h1>Your property deserves a better platform</h1>
-      <p>We built FindMyNest because we were tired of watching landlords get squeezed. Fair pricing, direct connections, full control.</p>
-      <button class="bp" id="landlordsSignupBtn">List My Property Free →</button>
+
+    <!-- PAGE HEADER -->
+    <div style="text-align:center;margin-bottom:40px;">
+      <div class="slb">List your property</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;margin-bottom:12px;">Your property deserves<br/>a better platform</h1>
+      <p style="color:#6B3A1F;max-width:540px;margin:0 auto;line-height:1.7;">We built FindMyNest because we were tired of watching landlords and agents get squeezed. Fair pricing, direct connections, full control.</p>
     </div>
-    <div class="landlord-feat-grid">
-      <div class="landlord-feat"><div class="landlord-feat-ico">🆓</div><div><div class="landlord-feat-title">Free listings right now</div><p class="landlord-feat-desc">List your property completely free during our launch period. No hidden fees, no commission, no surprises.</p></div></div>
-      <div class="landlord-feat"><div class="landlord-feat-ico">💬</div><div><div class="landlord-feat-title">Direct renter contact</div><p class="landlord-feat-desc">Renters contact you directly via email. No middlemen, no delays, no lost messages.</p></div></div>
-      <div class="landlord-feat"><div class="landlord-feat-ico">📊</div><div><div class="landlord-feat-title">Your own dashboard</div><p class="landlord-feat-desc">Add or remove listings any time from your personal dashboard. Full control, always.</p></div></div>
-      <div class="landlord-feat"><div class="landlord-feat-ico">🥝</div><div><div class="landlord-feat-title">100% Kiwi owned</div><p class="landlord-feat-desc">Built in Tauranga, NZ. We understand the Kiwi rental market because we live it too.</p></div></div>
+
+    <!-- TABS -->
+    <div style="display:flex;gap:0;background:#F2E4C4;border-radius:14px;padding:4px;margin-bottom:40px;max-width:440px;">
+      <button id="llTab" onclick="llTab('landlord')" style="flex:1;padding:11px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.9rem;background:#3D1F0D;color:#FAF0DC;transition:all .2s;">🏠 Landlords</button>
+      <button id="laTab" onclick="llTab('agent')" style="flex:1;padding:11px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.9rem;background:transparent;color:#6B3A1F;transition:all .2s;">🏢 Agents</button>
     </div>
-    <div style="background:#F7F3EE;border-radius:20px;padding:36px;margin-bottom:24px;">
-      <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:16px;">Pricing — transparent & fair</h2>
-      <p style="color:#6B3A1F;line-height:1.7;margin-bottom:12px;">Listing on FindMyNest is <strong>completely free</strong> during our launch period.</p>
-      <p style="color:#6B3A1F;line-height:1.7;margin-bottom:12px;">In approximately <strong>6 months</strong>, we'll introduce fair, flat listing fees — no commission, ever. All existing users will receive plenty of advance notice before any pricing changes.</p>
-      <p style="color:#6B3A1F;font-size:.86rem;">Questions? Email <a href="mailto:hello@findmynest.co.nz" style="color:#E8724A;">hello@findmynest.co.nz</a></p>
+
+    <!-- LANDLORD TAB -->
+    <div id="llLandlordSection">
+      <div class="landlord-hero" style="margin-bottom:32px;">
+        <div class="fbadge">🎉 100% Free to List Right Now</div>
+        <h1>List your property free</h1>
+        <p>No platform fees, no commission, no middlemen. Just you, your listing and thousands of Kiwi renters looking for their next nest.</p>
+        <button class="bp" id="landlordsSignupBtn">Create My Free Account →</button>
+      </div>
+      <div class="landlord-feat-grid">
+        <div class="landlord-feat"><div class="landlord-feat-ico">🆓</div><div><div class="landlord-feat-title">Free to list right now</div><p class="landlord-feat-desc">List completely free during our launch period. No hidden fees, no commission, no surprises.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">💬</div><div><div class="landlord-feat-title">Direct renter contact</div><p class="landlord-feat-desc">Renters contact you directly via email. No middlemen, no delays, no lost messages.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">📸</div><div><div class="landlord-feat-title">Up to 6 photos</div><p class="landlord-feat-desc">Upload up to six photos per listing. Listings with photos get far more enquiries.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">📊</div><div><div class="landlord-feat-title">Your own dashboard</div><p class="landlord-feat-desc">Add, edit or remove listings any time. Full control over your listings, always.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">🏠</div><div><div class="landlord-feat-title">Room listings too</div><p class="landlord-feat-desc">Got a spare room? List it in our Flatmates section alongside your whole properties.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">🥝</div><div><div class="landlord-feat-title">100% Kiwi owned</div><p class="landlord-feat-desc">Built in Tauranga, NZ. We understand the Kiwi rental market because we live it too.</p></div></div>
+      </div>
+      <div style="background:#F7F3EE;border-radius:20px;padding:36px;margin-bottom:24px;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:16px;">How it works</h2>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;gap:16px;align-items:flex-start;"><div style="width:32px;height:32px;border-radius:50%;background:#E8724A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">1</div><div><div style="font-weight:700;margin-bottom:4px;">Sign up as a Landlord</div><p style="color:#6B3A1F;font-size:.9rem;line-height:1.6;">Create your free account in under 2 minutes. No credit card required.</p></div></div>
+          <div style="display:flex;gap:16px;align-items:flex-start;"><div style="width:32px;height:32px;border-radius:50%;background:#E8724A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">2</div><div><div style="font-weight:700;margin-bottom:4px;">List your property</div><p style="color:#6B3A1F;font-size:.9rem;line-height:1.6;">Add your listing with photos, details and availability. Takes about 5 minutes.</p></div></div>
+          <div style="display:flex;gap:16px;align-items:flex-start;"><div style="width:32px;height:32px;border-radius:50%;background:#E8724A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">3</div><div><div style="font-weight:700;margin-bottom:4px;">Renters contact you directly</div><p style="color:#6B3A1F;font-size:.9rem;line-height:1.6;">Interested renters email you directly. You choose who views and who gets the keys.</p></div></div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#E8724A,#C85A2E);border-radius:20px;padding:40px;text-align:center;color:#fff;margin-bottom:24px;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:10px;">Ready to list your nest?</h2>
+        <p style="opacity:.85;margin-bottom:24px;">Join FindMyNest and get your property in front of Kiwi renters — completely free.</p>
+        <button class="bw" id="landlordsSignupBtn2">Create My Free Account 🥝</button>
+      </div>
     </div>
-    <div style="background:linear-gradient(135deg,#E8724A,#C85A2E);border-radius:20px;padding:40px;text-align:center;color:#fff;">
-      <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:10px;">Ready to list your nest?</h2>
-      <p style="opacity:.85;margin-bottom:24px;">Join FindMyNest and get your property in front of Kiwi renters — completely free.</p>
-      <button class="bw" id="landlordsSignupBtn2">Create My Free Account 🥝</button>
+
+    <!-- AGENT TAB -->
+    <div id="llAgentSection" style="display:none;">
+      <div class="landlord-hero" style="margin-bottom:32px;background:linear-gradient(135deg,#3D1F0D,#6B3A1F);">
+        <div class="fbadge" style="background:#E8724A;color:#fff;">🏢 For Property Managers & Agencies</div>
+        <h1>List and manage on behalf of your clients</h1>
+        <p>FindMyNest gives property managers and real estate agencies their own dedicated account type — with your agency name and branding on every listing.</p>
+        <button class="bp" id="agentsSignupBtn" style="background:#E8724A;">Create Agent Account →</button>
+      </div>
+      <div class="landlord-feat-grid">
+        <div class="landlord-feat"><div class="landlord-feat-ico">🏢</div><div><div class="landlord-feat-title">Agency-branded listings</div><p class="landlord-feat-desc">Every listing you post is badged with your agency name so renters know who they're dealing with.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">🆓</div><div><div class="landlord-feat-title">Free during launch</div><p class="landlord-feat-desc">List as many properties as you like, completely free until 1 September 2026. No catch.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">📋</div><div><div class="landlord-feat-title">Dedicated agent dashboard</div><p class="landlord-feat-desc">Manage all your client listings in one place. Add, edit, remove — whenever you need to.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">📸</div><div><div class="landlord-feat-title">Professional photo galleries</div><p class="landlord-feat-desc">Upload up to 6 photos per listing with a full gallery view for renters to browse.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">🔑</div><div><div class="landlord-feat-title">REAA licence support</div><p class="landlord-feat-desc">Add your REAA licence number to your profile so renters can verify your credentials.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">💰</div><div><div class="landlord-feat-title">A fraction of Trade Me's price</div><p class="landlord-feat-desc">Trade Me charges up to $99 per listing. When we introduce pricing, it'll be a fraction of that.</p></div></div>
+      </div>
+      <div style="background:#F7F3EE;border-radius:20px;padding:36px;margin-bottom:24px;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:16px;">What you'll need to sign up</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div style="background:#fff;border-radius:12px;padding:16px;border:1px solid #F2D4C0;"><div style="font-weight:700;margin-bottom:4px;color:#3D1F0D;">✓ Agency name</div><p style="font-size:.85rem;color:#6B3A1F;">Your company or agency trading name</p></div>
+          <div style="background:#fff;border-radius:12px;padding:16px;border:1px solid #F2D4C0;"><div style="font-weight:700;margin-bottom:4px;color:#3D1F0D;">✓ Your role</div><p style="font-size:.85rem;color:#6B3A1F;">Property manager, sales agent, or business owner</p></div>
+          <div style="background:#fff;border-radius:12px;padding:16px;border:1px solid #F2D4C0;"><div style="font-weight:700;margin-bottom:4px;color:#3D1F0D;">✓ Contact details</div><p style="font-size:.85rem;color:#6B3A1F;">Name, email and phone</p></div>
+          <div style="background:#fff;border-radius:12px;padding:16px;border:1px solid #F2D4C0;"><div style="font-weight:700;margin-bottom:4px;color:#3D1F0D;">Optional: REAA licence</div><p style="font-size:.85rem;color:#6B3A1F;">Adds credibility to your profile</p></div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#3D1F0D,#6B3A1F);border-radius:20px;padding:40px;text-align:center;color:#FAF0DC;margin-bottom:24px;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:10px;">Ready to list for your clients?</h2>
+        <p style="opacity:.85;margin-bottom:24px;">Join as an agent and get your clients' properties in front of Kiwi renters — completely free until September 2026.</p>
+        <button class="bw" id="agentsSignupBtn2">Create Agent Account 🏢</button>
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -748,7 +807,14 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Available From *</label><input id="f_av" type="date"/></div>
           <div class="ff"><label>Pets</label><select id="f_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
           <div class="ff"><label>Furnished</label><select id="f_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
-          <div class="ff s2"><label>Description *</label><textarea id="f_d" rows="4" placeholder="Describe your property — location highlights, features, nearby amenities..."></textarea></div>
+          <div class="ff s2">
+            <label style="display:flex;align-items:center;justify-content:space-between;">
+              Description *
+              <button type="button" class="ai-btn" id="f_ai_gen" onclick="generateDescription('f')">✨ AI Generate</button>
+            </label>
+            <textarea id="f_d" rows="4" placeholder="Describe your property — or click ✨ AI Generate to write it for you!"></textarea>
+            <div class="ai-hint" id="f_ai_hint">✨ AI is writing your description...</div>
+          </div>
     <div class="ff s2">
       <label>Property Photos (up to 6)</label>
       <div class="photo-upload-area" onclick="document.getElementById('ll_photos_input').click()">
@@ -924,7 +990,14 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Available From *</label><input id="af_av" type="date"/></div>
           <div class="ff"><label>Pets</label><select id="af_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
           <div class="ff"><label>Furnished</label><select id="af_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
-          <div class="ff s2"><label>Description *</label><textarea id="af_d" rows="4" placeholder="Describe the property..."></textarea></div>
+          <div class="ff s2">
+            <label style="display:flex;align-items:center;justify-content:space-between;">
+              Description *
+              <button type="button" class="ai-btn" id="af_ai_gen" onclick="generateDescription('af')">✨ AI Generate</button>
+            </label>
+            <textarea id="af_d" rows="4" placeholder="Describe the property — or click ✨ AI Generate to write it for you!"></textarea>
+            <div class="ai-hint" id="af_ai_hint">✨ AI is writing your description...</div>
+          </div>
     <div class="ff s2">
       <label>Property Photos (up to 6)</label>
       <div class="photo-upload-area" onclick="document.getElementById('al_photos_input').click()">
@@ -1058,7 +1131,14 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div class="ff"><label>Available From</label><input id="el_av" type="date"/></div>
     <div class="ff"><label>Pets</label><select id="el_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
     <div class="ff"><label>Furnished</label><select id="el_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
-    <div class="ff s2"><label>Description *</label><textarea id="el_d" rows="4" placeholder="Describe your property..."></textarea></div>
+    <div class="ff s2">
+      <label style="display:flex;align-items:center;justify-content:space-between;">
+        Description *
+        <button type="button" class="ai-btn" id="el_ai_gen" onclick="generateDescription('el')">✨ AI Generate</button>
+      </label>
+      <textarea id="el_d" rows="4" placeholder="Describe your property — or click ✨ AI Generate to write it for you!"></textarea>
+      <div class="ai-hint" id="el_ai_hint">✨ AI is writing your description...</div>
+    </div>
     <div class="ff s2"><label>Status</label><select id="el_st"><option value="active">Active — visible to renters</option><option value="inactive">Inactive — hidden from search</option></select></div>
   </div>
     <div class="ff s2" style="margin-top:4px;">
@@ -2708,6 +2788,92 @@ document.getElementById('contactClose').addEventListener('click', function() {
   document.getElementById('ct_submit').disabled = false;
   closeAllModals();
 });
+
+
+
+// Landlords/Agents page tab switching
+function llTab(tab) {
+  var ld = document.getElementById('llLandlordSection');
+  var ag = document.getElementById('llAgentSection');
+  var llBtn = document.getElementById('llTab');
+  var laBtn = document.getElementById('laTab');
+  if (tab === 'landlord') {
+    ld.style.display = 'block'; ag.style.display = 'none';
+    llBtn.style.background = '#3D1F0D'; llBtn.style.color = '#FAF0DC';
+    laBtn.style.background = 'transparent'; laBtn.style.color = '#6B3A1F';
+  } else {
+    ld.style.display = 'none'; ag.style.display = 'block';
+    laBtn.style.background = '#E8724A'; laBtn.style.color = '#fff';
+    llBtn.style.background = 'transparent'; llBtn.style.color = '#6B3A1F';
+  }
+}
+document.getElementById('agentsSignupBtn').addEventListener('click', function() { openAuth(); });
+document.getElementById('agentsSignupBtn2').addEventListener('click', function() { openAuth(); });
+
+
+
+// ════════════════════════════════════════════
+// AI LISTING DESCRIPTION GENERATOR
+// ════════════════════════════════════════════
+
+async function generateDescription(prefix) {
+  // Map prefix to field IDs
+  var fields = {
+    f:  { title:'f_t', suburb:'f_s', city:'f_c', rent:'f_r', type:'f_ty', beds:'f_b', baths:'f_ba', park:'f_pk', pets:'f_pt', furn:'f_fu', desc:'f_d', btn:'f_ai_gen', hint:'f_ai_hint' },
+    af: { title:'af_t', suburb:'af_s', city:'af_c', rent:'af_r', type:'af_ty', beds:'af_b', baths:'af_ba', park:'af_pk', pets:'af_pt', furn:'af_fu', desc:'af_d', btn:'af_ai_gen', hint:'af_ai_hint' },
+    el: { title:'el_t', suburb:'el_s', city:'el_c', rent:'el_r', type:'el_ty', beds:'el_b', baths:'el_ba', park:'el_pk', pets:'el_pt', furn:'el_fu', desc:'el_d', btn:'el_ai_gen', hint:'el_ai_hint' }
+  };
+
+  var f = fields[prefix];
+  var suburb = document.getElementById(f.suburb).value.trim();
+  var city   = document.getElementById(f.city).value;
+  var rent   = document.getElementById(f.rent).value;
+  var type   = document.getElementById(f.type).value;
+
+  if (!suburb || !city || !rent || !type) {
+    showToast('⚠️ Please fill in suburb, city, rent and type first so AI knows what to write!');
+    return;
+  }
+
+  var btn  = document.getElementById(f.btn);
+  var hint = document.getElementById(f.hint);
+  btn.disabled = true;
+  btn.textContent = '✨ Writing...';
+  hint.style.display = 'block';
+
+  try {
+    var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/generate-listing', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title:     document.getElementById(f.title).value.trim(),
+        suburb:    suburb,
+        city:      city,
+        rent:      rent,
+        type:      type,
+        beds:      document.getElementById(f.beds).value,
+        baths:     document.getElementById(f.baths).value,
+        park:      document.getElementById(f.park).value,
+        pets:      document.getElementById(f.pets).value,
+        furnished: document.getElementById(f.furn).value
+      })
+    });
+
+    var data = await res.json();
+    if (data.description) {
+      document.getElementById(f.desc).value = data.description;
+      showToast('✨ AI description generated! Feel free to edit it.');
+    } else {
+      showToast('⚠️ Could not generate description. Please write it manually.');
+    }
+  } catch(err) {
+    showToast('⚠️ AI generation failed. Please write the description manually.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✨ AI Generate';
+    hint.style.display = 'none';
+  }
+}
 
 
 </script>
