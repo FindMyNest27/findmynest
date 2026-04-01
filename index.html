@@ -312,6 +312,17 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 .ai-btn:hover{opacity:.9;transform:translateY(-1px)}
 .ai-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .ai-hint{font-size:.75rem;color:#8b5cf6;margin-top:5px;display:none;}
+
+.rent-est{background:linear-gradient(135deg,#FFF8F4,#FFF0E8);border:1.5px solid #F2D4C0;border-radius:14px;padding:18px 20px;margin-top:8px;display:none;}
+.rent-est-title{font-size:.78rem;font-weight:700;color:#E8724A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.rent-est-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.rent-est-stat{background:#fff;border-radius:10px;padding:10px;text-align:center;border:1px solid #F2D4C0;}
+.rent-est-stat-n{font-size:1.1rem;font-weight:700;color:#E8724A;}
+.rent-est-stat-l{font-size:.7rem;color:#6B3A1F;margin-top:2px;}
+.rent-est-insight{font-size:.82rem;color:#6B3A1F;line-height:1.6;border-top:1px solid #F2D4C0;padding-top:10px;}
+.rent-est-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#E8724A,#C85A2E);color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:6px;}
+.rent-est-btn:hover{opacity:.9;transform:translateY(-1px)}
+.rent-est-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 </style>
 </head>
 <body>
@@ -714,7 +725,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div class="landlord-feat-grid">
         <div class="landlord-feat"><div class="landlord-feat-ico">🆓</div><div><div class="landlord-feat-title">Free to list right now</div><p class="landlord-feat-desc">List completely free during our launch period. No hidden fees, no commission, no surprises.</p></div></div>
         <div class="landlord-feat"><div class="landlord-feat-ico">💬</div><div><div class="landlord-feat-title">Direct renter contact</div><p class="landlord-feat-desc">Renters contact you directly via email. No middlemen, no delays, no lost messages.</p></div></div>
-        <div class="landlord-feat"><div class="landlord-feat-ico">📸</div><div><div class="landlord-feat-title">Up to 6 photos</div><p class="landlord-feat-desc">Upload up to six photos per listing. Listings with photos get far more enquiries.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">📸</div><div><div class="landlord-feat-title">Add as many photos as you like</div><p class="landlord-feat-desc">Upload multiple photos per listing. Listings with great photos get far more enquiries.</p></div></div>
         <div class="landlord-feat"><div class="landlord-feat-ico">📊</div><div><div class="landlord-feat-title">Your own dashboard</div><p class="landlord-feat-desc">Add, edit or remove listings any time. Full control over your listings, always.</p></div></div>
         <div class="landlord-feat"><div class="landlord-feat-ico">🏠</div><div><div class="landlord-feat-title">Room listings too</div><p class="landlord-feat-desc">Got a spare room? List it in our Flatmates section alongside your whole properties.</p></div></div>
         <div class="landlord-feat"><div class="landlord-feat-ico">🥝</div><div><div class="landlord-feat-title">100% Kiwi owned</div><p class="landlord-feat-desc">Built in Tauranga, NZ. We understand the Kiwi rental market because we live it too.</p></div></div>
@@ -746,7 +757,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div class="landlord-feat"><div class="landlord-feat-ico">🏢</div><div><div class="landlord-feat-title">Agency-branded listings</div><p class="landlord-feat-desc">Every listing you post is badged with your agency name so renters know who they're dealing with.</p></div></div>
         <div class="landlord-feat"><div class="landlord-feat-ico">🆓</div><div><div class="landlord-feat-title">Free during launch</div><p class="landlord-feat-desc">List as many properties as you like, completely free until 1 September 2026. No catch.</p></div></div>
         <div class="landlord-feat"><div class="landlord-feat-ico">📋</div><div><div class="landlord-feat-title">Dedicated agent dashboard</div><p class="landlord-feat-desc">Manage all your client listings in one place. Add, edit, remove — whenever you need to.</p></div></div>
-        <div class="landlord-feat"><div class="landlord-feat-ico">📸</div><div><div class="landlord-feat-title">Professional photo galleries</div><p class="landlord-feat-desc">Upload up to 6 photos per listing with a full gallery view for renters to browse.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">📸</div><div><div class="landlord-feat-title">Professional photo galleries</div><p class="landlord-feat-desc">Upload multiple photos per listing with a full gallery view for renters to browse.</p></div></div>
         <div class="landlord-feat"><div class="landlord-feat-ico">🔑</div><div><div class="landlord-feat-title">REAA licence support</div><p class="landlord-feat-desc">Add your REAA licence number to your profile so renters can verify your credentials.</p></div></div>
         <div class="landlord-feat"><div class="landlord-feat-ico">💰</div><div><div class="landlord-feat-title">A fraction of Trade Me's price</div><p class="landlord-feat-desc">Trade Me charges up to $99 per listing. When we introduce pricing, it'll be a fraction of that.</p></div></div>
       </div>
@@ -800,6 +811,14 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Suburb *</label><input id="f_s" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'f_s_list')"/><datalist id="f_s_list"></datalist></div>
           <div class="ff"><label>City *</label><select id="f_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="f_r" type="number" placeholder="550"/></div>
+          <div class="ff s2" style="margin-top:-4px;">
+            <button type="button" class="rent-est-btn" id="f_est_btn" onclick="getRentEstimate('f')">📊 Get AI Rent Estimate for this Area</button>
+            <div class="rent-est" id="f_est_panel">
+              <div class="rent-est-title" id="f_est_location">📍 Area Rental Insights</div>
+              <div class="rent-est-stats" id="f_est_stats" style="display:none;"></div>
+              <div class="rent-est-insight" id="f_est_insight"></div>
+            </div>
+          </div>
           <div class="ff"><label>Type *</label><select id="f_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
           <div class="ff"><label>Bedrooms *</label><select id="f_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
           <div class="ff"><label>Bathrooms *</label><select id="f_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
@@ -816,11 +835,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
             <div class="ai-hint" id="f_ai_hint">✨ AI is writing your description...</div>
           </div>
     <div class="ff s2">
-      <label>Property Photos (up to 6)</label>
+      <label>Property Photos</label>
       <div class="photo-upload-area" onclick="document.getElementById('ll_photos_input').click()">
         <div style="font-size:2rem;margin-bottom:6px;">📷</div>
         <div style="font-weight:600;color:#6B3A1F;font-size:.88rem;">Click to add photos</div>
-        <div style="font-size:.75rem;color:#A07850;margin-top:4px;">JPEG, PNG or WEBP · Max 5MB each</div>
+        <div style="font-size:.75rem;color:#A07850;margin-top:4px;">Max 5MB each · JPEG, PNG or WEBP</div>
         <input type="file" id="ll_photos_input" accept="image/jpeg,image/jpg,image/png,image/webp,image/heic" multiple/>
       </div>
       <div id="ll_photos_grid" class="photo-grid"></div>
@@ -983,6 +1002,14 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Suburb *</label><input id="af_s" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'af_s_list')"/><datalist id="af_s_list"></datalist></div>
           <div class="ff"><label>City *</label><select id="af_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="af_r" type="number" placeholder="550"/></div>
+          <div class="ff s2" style="margin-top:-4px;">
+            <button type="button" class="rent-est-btn" id="af_est_btn" onclick="getRentEstimate('af')">📊 Get AI Rent Estimate for this Area</button>
+            <div class="rent-est" id="af_est_panel">
+              <div class="rent-est-title" id="af_est_location">📍 Area Rental Insights</div>
+              <div class="rent-est-stats" id="af_est_stats" style="display:none;"></div>
+              <div class="rent-est-insight" id="af_est_insight"></div>
+            </div>
+          </div>
           <div class="ff"><label>Type *</label><select id="af_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
           <div class="ff"><label>Bedrooms *</label><select id="af_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
           <div class="ff"><label>Bathrooms *</label><select id="af_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
@@ -999,11 +1026,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
             <div class="ai-hint" id="af_ai_hint">✨ AI is writing your description...</div>
           </div>
     <div class="ff s2">
-      <label>Property Photos (up to 6)</label>
+      <label>Property Photos</label>
       <div class="photo-upload-area" onclick="document.getElementById('al_photos_input').click()">
         <div style="font-size:2rem;margin-bottom:6px;">📷</div>
         <div style="font-weight:600;color:#6B3A1F;font-size:.88rem;">Click to add photos</div>
-        <div style="font-size:.75rem;color:#A07850;margin-top:4px;">JPEG, PNG or WEBP · Max 5MB each</div>
+        <div style="font-size:.75rem;color:#A07850;margin-top:4px;">Max 5MB each · JPEG, PNG or WEBP</div>
         <input type="file" id="al_photos_input" accept="image/jpeg,image/jpg,image/png,image/webp,image/heic" multiple/>
       </div>
       <div id="al_photos_grid" class="photo-grid"></div>
@@ -1058,11 +1085,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div class="ai-hint" id="rl_ai_hint">✨ AI is writing your description...</div>
     </div>
     <div class="ff s2">
-      <label>Room & House Photos (up to 6)</label>
+      <label>Room &amp; House Photos</label>
       <div class="photo-upload-area" onclick="document.getElementById('rl_photos_input').click()">
         <div style="font-size:2rem;margin-bottom:6px;">📷</div>
         <div style="font-weight:600;color:#6B3A1F;font-size:.88rem;">Click to add photos</div>
-        <div style="font-size:.75rem;color:#A07850;margin-top:4px;">JPEG, PNG or WEBP · Max 5MB each</div>
+        <div style="font-size:.75rem;color:#A07850;margin-top:4px;">Max 5MB each · JPEG, PNG or WEBP</div>
         <input type="file" id="rl_photos_input" accept="image/jpeg,image/jpg,image/png,image/webp,image/heic" multiple/>
       </div>
       <div id="rl_photos_grid" class="photo-grid"></div>
@@ -1152,7 +1179,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div class="photo-upload-area" onclick="document.getElementById('el_new_photos_input').click()" style="padding:14px;">
         <div style="font-size:1.5rem;margin-bottom:4px;">📷</div>
         <div style="font-weight:600;color:#6B3A1F;font-size:.82rem;">Click to add more photos</div>
-        <div style="font-size:.72rem;color:#A07850;margin-top:2px;">Up to 6 total · Max 5MB each</div>
+        <div style="font-size:.72rem;color:#A07850;margin-top:2px;">Max 5MB each · JPEG, PNG or WEBP</div>
         <input type="file" id="el_new_photos_input" accept="image/jpeg,image/jpg,image/png,image/webp,image/heic" multiple/>
       </div>
       <div id="el_new_photos_grid" class="photo-grid"></div>
@@ -2112,14 +2139,14 @@ var avatarFile = {};
 
 // ── MULTI-PHOTO UPLOADER ──────────────────────────────────────────────────────
 function initPhotoUploader(uid, maxPhotos) {
-  maxPhotos = maxPhotos || 6;
+  maxPhotos = maxPhotos || 20;
   photoFiles[uid] = [];
   var input = document.getElementById(uid + '_input');
   if (!input) return;
   input.addEventListener('change', function(e) {
     var files = Array.from(e.target.files);
     var remaining = maxPhotos - photoFiles[uid].length;
-    if (remaining <= 0) { showToast('Maximum ' + maxPhotos + ' photos allowed.'); return; }
+    if (remaining <= 0) { showToast('⚠️ You have reached the photo limit. Remove some to add more.'); return; }
     files = files.slice(0, remaining);
     // Validate size
     var valid = files.filter(function(f) { return f.size <= 5242880; });
@@ -2230,9 +2257,9 @@ async function uploadAvatar(uid, bucket, folder) {
 
 // Init all uploaders when DOM ready
 document.addEventListener('DOMContentLoaded', function() {
-  initPhotoUploader('ll_photos', 6);
-  initPhotoUploader('al_photos', 6);
-  initPhotoUploader('rl_photos', 6);
+  initPhotoUploader('ll_photos', 20);
+  initPhotoUploader('al_photos', 20);
+  initPhotoUploader('rl_photos', 20);
   initAvatarUploader('fp_avatar', '?');
   initAvatarUploader('rs_avatar', '?');
   photoFiles['el_new_photos'] = [];
@@ -2569,7 +2596,7 @@ document.getElementById('el_new_photos_input').addEventListener('change', functi
   var currentNew = photoFiles['el_new_photos'] || [];
   var total = existingUrls.length + currentNew.length;
   var remaining = 6 - total;
-  if (remaining <= 0) { showToast('Maximum 6 photos allowed. Remove some first.'); return; }
+  if (remaining <= 0) { showToast('You have reached the photo limit. Remove some to add more.'); return; }
   var files = Array.from(e.target.files).slice(0, remaining).filter(function(f) { return f.size <= 5242880; });
   photoFiles['el_new_photos'] = currentNew.concat(files);
   renderEditNewGrid();
@@ -2609,7 +2636,7 @@ async function doEditListing() {
     // Upload any new photos
     var u2 = getUser();
     var newUrls = await uploadPhotos('el_new_photos','listing-photos','listings/'+(u2?u2.id:'edit'));
-    var allPhotos = keptUrls.concat(newUrls).slice(0,6);
+    var allPhotos = keptUrls.concat(newUrls).slice(0,20);
     await sbq('PATCH','listings',{
       title:t, suburb:s, city:c, rent:parseFloat(r),
       type:ty, beds:b, baths:ba,
@@ -2940,6 +2967,72 @@ async function generateRoomDescription() {
     btn.disabled = false;
     btn.textContent = '✨ AI Generate';
     hint.style.display = 'none';
+  }
+}
+
+
+
+// ════════════════════════════════════════════
+// AI RENT ESTIMATOR
+// ════════════════════════════════════════════
+
+async function getRentEstimate(prefix) {
+  var fieldMap = {
+    f:  { suburb: 'f_s', city: 'f_c', type: 'f_ty', btn: 'f_est_btn', panel: 'f_est_panel', location: 'f_est_location', stats: 'f_est_stats', insight: 'f_est_insight' },
+    af: { suburb: 'af_s', city: 'af_c', type: 'af_ty', btn: 'af_est_btn', panel: 'af_est_panel', location: 'af_est_location', stats: 'af_est_stats', insight: 'af_est_insight' }
+  };
+  var f = fieldMap[prefix];
+  var suburb = document.getElementById(f.suburb).value.trim();
+  var city   = document.getElementById(f.city).value;
+  var type   = document.getElementById(f.type).value;
+
+  if (!city) { showToast('⚠️ Please select a city first!'); return; }
+
+  var btn    = document.getElementById(f.btn);
+  var panel  = document.getElementById(f.panel);
+  var locEl  = document.getElementById(f.location);
+  var statsEl = document.getElementById(f.stats);
+  var insightEl = document.getElementById(f.insight);
+
+  btn.disabled = true;
+  btn.textContent = '📊 Fetching estimate...';
+  panel.style.display = 'block';
+  locEl.textContent = '📍 Loading rental insights for ' + (suburb || city) + '...';
+  statsEl.style.display = 'none';
+  insightEl.textContent = '';
+
+  try {
+    var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/rent-estimate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ suburb: suburb || null, city: city, type: type || null })
+    });
+    var data = await res.json();
+
+    var location = data.location || (suburb || city);
+    locEl.textContent = '📍 Rental insights — ' + location + (type ? ' · ' + type : '');
+
+    // Show our own listings data if available
+    if (data.ownData && data.ownData.count > 0) {
+      var od = data.ownData;
+      statsEl.innerHTML =
+        '<div class="rent-est-stat"><div class="rent-est-stat-n">$' + od.avg + '</div><div class="rent-est-stat-l">Avg /week on FindMyNest</div></div>' +
+        '<div class="rent-est-stat"><div class="rent-est-stat-n">$' + od.min + '</div><div class="rent-est-stat-l">Lowest listed</div></div>' +
+        '<div class="rent-est-stat"><div class="rent-est-stat-n">$' + od.max + '</div><div class="rent-est-stat-l">Highest listed</div></div>';
+      statsEl.style.display = 'grid';
+    } else {
+      statsEl.style.display = 'none';
+    }
+
+    if (data.insight) {
+      insightEl.innerHTML = '<strong style="color:#3D1F0D;">🤖 AI Market Insight:</strong><br/>' + data.insight;
+    }
+
+  } catch(err) {
+    insightEl.textContent = 'Could not load estimate. Please try again.';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '📊 Get AI Rent Estimate for this Area';
   }
 }
 
