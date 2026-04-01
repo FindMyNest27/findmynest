@@ -2857,19 +2857,17 @@ async function generateDescription(prefix) {
     var furnished = document.getElementById(f.furn).value;
     var title = document.getElementById(f.title).value.trim() || type + ' in ' + suburb;
     var prompt = 'Write a warm 80-120 word New Zealand rental listing description in a friendly Kiwi tone. No bullet points, no price, no address. Just the paragraph.\nProperty: ' + title + ', ' + suburb + ', ' + city + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. Pets: ' + pets + '. ' + furnished + '. $' + rent + '/week.';
-    var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/ai-listing', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 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' },
-      body: JSON.stringify({ model: 'llama-3.1-8b-instant', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 300 })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: document.getElementById(f.title).value.trim(), suburb: suburb, city: city, rent: rent, type: type, beds: document.getElementById(f.beds).value, baths: document.getElementById(f.baths).value, park: document.getElementById(f.park).value, pets: document.getElementById(f.pets).value, furnished: document.getElementById(f.furn).value })
     });
     var data = await res.json();
-    var description = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
-    if (description) {
-      document.getElementById(f.desc).value = description.trim();
+    if (data.description) {
+      document.getElementById(f.desc).value = data.description;
       showToast('✨ Ka pai! AI description generated — feel free to edit it!');
     } else {
-      var errMsg = data && data.error && data.error.message ? data.error.message : 'Could not generate. Try again!';
-      showToast('⚠️ ' + errMsg);
+      showToast('⚠️ ' + (data.error || 'Could not generate. Try again!'));
     }
   } catch(err) {
     console.error('AI error:', err);
