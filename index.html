@@ -810,6 +810,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff s2"><label>Title *</label><input id="f_t" placeholder="e.g. Sunny 3BR House in Tauranga"/></div>
           <div class="ff"><label>Suburb *</label><input id="f_s" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'f_s_list')"/><datalist id="f_s_list"></datalist></div>
           <div class="ff"><label>City *</label><select id="f_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
+          <div class="ff"><label>Type *</label><select id="f_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
+          <div class="ff"><label>Bedrooms *</label><select id="f_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+          <div class="ff"><label>Bathrooms *</label><select id="f_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="f_r" type="number" placeholder="550"/></div>
           <div class="ff s2" style="margin-top:-4px;">
             <button type="button" class="rent-est-btn" id="f_est_btn" onclick="getRentEstimate('f')">📊 Get AI Rent Estimate for this Area</button>
@@ -819,9 +822,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
               <div class="rent-est-insight" id="f_est_insight"></div>
             </div>
           </div>
-          <div class="ff"><label>Type *</label><select id="f_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
-          <div class="ff"><label>Bedrooms *</label><select id="f_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
-          <div class="ff"><label>Bathrooms *</label><select id="f_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
+          <div class="ff s2">
+            <div style="background:#FFF8F4;border:1.5px solid #F2D4C0;border-radius:10px;padding:10px 14px;font-size:.78rem;color:#6B3A1F;line-height:1.6;">
+              ⚠️ <strong>Estimates only.</strong> AI rent estimates are based on general NZ market knowledge and FindMyNest listing data. Always do your own research to verify current market rates before setting your rent.
+            </div>
+          </div>
           <div class="ff"><label>Parking</label><select id="f_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
           <div class="ff"><label>Available From *</label><input id="f_av" type="date"/></div>
           <div class="ff"><label>Pets</label><select id="f_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
@@ -1001,6 +1006,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff s2"><label>Title *</label><input id="af_t" placeholder="e.g. Modern 2BR in Mount Maunganui"/></div>
           <div class="ff"><label>Suburb *</label><input id="af_s" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'af_s_list')"/><datalist id="af_s_list"></datalist></div>
           <div class="ff"><label>City *</label><select id="af_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
+          <div class="ff"><label>Type *</label><select id="af_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
+          <div class="ff"><label>Bedrooms *</label><select id="af_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+          <div class="ff"><label>Bathrooms *</label><select id="af_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="af_r" type="number" placeholder="550"/></div>
           <div class="ff s2" style="margin-top:-4px;">
             <button type="button" class="rent-est-btn" id="af_est_btn" onclick="getRentEstimate('af')">📊 Get AI Rent Estimate for this Area</button>
@@ -1010,9 +1018,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
               <div class="rent-est-insight" id="af_est_insight"></div>
             </div>
           </div>
-          <div class="ff"><label>Type *</label><select id="af_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
-          <div class="ff"><label>Bedrooms *</label><select id="af_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
-          <div class="ff"><label>Bathrooms *</label><select id="af_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
+          <div class="ff s2">
+            <div style="background:#FFF8F4;border:1.5px solid #F2D4C0;border-radius:10px;padding:10px 14px;font-size:.78rem;color:#6B3A1F;line-height:1.6;">
+              ⚠️ <strong>Estimates only.</strong> AI rent estimates are based on general NZ market knowledge and FindMyNest listing data. Always do your own research to verify current market rates before setting your rent.
+            </div>
+          </div>
           <div class="ff"><label>Parking</label><select id="af_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
           <div class="ff"><label>Available From *</label><input id="af_av" type="date"/></div>
           <div class="ff"><label>Pets</label><select id="af_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
@@ -3025,7 +3035,7 @@ async function getRentEstimate(prefix) {
     }
 
     if (data.insight) {
-      insightEl.innerHTML = '<strong style="color:#3D1F0D;">🤖 AI Market Insight:</strong><br/>' + data.insight;
+      insightEl.innerHTML = '<strong style="color:#3D1F0D;">🤖 AI Market Insight:</strong><br/>' + data.insight + '<br/><span style="font-size:.72rem;color:#A07850;display:block;margin-top:8px;">⚠️ Estimates only — based on general NZ market knowledge and FindMyNest listings. Always verify current market rates independently.</span>';
     }
 
   } catch(err) {
