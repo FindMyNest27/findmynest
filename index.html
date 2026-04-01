@@ -2817,7 +2817,6 @@ document.getElementById('agentsSignupBtn2').addEventListener('click', function()
 // ════════════════════════════════════════════
 
 async function generateDescription(prefix) {
-  // Map prefix to field IDs
   var fields = {
     f:  { title:'f_t', suburb:'f_s', city:'f_c', rent:'f_r', type:'f_ty', beds:'f_b', baths:'f_ba', park:'f_pk', pets:'f_pt', furn:'f_fu', desc:'f_d', btn:'f_ai_gen', hint:'f_ai_hint' },
     af: { title:'af_t', suburb:'af_s', city:'af_c', rent:'af_r', type:'af_ty', beds:'af_b', baths:'af_ba', park:'af_pk', pets:'af_pt', furn:'af_fu', desc:'af_d', btn:'af_ai_gen', hint:'af_ai_hint' },
@@ -2831,7 +2830,7 @@ async function generateDescription(prefix) {
   var type   = document.getElementById(f.type).value;
 
   if (!suburb || !city || !rent || !type) {
-    showToast('⚠️ Please fill in suburb, city, rent and type first so AI knows what to write!');
+    showToast('⚠️ Please fill in suburb, city, rent and type first!');
     return;
   }
 
@@ -2842,31 +2841,35 @@ async function generateDescription(prefix) {
   hint.style.display = 'block';
 
   try {
-    var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/generate-listing', {
+    var beds      = document.getElementById(f.beds).value;
+    var baths     = document.getElementById(f.baths).value;
+    var park      = document.getElementById(f.park).value;
+    var pets      = document.getElementById(f.pets).value;
+    var furnished = document.getElementById(f.furn).value;
+    var title     = document.getElementById(f.title).value.trim() || type + ' in ' + suburb;
+
+    var prompt = 'You are a professional New Zealand property copywriter. Write a compelling, warm and honest rental listing description. Friendly Kiwi tone. 80-120 words. No bullet points. No price or address. Just the description paragraph.\n\nProperty: ' + title + '. ' + type + ' in ' + suburb + ', ' + city + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. Pets: ' + pets + '. ' + furnished + '. $' + rent + '/week.\n\nWrite only the description.';
+
+    var res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyA9GxeLkn1uJAsP4Np4GgQzeJWfjN1isaE', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        title:     document.getElementById(f.title).value.trim(),
-        suburb:    suburb,
-        city:      city,
-        rent:      rent,
-        type:      type,
-        beds:      document.getElementById(f.beds).value,
-        baths:     document.getElementById(f.baths).value,
-        park:      document.getElementById(f.park).value,
-        pets:      document.getElementById(f.pets).value,
-        furnished: document.getElementById(f.furn).value
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.7, maxOutputTokens: 250 }
       })
     });
 
     var data = await res.json();
-    if (data.description) {
-      document.getElementById(f.desc).value = data.description;
-      showToast('✨ AI description generated! Feel free to edit it.');
+    var description = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text;
+
+    if (description) {
+      document.getElementById(f.desc).value = description.trim();
+      showToast('✨ Ka pai! AI description generated — feel free to edit it!');
     } else {
-      showToast('⚠️ Could not generate description. Please write it manually.');
+      showToast('⚠️ Could not generate description. Please try again or write it manually.');
     }
   } catch(err) {
+    console.error('AI error:', err);
     showToast('⚠️ AI generation failed. Please write the description manually.');
   } finally {
     btn.disabled = false;
