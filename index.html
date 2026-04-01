@@ -1052,7 +1052,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div class="ff"><label>Students OK?</label><select id="rl_students"><option value="Yes">Yes</option><option value="No">No students</option></select></div>
     <div class="ff s2"><label>House Vibe</label><select id="rl_vibe"><option value="Quiet & tidy">Quiet & tidy</option><option value="Social & outgoing">Social & outgoing</option><option value="Professional & working">Professional & working</option><option value="Mixed & relaxed">Mixed & relaxed</option><option value="Student house">Student house</option></select></div>
     <div class="ff s2"><label>About Your Current Flatmates</label><textarea id="rl_about_fm" rows="2" placeholder="e.g. We're two working professionals who enjoy cooking together on weekends and keeping the house clean. Looking for someone with a similar vibe..."></textarea></div>
-    <div class="ff s2"><label>Property Description *</label><textarea id="rl_desc" rows="3" placeholder="Describe the room and house — location, features, nearby transport, what makes it a great place to live..."></textarea></div>
+    <div class="ff s2">
+      <label style="display:flex;align-items:center;justify-content:space-between;">Property Description * <button type="button" class="ai-btn" id="rl_ai_gen" onclick="generateRoomDescription()">✨ AI Generate</button></label>
+      <textarea id="rl_desc" rows="3" placeholder="Describe the room and house — or click ✨ AI Generate!"></textarea>
+      <div class="ai-hint" id="rl_ai_hint">✨ AI is writing your description...</div>
+    </div>
     <div class="ff s2">
       <label>Room & House Photos (up to 6)</label>
       <div class="photo-upload-area" onclick="document.getElementById('rl_photos_input').click()">
@@ -2871,6 +2875,66 @@ async function generateDescription(prefix) {
     }
   } catch(err) {
     console.error('AI error:', err);
+    showToast('⚠️ AI generation failed. Please write the description manually.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✨ AI Generate';
+    hint.style.display = 'none';
+  }
+}
+
+
+
+// AI ROOM DESCRIPTION GENERATOR
+async function generateRoomDescription() {
+  var suburb  = document.getElementById('rl_suburb').value.trim();
+  var city    = document.getElementById('rl_city').value;
+  var rent    = document.getElementById('rl_rent').value;
+  var rtype   = document.getElementById('rl_rtype').value;
+  var bills   = document.getElementById('rl_bills').value;
+  var furn    = document.getElementById('rl_furn').value;
+  var rooms   = document.getElementById('rl_rooms').value;
+  var flatmates = document.getElementById('rl_flatmates').value;
+  var vibe    = document.getElementById('rl_vibe').value;
+  var pets    = document.getElementById('rl_pets').value;
+  var smoke   = document.getElementById('rl_smoke').value;
+
+  if (!suburb || !city || !rent || !rtype) {
+    showToast('⚠️ Please fill in suburb, city, rent and room type first!');
+    return;
+  }
+
+  var btn  = document.getElementById('rl_ai_gen');
+  var hint = document.getElementById('rl_ai_hint');
+  btn.disabled = true;
+  btn.textContent = '✨ Writing...';
+  hint.style.display = 'block';
+
+  try {
+    var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/ai-listing', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: rtype + ' in shared home',
+        suburb: suburb,
+        city: city,
+        rent: rent,
+        type: 'Room — ' + rtype,
+        beds: flatmates + ' current flatmates in a ' + rooms + '-bedroom home',
+        baths: 'shared',
+        park: 'not specified',
+        pets: pets,
+        furnished: furn + '. Bills: ' + bills + '. House vibe: ' + vibe + '. Smoking: ' + smoke
+      })
+    });
+    var data = await res.json();
+    if (data.description) {
+      document.getElementById('rl_desc').value = data.description;
+      showToast('✨ Ka pai! AI description generated — feel free to edit it!');
+    } else {
+      showToast('⚠️ ' + (data.error || 'Could not generate. Try again!'));
+    }
+  } catch(err) {
     showToast('⚠️ AI generation failed. Please write the description manually.');
   } finally {
     btn.disabled = false;
