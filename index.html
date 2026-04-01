@@ -2850,26 +2850,26 @@ async function generateDescription(prefix) {
 
     var prompt = 'You are a professional New Zealand property copywriter. Write a compelling, warm and honest rental listing description. Friendly Kiwi tone. 80-120 words. No bullet points. No price or address. Just the description paragraph.\n\nProperty: ' + title + '. ' + type + ' in ' + suburb + ', ' + city + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. Pets: ' + pets + '. ' + furnished + '. $' + rent + '/week.\n\nWrite only the description.';
 
-    var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/generate-listing', {
+    var beds = document.getElementById(f.beds).value;
+    var baths = document.getElementById(f.baths).value;
+    var park = document.getElementById(f.park).value;
+    var pets = document.getElementById(f.pets).value;
+    var furnished = document.getElementById(f.furn).value;
+    var title = document.getElementById(f.title).value.trim() || type + ' in ' + suburb;
+    var prompt = 'Write a warm 80-120 word New Zealand rental listing description in a friendly Kiwi tone. No bullet points, no price, no address. Just the paragraph.\nProperty: ' + title + ', ' + suburb + ', ' + city + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. Pets: ' + pets + '. ' + furnished + '. $' + rent + '/week.';
+    var res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCyG2d09fShNLE_wDvfVa9UZ1BwnLDzOlQ', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: document.getElementById(f.title).value.trim(),
-        suburb: suburb, city: city, rent: rent, type: type,
-        beds: document.getElementById(f.beds).value,
-        baths: document.getElementById(f.baths).value,
-        park: document.getElementById(f.park).value,
-        pets: document.getElementById(f.pets).value,
-        furnished: document.getElementById(f.furn).value
-      })
+      body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: { temperature: 0.7, maxOutputTokens: 300 } })
     });
-
     var data = await res.json();
-    if (data.description) {
-      document.getElementById(f.desc).value = data.description;
+    var description = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text;
+    if (description) {
+      document.getElementById(f.desc).value = description.trim();
       showToast('✨ Ka pai! AI description generated — feel free to edit it!');
     } else {
-      showToast('⚠️ ' + (data.error || 'Could not generate. Try again!'));
+      var errMsg = data && data.error && data.error.message ? data.error.message : 'Could not generate. Try again!';
+      showToast('⚠️ ' + errMsg);
     }
   } catch(err) {
     console.error('AI error:', err);
