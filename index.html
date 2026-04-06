@@ -2971,16 +2971,7 @@ async function generateDescription(prefix) {
     var pets      = document.getElementById(f.pets).value;
     var furnished = document.getElementById(f.furn).value;
     var title     = document.getElementById(f.title).value.trim() || type + ' in ' + suburb;
-
-    var prompt = 'You are a professional New Zealand property copywriter. Write a compelling, warm and honest rental listing description. Friendly Kiwi tone. 80-120 words. No bullet points. No price or address. Just the description paragraph.\n\nProperty: ' + title + '. ' + type + ' in ' + suburb + ', ' + city + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. Pets: ' + pets + '. ' + furnished + '. $' + rent + '/week.\n\nWrite only the description.';
-
-    var beds = document.getElementById(f.beds).value;
-    var baths = document.getElementById(f.baths).value;
-    var park = document.getElementById(f.park).value;
-    var pets = document.getElementById(f.pets).value;
-    var furnished = document.getElementById(f.furn).value;
-    var title = document.getElementById(f.title).value.trim() || type + ' in ' + suburb;
-    var prompt = 'Write a warm 80-120 word New Zealand rental listing description in a friendly Kiwi tone. No bullet points, no price, no address. Just the paragraph.\nProperty: ' + title + ', ' + suburb + ', ' + city + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. Pets: ' + pets + '. ' + furnished + '. $' + rent + '/week.';
+    var prompt    = 'Write a warm 80-120 word New Zealand rental listing description in a friendly Kiwi tone. No bullet points, no price, no address. Just the paragraph.\nProperty: ' + title + ', ' + suburb + ', ' + city + '. ' + type + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. Pets: ' + pets + '. ' + furnished + '. $' + rent + '/week.';
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/ai-listing', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
