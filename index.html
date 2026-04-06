@@ -1696,7 +1696,7 @@ async function loadAgentListings(){
       return '<div style="background:#FAF0DC;border-radius:14px;padding:18px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">'+
         '<div><div style="font-weight:700;color:#3D1F0D;margin-bottom:4px;">'+l.title+'</div>'+
         '<div style="font-size:.82rem;color:#6B3A1F;">'+l.suburb+', '+l.city+' · $'+l.rent+'/wk · '+l.beds+' bed · '+l.type+'</div></div>'+
-        '<div style="display:flex;gap:6px;"><button class="edb" onclick="openEditListing(\x27'+l.id+'\x27)">Edit ✏️</button><button onclick="doRemoveListing('+l.id+',\x27agent\x27)" style="background:none;border:1.5px solid #C85A2E;color:#C85A2E;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.8rem;">Remove</button></div>'+
+        '<div style="display:flex;gap:6px;"><button class="edb" onclick="openEditListing(\x27'+l.id+'\x27)">Edit ✏️</button><button class="rmb" onclick="doRemove(\x27'+l.id+'\x27)">Remove ✕</button></div>'+
         '</div>';
     }).join('');
   }catch(e){c.innerHTML='<div style="text-align:center;padding:18px;color:#C85A2E;">Error loading listings.</div>';}
@@ -1778,7 +1778,10 @@ async function doRemove(id){
   if(!confirm('⚠️ Remove this listing? This cannot be undone.'))return;
   try{
     await fetch(SB_URL+'/rest/v1/listings?id=eq.'+id,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
-    showToast('🗑️ Listing removed!');loadMyListings();renderListings();
+    showToast('🗑️ Listing removed!');
+    var u=getUser();
+    if(u && u.type==='agent'){loadAgentListings();}else{loadMyListings();}
+    renderListings();
   }catch(err){showToast('⚠️ Could not remove. Try again.');}
 }
 
@@ -1846,9 +1849,9 @@ async function viewListing(id){
       '</div>'+
       '<p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;margin-bottom:16px;">'+l.description+'</p>'+
       '<div style="background:#F7F3EE;border-radius:13px;padding:16px;">'+
-      '<div style="font-weight:700;margin-bottom:5px;">📞 Contact Landlord</div>'+
-      '<p style="color:#6B3A1F;font-size:.86rem;margin-bottom:11px;">Contact the landlord directly to arrange a viewing.</p>'+
-      '<a href="mailto:'+l.email+'" class="bp" style="display:inline-block;text-decoration:none;font-size:.86rem;padding:10px 22px;">✉️ Email '+l.name+'</a></div>'+
+      '<div style="font-weight:700;margin-bottom:5px;">📞 '+(l.is_agency?'Contact Agent':'Contact Landlord')+'</div>'+
+      '<p style="color:#6B3A1F;font-size:.86rem;margin-bottom:11px;">'+(l.is_agency?'Contact the agent directly to arrange a viewing.':'Contact the landlord directly to arrange a viewing.')+'</p>'+
+      '<a href="mailto:'+l.email+'" class="bp" style="display:inline-block;text-decoration:none;font-size:.86rem;padding:10px 22px;">✉️ Email '+(l.is_agency?l.name+' ('+l.agency_name+')':l.name)+'</a></div>'+
       '<p style="font-size:.7rem;color:#6B3A1F;margin-top:9px;line-height:1.5;">FindMyNest is a listing platform only. Please get independent legal advice before signing any tenancy agreement.</p>';
     openModal('detailMod');
   }catch(err){showToast('Could not load listing.');}
@@ -2951,7 +2954,7 @@ async function generateDescription(prefix) {
   var type   = document.getElementById(f.type).value;
 
   if (!suburb || !city || !rent || !type) {
-    showToast('⚠️ Please fill in suburb, city, rent and type first!');
+    showToast('⚠️ Please fill in suburb, city, type and rent first — then click ✨ AI Generate.');
     return;
   }
 
