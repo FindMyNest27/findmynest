@@ -968,6 +968,13 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div id="renterSavedRooms"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved rooms yet — browse the Flatmates page and tap 💛 to wishlist rooms! 🥝</div></div>
     </div>
     <div class="dash-section">
+      <div class="dash-section-title" style="display:flex;align-items:center;justify-content:space-between;">
+        🧑 My Flatmate Profile
+        <button class="dadd" id="renterCreateProfileBtn" style="font-size:.8rem;padding:8px 16px;">+ Create Profile</button>
+      </div>
+      <div id="renterFlatmateProfile"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">Loading your profile... 🥝</div></div>
+    </div>
+    <div class="dash-section">
       <div class="dash-section-title">🏡 Browse All Listings</div>
       <div id="renterListings"><div style="text-align:center;padding:18px;color:#6B3A1F;font-size:.88rem;">Loading listings... 🥝</div></div>
     </div>
@@ -2131,10 +2138,12 @@ async function submitFlatmateProfile(){
   var move=document.getElementById('fp_move').value;
   var about=document.getElementById('fp_about').value.trim();
   if(!name||!email||!age||!occ||!city||!bmax||!move||!about){showToast('⚠️ Please fill in all required fields.');return;}
-  var btn=document.getElementById('fp_submit');btn.textContent='Creating...';btn.disabled=true;
+  var isEditing = window._editingProfileId ? true : false;
+  var btn=document.getElementById('fp_submit');
+  btn.textContent=isEditing?'Saving...':'Creating...';btn.disabled=true;
   try{
     var fpAvatarUrl = await uploadAvatar('fp_avatar','profile-photos','avatars');
-    await sbq('POST','flatmate_profiles',{
+    var profileData = {
       email:email,name:name,phone:document.getElementById('fp_phone').value.trim()||null,
       age:parseInt(age),gender:document.getElementById('fp_gender').value,
       occupation:occ,city:city,
@@ -2149,12 +2158,25 @@ async function submitFlatmateProfile(){
       about_me:about,
       ideal_flatmates:document.getElementById('fp_ideal').value.trim()||null,
       references_available:document.getElementById('fp_refs').value,
-      photo_url:fpAvatarUrl,
       status:'active'
-    });
-    showToast('🥝 Ka pai! Your flatmate profile is live!');
+    };
+    if(fpAvatarUrl) profileData.photo_url = fpAvatarUrl;
+    if(isEditing){
+      await sbq('PATCH','flatmate_profiles',profileData,'?id=eq.'+window._editingProfileId);
+      showToast('✅ Ka pai! Your flatmate profile has been updated!');
+    } else {
+      await sbq('POST','flatmate_profiles',profileData);
+      showToast('🥝 Ka pai! Your flatmate profile is live!');
+    }
+    window._editingProfileId = null;
     closeAllModals();
-    fmTab('profiles');
+    // If logged in as renter, reload dashboard; otherwise show profiles tab
+    var u = getUser();
+    if(u && u.type === 'renter'){
+      await loadMyFlatmateProfile();
+    } else {
+      fmTab('profiles');
+    }
   }catch(e){
     if(e.message.indexOf('duplicate')>-1||e.message.indexOf('unique')>-1){showToast('⚠️ A profile with this email already exists.');}
     else showToast('⚠️ Something went wrong. Please try again.');
@@ -2977,7 +2999,9 @@ async function generateDescription(prefix) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: document.getElementById(f.title).value.trim(), suburb: suburb, city: city, rent: rent, type: type, beds: document.getElementById(f.beds).value, baths: document.getElementById(f.baths).value, park: document.getElementById(f.park).value, pets: document.getElementById(f.pets).value, furnished: document.getElementById(f.furn).value })
     });
-    var data = await res.json();
+    var rawText = await res.text();
+    var data = {};
+    try { data = JSON.parse(rawText); } catch(e) { data = { error: 'Bad response: ' + rawText.slice(0,100) }; }
     if (data.description) {
       document.getElementById(f.desc).value = data.description;
       showToast('✨ Ka pai! AI description generated — feel free to edit it!');
@@ -2986,7 +3010,7 @@ async function generateDescription(prefix) {
     }
   } catch(err) {
     console.error('AI error:', err);
-    showToast('⚠️ AI generation failed. Please write the description manually.');
+    showToast('⚠️ ' + String(err));
   } finally {
     btn.disabled = false;
     btn.textContent = '✨ AI Generate';
@@ -3241,6 +3265,136 @@ async function checkCompatibility(roomId) {
     document.getElementById('compatError').textContent = 'Could not check compatibility. Please try again.';
   }
 }
+
+
+
+// ════════════════════════════════════════════
+// RENTER DASHBOARD
+// ════════════════════════════════════════════
+
+async function loadRenterDashboard() {
+  var u = getUser();
+  if (!u) return;
+
+  // Load saved listings count + cards
+  try {
+    var saved = await sbq('GET','saved_listings',null,'?renter_email=eq.'+encodeURIComponent(u.email));
+    document.getElementById('renterSavedCount').textContent = saved ? saved.length : 0;
+    var sc = document.getElementById('renterSavedListings');
+    if (!saved || !saved.length) {
+      sc.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved listings yet — browse below and tap 💛 to save! 🥝</div>';
+    } else {
+      var ids = saved.map(function(s){return s.listing_id;}).join(',');
+      var listings = await sbq('GET','listings',null,'?id=in.('+ids+')&status=eq.active');
+      if (!listings || !listings.length) {
+        sc.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved listings yet. 🥝</div>';
+      } else {
+        sc.innerHTML = listings.map(function(l){
+          return '<div class="mlrow" style="cursor:pointer;" onclick="viewListing(\x27'+l.id+'\x27)"><div><div class="mltit">'+l.title+'</div><div class="mlmet">📍 '+l.suburb+', '+l.city+' &nbsp;•&nbsp; 🛏 '+l.beds+' bed &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk</div></div><button onclick="event.stopPropagation();unsaveListing(\x27'+l.id+'\x27)" style="background:none;border:none;cursor:pointer;font-size:1.1rem;flex-shrink:0;">💔</button></div>';
+        }).join('');
+      }
+    }
+  } catch(e) { console.error('Saved listings error:', e); }
+
+  // Load saved rooms count + cards
+  try {
+    var savedRooms = await sbq('GET','saved_rooms',null,'?user_email=eq.'+encodeURIComponent(u.email));
+    document.getElementById('renterSavedRoomsCount').textContent = savedRooms ? savedRooms.length : 0;
+    await loadSavedRooms(u);
+  } catch(e) { console.error('Saved rooms error:', e); }
+
+  // Load flatmate profile
+  await loadMyFlatmateProfile();
+
+  // Load browse listings
+  loadRenterListings();
+}
+
+async function loadMyFlatmateProfile() {
+  var u = getUser();
+  if (!u) return;
+  var c = document.getElementById('renterFlatmateProfile');
+  var btn = document.getElementById('renterCreateProfileBtn');
+  try {
+    var profiles = await sbq('GET','flatmate_profiles',null,'?email=eq.'+encodeURIComponent(u.email)+'&limit=1');
+    if (!profiles || !profiles.length) {
+      c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No flatmate profile yet — create one so room listers can find you! 🧑</div>';
+      if (btn) btn.style.display = 'inline-flex';
+      return;
+    }
+    var p = profiles[0];
+    if (btn) btn.style.display = 'none';
+    c.innerHTML =
+      '<div style="background:#FAF0DC;border-radius:14px;padding:18px 20px;margin-bottom:12px;">'+
+        '<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">'+
+          (p.photo_url ? '<img src="'+p.photo_url+'" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;"/>' :
+            '<div style="width:56px;height:56px;border-radius:50%;background:#E8724A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;font-weight:700;flex-shrink:0;">'+(p.name?p.name[0].toUpperCase():'?')+'</div>')+
+          '<div style="flex:1;">'+
+            '<div style="font-weight:700;font-size:1rem;color:#3D1F0D;">'+p.name+'</div>'+
+            '<div style="font-size:.82rem;color:#6B3A1F;">'+( p.occupation||'')+(p.age?' · Age '+p.age:'')+'</div>'+
+            '<div style="font-size:.78rem;color:#E8724A;margin-top:2px;">📍 '+p.city+(p.suburb_pref?' · '+p.suburb_pref:'')+'</div>'+
+          '</div>'+
+          '<div style="display:flex;gap:8px;flex-shrink:0;">'+
+            '<button class="edb" onclick="openEditFlatmateProfile('+p.id+')">Edit ✏️</button>'+
+            '<button onclick="deleteMyFlatmateProfile('+p.id+')" style="background:none;border:1.5px solid #C85A2E;color:#C85A2E;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.8rem;">Remove ✕</button>'+
+          '</div>'+
+        '</div>'+
+        '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:.8rem;color:#6B3A1F;margin-bottom:12px;">'+
+          '<div>💰 $'+(p.budget_min||0)+' – $'+(p.budget_max||'?')+'/wk</div>'+
+          '<div>🐾 Pets: '+(p.has_pets||'No')+'</div>'+
+          '<div>🚬 Smoker: '+(p.smoker||'No')+'</div>'+
+          '<div>💑 Couple: '+(p.couple||'No')+'</div>'+
+          '<div>📅 Move: '+(p.move_date||'Flexible')+'</div>'+
+          '<div>⏱ Stay: '+(p.stay_length||'Flexible')+'</div>'+
+        '</div>'+
+        (p.about_me ? '<div style="font-size:.85rem;color:#6B3A1F;line-height:1.6;border-top:1px solid #F2D4C0;padding-top:10px;">'+p.about_me+'</div>' : '')+
+      '</div>';
+  } catch(e) { c.innerHTML = '<div style="text-align:center;padding:18px;color:#C85A2E;">Could not load profile.</div>'; }
+}
+
+async function deleteMyFlatmateProfile(id) {
+  if (!confirm('⚠️ Remove your flatmate profile? This cannot be undone.')) return;
+  try {
+    await fetch(SB_URL+'/rest/v1/flatmate_profiles?id=eq.'+id, {method:'DELETE', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
+    showToast('🗑️ Flatmate profile removed.');
+    var btn = document.getElementById('renterCreateProfileBtn');
+    if (btn) btn.style.display = 'inline-flex';
+    await loadMyFlatmateProfile();
+  } catch(e) { showToast('⚠️ Could not remove profile. Try again.'); }
+}
+
+function openEditFlatmateProfile(id) {
+  // Reload the create profile modal pre-filled with existing data
+  sbq('GET','flatmate_profiles',null,'?id=eq.'+id+'&limit=1').then(function(profiles) {
+    if (!profiles || !profiles.length) return;
+    var p = profiles[0];
+    openFlatmateProfileModal();
+    // Pre-fill fields after modal opens
+    setTimeout(function() {
+      var fields = {
+        'fp_name': p.name, 'fp_email': p.email, 'fp_phone': p.phone,
+        'fp_age': p.age, 'fp_gender': p.gender, 'fp_occ': p.occupation,
+        'fp_city': p.city, 'fp_suburb': p.suburb_pref,
+        'fp_bmin': p.budget_min, 'fp_bmax': p.budget_max,
+        'fp_move': p.move_date, 'fp_stay': p.stay_length,
+        'fp_pets': p.has_pets, 'fp_smoke': p.smoker, 'fp_couple': p.couple,
+        'fp_about': p.about_me, 'fp_ideal': p.ideal_flatmates
+      };
+      Object.keys(fields).forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && fields[id] !== null && fields[id] !== undefined) el.value = fields[id];
+      });
+      // Store ID for update
+      window._editingProfileId = id;
+    }, 100);
+  });
+}
+
+// Wire up create profile button in dashboard
+document.getElementById('renterCreateProfileBtn').addEventListener('click', function() {
+  window._editingProfileId = null;
+  openFlatmateProfileModal();
+});
 
 
 </script>
