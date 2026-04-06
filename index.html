@@ -337,9 +337,56 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 .match-score-ring{width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;font-weight:700;font-size:1.6rem;color:#fff;flex-shrink:0}
 .match-positive{color:#16a34a;font-size:.82rem;margin:3px 0;display:flex;gap:6px;align-items:flex-start}
 .match-concern{color:#dc2626;font-size:.82rem;margin:3px 0;display:flex;gap:6px;align-items:flex-start}
+
+/* ONE-SHOT HERO BIRD */
+#heroBird {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 46px;
+  height: 46px;
+  display: none;
+  filter: drop-shadow(0 3px 8px rgba(232,114,74,.35));
+  transition: transform 0.1s;
+}
+.hb-wing {
+  animation: hbWingFlap 0.32s ease-in-out infinite alternate;
+  transform-origin: 50% 55%;
+}
+.hb-wing-r {
+  animation: hbWingFlapR 0.32s ease-in-out infinite alternate;
+  transform-origin: 50% 55%;
+}
+@keyframes hbWingFlap {
+  from { transform: rotate(-30deg); }
+  to   { transform: rotate(10deg) scaleY(0.65); }
+}
+@keyframes hbWingFlapR {
+  from { transform: rotate(30deg); }
+  to   { transform: rotate(-10deg) scaleY(0.65); }
+}
 </style>
 </head>
 <body>
+
+<!-- ONE-SHOT HERO BIRD -->
+<svg id="heroBird" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g class="hb-wing">
+    <ellipse cx="28" cy="34" rx="18" ry="7" fill="#FF9A5C" transform="rotate(-15 28 34)"/>
+    <ellipse cx="22" cy="36" rx="12" ry="5" fill="#E8724A" transform="rotate(-18 22 36)"/>
+  </g>
+  <g class="hb-wing-r">
+    <ellipse cx="52" cy="34" rx="18" ry="7" fill="#FF9A5C" transform="rotate(15 52 34)"/>
+    <ellipse cx="58" cy="36" rx="12" ry="5" fill="#E8724A" transform="rotate(18 58 36)"/>
+  </g>
+  <ellipse cx="40" cy="40" rx="12" ry="9" fill="#E8724A"/>
+  <circle cx="40" cy="29" r="8" fill="#E8724A"/>
+  <circle cx="43" cy="27" r="2.2" fill="white"/>
+  <circle cx="43.8" cy="27" r="1.1" fill="#7a2a00"/>
+  <polygon points="48,28 54,30 48,32" fill="#FFD580"/>
+  <polygon points="28,42 18,48 30,46" fill="#C85A2E"/>
+  <polygon points="30,44 19,52 31,49" fill="#E8724A"/>
+</svg>
 
 <nav>
   <a class="nl" id="navLogo">
@@ -363,7 +410,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <div class="hc">
     <div>
       <div class="hbadge"><div class="hdot"></div> NZ's Newest Rental Marketplace, powered by AI</div>
-      <h1 class="ht">Find your<br/><span>perfect nest</span><br/>in Aotearoa New Zealand</h1>
+      <h1 class="ht">Find your<br/><span>perfect <span id="nestWord" style="position:relative;display:inline-block;">nest<span id="nestT" style="position:absolute;right:0;bottom:0;width:1px;height:1px;pointer-events:none;"></span></span></span><br/>in Aotearoa New Zealand</h1>
       <p class="hs">The fairer, simpler way to rent in NZ. Built for Kiwi landlords and renters — no ridiculous fees, no drama.</p>
       <div class="ha">
         <button class="bp" id="browseBtnHero">Browse Listings</button>
@@ -3644,6 +3691,89 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
   <div id="compatError" style="display:none;text-align:center;padding:20px;color:#dc2626;font-size:.9rem;"></div>
 </div>
+
+<script>
+// ONE-SHOT BIRD: flies in from left, lands on top of the "t" in "Nest", perches briefly, then flies off to the right. Runs once on page load.
+(function() {
+  var bird = document.getElementById('heroBird');
+  var nestWord = document.getElementById('nestWord');
+  if (!bird || !nestWord) return;
+
+  // Wait for fonts/layout to settle
+  window.addEventListener('load', function() {
+    setTimeout(runBird, 600);
+  });
+
+  function runBird() {
+    var rect = nestWord.getBoundingClientRect();
+    // The "t" is the last character — sit just above the top-right of the word
+    var targetX = rect.right - 28;   // near the "t" at end of "nest"
+    var targetY = rect.top - 48;     // just above the top of the letter
+
+    var bw = 46; // bird width
+    var startX = -70;
+    var startY = targetY - 20;
+
+    // Show bird at start position
+    bird.style.display = 'block';
+    bird.style.left = startX + 'px';
+    bird.style.top  = startY + 'px';
+    bird.style.transform = 'scaleX(1)';
+    bird.style.transition = 'none';
+    bird.style.opacity = '1';
+
+    var wings = bird.querySelectorAll('.hb-wing, .hb-wing-r');
+
+    // Phase 1: Fly in to above the word (1.6s)
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        bird.style.transition = 'left 1.6s cubic-bezier(0.4,0,0.2,1), top 1.6s cubic-bezier(0.4,0,0.2,1)';
+        bird.style.left = targetX + 'px';
+        bird.style.top  = targetY + 'px';
+      });
+    });
+
+    // Phase 2: Land / perch (wings fold, slight bob down)
+    setTimeout(function() {
+      // Slow wing flap to stop
+      wings.forEach(function(w) { w.style.animationDuration = '0.9s'; });
+      bird.style.transition = 'top 0.25s ease-out';
+      bird.style.top = (targetY + 10) + 'px'; // settle down gently
+
+      // Fold wings after landing
+      setTimeout(function() {
+        wings.forEach(function(w) {
+          w.style.animationPlayState = 'paused';
+          w.style.transform = 'rotate(0deg) scaleY(1)';
+          w.style.transition = 'transform 0.3s ease';
+        });
+
+        // Tiny head-bob
+        bird.style.transition = 'top 0.18s ease-in-out';
+        setTimeout(function() { bird.style.top = (targetY + 6) + 'px'; }, 100);
+        setTimeout(function() { bird.style.top = (targetY + 10) + 'px'; }, 280);
+        setTimeout(function() { bird.style.top = (targetY + 6) + 'px'; }, 460);
+        setTimeout(function() { bird.style.top = (targetY + 10) + 'px'; }, 640);
+
+        // Phase 3: Take off and fly right (after perching ~1.2s)
+        setTimeout(function() {
+          wings.forEach(function(w) {
+            w.style.animationPlayState = 'running';
+            w.style.animationDuration = '0.28s';
+          });
+          bird.style.transition = 'left 2.2s cubic-bezier(0.4,0,0.6,1), top 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease 1.8s';
+          bird.style.left = (window.innerWidth + 80) + 'px';
+          bird.style.top  = (targetY - 40) + 'px';
+          bird.style.opacity = '0';
+          // Hide after done
+          setTimeout(function() { bird.style.display = 'none'; }, 2700);
+        }, 1300);
+
+      }, 350);
+    }, 1700);
+  }
+})();
+</script>
 
 </body>
 </html>
