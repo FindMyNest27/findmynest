@@ -327,6 +327,13 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 .match-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:none;border-radius:50px;padding:9px 16px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
 .match-btn:hover{opacity:.9;transform:translateY(-1px)}
 .match-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.rtab{flex:1;background:none;border:none;border-radius:9px;padding:9px 6px;font-size:.82rem;font-weight:600;color:#6B3A1F;cursor:pointer;transition:all .2s;}
+.active-rtab{background:#fff;color:#E8724A;box-shadow:0 1px 6px rgba(0,0,0,.08);}
+.rpanel{animation:fadeIn .2s ease;}
+.interest-tag{display:inline-flex;align-items:center;gap:6px;background:#E8724A;color:#fff;border-radius:50px;padding:6px 12px;font-size:.78rem;font-weight:600;}
+.interest-tag button{background:none;border:none;color:#fff;cursor:pointer;font-size:.9rem;padding:0;line-height:1;}
+.interest-suggest{background:#FAF0DC;border:1.5px solid #D4B896;color:#6B3A1F;border-radius:50px;padding:5px 12px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.interest-suggest:hover{background:#E8724A;color:#fff;border-color:#E8724A;}
 .match-score-ring{width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;font-weight:700;font-size:1.6rem;color:#fff;flex-shrink:0}
 .match-positive{color:#16a34a;font-size:.82rem;margin:3px 0;display:flex;gap:6px;align-items:flex-start}
 .match-concern{color:#dc2626;font-size:.82rem;margin:3px 0;display:flex;gap:6px;align-items:flex-start}
@@ -948,36 +955,104 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <button class="lgout-btn" id="renterLogoutBtn">Log out</button>
   </div>
   <div class="dash-content">
-    <div class="dash-header">
-      <div class="mbadge">🔍 Renter Dashboard</div>
-      <div class="dash-welcome" id="renterWelcomeName">Kia ora! 🥝</div>
-      <div class="dash-sub">Browse, save and track the listings you love.</div>
-    </div>
-    <div class="dash-grid" style="grid-template-columns:repeat(4,1fr);">
-      <div class="dash-stat"><div class="dash-stat-n" id="renterSavedCount">0</div><div class="dash-stat-l">Saved Listings</div></div>
-      <div class="dash-stat"><div class="dash-stat-n" id="renterSavedRoomsCount">0</div><div class="dash-stat-l">Saved Rooms</div></div>
-      <div class="dash-stat"><div class="dash-stat-n" id="renterRegionStat">—</div><div class="dash-stat-l">Searching In</div></div>
-      <div class="dash-stat"><div class="dash-stat-n" id="renterBudgetStat">—</div><div class="dash-stat-l">Max Budget /wk</div></div>
-    </div>
-    <div class="dash-section">
-      <div class="dash-section-title">💛 Saved Listings</div>
-      <div id="renterSavedListings"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved listings yet — browse below and tap 💛 to save! 🥝</div></div>
-    </div>
-    <div class="dash-section">
-      <div class="dash-section-title">🏠 Saved Rooms</div>
-      <div id="renterSavedRooms"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved rooms yet — browse the Flatmates page and tap 💛 to wishlist rooms! 🥝</div></div>
-    </div>
-    <div class="dash-section">
-      <div class="dash-section-title" style="display:flex;align-items:center;justify-content:space-between;">
-        🧑 My Flatmate Profile
-        <button class="dadd" id="renterCreateProfileBtn" style="font-size:.8rem;padding:8px 16px;">+ Create Profile</button>
+
+    <!-- PROFILE HERO CARD -->
+    <div id="renterProfileHero" style="background:linear-gradient(135deg,#3D1F0D,#6B3A1F);border-radius:20px;padding:28px 24px;margin-bottom:24px;color:#fff;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div style="position:relative;flex-shrink:0;">
+        <div id="renterAvatarRing" style="width:80px;height:80px;border-radius:50%;background:#E8724A;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;overflow:hidden;border:3px solid rgba(255,255,255,.3);">
+          <img id="renterAvatarImg" src="" style="width:100%;height:100%;object-fit:cover;display:none;" />
+          <span id="renterAvatarInitial">?</span>
+        </div>
+        <label for="renterAvatarUpload" style="position:absolute;bottom:-2px;right:-2px;background:#E8724A;border:2px solid #fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7rem;" title="Change photo">📷</label>
+        <input type="file" id="renterAvatarUpload" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="uploadRenterAvatar(this)"/>
       </div>
-      <div id="renterFlatmateProfile"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">Loading your profile... 🥝</div></div>
+      <div style="flex:1;min-width:180px;">
+        <div id="renterWelcomeName" style="font-size:1.4rem;font-weight:700;margin-bottom:4px;">Kia ora! 🥝</div>
+        <div id="renterProfileCity" style="font-size:.88rem;opacity:.8;margin-bottom:10px;"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button onclick="renterTab('profile')" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:6px 14px;font-size:.78rem;font-weight:600;cursor:pointer;">✏️ Edit Profile</button>
+          <button onclick="renterTab('saved')" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:6px 14px;font-size:.78rem;font-weight:600;cursor:pointer;">💛 Saved</button>
+          <button onclick="renterTab('browse')" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:6px 14px;font-size:.78rem;font-weight:600;cursor:pointer;">🏡 Browse</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;flex-shrink:0;">
+        <div style="text-align:center;"><div id="renterSavedCount" style="font-size:1.6rem;font-weight:700;">0</div><div style="font-size:.72rem;opacity:.7;">Saved</div></div>
+        <div style="text-align:center;"><div id="renterSavedRoomsCount" style="font-size:1.6rem;font-weight:700;">0</div><div style="font-size:.72rem;opacity:.7;">Rooms</div></div>
+        <div style="text-align:center;"><div id="renterBudgetStat" style="font-size:1.6rem;font-weight:700;">—</div><div style="font-size:.72rem;opacity:.7;">Max /wk</div></div>
+      </div>
     </div>
-    <div class="dash-section">
-      <div class="dash-section-title">🏡 Browse All Listings</div>
-      <div id="renterListings"><div style="text-align:center;padding:18px;color:#6B3A1F;font-size:.88rem;">Loading listings... 🥝</div></div>
+
+    <!-- TAB NAVIGATION -->
+    <div style="display:flex;gap:4px;margin-bottom:20px;background:#F7F3EE;border-radius:12px;padding:4px;">
+      <button id="rtab-profile" onclick="renterTab('profile')" class="rtab active-rtab">🧑 My Profile</button>
+      <button id="rtab-flatmate" onclick="renterTab('flatmate')" class="rtab">🤝 Flatmate Profile</button>
+      <button id="rtab-saved" onclick="renterTab('saved')" class="rtab">💛 Saved</button>
+      <button id="rtab-browse" onclick="renterTab('browse')" class="rtab">🏡 Browse</button>
     </div>
+
+    <!-- TAB: MY PROFILE -->
+    <div id="rpanel-profile" class="rpanel">
+      <div class="dash-section">
+        <div class="dash-section-title">👤 My Details</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" id="renterProfileForm">
+          <div class="ff"><label>Full Name</label><input id="rp_name" placeholder="Your name"/></div>
+          <div class="ff"><label>Email</label><input id="rp_email" placeholder="you@email.com" type="email"/></div>
+          <div class="ff"><label>Phone</label><input id="rp_phone" placeholder="021 123 4567"/></div>
+          <div class="ff"><label>City</label><select id="rp_city"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Palmerston North</option><option>Napier</option><option>New Plymouth</option><option>Nelson</option><option>Rotorua</option><option>Other</option></select></div>
+          <div class="ff"><label>Budget Min ($/wk)</label><input id="rp_bmin" type="number" placeholder="400"/></div>
+          <div class="ff"><label>Budget Max ($/wk)</label><input id="rp_bmax" type="number" placeholder="600"/></div>
+          <div class="ff"><label>Beds Needed</label><select id="rp_beds"><option value="">Any</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+          <div class="ff"><label>Move Date</label><input id="rp_move" type="date"/></div>
+          <div class="ff"><label>Pets</label><select id="rp_pets"><option value="No">No pets</option><option value="Yes">Have pets</option></select></div>
+        </div>
+        <button class="bful" onclick="saveRenterProfile()" style="max-width:200px;margin-top:16px;">Save Changes ✅</button>
+      </div>
+
+      <!-- INTERESTS -->
+      <div class="dash-section">
+        <div class="dash-section-title">🎯 My Interests</div>
+        <p style="font-size:.84rem;color:#6B3A1F;margin-bottom:14px;">Tap to add interests — these show on your flatmate profile so room listers get to know you.</p>
+        <div id="interestTags" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input id="interestInput" placeholder="Add an interest..." style="border:1.5px solid #D4B896;border-radius:50px;padding:8px 14px;font-size:.82rem;outline:none;background:#FAF0DC;width:200px;" onkeydown="if(event.key==='Enter'){addInterest();event.preventDefault();}"/>
+          <button onclick="addInterest()" style="background:#E8724A;color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">+ Add</button>
+        </div>
+        <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;" id="interestSuggestions"></div>
+      </div>
+    </div>
+
+    <!-- TAB: FLATMATE PROFILE -->
+    <div id="rpanel-flatmate" class="rpanel" style="display:none;">
+      <div class="dash-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div class="dash-section-title" style="margin:0;">🤝 My Flatmate Profile</div>
+          <button class="dadd" id="renterCreateProfileBtn" style="font-size:.8rem;padding:8px 16px;">+ Create Profile</button>
+        </div>
+        <p style="font-size:.84rem;color:#6B3A1F;margin-bottom:16px;">Your public flatmate profile — visible to room listers so they can find you.</p>
+        <div id="renterFlatmateProfile"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">Loading... 🥝</div></div>
+      </div>
+    </div>
+
+    <!-- TAB: SAVED -->
+    <div id="rpanel-saved" class="rpanel" style="display:none;">
+      <div class="dash-section">
+        <div class="dash-section-title">💛 Saved Listings</div>
+        <div id="renterSavedListings"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved listings yet — browse and tap 💛 to save! 🥝</div></div>
+      </div>
+      <div class="dash-section">
+        <div class="dash-section-title">🏠 Saved Rooms</div>
+        <div id="renterSavedRooms"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved rooms yet! 🥝</div></div>
+      </div>
+    </div>
+
+    <!-- TAB: BROWSE -->
+    <div id="rpanel-browse" class="rpanel" style="display:none;">
+      <div class="dash-section">
+        <div class="dash-section-title">🏡 Browse All Listings</div>
+        <div id="renterListings"><div style="text-align:center;padding:18px;color:#6B3A1F;font-size:.88rem;">Loading listings... 🥝</div></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1427,9 +1502,6 @@ function openDashboard(){
   if(!u){openAuth();return;}
   closeAllModals();
   if(u.type==='renter'){
-    document.getElementById('renterWelcomeName').textContent='Kia ora, '+u.name+'! 🥝';
-    document.getElementById('renterRegionStat').textContent=u.city||'Any';
-    document.getElementById('renterBudgetStat').textContent=u.budget_max?'$'+u.budget_max:'Open';
     loadRenterDashboard();
     showPage('renterDashPage');
   } else if(u.type==='agent'){
@@ -3282,42 +3354,174 @@ async function checkCompatibility(roomId) {
 // RENTER DASHBOARD
 // ════════════════════════════════════════════
 
+var _renterInterests = [];
+
+var INTEREST_SUGGESTIONS = [
+  'Cooking 🍳','Coffee ☕','Hiking 🥾','Netflix 🎬','Gaming 🎮','Gym 💪',
+  'Reading 📚','Music 🎵','Yoga 🧘','Travel ✈️','Cycling 🚲','Surfing 🏄',
+  'Dogs 🐕','Cats 🐈','Arts & Crafts 🎨','Photography 📷','Gardening 🌱',
+  'Football ⚽','Rugby 🏉','Running 🏃','Wine 🍷','Socialising 🥂',
+  'DIY 🔧','Meditation 🧠','Beach 🏖️','Mountains 🏔️','Foodie 🍜'
+];
+
 async function loadRenterDashboard() {
   var u = getUser();
   if (!u) return;
 
-  // Load saved listings count + cards
+  // Welcome name + city
+  document.getElementById('renterWelcomeName').textContent = 'Kia ora, ' + u.name + '! 🥝';
+  if (u.city) document.getElementById('renterProfileCity').textContent = '📍 ' + u.city;
+
+  // Avatar
+  var img = document.getElementById('renterAvatarImg');
+  var initial = document.getElementById('renterAvatarInitial');
+  if (u.photo_url) {
+    img.src = u.photo_url; img.style.display = 'block'; initial.style.display = 'none';
+  } else {
+    initial.textContent = u.name ? u.name[0].toUpperCase() : '?';
+    img.style.display = 'none'; initial.style.display = 'block';
+  }
+
+  // Budget stat
+  document.getElementById('renterBudgetStat').textContent = u.budget_max ? '$'+u.budget_max : 'Open';
+
+  // Pre-fill profile form
+  var fields = {rp_name:u.name||'',rp_email:u.email||'',rp_phone:u.phone||'',rp_bmin:u.budget_min||'',rp_bmax:u.budget_max||'',rp_move:u.move_date||'',rp_pets:u.pets||'No'};
+  Object.keys(fields).forEach(function(id){var el=document.getElementById(id);if(el)el.value=fields[id];});
+  if(u.city){var sc=document.getElementById('rp_city');if(sc)sc.value=u.city;}
+  if(u.beds_needed){var sb=document.getElementById('rp_beds');if(sb)sb.value=u.beds_needed;}
+
+  // Load interests from flatmate profile
+  await loadMyFlatmateProfile();
+  renderInterestSuggestions();
+
+  // Load counts
   try {
     var saved = await sbq('GET','saved_listings',null,'?renter_email=eq.'+encodeURIComponent(u.email));
     document.getElementById('renterSavedCount').textContent = saved ? saved.length : 0;
-    var sc = document.getElementById('renterSavedListings');
+    var sc2 = document.getElementById('renterSavedListings');
     if (!saved || !saved.length) {
-      sc.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved listings yet — browse below and tap 💛 to save! 🥝</div>';
+      sc2.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved listings yet — browse and tap 💛 to save! 🥝</div>';
     } else {
       var ids = saved.map(function(s){return s.listing_id;}).join(',');
       var listings = await sbq('GET','listings',null,'?id=in.('+ids+')&status=eq.active');
-      if (!listings || !listings.length) {
-        sc.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved listings yet. 🥝</div>';
-      } else {
-        sc.innerHTML = listings.map(function(l){
-          return '<div class="mlrow" style="cursor:pointer;" onclick="viewListing(\x27'+l.id+'\x27)"><div><div class="mltit">'+l.title+'</div><div class="mlmet">📍 '+l.suburb+', '+l.city+' &nbsp;•&nbsp; 🛏 '+l.beds+' bed &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk</div></div><button onclick="event.stopPropagation();unsaveListing(\x27'+l.id+'\x27)" style="background:none;border:none;cursor:pointer;font-size:1.1rem;flex-shrink:0;">💔</button></div>';
-        }).join('');
-      }
+      sc2.innerHTML = listings && listings.length ? listings.map(function(l){
+        return '<div class="mlrow" style="cursor:pointer;" onclick="viewListing(\x27'+l.id+'\x27)">'+
+          '<div><div class="mltit">'+l.title+'</div><div class="mlmet">📍 '+l.suburb+', '+l.city+' &nbsp;•&nbsp; 🛏 '+l.beds+' bed &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk</div></div>'+
+          '<button onclick="event.stopPropagation();unsaveListing(\x27'+l.id+'\x27)" style="background:none;border:none;cursor:pointer;font-size:1.1rem;flex-shrink:0;" title="Remove">💔</button></div>';
+      }).join('') : '<div style="text-align:center;padding:18px;color:#6B3A1F;font-size:.9rem;">Your saved listings have expired or been removed.</div>';
     }
-  } catch(e) { console.error('Saved listings error:', e); }
+  } catch(e) { console.error('Saved listings:', e); }
 
-  // Load saved rooms count + cards
   try {
     var savedRooms = await sbq('GET','saved_rooms',null,'?user_email=eq.'+encodeURIComponent(u.email));
     document.getElementById('renterSavedRoomsCount').textContent = savedRooms ? savedRooms.length : 0;
     await loadSavedRooms(u);
-  } catch(e) { console.error('Saved rooms error:', e); }
+  } catch(e) { console.error('Saved rooms:', e); }
 
-  // Load flatmate profile
-  await loadMyFlatmateProfile();
-
-  // Load browse listings
   loadRenterListings();
+}
+
+function renterTab(tab) {
+  ['profile','flatmate','saved','browse'].forEach(function(t) {
+    document.getElementById('rpanel-'+t).style.display = t === tab ? 'block' : 'none';
+    var btn = document.getElementById('rtab-'+t);
+    if (btn) { btn.classList.toggle('active-rtab', t === tab); }
+  });
+}
+
+async function saveRenterProfile() {
+  var u = getUser();
+  if (!u) return;
+  var name = document.getElementById('rp_name').value.trim();
+  var phone = document.getElementById('rp_phone').value.trim();
+  var city = document.getElementById('rp_city').value;
+  var bmin = document.getElementById('rp_bmin').value;
+  var bmax = document.getElementById('rp_bmax').value;
+  var beds = document.getElementById('rp_beds').value;
+  var move = document.getElementById('rp_move').value;
+  var pets = document.getElementById('rp_pets').value;
+  if (!name) { showToast('⚠️ Name is required.'); return; }
+  try {
+    await sbq('PATCH','renters',{name:name,phone:phone||null,city:city||null,budget_min:bmin?parseFloat(bmin):null,budget_max:bmax?parseFloat(bmax):null,beds_needed:beds||null,move_date:move||null,pets:pets},'?email=eq.'+encodeURIComponent(u.email));
+    // Update localStorage session
+    var sess = JSON.parse(localStorage.getItem('fmn_u')||'{}');
+    Object.assign(sess,{name:name,phone:phone,city:city,budget_min:bmin,budget_max:bmax,beds_needed:beds,move_date:move,pets:pets});
+    localStorage.setItem('fmn_u', JSON.stringify(sess));
+    showToast('✅ Profile saved!');
+    document.getElementById('renterWelcomeName').textContent = 'Kia ora, ' + name + '! 🥝';
+    if (city) document.getElementById('renterProfileCity').textContent = '📍 ' + city;
+    if (bmax) document.getElementById('renterBudgetStat').textContent = '$' + bmax;
+    // Save interests to flatmate profile if exists
+    await saveInterests();
+  } catch(e) { showToast('⚠️ Could not save. Try again.'); }
+}
+
+async function uploadRenterAvatar(input) {
+  var u = getUser();
+  if (!input.files || !input.files[0]) return;
+  showToast('Uploading photo...');
+  try {
+    var url = await uploadAvatar('renterAvatarUpload','profile-photos','avatars');
+    if (url) {
+      await sbq('PATCH','renters',{photo_url:url},'?email=eq.'+encodeURIComponent(u.email));
+      var sess = JSON.parse(localStorage.getItem('fmn_u')||'{}');
+      sess.photo_url = url; localStorage.setItem('fmn_u', JSON.stringify(sess));
+      var img = document.getElementById('renterAvatarImg');
+      img.src = url; img.style.display = 'block';
+      document.getElementById('renterAvatarInitial').style.display = 'none';
+      showToast('✅ Photo updated!');
+    }
+  } catch(e) { showToast('⚠️ Upload failed. Try again.'); }
+}
+
+function renderInterestSuggestions() {
+  var el = document.getElementById('interestSuggestions');
+  if (!el) return;
+  el.innerHTML = '<div style="font-size:.78rem;color:#6B3A1F;margin-bottom:6px;width:100%;">Quick add:</div>' +
+    INTEREST_SUGGESTIONS.filter(function(s){ return !_renterInterests.includes(s); }).slice(0,12).map(function(s){
+      return '<button class="interest-suggest" onclick="addInterestItem(this.dataset.v)" data-v="'+s+'">'+s+'</button>';
+    }).join('');
+}
+
+function renderInterestTags() {
+  var el = document.getElementById('interestTags');
+  if (!el) return;
+  el.innerHTML = _renterInterests.length ? _renterInterests.map(function(tag,i){
+    return '<div class="interest-tag">'+tag+'<button onclick="removeInterest('+i+')" title="Remove">✕</button></div>';
+  }).join('') : '<div style="font-size:.84rem;color:#A07850;">No interests added yet.</div>';
+  renderInterestSuggestions();
+}
+
+function addInterest() {
+  var input = document.getElementById('interestInput');
+  var val = (input.value||'').trim();
+  if (!val) return;
+  addInterestItem(val);
+  input.value = '';
+}
+
+function addInterestItem(val) {
+  if (_renterInterests.includes(val) || _renterInterests.length >= 20) return;
+  _renterInterests.push(val);
+  renderInterestTags();
+}
+
+function removeInterest(i) {
+  _renterInterests.splice(i, 1);
+  renderInterestTags();
+}
+
+async function saveInterests() {
+  var u = getUser();
+  if (!u) return;
+  try {
+    // Try to update existing flatmate profile with interests
+    var profiles = await sbq('GET','flatmate_profiles',null,'?email=eq.'+encodeURIComponent(u.email)+'&limit=1');
+    if (profiles && profiles.length) {
+      await sbq('PATCH','flatmate_profiles',{interests:_renterInterests},'?email=eq.'+encodeURIComponent(u.email));
+    }
+  } catch(e) { console.error('Interests save:', e); }
 }
 
 async function loadMyFlatmateProfile() {
@@ -3330,10 +3534,14 @@ async function loadMyFlatmateProfile() {
     if (!profiles || !profiles.length) {
       c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No flatmate profile yet — create one so room listers can find you! 🧑</div>';
       if (btn) btn.style.display = 'inline-flex';
+      renderInterestTags();
       return;
     }
     var p = profiles[0];
     if (btn) btn.style.display = 'none';
+    // Load interests
+    if (p.interests && Array.isArray(p.interests)) { _renterInterests = p.interests; }
+    renderInterestTags();
     c.innerHTML =
       '<div style="background:#FAF0DC;border-radius:14px;padding:18px 20px;margin-bottom:12px;">'+
         '<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">'+
