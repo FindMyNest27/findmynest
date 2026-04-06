@@ -2838,6 +2838,16 @@ async function toggleSaveRoom(roomId, btn) {
   } catch(e) { showToast('⚠️ Something went wrong.'); }
 }
 
+async function unsaveListing(listingId) {
+  var u = getUser();
+  if (!u) return;
+  try {
+    await sbq('DELETE','saved_listings',null,'?renter_email=eq.'+encodeURIComponent(u.email)+'&listing_id=eq.'+listingId);
+    showToast('Listing removed from saved.');
+    await loadRenterDashboard();
+  } catch(e) { showToast('⚠️ Could not remove. Try again.'); }
+}
+
 async function unsaveRoom(roomId) {
   var u = getUser();
   if (!u) return;
@@ -3390,10 +3400,13 @@ function openEditFlatmateProfile(id) {
   });
 }
 
-// Wire up create profile button in dashboard
-document.getElementById('renterCreateProfileBtn').addEventListener('click', function() {
-  window._editingProfileId = null;
-  openFlatmateProfileModal();
+// Wire up create profile button in dashboard - inside DOMContentLoaded to ensure DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  var rcp = document.getElementById('renterCreateProfileBtn');
+  if (rcp) rcp.addEventListener('click', function() {
+    window._editingProfileId = null;
+    openFlatmateProfileModal();
+  });
 });
 
 
