@@ -1215,6 +1215,24 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     </div>
     <button class="bful" id="llBtn">Log In 🏠</button>
     <p class="logk">No account? <a id="llToSignup">Sign up free</a></p>
+    <p class="logk"><a id="llForgot">Forgot your password?</a></p>
+  </div>
+
+  <!-- FORGOT PASSWORD STEP -->
+  <div id="stepFP" style="display:none;">
+    <div style="display:flex;align-items:center;gap:9px;margin-bottom:18px;"><button class="bbk" id="fpBack">←</button><div class="mbadge" style="margin:0;">🔑 Reset Password</div></div>
+    <div class="mtit">Forgot your password?</div>
+    <p class="msub">Enter your email and we'll send you a link to reset it.</p>
+    <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:12px;">
+      <div class="ff"><label>Email *</label><input id="fp_reset_e" type="email" placeholder="you@email.com"/></div>
+    </div>
+    <button class="bful" id="fpBtn">Send Reset Link 📧</button>
+    <div id="fpSuccess" style="display:none;text-align:center;padding:20px;">
+      <div style="font-size:2rem;margin-bottom:10px;">📬</div>
+      <div style="font-weight:700;color:#3D1F0D;margin-bottom:6px;">Check your inbox!</div>
+      <p style="font-size:.86rem;color:#6B3A1F;line-height:1.6;">We've sent a password reset link to your email. Click it to set a new password, then come back and log in.</p>
+    </div>
+    <p class="logk" style="margin-top:12px;"><a id="fpToLogin">Back to log in</a></p>
   </div>
   <div id="stepAS" style="display:none;">
     <div style="display:flex;align-items:center;gap:9px;margin-bottom:18px;"><button class="bbk" id="asBack">←</button><div class="mbadge" style="margin:0;background:#E8724A;color:#fff;">🏢 Agent Sign Up</div></div>
@@ -1561,7 +1579,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAllModa
 });
 
 // AUTH STEPS
-var ALL_STEPS=['step0','stepLS','stepLL','stepRS'];
+var ALL_STEPS=['step0','stepLS','stepLL','stepRS','stepFP'];
 function showStep(id){
   ALL_STEPS.forEach(function(s){var el=document.getElementById(s);if(el)el.style.display='none';});
   var t=document.getElementById(id);if(t)t.style.display='block';
@@ -1659,7 +1677,14 @@ document.getElementById('asToLogin').addEventListener('click',function(){showSte
 document.getElementById('asTerms').addEventListener('click',function(){openModal('termsMod');});
 document.getElementById('asPrivacy').addEventListener('click',function(){openModal('privacyMod');});
 document.getElementById('lsToLogin').addEventListener('click',function(){showStep('stepLL');});
-document.getElementById('llToSignup').addEventListener('click',function(){showStep('stepLS');});
+document.getElementById('llForgot').addEventListener('click',function(){
+  document.getElementById('fpSuccess').style.display='none';
+  document.getElementById('fp_reset_e').value='';
+  showStep('stepFP');
+});
+document.getElementById('fpBack').addEventListener('click',function(){showStep('stepLL');});
+document.getElementById('fpToLogin').addEventListener('click',function(){showStep('stepLL');});
+document.getElementById('fpBtn').addEventListener('click',doForgotPassword);
 document.getElementById('lsTerms').addEventListener('click',function(){openModal('termsMod');});
 document.getElementById('lsPrivacy').addEventListener('click',function(){openModal('privacyMod');});
 document.getElementById('rsTerms').addEventListener('click',function(){openModal('termsMod');});
@@ -1861,6 +1886,29 @@ async function doLogout() {
   hideAllPages();
   updateNav();
   showToast('👋 Logged out. See you soon! 🥝');
+}
+
+// ════════════════════════════════════════════
+// FORGOT PASSWORD
+// ════════════════════════════════════════════
+async function doForgotPassword() {
+  var e = document.getElementById('fp_reset_e').value.trim().toLowerCase();
+  if (!e) { showToast('⚠️ Please enter your email address.'); return; }
+  var btn = document.getElementById('fpBtn');
+  btn.textContent = 'Sending...'; btn.disabled = true;
+  try {
+    await fetch(SB_URL + '/auth/v1/recover', {
+      method: 'POST',
+      headers: {'apikey': SB_KEY, 'Content-Type': 'application/json'},
+      body: JSON.stringify({email: e})
+    });
+    // Always show success regardless — never reveal whether email exists (security best practice)
+    btn.style.display = 'none';
+    document.getElementById('fpSuccess').style.display = 'block';
+  } catch(err) {
+    showToast('⚠️ Something went wrong. Please try again.');
+    btn.textContent = 'Send Reset Link 📧'; btn.disabled = false;
+  }
 }
 
 // ════════════════════════════════════════════
