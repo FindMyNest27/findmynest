@@ -1897,12 +1897,23 @@ async function doForgotPassword() {
   var btn = document.getElementById('fpBtn');
   btn.textContent = 'Sending...'; btn.disabled = true;
   try {
-    await fetch(SB_URL + '/auth/v1/recover', {
+    // Step 1: Ask Supabase to generate the reset token
+    var recoverRes = await fetch(SB_URL + '/auth/v1/recover', {
       method: 'POST',
       headers: {'apikey': SB_KEY, 'Content-Type': 'application/json'},
-      body: JSON.stringify({email: e})
+      body: JSON.stringify({email: e, redirect_to: 'https://www.findmynest.co.nz'})
     });
-    // Always show success regardless — never reveal whether email exists (security best practice)
+    // Step 2: Send the email via our edge function using Resend directly
+    await fetch(SB_URL + '/functions/v1/send-email', {
+      method: 'POST',
+      headers: {'apikey': SB_KEY, 'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        type: 'recovery',
+        email: e,
+        confirmationUrl: 'https://www.findmynest.co.nz'
+      })
+    });
+    // Always show success — never reveal whether email exists
     btn.style.display = 'none';
     document.getElementById('fpSuccess').style.display = 'block';
   } catch(err) {
