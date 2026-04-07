@@ -4,6 +4,61 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>FindMyNest™ — NZ Rental Marketplace</title>
+
+<!-- SEO -->
+<meta name="description" content="FindMyNest is New Zealand's smart rental marketplace. Browse rentals, list your property for free, and let AI write your listing — no fuss, pure Kiwi."/>
+<meta name="keywords" content="NZ rental, New Zealand rentals, rent property NZ, find a flat NZ, rental listings New Zealand, Auckland rentals, Wellington rentals, Christchurch rentals, flatmates NZ"/>
+<meta name="author" content="FindMyNest"/>
+<link rel="canonical" href="https://www.findmynest.co.nz"/>
+
+<!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.findmynest.co.nz"/>
+<meta property="og:title" content="FindMyNest™ — NZ Rental Marketplace"/>
+<meta property="og:description" content="New Zealand's smart rental marketplace. Browse rentals, list your property for free, and let AI write your listing — no fuss, pure Kiwi."/>
+<meta property="og:image" content="https://www.findmynest.co.nz/og-image.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:site_name" content="FindMyNest"/>
+<meta property="og:locale" content="en_NZ"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:url" content="https://www.findmynest.co.nz"/>
+<meta name="twitter:title" content="FindMyNest™ — NZ Rental Marketplace"/>
+<meta name="twitter:description" content="New Zealand's smart rental marketplace. Browse rentals, list your property for free, and let AI write your listing — no fuss, pure Kiwi."/>
+<meta name="twitter:image" content="https://www.findmynest.co.nz/og-image.jpg"/>
+
+<!-- Structured Data (Google rich results) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "FindMyNest",
+  "url": "https://www.findmynest.co.nz",
+  "description": "New Zealand's smart rental marketplace with AI-powered listings.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.findmynest.co.nz/?search={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FindMyNest",
+    "url": "https://www.findmynest.co.nz",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.findmynest.co.nz/logo.png"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "hello@findmynest.co.nz",
+      "contactType": "customer support",
+      "areaServed": "NZ"
+    }
+  }
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Righteous&family=Abril+Fatface&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -595,20 +650,17 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       </div>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <button class="bp" id="fmShowRooms">Browse Rooms →</button>
-        <button class="bs" id="fmShowProfiles">Browse Flatmate Profiles</button>
       </div>
     </div>
 
     <!-- TABS -->
-    <div style="display:flex;gap:0;background:#F2E4C4;border-radius:14px;padding:4px;margin-bottom:32px;max-width:400px;">
+    <div style="display:flex;gap:0;background:#F2E4C4;border-radius:14px;padding:4px;margin-bottom:32px;max-width:200px;">
       <button id="fmTabRooms" onclick="fmTab('rooms')" style="flex:1;padding:10px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.88rem;background:#E8724A;color:#fff;transition:all .2s;">🏠 Rooms</button>
-      <button id="fmTabProfiles" onclick="fmTab('profiles')" style="flex:1;padding:10px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.88rem;background:transparent;color:#6B3A1F;transition:all .2s;">🧑 Flatmates</button>
     </div>
 
     <!-- POST BUTTONS -->
     <div style="display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;align-items:center;">
       <button class="bp" id="fmListRoom">+ List a Room</button>
-      <button class="bs" id="fmCreateProfile" style="border-color:#6B3A1F;color:#6B3A1F;">+ Create Flatmate Profile</button>
     </div>
     <!-- CONTEXTUAL HINT — shows when user clicks a button without being logged in -->
     <div id="fmHint" style="display:none;background:#FFF8F4;border:1.5px solid #F2D4C0;border-radius:14px;padding:16px 20px;margin-bottom:24px;font-size:.88rem;color:#6B3A1F;line-height:1.6;">
@@ -1032,7 +1084,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <!-- TAB NAVIGATION -->
     <div style="display:flex;gap:4px;margin-bottom:20px;background:#F7F3EE;border-radius:12px;padding:4px;">
       <button id="rtab-profile" onclick="renterTab('profile')" class="rtab active-rtab">🧑 My Profile</button>
-      <button id="rtab-flatmate" onclick="renterTab('flatmate')" class="rtab">🤝 Flatmate Profile</button>
       <button id="rtab-saved" onclick="renterTab('saved')" class="rtab">💛 Saved</button>
       <button id="rtab-browse" onclick="renterTab('browse')" class="rtab">🏡 Browse</button>
     </div>
@@ -1058,7 +1109,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <!-- INTERESTS -->
       <div class="dash-section">
         <div class="dash-section-title">🎯 My Interests</div>
-        <p style="font-size:.84rem;color:#6B3A1F;margin-bottom:14px;">Tap to add interests — these show on your flatmate profile so room listers get to know you.</p>
+        <p style="font-size:.84rem;color:#6B3A1F;margin-bottom:14px;">Tap to add interests — help landlords get to know you a little better. 🥝</p>
         <div id="interestTags" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;"></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <input id="interestInput" placeholder="Add an interest..." style="border:1.5px solid #D4B896;border-radius:50px;padding:8px 14px;font-size:.82rem;outline:none;background:#FAF0DC;width:200px;" onkeydown="if(event.key==='Enter'){addInterest();event.preventDefault();}"/>
@@ -1068,17 +1119,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       </div>
     </div>
 
-    <!-- TAB: FLATMATE PROFILE -->
-    <div id="rpanel-flatmate" class="rpanel" style="display:none;">
-      <div class="dash-section">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-          <div class="dash-section-title" style="margin:0;">🤝 My Flatmate Profile</div>
-          <button class="dadd" id="renterCreateProfileBtn" style="font-size:.8rem;padding:8px 16px;">+ Create Profile</button>
-        </div>
-        <p style="font-size:.84rem;color:#6B3A1F;margin-bottom:16px;">Your public flatmate profile — visible to room listers so they can find you.</p>
-        <div id="renterFlatmateProfile"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">Loading... 🥝</div></div>
-      </div>
-    </div>
 
     <!-- TAB: SAVED -->
     <div id="rpanel-saved" class="rpanel" style="display:none;">
@@ -1176,6 +1216,8 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div class="ff s2"><label>Full Name *</label><input id="rs_n" placeholder="e.g. Jane Smith"/></div>
       <div class="ff"><label>Email *</label><input id="rs_e" type="email" placeholder="you@email.com"/></div>
       <div class="ff"><label>Phone</label><input id="rs_ph" placeholder="021 123 4567"/></div>
+      <div class="ff"><label>Password *</label><input id="rs_p" type="password" placeholder="Min. 8 characters"/></div>
+      <div class="ff"><label>Confirm Password *</label><input id="rs_p2" type="password" placeholder="Repeat password"/></div>
       <div class="ff s2"><label>Looking in *</label><select id="rs_c"><option value="">Select region...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Anywhere in NZ</option></select></div>
       <div class="ff"><label>Min Budget $/wk</label><input id="rs_min" type="number" placeholder="400"/></div>
       <div class="ff"><label>Max Budget $/wk</label><input id="rs_max" type="number" placeholder="700"/></div>
@@ -1315,49 +1357,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     </div>
   </div>
   <button class="bful" id="rl_submit" style="margin-top:16px;">List My Room Free 🥝</button>
-</div>
-
-<!-- FLATMATE PROFILE MODAL -->
-<div class="mod" id="fmProfileMod" style="max-width:600px;width:96%;max-height:90vh;overflow-y:auto;">
-  <button class="mcl" id="fmProfileClose">✕</button>
-  <div class="mbadge">🧑 Flatmate Profile</div>
-  <div class="mtit">Create your flatmate profile</div>
-  <p class="msub">Tell room listers about yourself so they can find you. Always free.</p>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
-    <div class="ff s2"><label>Full Name *</label><input id="fp_name" placeholder="e.g. Alex Smith"/></div>
-    <div class="ff"><label>Email *</label><input id="fp_email" type="email" placeholder="you@email.com"/></div>
-    <div class="ff"><label>Phone</label><input id="fp_phone" placeholder="021 123 4567"/></div>
-    <div class="ff"><label>Age *</label><input id="fp_age" type="number" placeholder="e.g. 26" min="18" max="99"/></div>
-    <div class="ff"><label>Gender</label><select id="fp_gender"><option value="Prefer not to say">Prefer not to say</option><option value="Male">Male</option><option value="Female">Female</option><option value="Non-binary">Non-binary</option></select></div>
-    <div class="ff"><label>Occupation *</label><input id="fp_occ" placeholder="e.g. Nurse, Student, Software Developer"/></div>
-    <div class="ff"><label>Looking in *</label><select id="fp_city"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Anywhere in NZ</option></select></div>
-    <div class="ff"><label>Preferred Suburb</label><input id="fp_suburb" placeholder="Optional — e.g. Ponsonby"/></div>
-    <div class="ff"><label>Min Budget $/wk</label><input id="fp_bmin" type="number" placeholder="150"/></div>
-    <div class="ff"><label>Max Budget $/wk *</label><input id="fp_bmax" type="number" placeholder="300"/></div>
-    <div class="ff"><label>Move-in Date *</label><input id="fp_move" type="date"/></div>
-    <div class="ff"><label>Length of Stay</label><select id="fp_stay"><option value="Flexible">Flexible</option><option value="Short term (1-3 months)">Short term (1–3 months)</option><option value="Medium (3-6 months)">Medium (3–6 months)</option><option value="Long term (6+ months)">Long term (6+ months)</option></select></div>
-    <div class="ff"><label>I Have Pets?</label><select id="fp_pets"><option value="No">No pets</option><option value="Yes">Yes, I have pets</option></select></div>
-    <div class="ff"><label>I Smoke?</label><select id="fp_smoke"><option value="No">Non-smoker</option><option value="Outside">Outside only</option><option value="Yes">Yes</option></select></div>
-    <div class="ff"><label>Moving as a Couple?</label><select id="fp_couple"><option value="No">Just me</option><option value="Yes">Couple</option></select></div>
-    <div class="ff"><label>References Available?</label><select id="fp_refs"><option value="Yes">Yes — happy to provide</option><option value="No">Not currently</option></select></div>
-    <div class="ff s2"><label>About Me *</label><textarea id="fp_about" rows="3" placeholder="Tell potential flatmates about yourself — your lifestyle, work, hobbies, what kind of flatmate you are..."></textarea></div>
-    <div class="ff s2"><label>My Ideal Flatmates & Home</label><textarea id="fp_ideal" rows="2" placeholder="e.g. I'd love to live with other young professionals in a clean, social house. Happy to have house dinners occasionally but also respect everyone's space..."></textarea></div>
-    <div class="ff s2">
-      <label>Profile Photo (optional)</label>
-      <div class="avatar-upload">
-        <div class="avatar-preview" id="fp_avatar_preview" onclick="document.getElementById('fp_avatar_input').click()">
-          <span id="fp_avatar_initial">'?'</span>
-        </div>
-        <div>
-          <div style="font-weight:600;font-size:.88rem;color:#3D1F0D;margin-bottom:4px;">Upload a photo</div>
-          <div style="font-size:.78rem;color:#6B3A1F;line-height:1.5;">Helps landlords and flatmates feel confident.<br/>Max 3MB · JPEG or PNG</div>
-          <input type="file" id="fp_avatar_input" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none"/>
-        </div>
-      </div>
-      <div id="fp_avatar_bar" class="upload-progress" style="width:0;display:none;"></div>
-    </div>
-  </div>
-  <button class="bful" id="fp_submit" style="margin-top:16px;">Create My Profile 🧑</button>
 </div>
 
 
@@ -1657,156 +1656,244 @@ document.getElementById('footerContact').addEventListener('click',function(){ope
 document.getElementById('footerPrivacy').addEventListener('click',function(){openModal('privacyMod');});
 document.getElementById('footerTerms').addEventListener('click',function(){openModal('termsMod');});
 
-// SUPABASE
-async function sbq(method,table,data,filter){
-  filter=filter||'';
-  var headers={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
-  if(method==='POST') headers['Prefer']='return=representation';
-  if(method==='PATCH') headers['Prefer']='return=representation';
-  if(method==='DELETE') headers['Prefer']='return=representation';
-  var res=await fetch(SB_URL+'/rest/v1/'+table+filter,{
-    method:method,
-    headers:headers,
-    body:data?JSON.stringify(data):null
+// ════════════════════════════════════════════
+// SUPABASE CLIENT + AUTH
+// ════════════════════════════════════════════
+
+// Authenticated Supabase query — uses the live session token if available
+async function sbq(method, table, data, filter) {
+  filter = filter || '';
+  var token = SB_KEY; // fallback to anon key
+  try {
+    var sess = await sbAuth('GET_SESSION');
+    if (sess && sess.access_token) token = sess.access_token;
+  } catch(e) {}
+  var headers = {'apikey': SB_KEY, 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'};
+  if (method === 'POST') headers['Prefer'] = 'return=representation';
+  if (method === 'PATCH') headers['Prefer'] = 'return=representation';
+  if (method === 'DELETE') headers['Prefer'] = 'return=representation';
+  var res = await fetch(SB_URL + '/rest/v1/' + table + filter, {
+    method: method, headers: headers,
+    body: data ? JSON.stringify(data) : null
   });
-  if(!res.ok){var e=await res.text();throw new Error(e);}
-  return method==='GET'?res.json():res;
+  if (!res.ok) { var e = await res.text(); throw new Error(e); }
+  return method === 'GET' ? res.json() : res;
 }
 
-async function hashPw(pw){
-  var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(pw));
-  return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');
-}
-
-// LANDLORD SIGNUP
-async function doLandlordSignup(){
-  var n=document.getElementById('ls_n').value.trim();
-  var e=document.getElementById('ls_e').value.trim().toLowerCase();
-  var ph=document.getElementById('ls_ph').value.trim();
-  var p=document.getElementById('ls_p').value;
-  var p2=document.getElementById('ls_p2').value;
-  var tc=document.getElementById('ls_tc').checked;
-  if(!n||!e||!ph||!p){showToast('⚠️ Please fill in all required fields.');return;}
-  if(p!==p2){showToast('⚠️ Passwords do not match!');return;}
-  if(p.length<8){showToast('⚠️ Password must be at least 8 characters.');return;}
-  if(!tc){showToast('⚠️ Please agree to the Terms & Conditions.');return;}
-  var btn=document.getElementById('lsBtn');btn.textContent='Creating...';btn.disabled=true;
-  try{
-    var h=await hashPw(p);
-    await sbq('POST','landlords',{name:n,email:e,phone:ph,password_hash:h,status:'active'});
-    var res=await sbq('GET','landlords',null,'?email=eq.'+e);
-    setUser({id:res[0].id,name:res[0].name,email:res[0].email,type:'landlord'});
-    showToast('🥝 Ka pai! Account created!');
-    closeAllModals();
-    updateNav();
-    openDashboard();
-  }catch(err){
-    if(err.message.indexOf('duplicate')>-1||err.message.indexOf('unique')>-1){showToast('⚠️ Email already registered. Please log in.');showStep('stepLL');}
-    else showToast('⚠️ Something went wrong. Please try again.');
-  }finally{btn.textContent='Create My Free Account 🥝';btn.disabled=false;}
-}
-
-// LANDLORD LOGIN
-async function doLandlordLogin(){
-  var e=document.getElementById('ll_e').value.trim().toLowerCase();
-  var p=document.getElementById('ll_p').value;
-  if(!e||!p){showToast('⚠️ Please enter your email and password.');return;}
-  var btn=document.getElementById('llBtn');btn.textContent='Logging in...';btn.disabled=true;
-  try{
-    var h=await hashPw(p);
-    // Check landlords table first
-    var res=await sbq('GET','landlords',null,'?email=eq.'+e+'&password_hash=eq.'+h);
-    if(res&&res.length){
-      setUser({id:res[0].id,name:res[0].name,email:res[0].email,type:'landlord'});
-    } else {
-      // Check agents table
-      var ares=await sbq('GET','agents',null,'?email=eq.'+e+'&password_hash=eq.'+h);
-      if(ares&&ares.length){
-        setUser({id:ares[0].id,name:ares[0].name,email:ares[0].email,company:ares[0].company,role:ares[0].role,pm_range:ares[0].pm_range,type:'agent'});
-      } else {
-        showToast('⚠️ Incorrect email or password.');return;
-      }
+// Supabase Auth helper — wraps the Auth REST API
+async function sbAuth(action, payload) {
+  if (action === 'GET_SESSION') {
+    var stored = localStorage.getItem('sb_session');
+    if (!stored) return null;
+    var s = JSON.parse(stored);
+    // Refresh if expiring within 60s
+    if (s.expires_at && Date.now() / 1000 > s.expires_at - 60) {
+      try {
+        var r = await fetch(SB_URL + '/auth/v1/token?grant_type=refresh_token', {
+          method: 'POST',
+          headers: {'apikey': SB_KEY, 'Content-Type': 'application/json'},
+          body: JSON.stringify({refresh_token: s.refresh_token})
+        });
+        if (r.ok) { s = await r.json(); localStorage.setItem('sb_session', JSON.stringify(s)); }
+      } catch(e) {}
     }
-    var u=getUser();
-    showToast('🥝 Kia ora '+u.name+'! Welcome back!');
-    closeAllModals();
-    updateNav();
-    openDashboard();
-  }catch(err){showToast('⚠️ Something went wrong. Please try again.');}
-  finally{btn.textContent='Log In 🏠';btn.disabled=false;}
+    return s;
+  }
+  if (action === 'SIGNUP') {
+    var r = await fetch(SB_URL + '/auth/v1/signup', {
+      method: 'POST',
+      headers: {'apikey': SB_KEY, 'Content-Type': 'application/json'},
+      body: JSON.stringify({email: payload.email, password: payload.password})
+    });
+    var d = await r.json();
+    if (!r.ok) throw new Error(d.error_description || d.msg || 'Signup failed');
+    if (d.access_token) localStorage.setItem('sb_session', JSON.stringify(d));
+    return d;
+  }
+  if (action === 'LOGIN') {
+    var r = await fetch(SB_URL + '/auth/v1/token?grant_type=password', {
+      method: 'POST',
+      headers: {'apikey': SB_KEY, 'Content-Type': 'application/json'},
+      body: JSON.stringify({email: payload.email, password: payload.password})
+    });
+    var d = await r.json();
+    if (!r.ok) throw new Error(d.error_description || d.msg || 'Login failed');
+    localStorage.setItem('sb_session', JSON.stringify(d));
+    return d;
+  }
+  if (action === 'LOGOUT') {
+    var s = JSON.parse(localStorage.getItem('sb_session') || '{}');
+    if (s.access_token) {
+      await fetch(SB_URL + '/auth/v1/logout', {
+        method: 'POST',
+        headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + s.access_token}
+      }).catch(function(){});
+    }
+    localStorage.removeItem('sb_session');
+    return null;
+  }
 }
 
-// LOGOUT
-function doLogout(){clearUser();hideAllPages();updateNav();showToast('👋 Logged out. See you soon! 🥝');}
+// USER SESSION — backed by Supabase Auth session
+function getUser() { try { return JSON.parse(localStorage.getItem('fmn_u')); } catch(e) { return null; } }
+function setUser(u) { localStorage.setItem('fmn_u', JSON.stringify(u)); }
+function clearUser() { localStorage.removeItem('fmn_u'); localStorage.removeItem('sb_session'); }
 
-// RENTER SIGNUP
-async function doRenterSignup(){
-  var n=document.getElementById('rs_n').value.trim();
-  var e=document.getElementById('rs_e').value.trim().toLowerCase();
-  var c=document.getElementById('rs_c').value;
-  var tc=document.getElementById('rs_tc').checked;
-  if(!n||!e||!c){showToast('⚠️ Please fill in all required fields.');return;}
-  if(!tc){showToast('⚠️ Please agree to the Terms & Conditions.');return;}
-  var btn=document.getElementById('rsBtn');btn.textContent='Signing up...';btn.disabled=true;
-  try{
-    var bmin=parseFloat(document.getElementById('rs_min').value)||null;
-    var bmax=parseFloat(document.getElementById('rs_max').value)||null;
-    var beds=document.getElementById('rs_b').value||null;
-    var phone=document.getElementById('rs_ph').value.trim()||'';
-    var rsAvatarUrl=await uploadAvatar('rs_avatar','profile-photos','avatars');
-    await sbq('POST','renters',{name:n,email:e,phone:phone,city:c,budget_min:bmin,budget_max:bmax,beds_needed:beds,move_date:document.getElementById('rs_d').value||null,pets:document.getElementById('rs_pt').value,photo_url:rsAvatarUrl||null,status:'active'});
-    setUser({id:e,name:n,email:e,type:'renter',city:c,budget_max:bmax,beds_needed:beds,photo_url:rsAvatarUrl});
-    showToast('🥝 Ka pai! Welcome to FindMyNest!');
-    closeAllModals();
-    updateNav();
-    openDashboard();
-  }catch(err){
-    console.error('Renter signup error:',err);
-    if(err.message.indexOf('duplicate')>-1||err.message.indexOf('unique')>-1){showToast('⚠️ That email is already registered. Try logging in instead.');showStep('stepLL');}
-    else showToast('⚠️ Something went wrong: '+err.message);
-  }finally{btn.textContent='Sign Up Free 🔍';btn.disabled=false;}
+// ════════════════════════════════════════════
+// LANDLORD SIGNUP
+// ════════════════════════════════════════════
+async function doLandlordSignup() {
+  var n = document.getElementById('ls_n').value.trim();
+  var e = document.getElementById('ls_e').value.trim().toLowerCase();
+  var ph = document.getElementById('ls_ph').value.trim();
+  var p = document.getElementById('ls_p').value;
+  var p2 = document.getElementById('ls_p2').value;
+  var tc = document.getElementById('ls_tc').checked;
+  if (!n || !e || !ph || !p) { showToast('⚠️ Please fill in all required fields.'); return; }
+  if (p !== p2) { showToast('⚠️ Passwords do not match!'); return; }
+  if (p.length < 8) { showToast('⚠️ Password must be at least 8 characters.'); return; }
+  if (!tc) { showToast('⚠️ Please agree to the Terms & Conditions.'); return; }
+  var btn = document.getElementById('lsBtn'); btn.textContent = 'Creating...'; btn.disabled = true;
+  try {
+    // 1. Create Supabase Auth user
+    var authData = await sbAuth('SIGNUP', {email: e, password: p});
+    var uid = authData.user ? authData.user.id : (authData.id || null);
+    if (!uid) throw new Error('Auth signup failed');
+    // 2. Insert profile row linked to auth user
+    await sbq('POST', 'landlords', {auth_id: uid, name: n, email: e, phone: ph, status: 'active'});
+    await sbq('POST', 'user_profiles', {id: uid, user_type: 'landlord'});
+    var res = await sbq('GET', 'landlords', null, '?auth_id=eq.' + uid);
+    setUser({id: res[0].id, auth_id: uid, name: n, email: e, type: 'landlord'});
+    showToast('🥝 Ka pai! Account created! Check your email to verify.');
+    closeAllModals(); updateNav(); openDashboard();
+  } catch(err) {
+    if (err.message.indexOf('already registered') > -1 || err.message.indexOf('unique') > -1) { showToast('⚠️ Email already registered. Please log in.'); showStep('stepLL'); }
+    else showToast('⚠️ ' + (err.message || 'Something went wrong. Please try again.'));
+  } finally { btn.textContent = 'Create My Free Account 🥝'; btn.disabled = false; }
 }
 
-
-// AGENT SIGNUP
-async function doAgentSignup(){
-  var n=document.getElementById('as_n').value.trim();
-  var e=document.getElementById('as_e').value.trim().toLowerCase();
-  var ph=document.getElementById('as_ph').value.trim();
-  var co=document.getElementById('as_co').value.trim();
-  var role=document.getElementById('as_role').value;
-  var p=document.getElementById('as_p').value;
-  var p2=document.getElementById('as_p2').value;
-  var tc=document.getElementById('as_tc').checked;
-  if(!n||!e||!ph||!co||!role||!p){showToast('⚠️ Please fill in all required fields.');return;}
-  if(p!==p2){showToast('⚠️ Passwords do not match!');return;}
-  if(p.length<8){showToast('⚠️ Password must be at least 8 characters.');return;}
-  if(!tc){showToast('⚠️ Please agree to the Terms & Conditions.');return;}
-  var btn=document.getElementById('asBtn');btn.textContent='Creating...';btn.disabled=true;
-  try{
-    var h=await hashPw(p);
-    var lic=document.getElementById('as_lic').value.trim()||null;
-    var web=document.getElementById('as_web').value.trim()||null;
-    var pm=document.getElementById('as_pm').value||null;
-    await sbq('POST','agents',{name:n,email:e,phone:ph,company:co,role:role,licence:lic,website:web,pm_range:pm,password_hash:h,status:'active'});
-    var res=await sbq('GET','agents',null,'?email=eq.'+e);
-    setUser({id:res[0].id,name:res[0].name,email:res[0].email,company:co,role:role,pm_range:pm,type:'agent'});
-    showToast('🏢 Ka pai! Agent account created!');
-    closeAllModals();
-    updateNav();
-    openDashboard();
-  }catch(err){
-    if(err.message.indexOf('duplicate')>-1||err.message.indexOf('unique')>-1){showToast('⚠️ Email already registered. Please log in.');showStep('stepLL');}
+// ════════════════════════════════════════════
+// SHARED LOGIN (Landlord + Agent)
+// ════════════════════════════════════════════
+async function doLandlordLogin() {
+  var e = document.getElementById('ll_e').value.trim().toLowerCase();
+  var p = document.getElementById('ll_p').value;
+  if (!e || !p) { showToast('⚠️ Please enter your email and password.'); return; }
+  var btn = document.getElementById('llBtn'); btn.textContent = 'Logging in...'; btn.disabled = true;
+  try {
+    var authData = await sbAuth('LOGIN', {email: e, password: p});
+    var uid = authData.user ? authData.user.id : null;
+    if (!uid) throw new Error('Login failed');
+    // Check user type from profile
+    var profile = await sbq('GET', 'user_profiles', null, '?id=eq.' + uid);
+    if (!profile || !profile.length) throw new Error('Profile not found');
+    var userType = profile[0].user_type;
+    if (userType === 'landlord') {
+      var res = await sbq('GET', 'landlords', null, '?auth_id=eq.' + uid);
+      if (!res || !res.length) throw new Error('not found');
+      setUser({id: res[0].id, auth_id: uid, name: res[0].name, email: res[0].email, type: 'landlord'});
+    } else if (userType === 'agent') {
+      var res = await sbq('GET', 'agents', null, '?auth_id=eq.' + uid);
+      if (!res || !res.length) throw new Error('not found');
+      setUser({id: res[0].id, auth_id: uid, name: res[0].name, email: res[0].email, company: res[0].company, role: res[0].role, pm_range: res[0].pm_range, type: 'agent'});
+    } else if (userType === 'renter') {
+      var res = await sbq('GET', 'renters', null, '?auth_id=eq.' + uid);
+      if (!res || !res.length) throw new Error('not found');
+      setUser({id: res[0].id, auth_id: uid, name: res[0].name, email: res[0].email, type: 'renter', city: res[0].city, budget_max: res[0].budget_max, beds_needed: res[0].beds_needed, photo_url: res[0].photo_url});
+    }
+    var u = getUser();
+    showToast('🥝 Kia ora ' + u.name + '! Welcome back!');
+    closeAllModals(); updateNav(); openDashboard();
+  } catch(err) {
+    if (err.message.indexOf('Invalid login') > -1 || err.message.indexOf('not found') > -1) showToast('⚠️ Incorrect email or password.');
     else showToast('⚠️ Something went wrong. Please try again.');
-  }finally{btn.textContent='Create Agent Account 🏢';btn.disabled=false;}
+  } finally { btn.textContent = 'Log In 🏠'; btn.disabled = false; }
 }
 
-// AGENT LOGIN (uses same landlord login table fallback — checks agents table)
-async function doAgentLogin(e,p){
-  var h=await hashPw(p);
-  var res=await sbq('GET','agents',null,'?email=eq.'+e+'&password_hash=eq.'+h);
-  if(!res||!res.length)throw new Error('not found');
-  setUser({id:res[0].id,name:res[0].name,email:res[0].email,company:res[0].company,role:res[0].role,pm_range:res[0].pm_range,type:'agent'});
+// ════════════════════════════════════════════
+// LOGOUT
+// ════════════════════════════════════════════
+async function doLogout() {
+  await sbAuth('LOGOUT');
+  clearUser();
+  hideAllPages();
+  updateNav();
+  showToast('👋 Logged out. See you soon! 🥝');
+}
+
+// ════════════════════════════════════════════
+// RENTER SIGNUP
+// ════════════════════════════════════════════
+async function doRenterSignup() {
+  var n = document.getElementById('rs_n').value.trim();
+  var e = document.getElementById('rs_e').value.trim().toLowerCase();
+  var p = document.getElementById('rs_p') ? document.getElementById('rs_p').value : null;
+  var p2 = document.getElementById('rs_p2') ? document.getElementById('rs_p2').value : null;
+  var c = document.getElementById('rs_c').value;
+  var tc = document.getElementById('rs_tc').checked;
+  if (!n || !e || !c) { showToast('⚠️ Please fill in all required fields.'); return; }
+  if (!p || p.length < 8) { showToast('⚠️ Password must be at least 8 characters.'); return; }
+  if (p !== p2) { showToast('⚠️ Passwords do not match!'); return; }
+  if (!tc) { showToast('⚠️ Please agree to the Terms & Conditions.'); return; }
+  var btn = document.getElementById('rsBtn'); btn.textContent = 'Signing up...'; btn.disabled = true;
+  try {
+    var bmin = parseFloat(document.getElementById('rs_min').value) || null;
+    var bmax = parseFloat(document.getElementById('rs_max').value) || null;
+    var beds = document.getElementById('rs_b').value || null;
+    var phone = document.getElementById('rs_ph').value.trim() || '';
+    var rsAvatarUrl = await uploadAvatar('rs_avatar', 'profile-photos', 'avatars');
+    // 1. Create Supabase Auth user
+    var authData = await sbAuth('SIGNUP', {email: e, password: p});
+    var uid = authData.user ? authData.user.id : null;
+    if (!uid) throw new Error('Auth signup failed');
+    // 2. Insert renter profile
+    await sbq('POST', 'renters', {auth_id: uid, name: n, email: e, phone: phone, city: c, budget_min: bmin, budget_max: bmax, beds_needed: beds, move_date: document.getElementById('rs_d').value || null, pets: document.getElementById('rs_pt').value, photo_url: rsAvatarUrl || null, status: 'active'});
+    await sbq('POST', 'user_profiles', {id: uid, user_type: 'renter'});
+    setUser({id: uid, auth_id: uid, name: n, email: e, type: 'renter', city: c, budget_max: bmax, beds_needed: beds, photo_url: rsAvatarUrl});
+    showToast('🥝 Ka pai! Welcome to FindMyNest! Check your email to verify.');
+    closeAllModals(); updateNav(); openDashboard();
+  } catch(err) {
+    if (err.message.indexOf('already registered') > -1 || err.message.indexOf('unique') > -1) { showToast('⚠️ That email is already registered. Try logging in.'); showStep('stepLL'); }
+    else showToast('⚠️ ' + (err.message || 'Something went wrong.'));
+  } finally { btn.textContent = 'Sign Up Free 🔍'; btn.disabled = false; }
+}
+
+// ════════════════════════════════════════════
+// AGENT SIGNUP
+// ════════════════════════════════════════════
+async function doAgentSignup() {
+  var n = document.getElementById('as_n').value.trim();
+  var e = document.getElementById('as_e').value.trim().toLowerCase();
+  var ph = document.getElementById('as_ph').value.trim();
+  var co = document.getElementById('as_co').value.trim();
+  var role = document.getElementById('as_role').value;
+  var p = document.getElementById('as_p').value;
+  var p2 = document.getElementById('as_p2').value;
+  var tc = document.getElementById('as_tc').checked;
+  if (!n || !e || !ph || !co || !role || !p) { showToast('⚠️ Please fill in all required fields.'); return; }
+  if (p !== p2) { showToast('⚠️ Passwords do not match!'); return; }
+  if (p.length < 8) { showToast('⚠️ Password must be at least 8 characters.'); return; }
+  if (!tc) { showToast('⚠️ Please agree to the Terms & Conditions.'); return; }
+  var btn = document.getElementById('asBtn'); btn.textContent = 'Creating...'; btn.disabled = true;
+  try {
+    var lic = document.getElementById('as_lic').value.trim() || null;
+    var web = document.getElementById('as_web').value.trim() || null;
+    var pm = document.getElementById('as_pm').value || null;
+    // 1. Create Supabase Auth user
+    var authData = await sbAuth('SIGNUP', {email: e, password: p});
+    var uid = authData.user ? authData.user.id : null;
+    if (!uid) throw new Error('Auth signup failed');
+    // 2. Insert agent profile
+    await sbq('POST', 'agents', {auth_id: uid, name: n, email: e, phone: ph, company: co, role: role, licence: lic, website: web, pm_range: pm, status: 'active'});
+    await sbq('POST', 'user_profiles', {id: uid, user_type: 'agent'});
+    var res = await sbq('GET', 'agents', null, '?auth_id=eq.' + uid);
+    setUser({id: res[0].id, auth_id: uid, name: n, email: e, company: co, role: role, pm_range: pm, type: 'agent'});
+    showToast('🏢 Ka pai! Agent account created! Check your email to verify.');
+    closeAllModals(); updateNav(); openDashboard();
+  } catch(err) {
+    if (err.message.indexOf('already registered') > -1 || err.message.indexOf('unique') > -1) { showToast('⚠️ Email already registered. Please log in.'); showStep('stepLL'); }
+    else showToast('⚠️ Something went wrong. Please try again.');
+  } finally { btn.textContent = 'Create Agent Account 🏢'; btn.disabled = false; }
 }
 
 // LOAD AGENT LISTINGS
@@ -2043,17 +2130,9 @@ function fmTab(tab){
   var rooms=document.getElementById('fmRoomsSection');
   var profiles=document.getElementById('fmProfilesSection');
   var btnR=document.getElementById('fmTabRooms');
-  var btnP=document.getElementById('fmTabProfiles');
-  if(tab==='rooms'){
-    rooms.style.display='block';profiles.style.display='none';
-    btnR.style.background='#E8724A';btnR.style.color='#fff';
-    btnP.style.background='transparent';btnP.style.color='#6B3A1F';
-  }else{
-    rooms.style.display='none';profiles.style.display='block';
-    btnR.style.background='transparent';btnR.style.color='#6B3A1F';
-    btnP.style.background='#E8724A';btnP.style.color='#fff';
-    loadFlatmateProfiles();
-  }
+  rooms.style.display='block';
+  if(profiles) profiles.style.display='none';
+  if(btnR){btnR.style.background='#E8724A';btnR.style.color='#fff';}
 }
 
 // Load rooms on flatmates page
@@ -2246,62 +2325,6 @@ async function submitRoomListing(){
   finally{btn.textContent='List My Room Free 🥝';btn.disabled=false;}
 }
 
-// SUBMIT FLATMATE PROFILE
-async function submitFlatmateProfile(){
-  var name=document.getElementById('fp_name').value.trim();
-  var email=document.getElementById('fp_email').value.trim().toLowerCase();
-  var age=document.getElementById('fp_age').value;
-  var occ=document.getElementById('fp_occ').value.trim();
-  var city=document.getElementById('fp_city').value;
-  var bmax=document.getElementById('fp_bmax').value;
-  var move=document.getElementById('fp_move').value;
-  var about=document.getElementById('fp_about').value.trim();
-  if(!name||!email||!age||!occ||!city||!bmax||!move||!about){showToast('⚠️ Please fill in all required fields.');return;}
-  var isEditing = window._editingProfileId ? true : false;
-  var btn=document.getElementById('fp_submit');
-  btn.textContent=isEditing?'Saving...':'Creating...';btn.disabled=true;
-  try{
-    var fpAvatarUrl = await uploadAvatar('fp_avatar','profile-photos','avatars');
-    var profileData = {
-      email:email,name:name,phone:document.getElementById('fp_phone').value.trim()||null,
-      age:parseInt(age),gender:document.getElementById('fp_gender').value,
-      occupation:occ,city:city,
-      suburb_pref:document.getElementById('fp_suburb').value.trim()||null,
-      budget_min:parseFloat(document.getElementById('fp_bmin').value)||null,
-      budget_max:parseFloat(bmax),
-      move_date:move,
-      stay_length:document.getElementById('fp_stay').value,
-      has_pets:document.getElementById('fp_pets').value,
-      smoker:document.getElementById('fp_smoke').value,
-      couple:document.getElementById('fp_couple').value,
-      about_me:about,
-      ideal_flatmates:document.getElementById('fp_ideal').value.trim()||null,
-      references_available:document.getElementById('fp_refs').value,
-      status:'active'
-    };
-    if(fpAvatarUrl) profileData.photo_url = fpAvatarUrl;
-    if(isEditing){
-      await sbq('PATCH','flatmate_profiles',profileData,'?id=eq.'+window._editingProfileId);
-      showToast('✅ Ka pai! Your flatmate profile has been updated!');
-    } else {
-      await sbq('POST','flatmate_profiles',profileData);
-      showToast('🥝 Ka pai! Your flatmate profile is live!');
-    }
-    window._editingProfileId = null;
-    closeAllModals();
-    // If logged in as renter, reload dashboard; otherwise show profiles tab
-    var u = getUser();
-    if(u && u.type === 'renter'){
-      await loadMyFlatmateProfile();
-    } else {
-      fmTab('profiles');
-    }
-  }catch(e){
-    if(e.message.indexOf('duplicate')>-1||e.message.indexOf('unique')>-1){showToast('⚠️ A profile with this email already exists.');}
-    else showToast('⚠️ Something went wrong. Please try again.');
-  }
-  finally{btn.textContent='Create My Profile 🧑';btn.disabled=false;}
-}
 
 // Wire up flatmates nav, page buttons and modals
 document.getElementById('navFlatmates').addEventListener('click',function(){
@@ -2321,17 +2344,6 @@ document.getElementById('fmListRoom').addEventListener('click',function(){
   hideFmHint();
   openModal('roomListMod');
 });
-document.getElementById('fmCreateProfile').addEventListener('click',function(){
-  var u=getUser();
-  if(!u){
-    showFmHint(
-      '🔍 <strong>To create a flatmate profile, sign up as a Renter.</strong> Renter accounts can browse listings, save favourites and create a flatmate profile. <a onclick="openAuth()" style="color:#E8724A;font-weight:700;cursor:pointer;">Sign up or log in →</a>'
-    );
-    return;
-  }
-  hideFmHint();
-  openModal('fmProfileMod');
-});
 
 function showFmHint(msg){
   var h=document.getElementById('fmHint');
@@ -2343,11 +2355,8 @@ function hideFmHint(){
   if(h)h.style.display='none';
 }
 document.getElementById('fmShowRooms').addEventListener('click',function(){fmTab('rooms');});
-document.getElementById('fmShowProfiles').addEventListener('click',function(){fmTab('profiles');loadFlatmateProfiles();});
 document.getElementById('roomListClose').addEventListener('click',closeAllModals);
-document.getElementById('fmProfileClose').addEventListener('click',closeAllModals);
 document.getElementById('rl_submit').addEventListener('click',submitRoomListing);
-document.getElementById('fp_submit').addEventListener('click',submitFlatmateProfile);
 
 // Fix setTab to handle flatmates search tab
 function setTab(btn,type){
@@ -2449,9 +2458,14 @@ function initAvatarUploader(uid, initialChar) {
 }
 
 // ── UPLOAD FILES TO SUPABASE STORAGE ─────────────────────────────────────────
+async function getAuthToken() {
+  try { var s = await sbAuth('GET_SESSION'); return (s && s.access_token) ? s.access_token : SB_KEY; } catch(e) { return SB_KEY; }
+}
+
 async function uploadPhotos(uid, bucket, folder) {
   var files = photoFiles[uid] || [];
   if (!files.length) return [];
+  var token = await getAuthToken();
   var urls = [];
   var bar = document.getElementById(uid + '_bar');
   if (bar) { bar.style.display = 'block'; bar.style.width = '0%'; }
@@ -2461,12 +2475,10 @@ async function uploadPhotos(uid, bucket, folder) {
     var path = folder + '/' + Date.now() + '_' + i + '.' + ext;
     var res = await fetch(SB_STORAGE + '/object/' + bucket + '/' + path, {
       method: 'POST',
-      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': f.type, 'x-upsert': 'true' },
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token, 'Content-Type': f.type, 'x-upsert': 'true' },
       body: f
     });
-    if (res.ok) {
-      urls.push(SB_STORAGE + '/object/public/' + bucket + '/' + path);
-    }
+    if (res.ok) { urls.push(SB_STORAGE + '/object/public/' + bucket + '/' + path); }
     if (bar) bar.style.width = Math.round(((i+1)/files.length)*100) + '%';
   }
   if (bar) setTimeout(function() { bar.style.display = 'none'; bar.style.width = '0%'; }, 800);
@@ -2476,13 +2488,14 @@ async function uploadPhotos(uid, bucket, folder) {
 async function uploadAvatar(uid, bucket, folder) {
   var f = avatarFile[uid];
   if (!f) return null;
+  var token = await getAuthToken();
   var ext = f.name.split('.').pop().toLowerCase() || 'jpg';
   var path = folder + '/' + Date.now() + '.' + ext;
   var bar = document.getElementById(uid + '_bar');
   if (bar) { bar.style.display = 'block'; bar.style.width = '50%'; }
   var res = await fetch(SB_STORAGE + '/object/' + bucket + '/' + path, {
     method: 'POST',
-    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': f.type, 'x-upsert': 'true' },
+    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token, 'Content-Type': f.type, 'x-upsert': 'true' },
     body: f
   });
   if (bar) { bar.style.width = '100%'; setTimeout(function() { bar.style.display = 'none'; }, 800); }
@@ -3330,7 +3343,7 @@ async function checkCompatibility(roomId) {
   // Check renter has a flatmate profile
   var profileRes = await sbq('GET', 'flatmate_profiles', null, '?email=eq.' + encodeURIComponent(u.email) + '&limit=1');
   if (!profileRes || profileRes.length === 0) {
-    showToast('⚠️ You need a flatmate profile to use this feature. Create one in the Flatmates section!');
+    showToast('⚠️ You need a renter profile to use this feature. Sign up or log in first!');
     return;
   }
   var renter = profileRes[0];
@@ -3438,9 +3451,9 @@ async function loadRenterDashboard() {
   if(u.city){var sc=document.getElementById('rp_city');if(sc)sc.value=u.city;}
   if(u.beds_needed){var sb=document.getElementById('rp_beds');if(sb)sb.value=u.beds_needed;}
 
-  // Load interests from flatmate profile
-  await loadMyFlatmateProfile();
+  // Load interests
   renderInterestSuggestions();
+  renderInterestTags();
 
   // Load counts
   try {
@@ -3470,7 +3483,7 @@ async function loadRenterDashboard() {
 }
 
 function renterTab(tab) {
-  ['profile','flatmate','saved','browse'].forEach(function(t) {
+  ['profile','saved','browse'].forEach(function(t) {
     document.getElementById('rpanel-'+t).style.display = t === tab ? 'block' : 'none';
     var btn = document.getElementById('rtab-'+t);
     if (btn) { btn.classList.toggle('active-rtab', t === tab); }
@@ -3499,8 +3512,6 @@ async function saveRenterProfile() {
     document.getElementById('renterWelcomeName').textContent = 'Kia ora, ' + name + '! 🥝';
     if (city) document.getElementById('renterProfileCity').textContent = '📍 ' + city;
     if (bmax) document.getElementById('renterBudgetStat').textContent = '$' + bmax;
-    // Save interests to flatmate profile if exists
-    await saveInterests();
   } catch(e) { showToast('⚠️ Could not save. Try again.'); }
 }
 
@@ -3558,111 +3569,6 @@ function removeInterest(i) {
   _renterInterests.splice(i, 1);
   renderInterestTags();
 }
-
-async function saveInterests() {
-  var u = getUser();
-  if (!u) return;
-  try {
-    // Try to update existing flatmate profile with interests
-    var profiles = await sbq('GET','flatmate_profiles',null,'?email=eq.'+encodeURIComponent(u.email)+'&limit=1');
-    if (profiles && profiles.length) {
-      await sbq('PATCH','flatmate_profiles',{interests:_renterInterests},'?email=eq.'+encodeURIComponent(u.email));
-    }
-  } catch(e) { console.error('Interests save:', e); }
-}
-
-async function loadMyFlatmateProfile() {
-  var u = getUser();
-  if (!u) return;
-  var c = document.getElementById('renterFlatmateProfile');
-  var btn = document.getElementById('renterCreateProfileBtn');
-  try {
-    var profiles = await sbq('GET','flatmate_profiles',null,'?email=eq.'+encodeURIComponent(u.email)+'&limit=1');
-    if (!profiles || !profiles.length) {
-      c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No flatmate profile yet — create one so room listers can find you! 🧑</div>';
-      if (btn) btn.style.display = 'inline-flex';
-      renderInterestTags();
-      return;
-    }
-    var p = profiles[0];
-    if (btn) btn.style.display = 'none';
-    // Load interests
-    if (p.interests && Array.isArray(p.interests)) { _renterInterests = p.interests; }
-    renderInterestTags();
-    c.innerHTML =
-      '<div style="background:#FAF0DC;border-radius:14px;padding:18px 20px;margin-bottom:12px;">'+
-        '<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">'+
-          (p.photo_url ? '<img src="'+p.photo_url+'" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;"/>' :
-            '<div style="width:56px;height:56px;border-radius:50%;background:#E8724A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;font-weight:700;flex-shrink:0;">'+(p.name?p.name[0].toUpperCase():'?')+'</div>')+
-          '<div style="flex:1;">'+
-            '<div style="font-weight:700;font-size:1rem;color:#3D1F0D;">'+p.name+'</div>'+
-            '<div style="font-size:.82rem;color:#6B3A1F;">'+( p.occupation||'')+(p.age?' · Age '+p.age:'')+'</div>'+
-            '<div style="font-size:.78rem;color:#E8724A;margin-top:2px;">📍 '+p.city+(p.suburb_pref?' · '+p.suburb_pref:'')+'</div>'+
-          '</div>'+
-          '<div style="display:flex;gap:8px;flex-shrink:0;">'+
-            '<button class="edb" onclick="openEditFlatmateProfile('+p.id+')">Edit ✏️</button>'+
-            '<button onclick="deleteMyFlatmateProfile('+p.id+')" style="background:none;border:1.5px solid #C85A2E;color:#C85A2E;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.8rem;">Remove ✕</button>'+
-          '</div>'+
-        '</div>'+
-        '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:.8rem;color:#6B3A1F;margin-bottom:12px;">'+
-          '<div>💰 $'+(p.budget_min||0)+' – $'+(p.budget_max||'?')+'/wk</div>'+
-          '<div>🐾 Pets: '+(p.has_pets||'No')+'</div>'+
-          '<div>🚬 Smoker: '+(p.smoker||'No')+'</div>'+
-          '<div>💑 Couple: '+(p.couple||'No')+'</div>'+
-          '<div>📅 Move: '+(p.move_date||'Flexible')+'</div>'+
-          '<div>⏱ Stay: '+(p.stay_length||'Flexible')+'</div>'+
-        '</div>'+
-        (p.about_me ? '<div style="font-size:.85rem;color:#6B3A1F;line-height:1.6;border-top:1px solid #F2D4C0;padding-top:10px;">'+p.about_me+'</div>' : '')+
-      '</div>';
-  } catch(e) { c.innerHTML = '<div style="text-align:center;padding:18px;color:#C85A2E;">Could not load profile.</div>'; }
-}
-
-async function deleteMyFlatmateProfile(id) {
-  if (!confirm('⚠️ Remove your flatmate profile? This cannot be undone.')) return;
-  try {
-    await fetch(SB_URL+'/rest/v1/flatmate_profiles?id=eq.'+id, {method:'DELETE', headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
-    showToast('🗑️ Flatmate profile removed.');
-    var btn = document.getElementById('renterCreateProfileBtn');
-    if (btn) btn.style.display = 'inline-flex';
-    await loadMyFlatmateProfile();
-  } catch(e) { showToast('⚠️ Could not remove profile. Try again.'); }
-}
-
-function openEditFlatmateProfile(id) {
-  // Reload the create profile modal pre-filled with existing data
-  sbq('GET','flatmate_profiles',null,'?id=eq.'+id+'&limit=1').then(function(profiles) {
-    if (!profiles || !profiles.length) return;
-    var p = profiles[0];
-    openFlatmateProfileModal();
-    // Pre-fill fields after modal opens
-    setTimeout(function() {
-      var fields = {
-        'fp_name': p.name, 'fp_email': p.email, 'fp_phone': p.phone,
-        'fp_age': p.age, 'fp_gender': p.gender, 'fp_occ': p.occupation,
-        'fp_city': p.city, 'fp_suburb': p.suburb_pref,
-        'fp_bmin': p.budget_min, 'fp_bmax': p.budget_max,
-        'fp_move': p.move_date, 'fp_stay': p.stay_length,
-        'fp_pets': p.has_pets, 'fp_smoke': p.smoker, 'fp_couple': p.couple,
-        'fp_about': p.about_me, 'fp_ideal': p.ideal_flatmates
-      };
-      Object.keys(fields).forEach(function(id) {
-        var el = document.getElementById(id);
-        if (el && fields[id] !== null && fields[id] !== undefined) el.value = fields[id];
-      });
-      // Store ID for update
-      window._editingProfileId = id;
-    }, 100);
-  });
-}
-
-// Wire up create profile button in dashboard - inside DOMContentLoaded to ensure DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-  var rcp = document.getElementById('renterCreateProfileBtn');
-  if (rcp) rcp.addEventListener('click', function() {
-    window._editingProfileId = null;
-    openFlatmateProfileModal();
-  });
-});
 
 
 </script>
