@@ -1829,7 +1829,8 @@ async function doLandlordSignup() {
     // 2. Insert profile row linked to auth user
     await sbq('POST', 'landlords', {auth_id: uid, name: n, email: e, phone: ph, status: 'active'});
     await sbq('POST', 'user_profiles', {id: uid, user_type: 'landlord'});
-    // Show email verification screen instead of logging in
+    // Send confirmation email via Resend edge function
+    await sendEmail('signup', e, 'https://www.findmynest.co.nz');
     closeAllModals();
     showVerifyEmail(e);
   } catch(err) {
@@ -1889,6 +1890,19 @@ async function doLogout() {
 }
 
 // ════════════════════════════════════════════
+// SEND EMAIL VIA EDGE FUNCTION (Resend)
+// ════════════════════════════════════════════
+async function sendEmail(type, email, confirmationUrl) {
+  try {
+    await fetch(SB_URL + '/functions/v1/send-email', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'apikey': SB_KEY},
+      body: JSON.stringify({type: type, email: email, confirmationUrl: confirmationUrl || 'https://www.findmynest.co.nz'})
+    });
+  } catch(e) { console.error('sendEmail error:', e); }
+}
+
+// ════════════════════════════════════════════
 // FORGOT PASSWORD
 // ════════════════════════════════════════════
 async function doForgotPassword() {
@@ -1897,23 +1911,14 @@ async function doForgotPassword() {
   var btn = document.getElementById('fpBtn');
   btn.textContent = 'Sending...'; btn.disabled = true;
   try {
-    // Step 1: Ask Supabase to generate the reset token
-    var recoverRes = await fetch(SB_URL + '/auth/v1/recover', {
+    // Generate reset link via Supabase then send via Resend edge function
+    await fetch(SB_URL + '/auth/v1/recover', {
       method: 'POST',
       headers: {'apikey': SB_KEY, 'Content-Type': 'application/json'},
       body: JSON.stringify({email: e, redirect_to: 'https://www.findmynest.co.nz'})
     });
-    // Step 2: Send the email via our edge function using Resend directly
-    await fetch(SB_URL + '/functions/v1/send-email', {
-      method: 'POST',
-      headers: {'apikey': SB_KEY, 'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        type: 'recovery',
-        email: e,
-        confirmationUrl: 'https://www.findmynest.co.nz'
-      })
-    });
-    // Always show success — never reveal whether email exists
+    // Send branded email via Resend edge function
+    await sendEmail('recovery', e, 'https://www.findmynest.co.nz');
     btn.style.display = 'none';
     document.getElementById('fpSuccess').style.display = 'block';
   } catch(err) {
@@ -1957,6 +1962,7 @@ async function doRenterSignup() {
     // 2. Insert renter profile
     await sbq('POST', 'renters', {auth_id: uid, name: n, email: e, phone: phone, city: c, budget_min: bmin, budget_max: bmax, beds_needed: beds, move_date: document.getElementById('rs_d').value || null, pets: document.getElementById('rs_pt').value, photo_url: rsAvatarUrl || null, status: 'active'});
     await sbq('POST', 'user_profiles', {id: uid, user_type: 'renter'});
+    await sendEmail('signup', e, 'https://www.findmynest.co.nz');
     closeAllModals();
     showVerifyEmail(e);
   } catch(err) {
@@ -1994,6 +2000,7 @@ async function doAgentSignup() {
     // 2. Insert agent profile
     await sbq('POST', 'agents', {auth_id: uid, name: n, email: e, phone: ph, company: co, role: role, licence: lic, website: web, pm_range: pm, status: 'active'});
     await sbq('POST', 'user_profiles', {id: uid, user_type: 'agent'});
+    await sendEmail('signup', e, 'https://www.findmynest.co.nz');
     closeAllModals();
     showVerifyEmail(e);
   } catch(err) {
