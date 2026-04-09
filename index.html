@@ -2212,16 +2212,24 @@ async function loadEnquiries(u) {
   var countEl = document.getElementById('dashEnquiryCount') || document.getElementById('agentEnquiryCount');
   if (!c) return;
   try {
-    // Get listings for this user — landlords use auth_id via landlords table, agents use email
+    // Get listings for this user — landlords use auth_id lookup, agents use their numeric id as landlord_id
     var listings;
     if (u.type === 'agent') {
-      listings = await sbq('GET', 'listings', null, '?email=eq.' + encodeURIComponent(u.email) + '&select=id');
+      // Agent listings are stored with landlord_id = agent.id (numeric string)
+      listings = await sbq('GET', 'listings', null, '?landlord_id=eq.' + u.id + '&select=id');
+      // Also try email match as fallback
+      if (!listings || !listings.length) {
+        listings = await sbq('GET', 'listings', null, '?email=eq.' + encodeURIComponent(u.email) + '&select=id');
+      }
     } else {
-      // Landlord: get their numeric id from landlords table via auth_id
+      // Landlord: find by auth_id match in landlords table
       var ldRows = await sbq('GET', 'landlords', null, '?auth_id=eq.' + u.auth_id + '&select=id');
-      if (!ldRows || !ldRows.length) return;
-      var ldId = ldRows[0].id;
-      listings = await sbq('GET', 'listings', null, '?landlord_id=eq.' + ldId + '&select=id');
+      if (!ldRows || !ldRows.length) {
+        // Fallback: try landlord_id = auth_id directly
+        listings = await sbq('GET', 'listings', null, '?landlord_id=eq.' + u.auth_id + '&select=id');
+      } else {
+        listings = await sbq('GET', 'listings', null, '?landlord_id=eq.' + ldRows[0].id + '&select=id');
+      }
     }
     if (!listings || !listings.length) return;
     var ids = listings.map(function(l){ return l.id; }).join(',');
@@ -2379,6 +2387,7 @@ async function viewListing(id){
       (l.avail?'<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">From: '+esc(l.avail)+'</span>':'')+
       '</div>'+
       '<p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;margin-bottom:16px;">'+esc(l.description)+'</p>'+
+      (u && u.type==='renter' ? '<button id="saveListingBtn" onclick="toggleSaveListing(\''+l.id+'\')" style="width:100%;background:#FAF0DC;border:1.5px solid #D4B896;border-radius:50px;padding:10px;font-size:.86rem;font-weight:600;color:#6B3A1F;cursor:pointer;margin-bottom:12px;">💛 Save to Watchlist</button>' : '')+
       enquiryForm+
       '<p style="font-size:.7rem;color:#6B3A1F;margin-top:9px;line-height:1.5;">FindMyNest is a listing platform only. Please get independent legal advice before signing any tenancy agreement.</p>';
     openModal('detailMod');
@@ -3332,6 +3341,32 @@ async function toggleSaveRoom(roomId, btn) {
       showToast('💛 Room saved to wishlist!');
     }
   } catch(e) { showToast('⚠️ Something went wrong.'); }
+}
+
+async function toggleSaveListing(listingId) {
+  var u = getUser();
+  if (!u) { openAuth(); return; }
+  var btn = document.getElementById('saveListingBtn');
+  if (!btn) return;
+  try {
+    // Check if already saved
+    var existing = await sbq('GET', 'saved_listings', null, '?renter_email=eq.'+encodeURIComponent(u.email)+'&listing_id=eq.'+listingId);
+    if (existing && existing.length) {
+      // Already saved — unsave it
+      await sbq('DELETE', 'saved_listings', null, '?renter_email=eq.'+encodeURIComponent(u.email)+'&listing_id=eq.'+listingId);
+      btn.textContent = '💛 Save to Watchlist';
+      btn.style.background = '#FAF0DC';
+      showToast('Removed from watchlist.');
+    } else {
+      // Save it
+      await sbq('POST', 'saved_listings', {renter_email: u.email, listing_id: listingId});
+      btn.textContent = '💛 Saved to Watchlist ✓';
+      btn.style.background = '#FFF3E0';
+      btn.style.borderColor = '#E8724A';
+      btn.style.color = '#E8724A';
+      showToast('💛 Saved to watchlist!');
+    }
+  } catch(e) { showToast('⚠️ Could not save. Try again.'); }
 }
 
 async function unsaveListing(listingId) {
