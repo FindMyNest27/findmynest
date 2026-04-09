@@ -2206,36 +2206,33 @@ async function loadMyListings(){
 }
 
 async function loadEnquiries(u) {
-  // Support both landlord and agent dashboards
   var c = document.getElementById('landlordEnquiries') || document.getElementById('agentEnquiries');
   var badge = document.getElementById('newEnquiryBadge') || document.getElementById('agentEnquiryBadge');
   var countEl = document.getElementById('dashEnquiryCount') || document.getElementById('agentEnquiryCount');
   if (!c) return;
   try {
-    // Get listings for this user — landlords use auth_id lookup, agents use their numeric id as landlord_id
-    var listings;
-    if (u.type === 'agent') {
-      // Agent listings are stored with landlord_id = agent.id (numeric string)
-      listings = await sbq('GET', 'listings', null, '?landlord_id=eq.' + u.id + '&select=id');
-      // Also try email match as fallback
-      if (!listings || !listings.length) {
-        listings = await sbq('GET', 'listings', null, '?email=eq.' + encodeURIComponent(u.email) + '&select=id');
-      }
-    } else {
-      // Landlord: find by auth_id match in landlords table
-      var ldRows = await sbq('GET', 'landlords', null, '?auth_id=eq.' + u.auth_id + '&select=id');
-      if (!ldRows || !ldRows.length) {
-        // Fallback: try landlord_id = auth_id directly
-        listings = await sbq('GET', 'listings', null, '?landlord_id=eq.' + u.auth_id + '&select=id');
-      } else {
-        listings = await sbq('GET', 'listings', null, '?landlord_id=eq.' + ldRows[0].id + '&select=id');
-      }
-    }
-    if (!listings || !listings.length) return;
-    var ids = listings.map(function(l){ return l.id; }).join(',');
+    // Get all listing IDs for this user — use email match which is most reliable
+    var listings = await sbq('GET', 'listings', null, '?email=eq.' + encodeURIComponent(u.email) + '&select=id');
+    console.log('loadEnquiries: listings found for', u.email, listings);
 
-    // Get enquiries for those listings ordered by newest first, new ones first
+    // Also try by landlord_id as fallback
+    if (!listings || !listings.length) {
+      listings = await sbq('GET', 'listings', null, '?landlord_id=eq.' + String(u.id) + '&select=id');
+      console.log('loadEnquiries: listings by landlord_id', u.id, listings);
+    }
+
+    if (!listings || !listings.length) {
+      console.log('loadEnquiries: no listings found for user');
+      c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No listings yet — add a listing to start receiving enquiries. 🥝</div>';
+      return;
+    }
+
+    var ids = listings.map(function(l){ return l.id; }).join(',');
+    console.log('loadEnquiries: querying enquiries for listing ids:', ids);
+
     var enquiries = await sbq('GET', 'enquiries', null, '?listing_id=in.('+ids+')&order=created_at.desc&limit=50');
+    console.log('loadEnquiries: enquiries found:', enquiries ? enquiries.length : 0, enquiries);
+
     if (!enquiries || !enquiries.length) {
       c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No enquiries yet — they\'ll appear here once renters start messaging. 🥝</div>';
       return;
@@ -2287,7 +2284,10 @@ async function loadEnquiries(u) {
         '<div style="font-size:.7rem;color:#A07850;margin-top:6px;">'+new Date(e.created_at).toLocaleDateString('en-NZ',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'</div>'+
         '</div>';
     }).join('');
-  } catch(err) { console.error('loadEnquiries:', err); }
+  } catch(err) { 
+    console.error('loadEnquiries error:', err);
+    c.innerHTML = '<div style="text-align:center;padding:24px;color:#C85A2E;">Could not load enquiries. Please refresh.</div>';
+  }
 }
 
 async function updateEnquiryStatus(enquiryId, status) {
@@ -2302,7 +2302,8 @@ async function updateEnquiryStatus(enquiryId, status) {
 async function doRemove(id){
   if(!confirm('⚠️ Remove this listing? This cannot be undone.'))return;
   try{
-    await fetch(SB_URL+'/rest/v1/listings?id=eq.'+id,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
+    // Use sbq so the user's auth token is sent — required for RLS to allow delete
+    await sbq('DELETE','listings',null,'?id=eq.'+id);
     showToast('🗑️ Listing removed!');
     var u=getUser();
     if(u && u.type==='agent'){loadAgentListings();}else{loadMyListings();}
