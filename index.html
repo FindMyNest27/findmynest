@@ -1210,12 +1210,12 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div style="font-weight:700;margin-bottom:14px;color:#3D1F0D;">New Listing</div>
         <!-- RENTAL TERM SELECTOR -->
         <div style="display:flex;gap:10px;margin-bottom:18px;">
-          <button type="button" id="termLong" onclick="setRentalTerm('long-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;cursor:pointer;font-size:.88rem;">🏠 Long-Term (12+ months)</button>
-          <button type="button" id="termShort" onclick="setRentalTerm('short-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;cursor:pointer;font-size:.88rem;">🗓️ Short-Term (under 12 months)</button>
+          <button type="button" id="termLong" onclick="setRentalTerm('long-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;cursor:pointer;font-size:.88rem;">🏠 Standard Rental</button>
+          <button type="button" id="termShort" onclick="setRentalTerm('short-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;cursor:pointer;font-size:.88rem;">🗓️ Short-Term Rental</button>
         </div>
         <div id="shortTermBanner" style="display:none;background:linear-gradient(135deg,#FFF8F4,#FAF0DC);border:1.5px solid #E8724A;border-radius:14px;padding:16px 20px;margin-bottom:16px;">
-          <div style="font-weight:700;color:#E8724A;margin-bottom:4px;">🗓️ Short-Term Listing</div>
-          <p style="font-size:.85rem;color:#6B3A1F;line-height:1.6;margin:0;">Fill in the extra fields below so renters know exactly what you're offering and who you're looking for.</p>
+          <div style="font-weight:700;color:#E8724A;margin-bottom:4px;">🗓️ Short-Term Rental</div>
+          <p style="font-size:.85rem;color:#6B3A1F;line-height:1.6;margin:0;">Fill in the extra details below so renters know exactly what you're offering and who you're looking for.</p>
         </div>
         <div class="add-form-grid">
           <div class="ff s2"><label>Title *</label><input id="f_t" placeholder="e.g. Sunny 3BR House in Tauranga"/></div>
@@ -1227,7 +1227,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Parking</label><select id="f_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
           <div class="ff"><label>Pets</label><select id="f_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
           <div class="ff"><label>Furnished</label><select id="f_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
-          <div class="ff"><label>Available From *</label><input id="f_av" type="date"/></div>
+          <!-- Standard available from (hidden in short-term mode) -->
+          <div class="ff" id="f_av_wrap"><label>Available From *</label><input id="f_av" type="date"/></div>
+          <!-- Short-term date range (shown in short-term mode) -->
+          <div class="ff" id="f_term_from_wrap" style="display:none;"><label>Available From *</label><input id="f_term_from" type="date"/></div>
+          <div class="ff" id="f_term_to_wrap" style="display:none;"><label>Available Until *</label><input id="f_term_to" type="date"/></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="f_r" type="number" placeholder="550"/></div>
           <div class="ff s2" style="margin-top:4px;">
             <button type="button" class="rent-est-btn" id="f_est_btn" onclick="getRentEstimate('f')">📊 Get AI Rent Estimate for this Area</button>
@@ -1242,6 +1246,13 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
               ⚠️ <strong>Estimates only.</strong> AI rent estimates are based on general NZ market knowledge and FindMyNest listing data. Always do your own research to verify current market rates before setting your rent.
             </div>
           </div>
+          <!-- Short-term extra fields (shown inline in short-term mode) -->
+          <div class="ff s2" id="f_reason_wrap" style="display:none;"><label>Why are you listing short-term? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (renters want to know!)</span></label>
+            <select id="f_reason"><option value="">Select a reason...</option><option value="Going on OE">✈️ Going on my OE / overseas trip</option><option value="Work relocation">💼 Relocating for work temporarily</option><option value="Seasonal rental">🌊 Seasonal rental (summer/winter)</option><option value="Broken lease">📋 Broken lease — need someone to take over</option><option value="Travelling NZ">🚐 Travelling around NZ</option><option value="Family stay">👨‍👩‍👦 Staying with family for a period</option><option value="Other">Other reason</option></select>
+          </div>
+          <div class="ff s2" id="f_ideal_wrap" style="display:none;"><label>Who are you looking for? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (be specific — it helps!)</span></label>
+            <textarea id="f_ideal" rows="3" placeholder="e.g. Working professional, couple welcome, no parties, must be comfortable with our cat, someone happy to water the garden..."></textarea>
+          </div>
           <div class="ff s2">
             <label style="display:flex;align-items:center;justify-content:space-between;">
               Description *
@@ -1249,22 +1260,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
             </label>
             <textarea id="f_d" rows="4" placeholder="Describe your property — or click ✨ AI Generate to write it for you!"></textarea>
             <div class="ai-hint" id="f_ai_hint">✨ AI is writing your description...</div>
-          </div>
-          <!-- SHORT TERM SPECIFIC FIELDS -->
-          <div id="shortTermFields" style="display:none;grid-column:1/-1;">
-            <div style="background:#fff;border-radius:14px;padding:20px;border:1.5px solid #F2D4C0;margin-bottom:4px;">
-              <div style="font-weight:700;color:#3D1F0D;margin-bottom:14px;font-size:.95rem;">🗓️ Short-Term Details</div>
-              <div class="add-form-grid">
-                <div class="ff"><label>Available From *</label><input id="f_term_from" type="date"/></div>
-                <div class="ff"><label>Available Until *</label><input id="f_term_to" type="date"/></div>
-                <div class="ff s2"><label>Why are you listing short-term? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (renters want to know!)</span></label>
-                  <select id="f_reason"><option value="">Select a reason...</option><option value="Going on OE">✈️ Going on my OE / overseas trip</option><option value="Work relocation">💼 Relocating for work temporarily</option><option value="Seasonal rental">🌊 Seasonal rental (summer/winter)</option><option value="Broken lease">📋 Broken lease — need someone to take over</option><option value="Travelling NZ">🚐 Travelling around NZ</option><option value="Family stay">👨‍👩‍👦 Staying with family for a period</option><option value="Other">Other reason</option></select>
-                </div>
-                <div class="ff s2"><label>Who are you looking for? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (be specific — it helps!)</span></label>
-                  <textarea id="f_ideal" rows="3" placeholder="e.g. Working professional, couple welcome, no parties, must be comfortable with our cat, someone happy to water the garden..."></textarea>
-                </div>
-              </div>
-            </div>
           </div>
     <div class="ff s2">
       <label>Property Photos</label>
@@ -1531,12 +1526,12 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div style="font-weight:700;margin-bottom:14px;color:#3D1F0D;">New Listing</div>
         <!-- RENTAL TERM SELECTOR (shared via setRentalTerm) -->
         <div style="display:flex;gap:10px;margin-bottom:18px;">
-          <button type="button" id="af_termLong" onclick="setRentalTerm('long-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;cursor:pointer;font-size:.88rem;">🏠 Long-Term (12+ months)</button>
-          <button type="button" id="af_termShort" onclick="setRentalTerm('short-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;cursor:pointer;font-size:.88rem;">🗓️ Short-Term (under 12 months)</button>
+          <button type="button" id="af_termLong" onclick="setRentalTerm('long-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;cursor:pointer;font-size:.88rem;">🏠 Standard Rental</button>
+          <button type="button" id="af_termShort" onclick="setRentalTerm('short-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;cursor:pointer;font-size:.88rem;">🗓️ Short-Term Rental</button>
         </div>
         <div id="af_shortTermBanner" style="display:none;background:linear-gradient(135deg,#FFF8F4,#FAF0DC);border:1.5px solid #E8724A;border-radius:14px;padding:16px 20px;margin-bottom:16px;">
-          <div style="font-weight:700;color:#E8724A;margin-bottom:4px;">🗓️ Short-Term Listing</div>
-          <p style="font-size:.85rem;color:#6B3A1F;line-height:1.6;margin:0;">Fill in the extra fields below so renters know exactly what you're offering and who you're looking for.</p>
+          <div style="font-weight:700;color:#E8724A;margin-bottom:4px;">🗓️ Short-Term Rental</div>
+          <p style="font-size:.85rem;color:#6B3A1F;line-height:1.6;margin:0;">Fill in the extra details below so renters know exactly what you're offering and who you're looking for.</p>
         </div>
         <div class="add-form-grid">
           <div class="ff s2"><label>Title *</label><input id="af_t" placeholder="e.g. Modern 2BR in Mount Maunganui"/></div>
@@ -1548,7 +1543,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Parking</label><select id="af_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
           <div class="ff"><label>Pets</label><select id="af_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
           <div class="ff"><label>Furnished</label><select id="af_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
-          <div class="ff"><label>Available From *</label><input id="af_av" type="date"/></div>
+          <!-- Standard available from (hidden in short-term mode) -->
+          <div class="ff" id="af_av_wrap"><label>Available From *</label><input id="af_av" type="date"/></div>
+          <!-- Short-term date range (shown in short-term mode) -->
+          <div class="ff" id="af_term_from_wrap" style="display:none;"><label>Available From *</label><input id="af_term_from" type="date"/></div>
+          <div class="ff" id="af_term_to_wrap" style="display:none;"><label>Available Until *</label><input id="af_term_to" type="date"/></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="af_r" type="number" placeholder="550"/></div>
           <div class="ff s2" style="margin-top:4px;">
             <button type="button" class="rent-est-btn" id="af_est_btn" onclick="getRentEstimate('af')">📊 Get AI Rent Estimate for this Area</button>
@@ -1563,6 +1562,13 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
               ⚠️ <strong>Estimates only.</strong> AI rent estimates are based on general NZ market knowledge and FindMyNest listing data. Always do your own research to verify current market rates before setting your rent.
             </div>
           </div>
+          <!-- Short-term extra fields (shown inline in short-term mode) -->
+          <div class="ff s2" id="af_reason_wrap" style="display:none;"><label>Why are you listing short-term? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (renters want to know!)</span></label>
+            <select id="af_reason"><option value="">Select a reason...</option><option value="Going on OE">✈️ Going on my OE / overseas trip</option><option value="Work relocation">💼 Relocating for work temporarily</option><option value="Seasonal rental">🌊 Seasonal rental (summer/winter)</option><option value="Broken lease">📋 Broken lease — need someone to take over</option><option value="Travelling NZ">🚐 Travelling around NZ</option><option value="Family stay">👨‍👩‍👦 Staying with family for a period</option><option value="Other">Other reason</option></select>
+          </div>
+          <div class="ff s2" id="af_ideal_wrap" style="display:none;"><label>Who are you looking for? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (be specific — it helps!)</span></label>
+            <textarea id="af_ideal" rows="3" placeholder="e.g. Working professional, couple welcome, no parties, happy to water the garden..."></textarea>
+          </div>
           <div class="ff s2">
             <label style="display:flex;align-items:center;justify-content:space-between;">
               Description *
@@ -1572,21 +1578,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
             <div class="ai-hint" id="af_ai_hint">✨ AI is writing your description...</div>
           </div>
           <!-- SHORT TERM SPECIFIC FIELDS (agent) -->
-          <div id="af_shortTermFields" style="display:none;grid-column:1/-1;">
-            <div style="background:#fff;border-radius:14px;padding:20px;border:1.5px solid #F2D4C0;margin-bottom:4px;">
-              <div style="font-weight:700;color:#3D1F0D;margin-bottom:14px;font-size:.95rem;">🗓️ Short-Term Details</div>
-              <div class="add-form-grid">
-                <div class="ff"><label>Available From *</label><input id="af_term_from" type="date"/></div>
-                <div class="ff"><label>Available Until *</label><input id="af_term_to" type="date"/></div>
-                <div class="ff s2"><label>Why are you listing short-term? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (renters want to know!)</span></label>
-                  <select id="af_reason"><option value="">Select a reason...</option><option value="Going on OE">✈️ Going on my OE / overseas trip</option><option value="Work relocation">💼 Relocating for work temporarily</option><option value="Seasonal rental">🌊 Seasonal rental (summer/winter)</option><option value="Broken lease">📋 Broken lease — need someone to take over</option><option value="Travelling NZ">🚐 Travelling around NZ</option><option value="Family stay">👨‍👩‍👦 Staying with family for a period</option><option value="Other">Other reason</option></select>
-                </div>
-                <div class="ff s2"><label>Who are you looking for? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (be specific — it helps!)</span></label>
-                  <textarea id="af_ideal" rows="3" placeholder="e.g. Working professional, couple welcome, no parties, happy to water the garden..."></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div id="af_shortTermFields" style="display:none;grid-column:1/-1;"></div>
     <div class="ff s2">
       <label>Property Photos</label>
       <div class="photo-upload-area" onclick="document.getElementById('al_photos_input').click()">
@@ -3074,16 +3066,14 @@ function setTab(btn,type){
 function setRentalTerm(term) {
   var isShort = (term === 'short-term');
   window._rentalTerm = term;
-  // Update both landlord and agent toggle buttons if they exist
-  var pairs = [
-    ['termLong', 'termShort', 'shortTermBanner', 'shortTermFields'],
-    ['af_termLong', 'af_termShort', 'af_shortTermBanner', 'af_shortTermFields']
+  // Toggle buttons for both landlord and agent forms
+  var btnPairs = [
+    ['termLong', 'termShort'],
+    ['af_termLong', 'af_termShort']
   ];
-  pairs.forEach(function(ids) {
+  btnPairs.forEach(function(ids) {
     var longBtn = document.getElementById(ids[0]);
     var shortBtn = document.getElementById(ids[1]);
-    var banner = document.getElementById(ids[2]);
-    var fields = document.getElementById(ids[3]);
     if (longBtn) {
       longBtn.style.background = isShort ? '#fff' : '#E8724A';
       longBtn.style.color = isShort ? '#6B3A1F' : '#fff';
@@ -3094,8 +3084,21 @@ function setRentalTerm(term) {
       shortBtn.style.color = isShort ? '#fff' : '#6B3A1F';
       shortBtn.style.borderColor = isShort ? '#E8724A' : '#D4B896';
     }
-    if (banner) banner.style.display = isShort ? 'block' : 'none';
-    if (fields) fields.style.display = isShort ? 'block' : 'none';
+  });
+  // Toggle banners
+  ['shortTermBanner','af_shortTermBanner'].forEach(function(id){
+    var el = document.getElementById(id); if(el) el.style.display = isShort ? 'block' : 'none';
+  });
+  // Toggle standard Available From (hide when short-term)
+  ['f_av_wrap','af_av_wrap'].forEach(function(id){
+    var el = document.getElementById(id); if(el) el.style.display = isShort ? 'none' : '';
+  });
+  // Toggle short-term date + extra fields
+  ['f_term_from_wrap','af_term_from_wrap',
+   'f_term_to_wrap','af_term_to_wrap',
+   'f_reason_wrap','af_reason_wrap',
+   'f_ideal_wrap','af_ideal_wrap'].forEach(function(id){
+    var el = document.getElementById(id); if(el) el.style.display = isShort ? '' : 'none';
   });
 }
 
