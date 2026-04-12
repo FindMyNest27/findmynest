@@ -1102,6 +1102,10 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <!-- ENQUIRIES INBOX -->
     <div class="dash-section">
       <div class="dash-section-title">📬 Enquiry Inbox <span id="newEnquiryBadge" style="display:none;background:#E8724A;color:#fff;border-radius:50px;padding:2px 10px;font-size:.72rem;font-weight:700;margin-left:8px;"></span></div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;">
+        <button id="llEnqTabAll" onclick="switchEnqTab('landlord','all')" style="padding:7px 18px;border-radius:50px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;font-size:.82rem;cursor:pointer;">All Enquiries</button>
+        <button id="llEnqTabShortlist" onclick="switchEnqTab('landlord','shortlisted')" style="padding:7px 18px;border-radius:50px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;font-size:.82rem;cursor:pointer;">⭐ Shortlisted</button>
+      </div>
       <div id="landlordEnquiries"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No enquiries yet — they'll appear here once renters start messaging. 🥝</div></div>
     </div>
     <div class="dash-section">
@@ -1418,6 +1422,10 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <!-- AGENT ENQUIRIES INBOX -->
     <div class="dash-section">
       <div class="dash-section-title">📬 Enquiry Inbox <span id="agentEnquiryBadge" style="display:none;background:#E8724A;color:#fff;border-radius:50px;padding:2px 10px;font-size:.72rem;font-weight:700;margin-left:8px;"></span></div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;">
+        <button id="agEnqTabAll" onclick="switchEnqTab('agent','all')" style="padding:7px 18px;border-radius:50px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;font-size:.82rem;cursor:pointer;">All Enquiries</button>
+        <button id="agEnqTabShortlist" onclick="switchEnqTab('agent','shortlisted')" style="padding:7px 18px;border-radius:50px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;font-size:.82rem;cursor:pointer;">⭐ Shortlisted</button>
+      </div>
       <div id="agentEnquiries"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No enquiries yet — they'll appear here once renters start messaging. 🥝</div></div>
     </div>
     <div class="dash-section">
@@ -2318,83 +2326,126 @@ async function loadMyListings(){
   }catch(err){c.innerHTML='<div style="text-align:center;padding:18px;color:#6B3A1F;">Could not load listings.</div>';}
 }
 
-async function loadEnquiries(u) {
-  // Pick the right container based on which dashboard is active
+async function loadEnquiries(u, statusFilter) {
   var isAgent = u && u.type === 'agent';
-  var c = isAgent
-    ? document.getElementById('agentEnquiries')
-    : document.getElementById('landlordEnquiries');
-  var badge = isAgent
-    ? document.getElementById('agentEnquiryBadge')
-    : document.getElementById('newEnquiryBadge');
-  var countEl = isAgent
-    ? document.getElementById('agentEnquiryCount')
-    : document.getElementById('dashEnquiryCount');
+  var c = isAgent ? document.getElementById('agentEnquiries') : document.getElementById('landlordEnquiries');
+  var badge = isAgent ? document.getElementById('agentEnquiryBadge') : document.getElementById('newEnquiryBadge');
+  var countEl = isAgent ? document.getElementById('agentEnquiryCount') : document.getElementById('dashEnquiryCount');
   if (!c) return;
   try {
-    // Query directly by pm_email — no listing lookup needed, works even if listing deleted
-    var enquiries = await sbq('GET', 'enquiries', null, '?pm_email=eq.' + encodeURIComponent(u.email) + '&order=created_at.desc&limit=50');
-    console.log('loadEnquiries for', u.email, ':', enquiries ? enquiries.length : 0);
-    if (!enquiries || !enquiries.length) {
-      c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No applications yet — they\'ll appear here when renters apply. 🥝</div>';
-      return;
-    }
-    var newCount = enquiries.filter(function(e){ return e.status === 'new'; }).length;
+    var qs = '?pm_email=eq.' + encodeURIComponent(u.email) + '&order=created_at.desc&limit=50';
+    if (statusFilter === 'shortlisted') qs += '&status=eq.shortlisted';
+    var enquiries = await sbq('GET', 'enquiries', null, qs);
+    // Update new count badge (always from full list)
+    var newCount = (enquiries || []).filter(function(e){ return e.status === 'new'; }).length;
     if (newCount > 0) {
       if (badge) { badge.textContent = newCount + ' new'; badge.style.display = 'inline'; }
       if (countEl) countEl.textContent = newCount;
+    } else {
+      if (badge) badge.style.display = 'none';
+      if (countEl) countEl.textContent = '0';
+    }
+    if (!enquiries || !enquiries.length) {
+      c.innerHTML = '<div style="text-align:center;padding:32px;color:#6B3A1F;font-size:.9rem;">'+(statusFilter==='shortlisted'?'No shortlisted renters yet — shortlist your best applicants above. ⭐':'No enquiries yet — they\'ll appear here once renters start messaging. 🥝')+'</div>';
+      return;
     }
     c.innerHTML = enquiries.map(function(e) {
       var score = e.ai_score || 0;
       var scoreColor = score >= 75 ? '#22c55e' : score >= 50 ? '#f59e0b' : '#ef4444';
-      var scoreLabel = score >= 75 ? 'Great match' : score >= 50 ? 'Possible match' : 'Low match';
+      var scoreLabel = score >= 75 ? 'Strong Match' : score >= 50 ? 'Good Match' : 'Low Match';
       var isNew = e.status === 'new';
-      return '<div style="background:'+(isNew?'#FFF8F4':'#fff')+';border:1.5px solid '+(isNew?'#E8724A':'#F2D4C0')+';border-radius:14px;padding:16px;margin-bottom:12px;">'+
+      var isShortlisted = e.status === 'shortlisted';
+      return '<div style="background:'+(isNew?'#FFF8F4':'#fff')+';border:1.5px solid '+(isNew?'#E8724A':isShortlisted?'#22c55e':'#F2D4C0')+';border-radius:14px;padding:16px;margin-bottom:12px;">'+
+        // Header row: name + AI score ring
         '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">'+
         '<div style="flex:1;">'+
         '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">'+
         (isNew?'<span style="background:#E8724A;color:#fff;border-radius:50px;padding:1px 8px;font-size:.7rem;font-weight:700;">NEW</span>':'')+
-        '<div style="font-weight:700;color:#3D1F0D;">'+esc(e.renter_name)+'</div>'+
+        (isShortlisted?'<span style="background:#22c55e;color:#fff;border-radius:50px;padding:1px 8px;font-size:.7rem;font-weight:700;">⭐ SHORTLISTED</span>':'')+
+        '<div style="font-weight:700;color:#3D1F0D;font-size:1rem;">'+esc(e.renter_name)+'</div>'+
         '</div>'+
         '<div style="font-size:.82rem;color:#6B3A1F;">'+esc(e.renter_email)+(e.renter_phone?' &nbsp;&bull;&nbsp; '+esc(e.renter_phone):'')+'</div>'+
-        (e.listing_title?'<div style="font-size:.75rem;color:#A07850;margin-top:2px;">&#128205; '+esc(e.listing_title)+(e.listing_suburb?' &bull; '+esc(e.listing_suburb):'')+'</div>':'')+
+        (e.listing_title?'<div style="font-size:.75rem;color:#A07850;margin-top:3px;">📍 '+esc(e.listing_title)+(e.listing_suburb?' &bull; '+esc(e.listing_suburb):'')+'</div>':'')+
         '</div>'+
+        // AI score ring
         '<div style="text-align:center;flex-shrink:0;">'+
-        '<div style="width:52px;height:52px;border-radius:50%;background:conic-gradient('+scoreColor+' '+score+'%, #f0f0f0 0);display:flex;align-items:center;justify-content:center;">'+
-        '<div style="width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:'+scoreColor+';">'+score+'</div>'+
-        '</div><div style="font-size:.65rem;color:'+scoreColor+';font-weight:600;margin-top:2px;">'+scoreLabel+'</div></div></div>'+
-        (e.ai_summary?'<div style="background:#F7F3EE;border-radius:8px;padding:8px 10px;font-size:.82rem;color:#6B3A1F;margin-bottom:8px;">&#129302; '+esc(e.ai_summary)+'</div>':'')+
-        (e.ai_reasoning?'<div style="background:#F0F9FF;border:1px solid #BAE6FD;border-radius:8px;padding:8px 10px;font-size:.8rem;color:#0C4A6E;margin-bottom:8px;line-height:1.6;"><span style="font-weight:700;font-size:.72rem;color:#0369A1;">&#129302; How AI calculated this score</span><br>'+esc(e.ai_reasoning)+'</div>':'')+
-        (e.ai_positives&&e.ai_positives.length?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;">'+e.ai_positives.map(function(p){return'<span style="background:#dcfce7;color:#166534;border-radius:50px;padding:2px 8px;font-size:.72rem;">&#10003; '+esc(p)+'</span>';}).join('')+'</div>':'')+
-        (e.ai_concerns&&e.ai_concerns.length?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">'+e.ai_concerns.map(function(p){return'<span style="background:#fef2f2;color:#991b1b;border-radius:50px;padding:2px 8px;font-size:.72rem;">&#9888; '+esc(p)+'</span>';}).join('')+'</div>':'')+
-        (e.message?'<div style="font-size:.84rem;color:#6B3A1F;font-style:italic;margin-bottom:10px;padding:8px;background:#FAF0DC;border-radius:8px;">"'+esc(e.message)+'"</div>':'')+
-        '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">'+
-        (e.renter_budget_max?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">&#128176; $'+e.renter_budget_max+'/wk</span>':'')+
-        (e.renter_beds_needed?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">&#128716; '+esc(e.renter_beds_needed)+' bed</span>':'')+
-        (e.renter_pets?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">&#128062; '+esc(e.renter_pets)+'</span>':'')+
-        (e.renter_move_date?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">&#128197; '+esc(e.renter_move_date)+'</span>':'')+
+        '<div style="font-size:.6rem;font-weight:700;color:#A07850;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">🤖 AI Score</div>'+
+        '<div style="width:58px;height:58px;border-radius:50%;background:conic-gradient('+scoreColor+' '+score+'%, #f0f0f0 0);display:flex;align-items:center;justify-content:center;margin:0 auto;">'+
+        '<div style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:'+scoreColor+';">'+score+'</div>'+
+        '</div><div style="font-size:.68rem;color:'+scoreColor+';font-weight:700;margin-top:3px;">'+scoreLabel+'</div></div></div>'+
+        // AI summary
+        (e.ai_summary?'<div style="background:#F7F3EE;border-radius:8px;padding:8px 12px;font-size:.84rem;color:#3D1F0D;margin-bottom:8px;font-weight:600;">🤖 '+esc(e.ai_summary)+'</div>':'')+
+        // AI reasoning — always show if present
+        (e.ai_reasoning?'<div style="background:#F0F9FF;border:1px solid #BAE6FD;border-radius:10px;padding:10px 12px;font-size:.82rem;color:#0C4A6E;margin-bottom:10px;line-height:1.65;">'+
+        '<div style="font-weight:700;font-size:.72rem;color:#0369A1;margin-bottom:4px;">🤖 Why AI gave this score</div>'+
+        esc(e.ai_reasoning)+'</div>':'')+
+        // Positives
+        (e.ai_positives&&e.ai_positives.length?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px;">'+e.ai_positives.map(function(p){return'<span style="background:#dcfce7;color:#166534;border-radius:50px;padding:2px 9px;font-size:.74rem;">✓ '+esc(p)+'</span>';}).join('')+'</div>':'')+
+        // Concerns
+        (e.ai_concerns&&e.ai_concerns.length?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">'+e.ai_concerns.map(function(p){return'<span style="background:#fef2f2;color:#991b1b;border-radius:50px;padding:2px 9px;font-size:.74rem;">⚠ '+esc(p)+'</span>';}).join('')+'</div>':'')+
+        // Renter message
+        (e.message?'<div style="font-size:.84rem;color:#6B3A1F;font-style:italic;margin-bottom:10px;padding:10px 12px;background:#FAF0DC;border-radius:8px;line-height:1.6;">"'+esc(e.message)+'"</div>':'')+
+        // Renter profile pills
+        '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;">'+
+        (e.renter_budget_max?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 10px;font-size:.74rem;color:#6B3A1F;">💰 $'+e.renter_budget_max+'/wk</span>':'')+
+        (e.renter_beds_needed?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 10px;font-size:.74rem;color:#6B3A1F;">🛌 '+esc(e.renter_beds_needed)+' bed</span>':'')+
+        (e.renter_pets?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 10px;font-size:.74rem;color:#6B3A1F;">🐾 '+esc(e.renter_pets)+'</span>':'')+
+        (e.renter_move_date?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 10px;font-size:.74rem;color:#6B3A1F;">📅 '+esc(e.renter_move_date)+'</span>':'')+
         '</div>'+
-        '<div style="display:flex;gap:8px;flex-wrap:wrap;">'+
-        '<a href="mailto:'+esc(e.renter_email)+'" class="bp" style="font-size:.8rem;padding:8px 16px;text-decoration:none;">&#10003; Reply</a>'+
-        (e.status!=='shortlisted'?'<button onclick="updateEnquiryStatus(\''+e.id+'\',\'shortlisted\')" style="background:#22c55e;color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:.8rem;font-weight:600;cursor:pointer;">&#11088; Shortlist</button>':'<span style="background:#dcfce7;color:#166534;border-radius:50px;padding:8px 16px;font-size:.8rem;font-weight:600;">&#11088; Shortlisted</span>')+
-        (e.status!=='declined'?'<button onclick="updateEnquiryStatus(\''+e.id+'\',\'declined\')" style="background:#f1f5f9;color:#6B3A1F;border:none;border-radius:50px;padding:8px 16px;font-size:.8rem;font-weight:600;cursor:pointer;">&#10005; Decline</button>':'')+
+        // Action buttons
+        '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">'+
+        '<a href="mailto:'+esc(e.renter_email)+'" class="bp" style="font-size:.82rem;padding:8px 18px;text-decoration:none;">✓ Reply</a>'+
+        (!isShortlisted?'<button onclick="updateEnquiryStatus(\''+e.id+'\',\'shortlisted\')" style="background:#22c55e;color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">⭐ Shortlist</button>':
+        '<button onclick="updateEnquiryStatus(\''+e.id+'\',\'new\')" style="background:#F7F3EE;color:#6B3A1F;border:1.5px solid #D4B896;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">✕ Remove from Shortlist</button>')+
+        '<button onclick="confirmDeclineEnquiry(\''+e.id+'\')" style="background:#f1f5f9;color:#6B3A1F;border:none;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">✕ Decline</button>'+
         '</div>'+
-        '<div style="font-size:.7rem;color:#A07850;margin-top:6px;">'+new Date(e.created_at).toLocaleDateString('en-NZ',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'</div>'+
+        '<div style="font-size:.7rem;color:#A07850;margin-top:8px;">Received '+new Date(e.created_at).toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})+'</div>'+
         '</div>';
     }).join('');
   } catch(err) {
     console.error('loadEnquiries error:', err);
-    c.innerHTML = '<div style="text-align:center;padding:24px;color:#C85A2E;font-size:.9rem;">Could not load applications. Please refresh. &#x1F95D;</div>';
+    c.innerHTML = '<div style="text-align:center;padding:24px;color:#C85A2E;font-size:.9rem;">Could not load enquiries. Please refresh. 🥝</div>';
   }
 }
 
+function switchEnqTab(dashType, filter) {
+  var isAgent = dashType === 'agent';
+  var allBtn = document.getElementById(isAgent ? 'agEnqTabAll' : 'llEnqTabAll');
+  var slBtn = document.getElementById(isAgent ? 'agEnqTabShortlist' : 'llEnqTabShortlist');
+  var active = 'background:#E8724A;color:#fff;border-color:#E8724A;';
+  var inactive = 'background:#fff;color:#6B3A1F;border-color:#D4B896;';
+  allBtn.style.cssText += filter === 'all' ? active : inactive;
+  slBtn.style.cssText += filter === 'shortlisted' ? active : inactive;
+  var u = getUser();
+  if (u) loadEnquiries(u, filter === 'all' ? null : filter);
+}
+
+function confirmDeclineEnquiry(enquiryId) {
+  if (confirm('Decline this enquiry?\n\nClick OK to just decline, or go to the enquiry and click "Remove from Shortlist" first if needed.')) {
+    var removeAlso = confirm('Also remove this enquiry from your inbox entirely?\n\nOK = Remove completely\nCancel = Just mark as declined');
+    if (removeAlso) {
+      removeEnquiry(enquiryId);
+    } else {
+      updateEnquiryStatus(enquiryId, 'declined');
+    }
+  }
+}
+
+async function removeEnquiry(enquiryId) {
+  try {
+    await sbq('DELETE', 'enquiries', null, '?id=eq.' + enquiryId);
+    var u = getUser();
+    if (u) loadEnquiries(u);
+    showToast('✕ Enquiry removed.');
+  } catch(e) { showToast('⚠️ Could not remove. Try again.'); }
+}
 
 async function updateEnquiryStatus(enquiryId, status) {
   try {
     await sbq('PATCH', 'enquiries', {status: status}, '?id=eq.' + enquiryId);
     var u = getUser();
     if (u) loadEnquiries(u);
-    showToast(status === 'shortlisted' ? '⭐ Shortlisted!' : '✕ Declined');
+    showToast(status === 'shortlisted' ? '⭐ Shortlisted!' : status === 'new' ? '✕ Removed from shortlist' : '✕ Declined');
   } catch(e) { showToast('⚠️ Could not update. Try again.'); }
 }
 
