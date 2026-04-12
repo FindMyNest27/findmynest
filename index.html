@@ -510,6 +510,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <ul class="nls">
     <li><a id="navHow">How it works</a></li>
     <li><a id="navListings">Listings</a></li>
+    <li><a id="navShortTerm" style="color:#E8724A;font-weight:700;">Short-Term</a></li>
     <li><a id="navFlatmates">Flatmates</a></li>
     <li><a id="navLandlords">For Landlords &amp; Agents</a></li>
     <li><a id="navContact" style="color:#E8724A;font-weight:600;">Contact Us</a></li>
@@ -602,7 +603,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div style="text-align:center;margin-bottom:40px;">
       <div class="slb">🗓️ Our Niche</div>
       <h2 class="stl">NZ's home for short-term rentals</h2>
-      <p class="ssb">Facebook groups are chaos. Trade Me doesn't get it. FindMyNest is built for Kiwis who need flexibility — whether you're going on your OE, relocating for work, or taking over a broken lease.</p>
+      <p class="ssb">Other platforms weren't built for this. FindMyNest is built for Kiwis who need flexibility — whether you're going on your OE, relocating for work, or taking over a broken lease.</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px;">
       <div style="background:#fff;border-radius:20px;padding:28px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
@@ -623,7 +624,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     </div>
     <div style="background:linear-gradient(135deg,#3D1F0D,#6B3A1F);border-radius:24px;padding:40px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
       <div>
-        <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#FAF0DC;margin-bottom:10px;">Stop posting in Facebook groups 🙏</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#FAF0DC;margin-bottom:10px;">A better way to find short-term renters 🙌</div>
         <p style="color:rgba(250,240,220,.75);font-size:.95rem;line-height:1.7;max-width:480px;">FindMyNest connects short-term landlords with renters who actually want what you're offering. No scrolling through irrelevant posts. No ghosting. Just the right match.</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
@@ -993,6 +994,92 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 </div>
 
 <!-- ===== FOR LANDLORDS FULL PAGE ===== -->
+<!-- SHORT TERM PAGE -->
+<div class="fpage" id="shortTermPage">
+  <div class="fp-nav">
+    <button class="fp-back" id="shortTermBack"><span>←</span> Back to Home</button>
+    <span class="nlt" style="font-size:1rem;">FindMy<span style="color:#E8724A;">Nest</span>™</span>
+    <button class="ncta" id="shortTermAuthBtn">Sign Up / Log In</button>
+  </div>
+  <div class="fp-content">
+    <!-- HEADER -->
+    <div style="background:linear-gradient(135deg,#E8724A,#C85A2E);border-radius:24px;padding:56px 48px;color:#fff;margin-bottom:40px;text-align:center;">
+      <div style="display:inline-block;background:rgba(255,255,255,.2);border-radius:50px;padding:6px 18px;font-size:.82rem;font-weight:700;margin-bottom:16px;">🗓️ NZ's Short-Term Rental Specialist</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;margin-bottom:14px;">Short-term rentals,<br/>done properly</h1>
+      <p style="opacity:.9;font-size:.98rem;max-width:520px;margin:0 auto 28px;line-height:1.7;">From a few weeks to nearly a year — FindMyNest connects Kiwis who need flexible housing with landlords who have it.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <button class="bw" id="stFindBtn" style="font-size:.95rem;">Browse Short-Term Listings →</button>
+        <button id="stListBtn2" style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:13px 26px;font-weight:700;cursor:pointer;font-size:.95rem;">List Short-Term Property →</button>
+      </div>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:0 4px 20px rgba(61,31,13,.08);margin-bottom:40px;">
+      <div style="font-weight:700;color:#3D1F0D;margin-bottom:14px;font-size:.95rem;">🔍 Find a short-term nest</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;">
+        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Location</label><input id="st_loc" type="text" placeholder="e.g. Auckland, Queenstown..." style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"/></div>
+        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Available From</label><input id="st_from" type="date" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"/></div>
+        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Duration</label><select id="st_dur" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
+        <button class="bp" onclick="doShortTermSearch()" style="white-space:nowrap;">Search →</button>
+      </div>
+    </div>
+
+    <!-- WHO IS IT FOR -->
+    <div style="text-align:center;margin-bottom:28px;"><div class="slb">Who it's for</div><h2 class="stl">Find the right match, whatever your situation</h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:40px;">
+      <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
+        <div style="font-size:2.2rem;margin-bottom:12px;">✈️</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Going on your OE?</div>
+        <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Heading overseas for a few months? Sublet your place to a trusted renter, keep your home looked after, and cover your costs while you're away.</p>
+        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">List my place →</button>
+      </div>
+      <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
+        <div style="font-size:2.2rem;margin-bottom:12px;">📋</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Broken lease?</div>
+        <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Need to exit your tenancy early? Find a qualified tenant to take over your remaining term. Your landlord stays happy, you move on with no drama.</p>
+        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">Find a replacement →</button>
+      </div>
+      <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
+        <div style="font-size:2.2rem;margin-bottom:12px;">🌊</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Seasonal landlord?</div>
+        <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Rent your place out for part of the year? List it here and reach renters who specifically want mid-term stays — not long-term commitments.</p>
+        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">List seasonally →</button>
+      </div>
+      <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
+        <div style="font-size:2.2rem;margin-bottom:12px;">💼</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Work relocation?</div>
+        <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Moving cities for a contract or secondment? Find a furnished or unfurnished place for 3–6 months without locking into a 12-month lease.</p>
+        <button class="bp" id="stBrowseBtn" style="font-size:.8rem;padding:8px 16px;">Browse listings →</button>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div style="background:#F7F3EE;border-radius:24px;padding:40px;margin-bottom:32px;">
+      <div style="text-align:center;margin-bottom:28px;"><h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:8px;">How short-term listing works</h2><p style="color:#6B3A1F;font-size:.9rem;">For landlords, home owners and tenants listing a lease takeover</p></div>
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:560px;margin:0 auto;">
+        <div style="display:flex;gap:16px;align-items:flex-start;"><div style="width:34px;height:34px;border-radius:50%;background:#E8724A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:.9rem;">1</div><div><div style="font-weight:700;margin-bottom:3px;">Create a free account</div><p style="color:#6B3A1F;font-size:.88rem;line-height:1.6;">Sign up as a landlord or agent in under 2 minutes.</p></div></div>
+        <div style="display:flex;gap:16px;align-items:flex-start;"><div style="width:34px;height:34px;border-radius:50%;background:#E8724A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:.9rem;">2</div><div><div style="font-weight:700;margin-bottom:3px;">List as short-term</div><p style="color:#6B3A1F;font-size:.88rem;line-height:1.6;">Choose "Short-Term" when creating your listing. Set your dates, explain why you're listing, and tell us who you're looking for.</p></div></div>
+        <div style="display:flex;gap:16px;align-items:flex-start;"><div style="width:34px;height:34px;border-radius:50%;background:#E8724A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:.9rem;">3</div><div><div style="font-weight:700;margin-bottom:3px;">AI-scored enquiries come to you</div><p style="color:#6B3A1F;font-size:.88rem;line-height:1.6;">Renters enquire and our AI scores their compatibility with your listing. You get an email instantly with the score and renter details.</p></div></div>
+        <div style="display:flex;gap:16px;align-items:flex-start;"><div style="width:34px;height:34px;border-radius:50%;background:#E8724A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:.9rem;">4</div><div><div style="font-weight:700;margin-bottom:3px;">Choose your renter</div><p style="color:#6B3A1F;font-size:.88rem;line-height:1.6;">Shortlist your top applicants and reply directly. You're always in control.</p></div></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div style="background:#3D1F0D;border-radius:24px;padding:40px;text-align:center;">
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#FAF0DC;margin-bottom:10px;">Ready to list your short-term rental?</h2>
+      <p style="color:rgba(250,240,220,.75);font-size:.93rem;margin-bottom:24px;max-width:420px;margin-left:auto;margin-right:auto;">It's completely free right now. Takes 5 minutes. Reach renters specifically looking for short-term options in your area.</p>
+      <button class="bp" id="stPageListBtn" style="font-size:1rem;padding:14px 36px;">List My Short-Term Property Free →</button>
+    </div>
+
+    <!-- SHORT TERM LISTINGS PREVIEW -->
+    <div style="margin-top:40px;">
+      <div style="text-align:center;margin-bottom:24px;"><div class="slb">Currently available</div><h2 class="stl">Short-Term Nests in NZ</h2></div>
+      <div id="stListingsGrid" class="lg"><div style="text-align:center;padding:32px;color:#6B3A1F;">Loading... 🥝</div></div>
+    </div>
+
+  </div>
+</div>
+
 <div class="fpage" id="landlordsPage">
   <div class="fp-nav">
     <button class="fp-back" id="landlordsBack"><span>←</span> Back to Home</button>
@@ -1059,7 +1146,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div class="landlord-feat"><div class="landlord-feat-ico">📋</div><div><div class="landlord-feat-title">Dedicated agent dashboard</div><p class="landlord-feat-desc">Manage all your client listings in one place. Add, edit, remove — whenever you need to.</p></div></div>
         <div class="landlord-feat"><div class="landlord-feat-ico">📸</div><div><div class="landlord-feat-title">Professional photo galleries</div><p class="landlord-feat-desc">Upload multiple photos per listing with a full gallery view for renters to browse.</p></div></div>
         <div class="landlord-feat"><div class="landlord-feat-ico">🔑</div><div><div class="landlord-feat-title">REAA licence support</div><p class="landlord-feat-desc">Add your REAA licence number to your profile so renters can verify your credentials.</p></div></div>
-        <div class="landlord-feat"><div class="landlord-feat-ico">💰</div><div><div class="landlord-feat-title">A fraction of Trade Me's price</div><p class="landlord-feat-desc">Trade Me charges up to $99 per listing. When we introduce pricing, it'll be a fraction of that.</p></div></div>
+        <div class="landlord-feat"><div class="landlord-feat-ico">💰</div><div><div class="landlord-feat-title">Priced fairly for Kiwis</div><p class="landlord-feat-desc">Free to list during our launch. When pricing arrives, it'll always be fair and transparent.</p></div></div>
       </div>
       <div style="background:#F7F3EE;border-radius:20px;padding:36px;margin-bottom:24px;">
         <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:16px;">What you'll need to sign up</h2>
@@ -1113,7 +1200,12 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div id="myRoomListings"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No room listings yet.</div></div>
     </div>
     <div class="dash-section">
-      <div class="dash-section-title">My Property Listings <button class="dadd" id="showAddForm">+ Add Listing</button></div>
+      <div class="dash-section-title">My Property Listings
+        <div style="display:flex;gap:8px;">
+          <button class="dadd" id="showAddForm">+ Long-Term</button>
+          <button class="dadd" id="showAddFormShort" style="background:linear-gradient(135deg,#E8724A,#C85A2E);">🗓️ Short-Term</button>
+        </div>
+      </div>
       <div id="addListingSection" style="display:none;background:#F7F3EE;border-radius:14px;padding:22px;margin-bottom:20px;">
         <div style="font-weight:700;margin-bottom:14px;color:#3D1F0D;">New Listing</div>
         <!-- RENTAL TERM SELECTOR -->
@@ -1429,9 +1521,23 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div id="agentEnquiries"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No enquiries yet — they'll appear here once renters start messaging. 🥝</div></div>
     </div>
     <div class="dash-section">
-      <div class="dash-section-title">My Listings <button class="dadd" id="agentShowAddForm">+ Add Listing</button></div>
+      <div class="dash-section-title">My Listings
+        <div style="display:flex;gap:8px;">
+          <button class="dadd" id="agentShowAddForm">+ Long-Term</button>
+          <button class="dadd" id="agentShowAddFormShort" style="background:linear-gradient(135deg,#E8724A,#C85A2E);">🗓️ Short-Term</button>
+        </div>
+      </div>
       <div id="agentAddListingSection" style="display:none;background:#F7F3EE;border-radius:14px;padding:22px;margin-bottom:20px;">
         <div style="font-weight:700;margin-bottom:14px;color:#3D1F0D;">New Listing</div>
+        <!-- RENTAL TERM SELECTOR (shared via setRentalTerm) -->
+        <div style="display:flex;gap:10px;margin-bottom:18px;">
+          <button type="button" id="af_termLong" onclick="setRentalTerm('long-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;cursor:pointer;font-size:.88rem;">🏠 Long-Term (12+ months)</button>
+          <button type="button" id="af_termShort" onclick="setRentalTerm('short-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;cursor:pointer;font-size:.88rem;">🗓️ Short-Term (under 12 months)</button>
+        </div>
+        <div id="af_shortTermBanner" style="display:none;background:linear-gradient(135deg,#FFF8F4,#FAF0DC);border:1.5px solid #E8724A;border-radius:14px;padding:16px 20px;margin-bottom:16px;">
+          <div style="font-weight:700;color:#E8724A;margin-bottom:4px;">🗓️ Short-Term Listing</div>
+          <p style="font-size:.85rem;color:#6B3A1F;line-height:1.6;margin:0;">Fill in the extra fields below so renters know exactly what you're offering and who you're looking for.</p>
+        </div>
         <div class="add-form-grid">
           <div class="ff s2"><label>Title *</label><input id="af_t" placeholder="e.g. Modern 2BR in Mount Maunganui"/></div>
           <div class="ff"><label>Suburb *</label><input id="af_s" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'af_s_list')"/><datalist id="af_s_list"></datalist></div>
@@ -1464,6 +1570,22 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
             </label>
             <textarea id="af_d" rows="4" placeholder="Describe the property — or click ✨ AI Generate to write it for you!"></textarea>
             <div class="ai-hint" id="af_ai_hint">✨ AI is writing your description...</div>
+          </div>
+          <!-- SHORT TERM SPECIFIC FIELDS (agent) -->
+          <div id="af_shortTermFields" style="display:none;grid-column:1/-1;">
+            <div style="background:#fff;border-radius:14px;padding:20px;border:1.5px solid #F2D4C0;margin-bottom:4px;">
+              <div style="font-weight:700;color:#3D1F0D;margin-bottom:14px;font-size:.95rem;">🗓️ Short-Term Details</div>
+              <div class="add-form-grid">
+                <div class="ff"><label>Available From *</label><input id="af_term_from" type="date"/></div>
+                <div class="ff"><label>Available Until *</label><input id="af_term_to" type="date"/></div>
+                <div class="ff s2"><label>Why are you listing short-term? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (renters want to know!)</span></label>
+                  <select id="af_reason"><option value="">Select a reason...</option><option value="Going on OE">✈️ Going on my OE / overseas trip</option><option value="Work relocation">💼 Relocating for work temporarily</option><option value="Seasonal rental">🌊 Seasonal rental (summer/winter)</option><option value="Broken lease">📋 Broken lease — need someone to take over</option><option value="Travelling NZ">🚐 Travelling around NZ</option><option value="Family stay">👨‍👩‍👦 Staying with family for a period</option><option value="Other">Other reason</option></select>
+                </div>
+                <div class="ff s2"><label>Who are you looking for? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (be specific — it helps!)</span></label>
+                  <textarea id="af_ideal" rows="3" placeholder="e.g. Working professional, couple welcome, no parties, happy to water the garden..."></textarea>
+                </div>
+              </div>
+            </div>
           </div>
     <div class="ff s2">
       <label>Property Photos</label>
@@ -1774,16 +1896,21 @@ document.getElementById('navListings').addEventListener('click',function(){
 });
 document.getElementById('navHow').addEventListener('click',function(){showPage('howPage');});
 document.getElementById('navLandlords').addEventListener('click',function(){showPage('landlordsPage');});
+document.getElementById('navShortTerm').addEventListener('click',function(){
+  showPage('shortTermPage');
+  loadShortTermListings();
+});
 
 // BACK BUTTONS
 document.getElementById('listingsBack').addEventListener('click',hideAllPages);
 document.getElementById('howBack').addEventListener('click',hideAllPages);
 document.getElementById('landlordsBack').addEventListener('click',hideAllPages);
+document.getElementById('shortTermBack').addEventListener('click',hideAllPages);
 document.getElementById('dashHomeBtn').addEventListener('click',function(){hideAllPages();updateNav();});
 document.getElementById('renterDashHomeBtn').addEventListener('click',function(){hideAllPages();updateNav();});
 
 // AUTH BUTTONS ON FULL PAGES
-['listingsAuthBtn','howAuthBtn','landlordsAuthBtn'].forEach(function(id){
+['listingsAuthBtn','howAuthBtn','landlordsAuthBtn','shortTermAuthBtn'].forEach(function(id){
   var el=document.getElementById(id);if(el)el.addEventListener('click',openAuth);
 });
 ['listingsSignupBtn','howSignupBtn','landlordsSignupBtn','landlordsSignupBtn2'].forEach(function(id){
@@ -1848,10 +1975,30 @@ document.getElementById('dashLogoutBtn').addEventListener('click',doLogout);
 document.getElementById('renterLogoutBtn').addEventListener('click',doLogout);
 document.getElementById('agentLogoutBtn').addEventListener('click',doLogout);
 document.getElementById('agentDashHomeBtn').addEventListener('click',function(){hideAllPages();updateNav();});
-document.getElementById('agentShowAddForm').addEventListener('click',function(){document.getElementById('agentAddListingSection').style.display='block';});
+
+// Agent listing buttons
+document.getElementById('agentShowAddForm').addEventListener('click',function(){
+  setRentalTerm('long-term');
+  document.getElementById('agentAddListingSection').style.display='block';
+});
+document.getElementById('agentShowAddFormShort').addEventListener('click',function(){
+  document.getElementById('agentAddListingSection').style.display='block';
+  setTimeout(function(){ setRentalTerm('short-term'); }, 50);
+  document.getElementById('agentAddListingSection').scrollIntoView({behavior:'smooth'});
+});
 document.getElementById('agentHideAddForm').addEventListener('click',function(){document.getElementById('agentAddListingSection').style.display='none';});
 document.getElementById('agentAddListingSubmit').addEventListener('click',doAgentAddListing);
-document.getElementById('showAddForm').addEventListener('click',function(){document.getElementById('addListingSection').style.display='block';});
+
+// Landlord listing buttons
+document.getElementById('showAddForm').addEventListener('click',function(){
+  setRentalTerm('long-term');
+  document.getElementById('addListingSection').style.display='block';
+});
+document.getElementById('showAddFormShort').addEventListener('click',function(){
+  document.getElementById('addListingSection').style.display='block';
+  setTimeout(function(){ setRentalTerm('short-term'); }, 50);
+  document.getElementById('addListingSection').scrollIntoView({behavior:'smooth'});
+});
 document.getElementById('showAddRoomForm').addEventListener('click',function(){openModal('roomListMod');});
 document.getElementById('hideAddForm').addEventListener('click',function(){document.getElementById('addListingSection').style.display='none';});
 document.getElementById('addListingSubmit').addEventListener('click',doAddListing);
@@ -2247,12 +2394,29 @@ async function doAgentAddListing(){
   var ba=document.getElementById('af_ba').value;
   var d=document.getElementById('af_d').value.trim();
   var av=document.getElementById('af_av').value;
+  var rentalTerm = window._rentalTerm || 'long-term';
+  var isShort = rentalTerm === 'short-term';
   if(!t||!s||!c||!r||!ty||!b||!ba||!d||!av){showToast('⚠️ Please fill in all required fields.');return;}
+  if(isShort){
+    var afTermFrom = document.getElementById('af_term_from').value;
+    var afTermTo = document.getElementById('af_term_to').value;
+    var afReason = document.getElementById('af_reason').value;
+    var afIdeal = document.getElementById('af_ideal').value.trim();
+    if(!afTermFrom||!afTermTo||!afReason||!afIdeal){showToast('⚠️ Please fill in all short-term fields.');return;}
+  }
   var btn=document.getElementById('agentAddListingSubmit');btn.textContent='Listing...';btn.disabled=true;
   try{
     var alPhotoUrls = await uploadPhotos('al_photos','listing-photos','listings/'+u.id);
-    await sbq('POST','listings',{name:u.name,email:u.email,phone:u.phone||'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('af_pk').value,avail:av,pets:document.getElementById('af_pt').value,furnished:document.getElementById('af_fu').value,description:d,status:'active',landlord_id:u.id,is_agency:true,agency_name:u.company,photo_urls:alPhotoUrls});
+    var payload = {name:u.name,email:u.email,phone:u.phone||'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('af_pk').value,avail:av,pets:document.getElementById('af_pt').value,furnished:document.getElementById('af_fu').value,description:d,status:'active',landlord_id:u.id,is_agency:true,agency_name:u.company,photo_urls:alPhotoUrls,rental_term:rentalTerm};
+    if(isShort){
+      payload.term_from = document.getElementById('af_term_from').value;
+      payload.term_to = document.getElementById('af_term_to').value;
+      payload.reason_for_listing = document.getElementById('af_reason').value;
+      payload.ideal_tenant = document.getElementById('af_ideal').value.trim();
+    }
+    await sbq('POST','listings',payload);
     ['af_t','af_s','af_r','af_d','af_av'].forEach(function(id){document.getElementById(id).value='';});
+    setRentalTerm('long-term');
     document.getElementById('agentAddListingSection').style.display='none';
     showToast('🏢 Ka pai! Listing is live!');
     loadAgentListings();
@@ -2909,17 +3073,30 @@ function setTab(btn,type){
 
 function setRentalTerm(term) {
   var isShort = (term === 'short-term');
-  document.getElementById('termLong').style.background = isShort ? '#fff' : '#E8724A';
-  document.getElementById('termLong').style.color = isShort ? '#6B3A1F' : '#fff';
-  document.getElementById('termLong').style.borderColor = isShort ? '#D4B896' : '#E8724A';
-  document.getElementById('termShort').style.background = isShort ? '#E8724A' : '#fff';
-  document.getElementById('termShort').style.color = isShort ? '#fff' : '#6B3A1F';
-  document.getElementById('termShort').style.borderColor = isShort ? '#E8724A' : '#D4B896';
-  document.getElementById('shortTermBanner').style.display = isShort ? 'block' : 'none';
-  document.getElementById('shortTermFields').style.display = isShort ? 'block' : 'none';
-  // Swap available from field label
-  var avLabel = document.querySelector('label[for="f_av"]') || document.querySelector('.ff label');
   window._rentalTerm = term;
+  // Update both landlord and agent toggle buttons if they exist
+  var pairs = [
+    ['termLong', 'termShort', 'shortTermBanner', 'shortTermFields'],
+    ['af_termLong', 'af_termShort', 'af_shortTermBanner', 'af_shortTermFields']
+  ];
+  pairs.forEach(function(ids) {
+    var longBtn = document.getElementById(ids[0]);
+    var shortBtn = document.getElementById(ids[1]);
+    var banner = document.getElementById(ids[2]);
+    var fields = document.getElementById(ids[3]);
+    if (longBtn) {
+      longBtn.style.background = isShort ? '#fff' : '#E8724A';
+      longBtn.style.color = isShort ? '#6B3A1F' : '#fff';
+      longBtn.style.borderColor = isShort ? '#D4B896' : '#E8724A';
+    }
+    if (shortBtn) {
+      shortBtn.style.background = isShort ? '#E8724A' : '#fff';
+      shortBtn.style.color = isShort ? '#fff' : '#6B3A1F';
+      shortBtn.style.borderColor = isShort ? '#E8724A' : '#D4B896';
+    }
+    if (banner) banner.style.display = isShort ? 'block' : 'none';
+    if (fields) fields.style.display = isShort ? 'block' : 'none';
+  });
 }
 
 function searchShortTerm() {
@@ -2927,6 +3104,42 @@ function searchShortTerm() {
   document.getElementById('listings').scrollIntoView({behavior:'smooth'});
   document.querySelector('.lh .stl') && (document.querySelector('.lh .stl').textContent = '🗓️ Short-Term Nests in NZ');
   showToast('🗓️ Showing short-term listings...');
+}
+
+async function loadShortTermListings() {
+  var grid = document.getElementById('stListingsGrid');
+  if (!grid) return;
+  grid.innerHTML = '<div style="text-align:center;padding:32px;color:#6B3A1F;">Loading... 🥝</div>';
+  try {
+    var list = await sbq('GET', 'listings', null, '?rental_term=eq.short-term&status=eq.active&order=created_at.desc&limit=9');
+    if (!list || !list.length) {
+      grid.innerHTML = '<div style="text-align:center;padding:48px;color:#6B3A1F;"><div style="font-size:2.5rem;margin-bottom:12px;">🗓️</div><div style="font-weight:700;font-size:1.1rem;margin-bottom:8px;">No short-term listings yet</div><p style="font-size:.9rem;max-width:340px;margin:0 auto;">Be the first to list a short-term property and reach renters looking for exactly this.</p></div>';
+      return;
+    }
+    grid.innerHTML = list.map(function(l, i) {
+      var hasPhoto = l.photo_urls && l.photo_urls.length;
+      var photoHtml = hasPhoto
+        ? '<div class="lim" style="padding:0;overflow:hidden;"><img src="' + l.photo_urls[0] + '" style="width:100%;height:100%;object-fit:cover;display:block;"/></div>'
+        : '<div class="lim" style="background:' + CLRS[i % CLRS.length] + ';"><div class="lt ltn">NEW</div>🏡</div>';
+      var termInfo = l.term_from && l.term_to ? '<div style="font-size:.78rem;color:#E8724A;font-weight:600;margin-top:4px;">📅 ' + formatDate(l.term_from) + ' → ' + formatDate(l.term_to) + '</div>' : '';
+      var reasonBadge = l.reason_for_listing ? '<span style="font-size:.72rem;background:#FFF8F4;border:1px solid #F2D4C0;border-radius:6px;padding:2px 8px;color:#C85A2E;display:inline-block;margin-top:4px;">' + esc(l.reason_for_listing) + '</span>' : '';
+      return '<div class="lc" onclick="viewListing(\'' + l.id + '\')">' + photoHtml +
+        '<div class="lb">' +
+        '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;"><div class="lpr">$' + Number(l.rent).toLocaleString() + '<span>/week</span></div><span style="background:#E8724A;color:#fff;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:50px;white-space:nowrap;">🗓️ Short-Term</span></div>' +
+        '<div class="ltit">' + esc(l.title) + '</div>' +
+        '<div class="lloc">📍 ' + esc(l.suburb) + ', ' + esc(l.city) + '</div>' +
+        termInfo + (reasonBadge ? '<div>' + reasonBadge + '</div>' : '') +
+        '<div class="lft" style="margin-top:6px;"><span>🛏 ' + esc(l.beds) + '</span><span>🚿 ' + esc(l.baths) + '</span>' + (l.pets === 'Yes' ? '<span>🐾 Pets ok</span>' : '') + '</div>' +
+        '</div></div>';
+    }).join('');
+  } catch(err) {
+    grid.innerHTML = '<div style="text-align:center;padding:32px;color:#C85A2E;">Could not load listings. Please try again.</div>';
+  }
+}
+
+function doShortTermSearch() {
+  loadShortTermListings();
+  document.getElementById('stListingsGrid') && document.getElementById('stListingsGrid').scrollIntoView({behavior:'smooth'});
 }
 
 
