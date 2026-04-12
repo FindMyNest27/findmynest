@@ -2388,23 +2388,22 @@ async function doAgentAddListing(){
   var av=document.getElementById('af_av').value;
   var rentalTerm = window._rentalTerm || 'long-term';
   var isShort = rentalTerm === 'short-term';
-  if(!t||!s||!c||!r||!ty||!b||!ba||!d||!av){showToast('⚠️ Please fill in all required fields.');return;}
-  if(isShort){
-    var afTermFrom = document.getElementById('af_term_from').value;
-    var afTermTo = document.getElementById('af_term_to').value;
-    var afReason = document.getElementById('af_reason').value;
-    var afIdeal = document.getElementById('af_ideal').value.trim();
-    if(!afTermFrom||!afTermTo||!afReason||!afIdeal){showToast('⚠️ Please fill in all short-term fields.');return;}
-  }
+  var afTermFrom = isShort ? document.getElementById('af_term_from').value : '';
+  var afTermTo = isShort ? document.getElementById('af_term_to').value : '';
+  var afReason = isShort ? document.getElementById('af_reason').value : 'n/a';
+  var afIdeal = isShort ? document.getElementById('af_ideal').value.trim() : 'n/a';
+  if(!t||!s||!c||!r||!ty||!b||!ba||!d){showToast('⚠️ Please fill in all required fields.');return;}
+  if(!isShort && !av){showToast('⚠️ Please fill in all required fields.');return;}
+  if(isShort && (!afTermFrom||!afTermTo||!afReason||!afIdeal)){showToast('⚠️ Please fill in all short-term fields.');return;}
   var btn=document.getElementById('agentAddListingSubmit');btn.textContent='Listing...';btn.disabled=true;
   try{
     var alPhotoUrls = await uploadPhotos('al_photos','listing-photos','listings/'+u.id);
-    var payload = {name:u.name,email:u.email,phone:u.phone||'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('af_pk').value,avail:av,pets:document.getElementById('af_pt').value,furnished:document.getElementById('af_fu').value,description:d,status:'active',landlord_id:u.id,is_agency:true,agency_name:u.company,photo_urls:alPhotoUrls,rental_term:rentalTerm};
+    var payload = {name:u.name,email:u.email,phone:u.phone||'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('af_pk').value,avail:isShort?afTermFrom:av,pets:document.getElementById('af_pt').value,furnished:document.getElementById('af_fu').value,description:d,status:'active',landlord_id:u.id,is_agency:true,agency_name:u.company,photo_urls:alPhotoUrls,rental_term:rentalTerm};
     if(isShort){
-      payload.term_from = document.getElementById('af_term_from').value;
-      payload.term_to = document.getElementById('af_term_to').value;
-      payload.reason_for_listing = document.getElementById('af_reason').value;
-      payload.ideal_tenant = document.getElementById('af_ideal').value.trim();
+      payload.term_from = afTermFrom;
+      payload.term_to = afTermTo;
+      payload.reason_for_listing = afReason;
+      payload.ideal_tenant = afIdeal;
     }
     await sbq('POST','listings',payload);
     ['af_t','af_s','af_r','af_d','af_av'].forEach(function(id){document.getElementById(id).value='';});
@@ -2432,24 +2431,22 @@ async function doAddListing(){
   var av=document.getElementById('f_av').value;
   var rentalTerm = window._rentalTerm || 'long-term';
   var isShort = rentalTerm === 'short-term';
-  if(!t||!s||!c||!r||!ty||!b||!ba||!d||!av){showToast('⚠️ Please fill in all required fields.');return;}
-  // Validate short-term specific fields
-  if(isShort){
-    var termFrom = document.getElementById('f_term_from').value;
-    var termTo = document.getElementById('f_term_to').value;
-    var reason = document.getElementById('f_reason').value;
-    var ideal = document.getElementById('f_ideal').value.trim();
-    if(!termFrom||!termTo||!reason||!ideal){showToast('⚠️ Please fill in all short-term fields.');return;}
-  }
+  var termFrom = isShort ? document.getElementById('f_term_from').value : '';
+  var termTo = isShort ? document.getElementById('f_term_to').value : '';
+  var reason = isShort ? document.getElementById('f_reason').value : 'n/a';
+  var ideal = isShort ? document.getElementById('f_ideal').value.trim() : 'n/a';
+  if(!t||!s||!c||!r||!ty||!b||!ba||!d){showToast('⚠️ Please fill in all required fields.');return;}
+  if(!isShort && !av){showToast('⚠️ Please fill in all required fields.');return;}
+  if(isShort && (!termFrom||!termTo||!reason||!ideal)){showToast('⚠️ Please fill in all short-term fields.');return;}
   var btn=document.getElementById('addListingSubmit');btn.textContent='Listing...';btn.disabled=true;
   try{
     var llPhotoUrls = await uploadPhotos('ll_photos','listing-photos','listings/'+u.id);
-    var payload = {name:u.name,email:u.email,phone:'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('f_pk').value,avail:av,pets:document.getElementById('f_pt').value,furnished:document.getElementById('f_fu').value,description:d,status:'active',landlord_id:u.id,photo_urls:llPhotoUrls,rental_term:rentalTerm};
+    var payload = {name:u.name,email:u.email,phone:'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('f_pk').value,avail:isShort?termFrom:av,pets:document.getElementById('f_pt').value,furnished:document.getElementById('f_fu').value,description:d,status:'active',landlord_id:u.id,photo_urls:llPhotoUrls,rental_term:rentalTerm};
     if(isShort){
-      payload.term_from = document.getElementById('f_term_from').value;
-      payload.term_to = document.getElementById('f_term_to').value;
-      payload.reason_for_listing = document.getElementById('f_reason').value;
-      payload.ideal_tenant = document.getElementById('f_ideal').value.trim();
+      payload.term_from = termFrom;
+      payload.term_to = termTo;
+      payload.reason_for_listing = reason;
+      payload.ideal_tenant = ideal;
     }
     await sbq('POST','listings',payload);
     ['f_t','f_s','f_r','f_d','f_av'].forEach(function(id){document.getElementById(id).value='';});
