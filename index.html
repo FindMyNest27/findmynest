@@ -523,7 +523,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <div class="hbg"></div><div class="hbg"></div>
   <div class="hc">
     <div>
-      <div class="hbadge"><div class="hdot"></div> NZ's Newest Rental Marketplace, powered by AI</div>
+      <div class="hbadge"><div class="hdot"></div> NZ's home for short &amp; long-term rentals, powered by AI</div>
       <h1 class="ht">Find your<br/><span>perfect <span id="nestWord" style="position:relative;display:inline-block;">nest<span id="nestT" style="position:absolute;right:0;bottom:0;width:1px;height:1px;pointer-events:none;"></span></span></span><br/>in Aotearoa New Zealand</h1>
       <p class="hs">The fairer, simpler way to rent in NZ. Built for Kiwi landlords and renters — no ridiculous fees, no drama.</p>
       <div class="ha">
@@ -556,14 +556,32 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 <div class="ss">
   <div class="stit">🔍 Find your next nest</div>
   <div class="stabs">
-    <button class="stab active" onclick="setTab(this,'rent')">Rent</button>
+    <button class="stab active" onclick="setTab(this,'rent')">Long-Term Rent</button>
+    <button class="stab" onclick="setTab(this,'shortterm')" style="position:relative;">Short-Term ✨<span style="position:absolute;top:-8px;right:-6px;background:#E8724A;color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:50px;">NEW</span></button>
     <button class="stab" onclick="setTab(this,'flatmates')">Flatmates</button>
   </div>
-  <div class="sbar">
+  <div class="sbar" id="sbar-rent">
     <div class="sf"><label>Location</label><input type="text" placeholder="e.g. Tauranga, Auckland..."/></div>
     <div class="sf"><label>Type</label><select><option>Any type</option><option>House</option><option>Apartment</option><option>Unit</option><option>Townhouse</option></select></div>
     <div class="sf"><label>Bedrooms</label><select><option>Any bedrooms</option><option>1 bed</option><option>2 beds</option><option>3 beds</option><option>4+ beds</option></select></div>
     <button class="sbtn" id="searchBtn">Search Nests</button>
+  </div>
+  <div id="sbar-shortterm" style="display:none;">
+    <div style="background:linear-gradient(135deg,#E8724A,#C85A2E);border-radius:20px;padding:28px 32px;color:#fff;margin-bottom:0;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+        <span style="font-size:1.8rem;">🗓️</span>
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;">Short-Term & Broken Leases</div>
+          <div style="font-size:.88rem;opacity:.9;margin-top:2px;">3 weeks to 11 months — holiday lets, OE sublets, broken leases & more</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;">
+        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Location</label><input type="text" placeholder="e.g. Auckland, Queenstown..." style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"/></div>
+        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Available From</label><input type="date" style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"/></div>
+        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Duration</label><select style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
+        <button class="sbtn" style="background:#fff;color:#E8724A;white-space:nowrap;" onclick="searchShortTerm()">Search →</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -575,6 +593,44 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div class="sc"><div class="snum">01</div><div class="sico">📝</div><div class="sctit">Create your account</div><p class="scd">Sign up as a landlord, agent or renter in minutes. Free and no fuss.</p></div>
     <div class="sc"><div class="snum">02</div><div class="sico">🏡</div><div class="sctit">List or find a nest</div><p class="scd">Landlords and agents list properties. Renters browse listings across NZ.</p></div>
     <div class="sc"><div class="snum">03</div><div class="sico">🤝</div><div class="sctit">Connect & move in</div><p class="scd">Contact landlords or agents directly, arrange viewings and seal the deal.</p></div>
+  </div>
+</section>
+
+<!-- SHORT TERM NICHE SECTION -->
+<section style="padding:64px 0;background:linear-gradient(180deg,#FAF0DC 0%,#FFF8F4 100%);">
+  <div class="li">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div class="slb">🗓️ Our Niche</div>
+      <h2 class="stl">NZ's home for short-term rentals</h2>
+      <p class="ssb">Facebook groups are chaos. Trade Me doesn't get it. FindMyNest is built for Kiwis who need flexibility — whether you're going on your OE, relocating for work, or taking over a broken lease.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px;">
+      <div style="background:#fff;border-radius:20px;padding:28px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
+        <div style="font-size:2.2rem;margin-bottom:12px;">✈️</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Going on your OE?</div>
+        <p style="color:#6B3A1F;font-size:.88rem;line-height:1.7;">Sublet your place while you're away. Get the right person in, keep your home looked after, and cover your costs.</p>
+      </div>
+      <div style="background:#fff;border-radius:20px;padding:28px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
+        <div style="font-size:2.2rem;margin-bottom:12px;">📋</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Broken lease?</div>
+        <p style="color:#6B3A1F;font-size:.88rem;line-height:1.7;">Need to exit your lease early? Find a qualified tenant to take it over. Landlords stay happy, you stay free.</p>
+      </div>
+      <div style="background:#fff;border-radius:20px;padding:28px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
+        <div style="font-size:2.2rem;margin-bottom:12px;">🏡</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Seasonal landlord?</div>
+        <p style="color:#6B3A1F;font-size:.88rem;line-height:1.7;">Rent your place out for 3–6 months a year? List it here and find renters who specifically want mid-term stays.</p>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,#3D1F0D,#6B3A1F);border-radius:24px;padding:40px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#FAF0DC;margin-bottom:10px;">Stop posting in Facebook groups 🙏</div>
+        <p style="color:rgba(250,240,220,.75);font-size:.95rem;line-height:1.7;max-width:480px;">FindMyNest connects short-term landlords with renters who actually want what you're offering. No scrolling through irrelevant posts. No ghosting. Just the right match.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
+        <button class="bp" onclick="setTab(document.querySelector('.stab:nth-child(2)'),'shortterm');document.querySelector('.ss').scrollIntoView({behavior:'smooth'});">Find Short-Term Nests →</button>
+        <button class="bs" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#FAF0DC;" id="stListBtn">List Short-Term Property →</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1056,6 +1112,15 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div class="dash-section-title">My Property Listings <button class="dadd" id="showAddForm">+ Add Listing</button></div>
       <div id="addListingSection" style="display:none;background:#F7F3EE;border-radius:14px;padding:22px;margin-bottom:20px;">
         <div style="font-weight:700;margin-bottom:14px;color:#3D1F0D;">New Listing</div>
+        <!-- RENTAL TERM SELECTOR -->
+        <div style="display:flex;gap:10px;margin-bottom:18px;">
+          <button type="button" id="termLong" onclick="setRentalTerm('long-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;cursor:pointer;font-size:.88rem;">🏠 Long-Term (12+ months)</button>
+          <button type="button" id="termShort" onclick="setRentalTerm('short-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;cursor:pointer;font-size:.88rem;">🗓️ Short-Term (under 12 months)</button>
+        </div>
+        <div id="shortTermBanner" style="display:none;background:linear-gradient(135deg,#FFF8F4,#FAF0DC);border:1.5px solid #E8724A;border-radius:14px;padding:16px 20px;margin-bottom:16px;">
+          <div style="font-weight:700;color:#E8724A;margin-bottom:4px;">🗓️ Short-Term Listing</div>
+          <p style="font-size:.85rem;color:#6B3A1F;line-height:1.6;margin:0;">Fill in the extra fields below so renters know exactly what you're offering and who you're looking for.</p>
+        </div>
         <div class="add-form-grid">
           <div class="ff s2"><label>Title *</label><input id="f_t" placeholder="e.g. Sunny 3BR House in Tauranga"/></div>
           <div class="ff"><label>Suburb *</label><input id="f_s" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'f_s_list')"/><datalist id="f_s_list"></datalist></div>
@@ -1088,6 +1153,22 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
             </label>
             <textarea id="f_d" rows="4" placeholder="Describe your property — or click ✨ AI Generate to write it for you!"></textarea>
             <div class="ai-hint" id="f_ai_hint">✨ AI is writing your description...</div>
+          </div>
+          <!-- SHORT TERM SPECIFIC FIELDS -->
+          <div id="shortTermFields" style="display:none;grid-column:1/-1;">
+            <div style="background:#fff;border-radius:14px;padding:20px;border:1.5px solid #F2D4C0;margin-bottom:4px;">
+              <div style="font-weight:700;color:#3D1F0D;margin-bottom:14px;font-size:.95rem;">🗓️ Short-Term Details</div>
+              <div class="add-form-grid">
+                <div class="ff"><label>Available From *</label><input id="f_term_from" type="date"/></div>
+                <div class="ff"><label>Available Until *</label><input id="f_term_to" type="date"/></div>
+                <div class="ff s2"><label>Why are you listing short-term? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (renters want to know!)</span></label>
+                  <select id="f_reason"><option value="">Select a reason...</option><option value="Going on OE">✈️ Going on my OE / overseas trip</option><option value="Work relocation">💼 Relocating for work temporarily</option><option value="Seasonal rental">🌊 Seasonal rental (summer/winter)</option><option value="Broken lease">📋 Broken lease — need someone to take over</option><option value="Travelling NZ">🚐 Travelling around NZ</option><option value="Family stay">👨‍👩‍👦 Staying with family for a period</option><option value="Other">Other reason</option></select>
+                </div>
+                <div class="ff s2"><label>Who are you looking for? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (be specific — it helps!)</span></label>
+                  <textarea id="f_ideal" rows="3" placeholder="e.g. Working professional, couple welcome, no parties, must be comfortable with our cat, someone happy to water the garden..."></textarea>
+                </div>
+              </div>
+            </div>
           </div>
     <div class="ff s2">
       <label>Property Photos</label>
@@ -1661,6 +1742,7 @@ function openDashboard(){
     document.getElementById('agentRoleName').textContent=u.role||'Agent';
     document.getElementById('agentPmRange').textContent=u.pm_range||'—';
     loadAgentListings();
+    loadEnquiries(u);
     showPage('agentDashPage');
   } else {
     document.getElementById('dashWelcomeName').textContent='Kia ora, '+esc(u.name)+'! 🥝';
@@ -1708,6 +1790,18 @@ document.getElementById('emptyListBtn').addEventListener('click',openAuth);
 document.getElementById('viewAllBtn').addEventListener('click',function(){loadAllListingsPage();showPage('listingsPage');});
 document.getElementById('ctaListBtn').addEventListener('click',openAuth);
 document.getElementById('searchBtn').addEventListener('click',function(){loadAllListingsPage();showPage('listingsPage');});
+document.getElementById('stListBtn').addEventListener('click',function(){
+  var u = getUser();
+  if(!u){ openAuth(); return; }
+  // Open dashboard and pre-select short-term
+  var type = u.type;
+  if(type==='landlord') showPage('landlordDashPage');
+  else if(type==='agent') showPage('agentDashPage');
+  setTimeout(function(){
+    document.getElementById('showAddForm') && document.getElementById('showAddForm').click();
+    setTimeout(function(){ setRentalTerm('short-term'); }, 200);
+  }, 300);
+});
 
 // AUTH STEP NAVIGATION
 document.getElementById('goLandlord').addEventListener('click',function(){showStep('stepLS');});
@@ -2172,18 +2266,37 @@ async function doAddListing(){
   var ba=document.getElementById('f_ba').value;
   var d=document.getElementById('f_d').value.trim();
   var av=document.getElementById('f_av').value;
+  var rentalTerm = window._rentalTerm || 'long-term';
+  var isShort = rentalTerm === 'short-term';
   if(!t||!s||!c||!r||!ty||!b||!ba||!d||!av){showToast('⚠️ Please fill in all required fields.');return;}
+  // Validate short-term specific fields
+  if(isShort){
+    var termFrom = document.getElementById('f_term_from').value;
+    var termTo = document.getElementById('f_term_to').value;
+    var reason = document.getElementById('f_reason').value;
+    var ideal = document.getElementById('f_ideal').value.trim();
+    if(!termFrom||!termTo||!reason||!ideal){showToast('⚠️ Please fill in all short-term fields.');return;}
+  }
   var btn=document.getElementById('addListingSubmit');btn.textContent='Listing...';btn.disabled=true;
   try{
     var llPhotoUrls = await uploadPhotos('ll_photos','listing-photos','listings/'+u.id);
-    await sbq('POST','listings',{name:u.name,email:u.email,phone:'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('f_pk').value,avail:av,pets:document.getElementById('f_pt').value,furnished:document.getElementById('f_fu').value,description:d,status:'active',landlord_id:u.id,photo_urls:llPhotoUrls});
+    var payload = {name:u.name,email:u.email,phone:'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('f_pk').value,avail:av,pets:document.getElementById('f_pt').value,furnished:document.getElementById('f_fu').value,description:d,status:'active',landlord_id:u.id,photo_urls:llPhotoUrls,rental_term:rentalTerm};
+    if(isShort){
+      payload.term_from = document.getElementById('f_term_from').value;
+      payload.term_to = document.getElementById('f_term_to').value;
+      payload.reason_for_listing = document.getElementById('f_reason').value;
+      payload.ideal_tenant = document.getElementById('f_ideal').value.trim();
+    }
+    await sbq('POST','listings',payload);
     ['f_t','f_s','f_r','f_d','f_av'].forEach(function(id){document.getElementById(id).value='';});
     ['f_c','f_ty','f_b','f_ba'].forEach(function(id){document.getElementById(id).selectedIndex=0;});
+    // Reset rental term
+    setRentalTerm('long-term');
     document.getElementById('addListingSection').style.display='none';
     showToast('🥝 Ka pai! Your listing is live!');
     loadMyListings();
     renderListings();
-  }catch(err){console.error('Listing error:',err);showToast('⚠️ '+( err.message||'Something went wrong. Please try again.'));}
+  }catch(err){console.error('Listing error:',err);showToast('⚠️ '+(err.message||'Something went wrong. Please try again.'));}
   finally{btn.textContent='List My Property 🥝';btn.disabled=false;}
 }
 
@@ -2206,44 +2319,31 @@ async function loadMyListings(){
 }
 
 async function loadEnquiries(u) {
-  var c = document.getElementById('landlordEnquiries') || document.getElementById('agentEnquiries');
-  var badge = document.getElementById('newEnquiryBadge') || document.getElementById('agentEnquiryBadge');
-  var countEl = document.getElementById('dashEnquiryCount') || document.getElementById('agentEnquiryCount');
+  // Pick the right container based on which dashboard is active
+  var isAgent = u && u.type === 'agent';
+  var c = isAgent
+    ? document.getElementById('agentEnquiries')
+    : document.getElementById('landlordEnquiries');
+  var badge = isAgent
+    ? document.getElementById('agentEnquiryBadge')
+    : document.getElementById('newEnquiryBadge');
+  var countEl = isAgent
+    ? document.getElementById('agentEnquiryCount')
+    : document.getElementById('dashEnquiryCount');
   if (!c) return;
   try {
-    // Get all listing IDs for this user — use email match which is most reliable
-    var listings = await sbq('GET', 'listings', null, '?email=eq.' + encodeURIComponent(u.email) + '&select=id');
-    console.log('loadEnquiries: listings found for', u.email, listings);
-
-    // Also try by landlord_id as fallback
-    if (!listings || !listings.length) {
-      listings = await sbq('GET', 'listings', null, '?landlord_id=eq.' + String(u.id) + '&select=id');
-      console.log('loadEnquiries: listings by landlord_id', u.id, listings);
-    }
-
-    if (!listings || !listings.length) {
-      console.log('loadEnquiries: no listings found for user');
-      c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No listings yet — add a listing to start receiving enquiries. 🥝</div>';
-      return;
-    }
-
-    var ids = listings.map(function(l){ return l.id; }).join(',');
-    console.log('loadEnquiries: querying enquiries for listing ids:', ids);
-
-    var enquiries = await sbq('GET', 'enquiries', null, '?listing_id=in.('+ids+')&order=created_at.desc&limit=50');
-    console.log('loadEnquiries: enquiries found:', enquiries ? enquiries.length : 0, enquiries);
-
+    // Query directly by pm_email — no listing lookup needed, works even if listing deleted
+    var enquiries = await sbq('GET', 'enquiries', null, '?pm_email=eq.' + encodeURIComponent(u.email) + '&order=created_at.desc&limit=50');
+    console.log('loadEnquiries for', u.email, ':', enquiries ? enquiries.length : 0);
     if (!enquiries || !enquiries.length) {
-      c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No enquiries yet — they\'ll appear here once renters start messaging. 🥝</div>';
+      c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No applications yet — they\'ll appear here when renters apply. 🥝</div>';
       return;
     }
-
     var newCount = enquiries.filter(function(e){ return e.status === 'new'; }).length;
     if (newCount > 0) {
       if (badge) { badge.textContent = newCount + ' new'; badge.style.display = 'inline'; }
       if (countEl) countEl.textContent = newCount;
     }
-
     c.innerHTML = enquiries.map(function(e) {
       var score = e.ai_score || 0;
       var scoreColor = score >= 75 ? '#22c55e' : score >= 50 ? '#f59e0b' : '#ef4444';
@@ -2256,39 +2356,38 @@ async function loadEnquiries(u) {
         (isNew?'<span style="background:#E8724A;color:#fff;border-radius:50px;padding:1px 8px;font-size:.7rem;font-weight:700;">NEW</span>':'')+
         '<div style="font-weight:700;color:#3D1F0D;">'+esc(e.renter_name)+'</div>'+
         '</div>'+
-        '<div style="font-size:.82rem;color:#6B3A1F;">'+esc(e.renter_email)+(e.renter_phone?' &nbsp;•&nbsp; '+esc(e.renter_phone):'')+'</div>'+
+        '<div style="font-size:.82rem;color:#6B3A1F;">'+esc(e.renter_email)+(e.renter_phone?' &nbsp;&bull;&nbsp; '+esc(e.renter_phone):'')+'</div>'+
+        (e.listing_title?'<div style="font-size:.75rem;color:#A07850;margin-top:2px;">&#128205; '+esc(e.listing_title)+(e.listing_suburb?' &bull; '+esc(e.listing_suburb):'')+'</div>':'')+
         '</div>'+
         '<div style="text-align:center;flex-shrink:0;">'+
         '<div style="width:52px;height:52px;border-radius:50%;background:conic-gradient('+scoreColor+' '+score+'%, #f0f0f0 0);display:flex;align-items:center;justify-content:center;">'+
         '<div style="width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:'+scoreColor+';">'+score+'</div>'+
-        '</div>'+
-        '<div style="font-size:.65rem;color:'+scoreColor+';font-weight:600;margin-top:2px;">'+scoreLabel+'</div>'+
-        '</div>'+
-        '</div>'+
-        (e.ai_summary?'<div style="background:#F7F3EE;border-radius:8px;padding:8px 10px;font-size:.82rem;color:#6B3A1F;margin-bottom:8px;">🤖 '+esc(e.ai_summary)+'</div>':'')+
-        (e.ai_reasoning?'<div style="background:#F0F9FF;border:1px solid #BAE6FD;border-radius:8px;padding:8px 10px;font-size:.8rem;color:#0C4A6E;margin-bottom:8px;line-height:1.6;"><span style="font-weight:700;font-size:.72rem;color:#0369A1;">🤖 How AI calculated this score</span><br>'+esc(e.ai_reasoning)+'</div>':'')+
-        (e.ai_positives&&e.ai_positives.length?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;">'+e.ai_positives.map(function(p){return'<span style="background:#dcfce7;color:#166534;border-radius:50px;padding:2px 8px;font-size:.72rem;">✓ '+esc(p)+'</span>';}).join('')+'</div>':'')+
-        (e.ai_concerns&&e.ai_concerns.length?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">'+e.ai_concerns.map(function(p){return'<span style="background:#fef2f2;color:#991b1b;border-radius:50px;padding:2px 8px;font-size:.72rem;">⚠ '+esc(p)+'</span>';}).join('')+'</div>':'')+
+        '</div><div style="font-size:.65rem;color:'+scoreColor+';font-weight:600;margin-top:2px;">'+scoreLabel+'</div></div></div>'+
+        (e.ai_summary?'<div style="background:#F7F3EE;border-radius:8px;padding:8px 10px;font-size:.82rem;color:#6B3A1F;margin-bottom:8px;">&#129302; '+esc(e.ai_summary)+'</div>':'')+
+        (e.ai_reasoning?'<div style="background:#F0F9FF;border:1px solid #BAE6FD;border-radius:8px;padding:8px 10px;font-size:.8rem;color:#0C4A6E;margin-bottom:8px;line-height:1.6;"><span style="font-weight:700;font-size:.72rem;color:#0369A1;">&#129302; How AI calculated this score</span><br>'+esc(e.ai_reasoning)+'</div>':'')+
+        (e.ai_positives&&e.ai_positives.length?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;">'+e.ai_positives.map(function(p){return'<span style="background:#dcfce7;color:#166534;border-radius:50px;padding:2px 8px;font-size:.72rem;">&#10003; '+esc(p)+'</span>';}).join('')+'</div>':'')+
+        (e.ai_concerns&&e.ai_concerns.length?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">'+e.ai_concerns.map(function(p){return'<span style="background:#fef2f2;color:#991b1b;border-radius:50px;padding:2px 8px;font-size:.72rem;">&#9888; '+esc(p)+'</span>';}).join('')+'</div>':'')+
         (e.message?'<div style="font-size:.84rem;color:#6B3A1F;font-style:italic;margin-bottom:10px;padding:8px;background:#FAF0DC;border-radius:8px;">"'+esc(e.message)+'"</div>':'')+
         '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">'+
-        (e.renter_budget_max?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">💰 Budget: $'+e.renter_budget_max+'/wk</span>':'')+
-        (e.renter_beds_needed?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">🛏 Needs: '+esc(e.renter_beds_needed)+' bed</span>':'')+
-        (e.renter_pets?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">🐾 Pets: '+esc(e.renter_pets)+'</span>':'')+
-        (e.renter_move_date?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">📅 Move: '+esc(e.renter_move_date)+'</span>':'')+
+        (e.renter_budget_max?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">&#128176; $'+e.renter_budget_max+'/wk</span>':'')+
+        (e.renter_beds_needed?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">&#128716; '+esc(e.renter_beds_needed)+' bed</span>':'')+
+        (e.renter_pets?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">&#128062; '+esc(e.renter_pets)+'</span>':'')+
+        (e.renter_move_date?'<span style="background:#F7F3EE;border-radius:50px;padding:2px 9px;font-size:.72rem;color:#6B3A1F;">&#128197; '+esc(e.renter_move_date)+'</span>':'')+
         '</div>'+
         '<div style="display:flex;gap:8px;flex-wrap:wrap;">'+
-        '<a href="mailto:'+esc(e.renter_email)+'" class="bp" style="font-size:.8rem;padding:8px 16px;text-decoration:none;">✉️ Reply</a>'+
-        (e.status!=='shortlisted'?'<button onclick="updateEnquiryStatus(\''+e.id+'\',\'shortlisted\')" style="background:#22c55e;color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:.8rem;font-weight:600;cursor:pointer;">⭐ Shortlist</button>':'<span style="background:#dcfce7;color:#166534;border-radius:50px;padding:8px 16px;font-size:.8rem;font-weight:600;">⭐ Shortlisted</span>')+
-        (e.status!=='declined'?'<button onclick="updateEnquiryStatus(\''+e.id+'\',\'declined\')" style="background:#f1f5f9;color:#6B3A1F;border:none;border-radius:50px;padding:8px 16px;font-size:.8rem;font-weight:600;cursor:pointer;">✕ Decline</button>':'')+
+        '<a href="mailto:'+esc(e.renter_email)+'" class="bp" style="font-size:.8rem;padding:8px 16px;text-decoration:none;">&#10003; Reply</a>'+
+        (e.status!=='shortlisted'?'<button onclick="updateEnquiryStatus(\''+e.id+'\',\'shortlisted\')" style="background:#22c55e;color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:.8rem;font-weight:600;cursor:pointer;">&#11088; Shortlist</button>':'<span style="background:#dcfce7;color:#166534;border-radius:50px;padding:8px 16px;font-size:.8rem;font-weight:600;">&#11088; Shortlisted</span>')+
+        (e.status!=='declined'?'<button onclick="updateEnquiryStatus(\''+e.id+'\',\'declined\')" style="background:#f1f5f9;color:#6B3A1F;border:none;border-radius:50px;padding:8px 16px;font-size:.8rem;font-weight:600;cursor:pointer;">&#10005; Decline</button>':'')+
         '</div>'+
         '<div style="font-size:.7rem;color:#A07850;margin-top:6px;">'+new Date(e.created_at).toLocaleDateString('en-NZ',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'</div>'+
         '</div>';
     }).join('');
-  } catch(err) { 
+  } catch(err) {
     console.error('loadEnquiries error:', err);
-    c.innerHTML = '<div style="text-align:center;padding:24px;color:#C85A2E;">Could not load enquiries. Please refresh.</div>';
+    c.innerHTML = '<div style="text-align:center;padding:24px;color:#C85A2E;font-size:.9rem;">Could not load applications. Please refresh. &#x1F95D;</div>';
   }
 }
+
 
 async function updateEnquiryStatus(enquiryId, status) {
   try {
@@ -2388,6 +2487,14 @@ async function viewListing(id){
       (l.avail?'<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">From: '+esc(l.avail)+'</span>':'')+
       '</div>'+
       '<p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;margin-bottom:16px;">'+esc(l.description)+'</p>'+
+      (l.rental_term==='short-term' ? (
+        '<div style="background:linear-gradient(135deg,#FFF8F4,#FAF0DC);border:1.5px solid #E8724A;border-radius:14px;padding:16px 18px;margin-bottom:14px;">'+
+        '<div style="font-weight:700;color:#E8724A;margin-bottom:10px;">🗓️ Short-Term Rental Details</div>'+
+        (l.term_from && l.term_to ? '<div style="font-size:.88rem;color:#3D1F0D;margin-bottom:8px;font-weight:600;">📅 Available: '+formatDate(l.term_from)+' → '+formatDate(l.term_to)+'</div>' : '')+
+        (l.reason_for_listing ? '<div style="font-size:.86rem;color:#6B3A1F;margin-bottom:8px;"><strong>Why short-term?</strong> '+esc(l.reason_for_listing)+'</div>' : '')+
+        (l.ideal_tenant ? '<div style="font-size:.86rem;color:#6B3A1F;"><strong>Looking for:</strong> '+esc(l.ideal_tenant)+'</div>' : '')+
+        '</div>'
+      ) : '')+
       (u && u.type==='renter' ? '<button id="saveListingBtn" onclick="toggleSaveListing(\''+l.id+'\')" style="width:100%;background:#FAF0DC;border:1.5px solid #D4B896;border-radius:50px;padding:10px;font-size:.86rem;font-weight:600;color:#6B3A1F;cursor:pointer;margin-bottom:12px;">💛 Save to Watchlist</button>' : '')+
       enquiryForm+
       '<p style="font-size:.7rem;color:#6B3A1F;margin-top:9px;line-height:1.5;">FindMyNest is a listing platform only. Please get independent legal advice before signing any tenancy agreement.</p>';
@@ -2426,11 +2533,14 @@ async function submitEnquiry(listingId) {
 }
 
 // HOME LISTINGS
-async function renderListings(){
+async function renderListings(termFilter){
   var empty=document.getElementById('emptyState');
   var grid=document.getElementById('listGrid');
   try{
-    var list=await sbq('GET','listings',null,'?order=created_at.desc&limit=3&status=eq.active');
+    var qs = termFilter
+      ? '?order=created_at.desc&limit=6&status=eq.active&rental_term=eq.'+termFilter
+      : '?order=created_at.desc&limit=6&status=eq.active';
+    var list=await sbq('GET','listings',null,qs);
     if(!list||!list.length){empty.style.display='block';grid.style.display='none';return;}
     empty.style.display='none';grid.style.display='grid';
     grid.innerHTML=list.map(function(l,i){
@@ -2438,14 +2548,28 @@ async function renderListings(){
       var photoHtml=hasPhoto
         ?'<div class="lim" style="padding:0;overflow:hidden;"><img src="'+l.photo_urls[0]+'" style="width:100%;height:100%;object-fit:cover;display:block;"/></div>'
         :'<div class="lim" style="background:'+CLRS[i%CLRS.length]+';"><div class="lt ltn">NEW</div>🏡</div>';
+      var shortBadge = l.rental_term==='short-term'
+        ? '<span style="background:#E8724A;color:#fff;font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:50px;margin-left:6px;">🗓️ Short-Term</span>'
+        : '';
+      var termInfo = l.rental_term==='short-term' && l.term_from && l.term_to
+        ? '<div style="font-size:.78rem;color:#E8724A;font-weight:600;margin-top:4px;">📅 '+formatDate(l.term_from)+' → '+formatDate(l.term_to)+'</div>'
+        : '';
       return '<div class="lc" onclick="viewListing(\''+l.id+'\')">'+photoHtml+
-        '<div class="lb"><div class="lpr">$'+Number(l.rent).toLocaleString()+'<span>/week</span></div>'+
+        '<div class="lb"><div class="lpr">$'+Number(l.rent).toLocaleString()+'<span>/week</span>'+shortBadge+'</div>'+
         '<div class="ltit">'+esc(l.title)+'</div>'+
         '<div class="lloc">📍 '+esc(l.suburb)+', '+esc(l.city)+'</div>'+
+        termInfo+
         '<div class="lft"><span>🛏 '+esc(l.beds)+'</span><span>🚿 '+esc(l.baths)+'</span>'+(l.pets==='Yes'?'<span>🐾 Pets ok</span>':'')+'</div></div></div>';
     }).join('');
     initHero(list);
   }catch(err){empty.style.display='block';grid.style.display='none';}
+}
+
+function formatDate(d){
+  if(!d)return '';
+  var parts=d.split('-');
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return parts[2]+' '+months[parseInt(parts[1])-1]+' '+parts[0];
 }
 
 function initHero(list){
@@ -2717,10 +2841,41 @@ document.getElementById('rl_submit').addEventListener('click',submitRoomListing)
 function setTab(btn,type){
   document.querySelectorAll('.stab').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
+  // Toggle search bars
+  var rentBar = document.getElementById('sbar-rent');
+  var stBar = document.getElementById('sbar-shortterm');
+  if (rentBar) rentBar.style.display = (type === 'shortterm') ? 'none' : '';
+  if (stBar) stBar.style.display = (type === 'shortterm') ? 'block' : 'none';
   if(type==='flatmates'){
     loadRoomListings();
     showPage('flatmatesPage');
   }
+  if(type==='shortterm'){
+    // Scroll to short term section on homepage
+    document.querySelector('.ss').scrollIntoView({behavior:'smooth'});
+  }
+}
+
+function setRentalTerm(term) {
+  var isShort = (term === 'short-term');
+  document.getElementById('termLong').style.background = isShort ? '#fff' : '#E8724A';
+  document.getElementById('termLong').style.color = isShort ? '#6B3A1F' : '#fff';
+  document.getElementById('termLong').style.borderColor = isShort ? '#D4B896' : '#E8724A';
+  document.getElementById('termShort').style.background = isShort ? '#E8724A' : '#fff';
+  document.getElementById('termShort').style.color = isShort ? '#fff' : '#6B3A1F';
+  document.getElementById('termShort').style.borderColor = isShort ? '#E8724A' : '#D4B896';
+  document.getElementById('shortTermBanner').style.display = isShort ? 'block' : 'none';
+  document.getElementById('shortTermFields').style.display = isShort ? 'block' : 'none';
+  // Swap available from field label
+  var avLabel = document.querySelector('label[for="f_av"]') || document.querySelector('.ff label');
+  window._rentalTerm = term;
+}
+
+function searchShortTerm() {
+  renderListings('short-term');
+  document.getElementById('listings').scrollIntoView({behavior:'smooth'});
+  document.querySelector('.lh .stl') && (document.querySelector('.lh .stl').textContent = '🗓️ Short-Term Nests in NZ');
+  showToast('🗓️ Showing short-term listings...');
 }
 
 
