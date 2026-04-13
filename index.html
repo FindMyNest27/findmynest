@@ -890,6 +890,13 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
             <option value="Unfurnished">Unfurnished</option>
           </select>
         </div>
+        <div class="ff" style="margin:0;">
+          <label>♿ Accessibility</label>
+          <select id="filt_disability" onchange="applyFilters()">
+            <option value="">Any</option>
+            <option value="yes">Disability Friendly only</option>
+          </select>
+        </div>
       </div>
       <div id="filtCount" style="margin-top:12px;font-size:.82rem;color:#6B3A1F;"></div>
     </div>
@@ -1261,6 +1268,38 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
             <textarea id="f_d" rows="4" placeholder="Describe your property — or click ✨ AI Generate to write it for you!"></textarea>
             <div class="ai-hint" id="f_ai_hint">✨ AI is writing your description...</div>
           </div>
+
+          <!-- DISABILITY FEATURES -->
+          <div class="ff s2">
+            <label style="display:flex;align-items:center;gap:8px;">
+              ♿ Disability & Accessibility Features
+              <span style="font-size:.75rem;color:#A07850;font-weight:400;">Optional — helps renters with accessibility needs find your property</span>
+            </label>
+            <div style="background:#FFF8F4;border:1px solid #F2D4C0;border-radius:12px;padding:16px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_wheelchair" style="width:16px;height:16px;accent-color:#E8724A;"> Wheelchair accessible entry</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_ramp" style="width:16px;height:16px;accent-color:#E8724A;"> Ramp or step-free access</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_wide_doors" style="width:16px;height:16px;accent-color:#E8724A;"> Wide doorways (80cm+)</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_bathroom" style="width:16px;height:16px;accent-color:#E8724A;"> Accessible bathroom</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_grab_rails" style="width:16px;height:16px;accent-color:#E8724A;"> Grab rails installed</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_roll_shower" style="width:16px;height:16px;accent-color:#E8724A;"> Roll-in shower</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_single_level" style="width:16px;height:16px;accent-color:#E8724A;"> Single level / no stairs</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_lift" style="width:16px;height:16px;accent-color:#E8724A;"> Lift / elevator access</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_parking" style="width:16px;height:16px;accent-color:#E8724A;"> Accessible parking</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_hearing" style="width:16px;height:16px;accent-color:#E8724A;"> Hearing loop / visual alerts</label>
+              </div>
+              <div style="padding-top:10px;border-top:1px solid #F2D4C0;">
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                  <input type="checkbox" id="f_da_friendly" style="width:18px;height:18px;accent-color:#E8724A;">
+                  <div>
+                    <div style="font-weight:700;color:#3D1F0D;font-size:.9rem;">♿ Mark as Disability Friendly</div>
+                    <div style="font-size:.78rem;color:#6B3A1F;">Adds a visible badge to your listing and makes it appear in accessibility-filtered searches</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
     <div class="ff s2">
       <label>Property Photos</label>
       <div class="photo-upload-area" onclick="document.getElementById('ll_photos_input').click()">
@@ -2451,6 +2490,11 @@ async function doAddListing(){
       payload.reason_for_listing = reason;
       payload.ideal_tenant = ideal;
     }
+    // Disability features
+    var daFields = ['wheelchair','ramp','wide_doors','bathroom','grab_rails','roll_shower','single_level','lift','parking','hearing'];
+    var daSelected = daFields.filter(function(f){var el=document.getElementById('f_da_'+f);return el&&el.checked;});
+    payload.disability_features = daSelected;
+    payload.disability_friendly = document.getElementById('f_da_friendly').checked;
     await sbq('POST','listings',payload);
     ['f_t','f_s','f_r','f_d','f_av'].forEach(function(id){document.getElementById(id).value='';});
     ['f_c','f_ty','f_b','f_ba'].forEach(function(id){document.getElementById(id).selectedIndex=0;});
@@ -2630,39 +2674,100 @@ async function loadRenterListings(){
 }
 
 // PUBLIC LISTINGS PAGE
+var _allListingsCache = [];
+
 async function loadAllListingsPage(){
   var c=document.getElementById('allListingsContent');
   c.innerHTML='<div style="text-align:center;padding:40px;color:#6B3A1F;">Loading listings... 🥝</div>';
   try{
     var list=await sbq('GET','listings',null,'?order=created_at.desc&status=eq.active');
-    if(!list||!list.length){
+    _allListingsCache = list || [];
+    if(!_allListingsCache.length){
       c.innerHTML='<div style="text-align:center;padding:56px;background:#fff;border-radius:20px;"><div style="font-size:3rem;margin-bottom:16px;">🏡</div><div style="font-size:1.4rem;font-weight:700;margin-bottom:10px;">No listings yet!</div><p style="color:#6B3A1F;margin-bottom:24px;">Be the first to list your property on FindMyNest.</p><button class="bp" onclick="openAuth()">List My Property Free →</button></div>';
       return;
     }
-    c.innerHTML='<div style="margin-bottom:16px;color:#6B3A1F;font-size:.88rem;">'+list.length+' listing'+(list.length!==1?'s':'')+' available</div>'+
-    list.map(function(l,i){
-      var isShortTerm = l.rental_term==='short-term';
-      var thumbHtml = l.photo_urls&&l.photo_urls.length
-        ? '<div style="position:relative;width:56px;height:56px;flex-shrink:0;"><img src="'+l.photo_urls[0]+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;" onerror="this.style.background=\x27#F2E4C4\x27"/>'+
-          (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;white-space:nowrap;">ST</div>':'')+'</div>'
-        : '<div style="position:relative;width:56px;height:56px;border-radius:12px;background:'+CLRS[i%CLRS.length]+';display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">🏡'+
-          (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;">ST</div>':'')+'</div>';
-      var stBadge = isShortTerm
-        ? '<span style="background:#E8724A;color:#fff;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:6px;vertical-align:middle;">🗓️ Short-Term</span>'
-        : '';
-      return '<div class="all-list-item" onclick="viewListing(\''+l.id+'\')">'+
-        '<div style="display:flex;gap:16px;align-items:center;">'+
-        thumbHtml+
-        '<div><div style="font-weight:700;margin-bottom:3px;">'+esc(l.title)+stBadge+'</div>'+
-        '<div style="font-size:.82rem;color:#6B3A1F;">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; 🚿 '+esc(l.baths)+' bath</div>'+
-        '<div style="font-size:.78rem;color:#6B3A1F;margin-top:3px;">'+esc(l.type)+' &nbsp;•&nbsp; '+l.furnished+(l.pets==='Yes'?' &nbsp;•&nbsp; 🐾 Pets ok':'')+'</div></div></div>'+
-        '<div style="text-align:right;flex-shrink:0;">'+
-        '<div style="font-size:1.3rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div>'+
-        '<div style="font-size:.74rem;color:#6B3A1F;">/week</div>'+
-        (l.avail?'<div style="font-size:.72rem;color:#6B3A1F;margin-top:4px;">From '+esc(l.avail)+'</div>':'')+
-        '</div></div>';
-    }).join('');
+    applyFilters();
   }catch(err){c.innerHTML='<div style="text-align:center;padding:40px;color:#6B3A1F;">Could not load listings. Please try again.</div>';}
+}
+
+function applyFilters(){
+  var city   = (document.getElementById('filt_city')||{}).value||'';
+  var suburb = (document.getElementById('filt_suburb')||{}).value||'';
+  var beds   = (document.getElementById('filt_beds')||{}).value||'';
+  var baths  = (document.getElementById('filt_baths')||{}).value||'';
+  var type   = (document.getElementById('filt_type')||{}).value||'';
+  var rent   = (document.getElementById('filt_rent')||{}).value||'';
+  var pets   = (document.getElementById('filt_pets')||{}).value||'';
+  var furn   = (document.getElementById('filt_furn')||{}).value||'';
+  var disab  = (document.getElementById('filt_disability')||{}).value||'';
+
+  var filtered = _allListingsCache.filter(function(l){
+    if(city   && l.city   !== city)   return false;
+    if(suburb && l.suburb !== suburb)  return false;
+    if(beds   && l.beds   !== beds)    return false;
+    if(baths  && l.baths  !== baths)   return false;
+    if(type   && l.type   !== type)    return false;
+    if(rent   && Number(l.rent) > Number(rent)) return false;
+    if(pets   && l.pets   !== pets)    return false;
+    if(furn   && l.furnished !== furn) return false;
+    if(disab === 'yes' && !l.disability_friendly) return false;
+    return true;
+  });
+
+  var c = document.getElementById('allListingsContent');
+  var countEl = document.getElementById('filtCount');
+  if(countEl) countEl.textContent = filtered.length + ' listing' + (filtered.length!==1?'s':'') + ' found';
+
+  if(!filtered.length){
+    c.innerHTML='<div style="text-align:center;padding:40px;background:#fff;border-radius:20px;"><div style="font-size:2.5rem;margin-bottom:12px;">🔍</div><div style="font-weight:700;font-size:1.1rem;margin-bottom:8px;">No listings match your filters</div><p style="color:#6B3A1F;font-size:.88rem;">Try adjusting your search criteria.</p></div>';
+    return;
+  }
+
+  c.innerHTML = filtered.map(function(l,i){
+    var isShortTerm = l.rental_term==='short-term';
+    var thumbHtml = l.photo_urls&&l.photo_urls.length
+      ? '<div style="position:relative;width:56px;height:56px;flex-shrink:0;"><img src="'+l.photo_urls[0]+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;" onerror="this.style.background=\x27#F2E4C4\x27"/>'+
+        (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;white-space:nowrap;">ST</div>':'')+'</div>'
+      : '<div style="position:relative;width:56px;height:56px;border-radius:12px;background:'+CLRS[i%CLRS.length]+';display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">🏡'+
+        (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;">ST</div>':'')+'</div>';
+    var stBadge = isShortTerm
+      ? '<span style="background:#E8724A;color:#fff;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:6px;vertical-align:middle;">🗓️ Short-Term</span>'
+      : '';
+    var daBadge = l.disability_friendly
+      ? '<span style="background:rgba(74,144,226,.15);color:#2563EB;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:4px;vertical-align:middle;">♿ Accessible</span>'
+      : '';
+    return '<div class="all-list-item" onclick="viewListing(\''+l.id+'\')">'+
+      '<div style="display:flex;gap:16px;align-items:center;">'+
+      thumbHtml+
+      '<div><div style="font-weight:700;margin-bottom:3px;">'+esc(l.title)+stBadge+daBadge+'</div>'+
+      '<div style="font-size:.82rem;color:#6B3A1F;">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; 🚿 '+esc(l.baths)+' bath</div>'+
+      '<div style="font-size:.78rem;color:#6B3A1F;margin-top:3px;">'+esc(l.type)+' &nbsp;•&nbsp; '+esc(l.furnished)+(l.pets==='Yes'?' &nbsp;•&nbsp; 🐾 Pets ok':'')+'</div></div></div>'+
+      '<div style="text-align:right;flex-shrink:0;">'+
+      '<div style="font-size:1.3rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div>'+
+      '<div style="font-size:.74rem;color:#6B3A1F;">/week</div>'+
+      (l.avail?'<div style="font-size:.72rem;color:#6B3A1F;margin-top:4px;">From '+esc(l.avail)+'</div>':'')+
+      '</div></div>';
+  }).join('');
+}
+
+function clearFilters(){
+  ['filt_city','filt_suburb','filt_beds','filt_baths','filt_type','filt_rent','filt_pets','filt_furn','filt_disability'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.selectedIndex=0;
+  });
+  applyFilters();
+}
+
+function onCityFilterChange(){
+  var city = document.getElementById('filt_city').value;
+  var subEl = document.getElementById('filt_suburb');
+  subEl.innerHTML='<option value="">Any suburb</option>';
+  if(city){
+    var suburbs = [...new Set(_allListingsCache.filter(function(l){return l.city===city;}).map(function(l){return l.suburb;}))].sort();
+    suburbs.forEach(function(s){
+      var o=document.createElement('option');o.value=s;o.textContent=s;subEl.appendChild(o);
+    });
+  }
+  applyFilters();
 }
 
 // VIEW LISTING DETAIL
@@ -2699,7 +2804,14 @@ async function viewListing(id){
       '<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">Pets: '+esc(l.pets)+'</span>'+
       (l.park&&l.park!=='0'?'<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">'+esc(l.park)+' car park</span>':'')+
       (l.avail?'<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">From: '+esc(l.avail)+'</span>':'')+
+      (l.disability_friendly?'<span style="background:rgba(74,144,226,.12);color:#2563EB;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:700;">♿ Disability Friendly</span>':'')+
       '</div>'+
+      (l.disability_friendly && l.disability_features && l.disability_features.length > 0 ?
+        '<div style="background:rgba(74,144,226,.06);border:1.5px solid rgba(74,144,226,.2);border-radius:14px;padding:14px 16px;margin-bottom:14px;">'+
+        '<div style="font-weight:700;color:#2563EB;margin-bottom:10px;font-size:.9rem;">♿ Accessibility Features</div>'+
+        '<div style="display:flex;flex-wrap:wrap;gap:7px;">'+
+        (function(){var labelMap={wheelchair:'Wheelchair accessible entry',ramp:'Ramp / step-free access',wide_doors:'Wide doorways (80cm+)',bathroom:'Accessible bathroom',grab_rails:'Grab rails',roll_shower:'Roll-in shower',single_level:'Single level / no stairs',lift:'Lift access',parking:'Accessible parking',hearing:'Hearing loop / visual alerts'};return l.disability_features.map(function(f){return '<span style="background:#fff;border:1px solid rgba(74,144,226,.3);color:#2563EB;padding:3px 10px;border-radius:10px;font-size:.78rem;">'+esc(labelMap[f]||f)+'</span>';}).join('');})()+ 
+        '</div></div>' : '')+
       '<p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;margin-bottom:16px;">'+esc(l.description)+'</p>'+
       (l.rental_term==='short-term' ? (
         '<div style="background:linear-gradient(135deg,#FFF8F4,#FAF0DC);border:1.5px solid #E8724A;border-radius:14px;padding:16px 18px;margin-bottom:14px;">'+
@@ -2774,7 +2886,7 @@ async function renderListings(termFilter){
         '<div class="ltit">'+esc(l.title)+'</div>'+
         '<div class="lloc">📍 '+esc(l.suburb)+', '+esc(l.city)+'</div>'+
         termInfo+
-        '<div class="lft"><span>🛏 '+esc(l.beds)+'</span><span>🚿 '+esc(l.baths)+'</span>'+(l.pets==='Yes'?'<span>🐾 Pets ok</span>':'')+'</div></div></div>';
+        '<div class="lft"><span>🛏 '+esc(l.beds)+'</span><span>🚿 '+esc(l.baths)+'</span>'+(l.pets==='Yes'?'<span>🐾 Pets ok</span>':'')+(l.disability_friendly?'<span style="color:#2563EB;">♿ Accessible</span>':'')+'</div></div></div>';
     }).join('');
     initHero(list);
   }catch(err){empty.style.display='block';grid.style.display='none';}
