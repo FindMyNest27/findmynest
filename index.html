@@ -515,7 +515,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <li><a id="navLandlords">For Landlords &amp; Agents</a></li>
     <li><a id="navContact" style="color:#E8724A;font-weight:600;">Contact Us</a></li>
     <li><button class="ncta" id="navBtn">Sign Up / Log In</button></li>
-    <li><button id="reoBtn" onclick="toggleReo()" style="background:none;border:2px solid #D4B896;border-radius:50px;padding:7px 14px;cursor:pointer;font-size:.82rem;font-weight:700;color:#6B3A1F;transition:all .3s;white-space:nowrap;" title="Switch to te reo Māori">🌿 Te Reo</button></li>
   </ul>
 </nav>
 
@@ -2234,116 +2233,6 @@ async function doResetPassword() {
 // ════════════════════════════════════════════
 // TE REO MĀORI TOGGLE
 // ════════════════════════════════════════════
-var _reoActive = false;
-var _reoOriginals = []; // [{node, original}]
-
-function getAllTextNodes() {
-  var walker = document.createTreeWalker(
-    document.body,
-    NodeFilter.SHOW_TEXT,
-    {
-      acceptNode: function(node) {
-        // Skip empty, whitespace-only, script, style nodes
-        if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-        var parent = node.parentElement;
-        if (!parent) return NodeFilter.FILTER_REJECT;
-        var tag = parent.tagName;
-        if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') return NodeFilter.FILTER_REJECT;
-        // Skip hidden elements
-        if (parent.offsetParent === null && parent.tagName !== 'BODY') return NodeFilter.FILTER_SKIP;
-        return NodeFilter.FILTER_ACCEPT;
-      }
-    }
-  );
-  var nodes = [];
-  var node;
-  while ((node = walker.nextNode())) {
-    nodes.push(node);
-  }
-  return nodes;
-}
-
-async function toggleReo() {
-  var btn = document.getElementById('reoBtn');
-
-  if (_reoActive) {
-    // Restore all original text
-    _reoOriginals.forEach(function(item) {
-      item.node.nodeValue = item.original;
-    });
-    _reoOriginals = [];
-    btn.textContent = '🌿 Te Reo';
-    btn.style.background = 'none';
-    btn.style.color = '#6B3A1F';
-    btn.style.borderColor = '#D4B896';
-    _reoActive = false;
-    return;
-  }
-
-  btn.textContent = '🌿 Translating...';
-  btn.disabled = true;
-
-  try {
-    // Collect all visible text nodes
-    var nodes = getAllTextNodes();
-    var texts = nodes.map(function(n) { return n.nodeValue.trim(); });
-
-    // Filter to only meaningful strings (skip numbers, symbols, single chars)
-    var toTranslate = [];
-    var nodeMap = [];
-    texts.forEach(function(t, i) {
-      if (t.length > 2 && /[a-zA-Z]/.test(t)) {
-        toTranslate.push(t);
-        nodeMap.push(i);
-      }
-    });
-
-    if (toTranslate.length === 0) throw new Error('No text found');
-
-    // Send in batches of 50 to avoid hitting limits
-    var translated = [];
-    var batchSize = 50;
-    for (var b = 0; b < toTranslate.length; b += batchSize) {
-      var batch = toTranslate.slice(b, b + batchSize);
-      var res = await fetch(SB_URL + '/functions/v1/translate-maori', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
-        body: JSON.stringify({ texts: batch })
-      });
-      var data = await res.json();
-      if (!data.translated) throw new Error('Translation failed');
-      translated = translated.concat(data.translated);
-    }
-
-    // Apply translations and save originals
-    _reoOriginals = [];
-    nodeMap.forEach(function(nodeIdx, transIdx) {
-      var node = nodes[nodeIdx];
-      _reoOriginals.push({ node: node, original: node.nodeValue });
-      if (translated[transIdx]) {
-        // Preserve leading/trailing whitespace
-        var leading = node.nodeValue.match(/^\s*/)[0];
-        var trailing = node.nodeValue.match(/\s*$/)[0];
-        node.nodeValue = leading + translated[transIdx] + trailing;
-      }
-    });
-
-    btn.textContent = '🌿 Hoki ki Ingarihi';
-    btn.style.background = '#2D6A4F';
-    btn.style.color = '#fff';
-    btn.style.borderColor = '#2D6A4F';
-    _reoActive = true;
-
-  } catch(err) {
-    console.error('Te reo error:', err);
-    showToast('⚠️ Could not translate right now. Try again shortly.');
-    btn.textContent = '🌿 Te Reo';
-    btn.style.background = 'none';
-    btn.style.color = '#6B3A1F';
-  } finally {
-    btn.disabled = false;
-  }
-}
 // ════════════════════════════════════════════
 // SEND EMAIL VIA EDGE FUNCTION (Resend)
 // ════════════════════════════════════════════
