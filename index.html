@@ -148,7 +148,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hst{display:flex;gap:28px}
 .sn{font-family:"Playfair Display",serif;font-size:1.7rem;font-weight:700;color:#E8724A}
 .sl{font-size:.76rem;color:#6B3A1F}
-.hv{position:relative;display:flex;flex-direction:column;align-items:center}
+.hv{position:relative;display:flex;flex-direction:column;align-items:center;overflow:hidden;}
 .hcard{background:#fff;border-radius:26px;padding:26px;box-shadow:0 24px 64px rgba(61,31,13,.16);width:100%;}
 .hci{width:100%;height:260px;border-radius:18px;background:linear-gradient(135deg,#F9C784,#E8724A);display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;overflow:hidden;transition:background .5s}
 .hcii{font-size:4.5rem}
@@ -2787,7 +2787,16 @@ function formatDate(d){
 function initHero(list){
   if(!list||!list.length)return;
   var i=0;
-  function show(l,idx){
+  var animating=false;
+
+  // Add shuffle transition style once
+  var hcard = document.querySelector('.hcard');
+  if(hcard){
+    hcard.style.transition='transform 0.55s cubic-bezier(.4,0,.2,1), opacity 0.55s ease, box-shadow 0.55s ease';
+    hcard.style.transformOrigin='center center';
+  }
+
+  function applyListing(l,idx){
     var ci=document.getElementById('hci');if(!ci)return;
     if(l.photo_urls&&l.photo_urls.length){
       ci.style.background='#3D1F0D';
@@ -2805,8 +2814,47 @@ function initHero(list){
     document.getElementById('hcbtn').textContent='View Nest →';
     document.getElementById('hcbtn').onclick=function(){viewListing(l.id);};
   }
-  show(list[0],0);
-  if(list.length>1)setInterval(function(){i=(i+1)%list.length;show(list[i],i);},4000);
+
+  function shuffleTo(nextIdx){
+    if(animating)return;
+    animating=true;
+    var card=document.querySelector('.hcard');
+    if(!card){animating=false;return;}
+
+    // Slide out — tip slightly and fly left like a card being dealt away
+    card.style.transition='transform 0.45s cubic-bezier(.4,0,.6,1), opacity 0.45s ease';
+    card.style.transform='translateX(-110%) rotate(-6deg) scale(0.92)';
+    card.style.opacity='0';
+
+    setTimeout(function(){
+      // Swap content while hidden
+      applyListing(list[nextIdx],nextIdx);
+
+      // Position incoming card off to the right
+      card.style.transition='none';
+      card.style.transform='translateX(110%) rotate(6deg) scale(0.92)';
+      card.style.opacity='0';
+
+      // Force reflow
+      card.getBoundingClientRect();
+
+      // Slide in smoothly
+      card.style.transition='transform 0.55s cubic-bezier(.2,0,.2,1), opacity 0.5s ease';
+      card.style.transform='translateX(0) rotate(0deg) scale(1)';
+      card.style.opacity='1';
+
+      setTimeout(function(){ animating=false; }, 600);
+    }, 460);
+  }
+
+  applyListing(list[0],0);
+
+  if(list.length>1){
+    setInterval(function(){
+      i=(i+1)%list.length;
+      shuffleTo(i);
+    }, 4500);
+  }
 }
 
 document.addEventListener('DOMContentLoaded',function(){renderListings();updateNav();});
