@@ -1618,8 +1618,37 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           </div>
           <!-- SHORT TERM SPECIFIC FIELDS (agent) -->
           <div id="af_shortTermFields" style="display:none;grid-column:1/-1;"></div>
-    <div class="ff s2">
-      <label>Property Photos</label>
+
+          <!-- DISABILITY FEATURES (agent) -->
+          <div class="ff s2">
+            <label style="display:flex;align-items:center;gap:8px;">
+              ♿ Disability & Accessibility Features
+              <span style="font-size:.75rem;color:#A07850;font-weight:400;">Optional — helps renters with accessibility needs find your property</span>
+            </label>
+            <div style="background:#FFF8F4;border:1px solid #F2D4C0;border-radius:12px;padding:16px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_wheelchair" style="width:16px;height:16px;accent-color:#E8724A;"> Wheelchair accessible entry</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_ramp" style="width:16px;height:16px;accent-color:#E8724A;"> Ramp or step-free access</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_wide_doors" style="width:16px;height:16px;accent-color:#E8724A;"> Wide doorways (80cm+)</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_bathroom" style="width:16px;height:16px;accent-color:#E8724A;"> Accessible bathroom</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_grab_rails" style="width:16px;height:16px;accent-color:#E8724A;"> Grab rails installed</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_roll_shower" style="width:16px;height:16px;accent-color:#E8724A;"> Roll-in shower</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_single_level" style="width:16px;height:16px;accent-color:#E8724A;"> Single level / no stairs</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_lift" style="width:16px;height:16px;accent-color:#E8724A;"> Lift / elevator access</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_parking" style="width:16px;height:16px;accent-color:#E8724A;"> Accessible parking</label>
+                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_hearing" style="width:16px;height:16px;accent-color:#E8724A;"> Hearing loop / visual alerts</label>
+              </div>
+              <div style="padding-top:10px;border-top:1px solid #F2D4C0;">
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                  <input type="checkbox" id="af_da_friendly" style="width:18px;height:18px;accent-color:#E8724A;">
+                  <div>
+                    <div style="font-weight:700;color:#3D1F0D;font-size:.9rem;">♿ Mark as Disability Friendly</div>
+                    <div style="font-size:.78rem;color:#6B3A1F;">Adds a visible badge to your listing and makes it appear in accessibility-filtered searches</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
       <div class="photo-upload-area" onclick="document.getElementById('al_photos_input').click()">
         <div style="font-size:2rem;margin-bottom:6px;">📷</div>
         <div style="font-weight:600;color:#6B3A1F;font-size:.88rem;">Click to add photos</div>
@@ -2447,6 +2476,11 @@ async function doAgentAddListing(){
       payload.reason_for_listing = afReason;
       payload.ideal_tenant = afIdeal;
     }
+    // Disability features
+    var afDaFields = ['wheelchair','ramp','wide_doors','bathroom','grab_rails','roll_shower','single_level','lift','parking','hearing'];
+    var afDaSelected = afDaFields.filter(function(f){var el=document.getElementById('af_da_'+f);return el&&el.checked;});
+    payload.disability_features = afDaSelected;
+    payload.disability_friendly = document.getElementById('af_da_friendly').checked;
     await sbq('POST','listings',payload);
     ['af_t','af_s','af_r','af_d','af_av'].forEach(function(id){document.getElementById(id).value='';});
     setRentalTerm('long-term');
