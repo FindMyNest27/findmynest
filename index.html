@@ -515,6 +515,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <li><a id="navLandlords">For Landlords &amp; Agents</a></li>
     <li><a id="navContact" style="color:#E8724A;font-weight:600;">Contact Us</a></li>
     <li><button class="ncta" id="navBtn">Sign Up / Log In</button></li>
+    <li><button id="reoBtn" onclick="toggleReo()" style="background:none;border:2px solid #D4B896;border-radius:50px;padding:7px 14px;cursor:pointer;font-size:.82rem;font-weight:700;color:#6B3A1F;transition:all .2s;white-space:nowrap;" title="Switch to te reo Māori">🌿 Te Reo</button></li>
   </ul>
 </nav>
 
@@ -2230,6 +2231,98 @@ async function doResetPassword() {
   }
 }
 
+// ════════════════════════════════════════════
+// TE REO MĀORI TOGGLE
+// ════════════════════════════════════════════
+var _reoActive = false;
+var _reoCache = null;
+
+// Key UI strings to translate — [selector, property]
+var REO_STRINGS = [
+  ['#navHow', 'textContent'],
+  ['#navListings', 'textContent'],
+  ['#navShortTerm', 'textContent'],
+  ['#navFlatmates', 'textContent'],
+  ['#navLandlords', 'textContent'],
+  ['#navContact', 'textContent'],
+  ['.hbadge', 'textContent'],
+  ['.ht', 'innerHTML'],
+  ['.hs', 'textContent'],
+  ['#browseBtnHero', 'textContent'],
+  ['#listBtnHero', 'textContent'],
+  ['.stit', 'textContent'],
+  ['.stab:nth-child(1)', 'textContent'],
+  ['.stab:nth-child(2)', 'textContent'],
+  ['.stab:nth-child(3)', 'textContent'],
+  ['.slb:first-of-type', 'textContent'],
+  ['.stl:first-of-type', 'textContent'],
+  ['.ssb:first-of-type', 'textContent'],
+  ['#emptyListBtn', 'textContent'],
+  ['#ctaListBtn', 'textContent'],
+];
+
+async function toggleReo() {
+  var btn = document.getElementById('reoBtn');
+  if (_reoActive) {
+    // Restore English
+    REO_STRINGS.forEach(function(item) {
+      var el = document.querySelector(item[0]);
+      if (el && el.dataset.en) {
+        el[item[1]] = el.dataset.en;
+      }
+    });
+    btn.textContent = '🌿 Te Reo';
+    btn.style.background = 'none';
+    btn.style.color = '#6B3A1F';
+    _reoActive = false;
+    return;
+  }
+
+  // Collect current English strings
+  var texts = REO_STRINGS.map(function(item) {
+    var el = document.querySelector(item[0]);
+    if (!el) return '';
+    if (!el.dataset.en) el.dataset.en = el[item[1]]; // save original
+    return el.dataset.en;
+  });
+
+  btn.textContent = '🌿 Translating...';
+  btn.disabled = true;
+
+  try {
+    // Use cache if available
+    var translated = _reoCache;
+    if (!translated) {
+      var res = await fetch(SB_URL + '/functions/v1/translate-maori', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
+        body: JSON.stringify({ texts: texts })
+      });
+      var data = await res.json();
+      if (!data.translated) throw new Error('Translation failed');
+      translated = data.translated;
+      _reoCache = translated; // cache so we don't re-translate
+    }
+
+    // Apply translations
+    REO_STRINGS.forEach(function(item, idx) {
+      var el = document.querySelector(item[0]);
+      if (el && translated[idx]) el[item[1]] = translated[idx];
+    });
+
+    btn.textContent = '🌿 English';
+    btn.style.background = '#E8724A';
+    btn.style.color = '#fff';
+    btn.style.borderColor = '#E8724A';
+    _reoActive = true;
+
+  } catch(err) {
+    showToast('⚠️ Could not translate right now. Try again shortly.');
+    btn.textContent = '🌿 Te Reo';
+  } finally {
+    btn.disabled = false;
+  }
+}
 // ════════════════════════════════════════════
 // SEND EMAIL VIA EDGE FUNCTION (Resend)
 // ════════════════════════════════════════════
