@@ -1269,35 +1269,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
             <div class="ai-hint" id="f_ai_hint">✨ AI is writing your description...</div>
           </div>
 
-          <!-- DISABILITY FEATURES -->
-          <div class="ff s2">
-            <label style="display:flex;align-items:center;gap:8px;">
-              ♿ Disability & Accessibility Features
-              <span style="font-size:.75rem;color:#A07850;font-weight:400;">Optional — helps renters with accessibility needs find your property</span>
-            </label>
-            <div style="background:#FFF8F4;border:1px solid #F2D4C0;border-radius:12px;padding:16px;">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_wheelchair" style="width:16px;height:16px;accent-color:#E8724A;"> Wheelchair accessible entry</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_ramp" style="width:16px;height:16px;accent-color:#E8724A;"> Ramp or step-free access</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_wide_doors" style="width:16px;height:16px;accent-color:#E8724A;"> Wide doorways (80cm+)</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_bathroom" style="width:16px;height:16px;accent-color:#E8724A;"> Accessible bathroom</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_grab_rails" style="width:16px;height:16px;accent-color:#E8724A;"> Grab rails installed</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_roll_shower" style="width:16px;height:16px;accent-color:#E8724A;"> Roll-in shower</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_single_level" style="width:16px;height:16px;accent-color:#E8724A;"> Single level / no stairs</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_lift" style="width:16px;height:16px;accent-color:#E8724A;"> Lift / elevator access</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_parking" style="width:16px;height:16px;accent-color:#E8724A;"> Accessible parking</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="f_da_hearing" style="width:16px;height:16px;accent-color:#E8724A;"> Hearing loop / visual alerts</label>
-              </div>
-              <div style="padding-top:10px;border-top:1px solid #F2D4C0;">
-                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-                  <input type="checkbox" id="f_da_friendly" style="width:18px;height:18px;accent-color:#E8724A;">
-                  <div>
-                    <div style="font-weight:700;color:#3D1F0D;font-size:.9rem;">♿ Mark as Disability Friendly</div>
-                    <div style="font-size:.78rem;color:#6B3A1F;">Adds a visible badge to your listing and makes it appear in accessibility-filtered searches</div>
-                  </div>
-                </label>
-              </div>
-            </div>
+          <!-- DISABILITY & ACCESSIBILITY FEATURES (LANDLORD) -->
+          <div class="ff s2" id="f_access_section">
+            <div id="f_access_placeholder"></div>
           </div>
 
     <div class="ff s2">
@@ -1619,35 +1593,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <!-- SHORT TERM SPECIFIC FIELDS (agent) -->
           <div id="af_shortTermFields" style="display:none;grid-column:1/-1;"></div>
 
-          <!-- DISABILITY FEATURES (agent) -->
-          <div class="ff s2">
-            <label style="display:flex;align-items:center;gap:8px;">
-              ♿ Disability & Accessibility Features
-              <span style="font-size:.75rem;color:#A07850;font-weight:400;">Optional — helps renters with accessibility needs find your property</span>
-            </label>
-            <div style="background:#FFF8F4;border:1px solid #F2D4C0;border-radius:12px;padding:16px;">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_wheelchair" style="width:16px;height:16px;accent-color:#E8724A;"> Wheelchair accessible entry</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_ramp" style="width:16px;height:16px;accent-color:#E8724A;"> Ramp or step-free access</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_wide_doors" style="width:16px;height:16px;accent-color:#E8724A;"> Wide doorways (80cm+)</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_bathroom" style="width:16px;height:16px;accent-color:#E8724A;"> Accessible bathroom</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_grab_rails" style="width:16px;height:16px;accent-color:#E8724A;"> Grab rails installed</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_roll_shower" style="width:16px;height:16px;accent-color:#E8724A;"> Roll-in shower</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_single_level" style="width:16px;height:16px;accent-color:#E8724A;"> Single level / no stairs</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_lift" style="width:16px;height:16px;accent-color:#E8724A;"> Lift / elevator access</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_parking" style="width:16px;height:16px;accent-color:#E8724A;"> Accessible parking</label>
-                <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.88rem;"><input type="checkbox" id="af_da_hearing" style="width:16px;height:16px;accent-color:#E8724A;"> Hearing loop / visual alerts</label>
-              </div>
-              <div style="padding-top:10px;border-top:1px solid #F2D4C0;">
-                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
-                  <input type="checkbox" id="af_da_friendly" style="width:18px;height:18px;accent-color:#E8724A;">
-                  <div>
-                    <div style="font-weight:700;color:#3D1F0D;font-size:.9rem;">♿ Mark as Disability Friendly</div>
-                    <div style="font-size:.78rem;color:#6B3A1F;">Adds a visible badge to your listing and makes it appear in accessibility-filtered searches</div>
-                  </div>
-                </label>
-              </div>
-            </div>
+          <!-- DISABILITY & ACCESSIBILITY FEATURES (AGENT) -->
+          <div class="ff s2" id="af_access_section">
+            <div id="af_access_placeholder"></div>
           </div>
       <div class="photo-upload-area" onclick="document.getElementById('al_photos_input').click()">
         <div style="font-size:2rem;margin-bottom:6px;">📷</div>
@@ -2342,6 +2290,143 @@ async function doForgotPassword() {
 }
 
 // ════════════════════════════════════════════
+// ════════════════════════════════════════════
+// ACCESSIBILITY FORM — renders detailed form for both landlord & agent
+// ════════════════════════════════════════════
+function buildAccessibilityForm(prefix) {
+  var p = prefix; // 'f' for landlord, 'af' for agent
+  return `
+  <label style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+    ♿ <strong>Disability &amp; Accessibility Features</strong>
+    <span style="font-size:.75rem;color:#A07850;font-weight:400;">Optional — helps renters with accessibility needs find your home</span>
+  </label>
+  <div style="background:linear-gradient(135deg,#EEF4FF,#F0F7FF);border:1.5px solid rgba(74,144,226,.25);border-radius:14px;padding:18px;">
+
+    <!-- MASTER TOGGLE -->
+    <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding-bottom:14px;border-bottom:1px solid rgba(74,144,226,.2);margin-bottom:16px;">
+      <input type="checkbox" id="${p}_da_friendly" style="width:20px;height:20px;accent-color:#2563EB;">
+      <div>
+        <div style="font-weight:700;color:#1E40AF;font-size:.95rem;">♿ Mark as Disability Friendly</div>
+        <div style="font-size:.78rem;color:#3B4FA8;">Adds a visible badge and includes this listing in accessibility-filtered searches</div>
+      </div>
+    </label>
+
+    <!-- SECTION: ACCESS FEATURES -->
+    <div style="font-weight:700;color:#1E40AF;font-size:.82rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;">Access Features</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;">
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_step_free" style="width:15px;height:15px;accent-color:#2563EB;"> Step-free entry</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_ramp" style="width:15px;height:15px;accent-color:#2563EB;"> Ramp access</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_single_level" style="width:15px;height:15px;accent-color:#2563EB;"> Single level / no stairs</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_lift" style="width:15px;height:15px;accent-color:#2563EB;"> Lift / elevator</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_parking" style="width:15px;height:15px;accent-color:#2563EB;"> Accessible parking</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_path" style="width:15px;height:15px;accent-color:#2563EB;"> Accessible path to entry</label>
+    </div>
+
+    <!-- SECTION: BATHROOM -->
+    <div style="font-weight:700;color:#1E40AF;font-size:.82rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;">Bathroom</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;">
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_roll_shower" style="width:15px;height:15px;accent-color:#2563EB;"> Roll-in shower</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_shower_seat" style="width:15px;height:15px;accent-color:#2563EB;"> Shower seat / bench</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_grab_rails" style="width:15px;height:15px;accent-color:#2563EB;"> Grab rails</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_bath_hoist" style="width:15px;height:15px;accent-color:#2563EB;"> Bath hoist</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_height_toilet" style="width:15px;height:15px;accent-color:#2563EB;"> Height-adjustable toilet</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_bathroom" style="width:15px;height:15px;accent-color:#2563EB;"> Accessible bathroom layout</label>
+    </div>
+
+    <!-- SECTION: HOISTING & EQUIPMENT -->
+    <div style="font-weight:700;color:#1E40AF;font-size:.82rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;">Hoisting &amp; Equipment</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;">
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_ceiling_hoist" style="width:15px;height:15px;accent-color:#2563EB;"> Ceiling hoist installed</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_hoist_track" style="width:15px;height:15px;accent-color:#2563EB;"> Hoist track (H-frame)</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_portable_hoist" style="width:15px;height:15px;accent-color:#2563EB;"> Portable hoist space</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_hoist_bathroom" style="width:15px;height:15px;accent-color:#2563EB;"> Hoist extends to bathroom</label>
+    </div>
+
+    <!-- SECTION: OTHER FEATURES -->
+    <div style="font-weight:700;color:#1E40AF;font-size:.82rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;">Other Features</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;">
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_wide_doors" style="width:15px;height:15px;accent-color:#2563EB;"> Wide doorways (80cm+)</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_low_bench" style="width:15px;height:15px;accent-color:#2563EB;"> Lowered kitchen benches</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_hearing" style="width:15px;height:15px;accent-color:#2563EB;"> Hearing loop / visual alerts</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_visual_fire" style="width:15px;height:15px;accent-color:#2563EB;"> Visual fire alarms</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_sda" style="width:15px;height:15px;accent-color:#2563EB;"> NDIS SDA eligible</label>
+      <label style="display:flex;align-items:center;gap:8px;font-weight:400;cursor:pointer;font-size:.86rem;"><input type="checkbox" id="${p}_da_turning_space" style="width:15px;height:15px;accent-color:#2563EB;"> 1500mm wheelchair turning space</label>
+    </div>
+
+    <!-- MEASUREMENTS -->
+    <div style="font-weight:700;color:#1E40AF;font-size:.82rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;">Measurements <span style="font-weight:400;font-size:.75rem;color:#3B4FA8;text-transform:none;">(fill in what you know — even partial info helps)</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+      <div>
+        <label style="font-size:.8rem;color:#1E40AF;font-weight:600;display:block;margin-bottom:3px;">Main entrance door width</label>
+        <div style="display:flex;align-items:center;gap:6px;"><input type="number" id="${p}_da_door_main" placeholder="e.g. 90" min="50" max="200" style="width:100%;border:1.5px solid rgba(74,144,226,.3);border-radius:8px;padding:8px 10px;font-size:.86rem;background:#fff;"><span style="font-size:.8rem;color:#6B7ABA;white-space:nowrap;">cm</span></div>
+        <div style="font-size:.72rem;color:#6B7ABA;margin-top:2px;">Standard wheelchair needs 80cm+</div>
+      </div>
+      <div>
+        <label style="font-size:.8rem;color:#1E40AF;font-weight:600;display:block;margin-bottom:3px;">Bedroom door width</label>
+        <div style="display:flex;align-items:center;gap:6px;"><input type="number" id="${p}_da_door_bedroom" placeholder="e.g. 85" min="50" max="200" style="width:100%;border:1.5px solid rgba(74,144,226,.3);border-radius:8px;padding:8px 10px;font-size:.86rem;background:#fff;"><span style="font-size:.8rem;color:#6B7ABA;white-space:nowrap;">cm</span></div>
+      </div>
+      <div>
+        <label style="font-size:.8rem;color:#1E40AF;font-weight:600;display:block;margin-bottom:3px;">Bathroom door width</label>
+        <div style="display:flex;align-items:center;gap:6px;"><input type="number" id="${p}_da_door_bathroom" placeholder="e.g. 85" min="50" max="200" style="width:100%;border:1.5px solid rgba(74,144,226,.3);border-radius:8px;padding:8px 10px;font-size:.86rem;background:#fff;"><span style="font-size:.8rem;color:#6B7ABA;white-space:nowrap;">cm</span></div>
+      </div>
+      <div>
+        <label style="font-size:.8rem;color:#1E40AF;font-weight:600;display:block;margin-bottom:3px;">Shower width</label>
+        <div style="display:flex;align-items:center;gap:6px;"><input type="number" id="${p}_da_shower_w" placeholder="e.g. 100" min="50" max="300" style="width:100%;border:1.5px solid rgba(74,144,226,.3);border-radius:8px;padding:8px 10px;font-size:.86rem;background:#fff;"><span style="font-size:.8rem;color:#6B7ABA;white-space:nowrap;">cm</span></div>
+        <div style="font-size:.72rem;color:#6B7ABA;margin-top:2px;">Roll-in needs 90cm+ wide</div>
+      </div>
+      <div>
+        <label style="font-size:.8rem;color:#1E40AF;font-weight:600;display:block;margin-bottom:3px;">Shower length</label>
+        <div style="display:flex;align-items:center;gap:6px;"><input type="number" id="${p}_da_shower_l" placeholder="e.g. 120" min="50" max="300" style="width:100%;border:1.5px solid rgba(74,144,226,.3);border-radius:8px;padding:8px 10px;font-size:.86rem;background:#fff;"><span style="font-size:.8rem;color:#6B7ABA;white-space:nowrap;">cm</span></div>
+      </div>
+      <div>
+        <label style="font-size:.8rem;color:#1E40AF;font-weight:600;display:block;margin-bottom:3px;">Wheelchair turning space</label>
+        <div style="display:flex;align-items:center;gap:6px;"><input type="number" id="${p}_da_turning" placeholder="e.g. 1500" min="500" max="3000" style="width:100%;border:1.5px solid rgba(74,144,226,.3);border-radius:8px;padding:8px 10px;font-size:.86rem;background:#fff;"><span style="font-size:.8rem;color:#6B7ABA;white-space:nowrap;">mm</span></div>
+        <div style="font-size:.72rem;color:#6B7ABA;margin-top:2px;">Standard needs 1500mm diameter</div>
+      </div>
+      <div>
+        <label style="font-size:.8rem;color:#1E40AF;font-weight:600;display:block;margin-bottom:3px;">Hoist track length</label>
+        <div style="display:flex;align-items:center;gap:6px;"><input type="number" id="${p}_da_hoist_len" placeholder="e.g. 400" min="0" max="2000" style="width:100%;border:1.5px solid rgba(74,144,226,.3);border-radius:8px;padding:8px 10px;font-size:.86rem;background:#fff;"><span style="font-size:.8rem;color:#6B7ABA;white-space:nowrap;">cm</span></div>
+      </div>
+      <div>
+        <label style="font-size:.8rem;color:#1E40AF;font-weight:600;display:block;margin-bottom:3px;">Ramp gradient</label>
+        <select id="${p}_da_ramp_grad" style="width:100%;border:1.5px solid rgba(74,144,226,.3);border-radius:8px;padding:8px 10px;font-size:.86rem;background:#fff;">
+          <option value="">Not applicable</option>
+          <option value="1:8">1:8 (steep)</option>
+          <option value="1:12">1:12 (moderate)</option>
+          <option value="1:14">1:14 (NZ standard)</option>
+          <option value="1:20">1:20 (gentle)</option>
+          <option value="flat">Flat / level</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- SDA CATEGORY -->
+    <div style="margin-bottom:12px;">
+      <label style="font-size:.8rem;color:#1E40AF;font-weight:600;display:block;margin-bottom:3px;">NDIS SDA Category <span style="font-weight:400;color:#6B7ABA;">(if applicable)</span></label>
+      <select id="${p}_da_sda_cat" style="width:100%;border:1.5px solid rgba(74,144,226,.3);border-radius:8px;padding:8px 10px;font-size:.86rem;background:#fff;">
+        <option value="">Not SDA registered</option>
+        <option value="improved_liveability">Improved Liveability</option>
+        <option value="fully_accessible">Fully Accessible</option>
+        <option value="robust">Robust</option>
+        <option value="high_physical_support">High Physical Support</option>
+      </select>
+    </div>
+
+    <!-- NOTES -->
+    <div>
+      <label style="font-size:.8rem;color:#1E40AF;font-weight:600;display:block;margin-bottom:3px;">Additional accessibility notes</label>
+      <textarea id="${p}_da_notes" rows="2" placeholder="e.g. Wide hallways throughout, electric door opener on main entrance, bathroom has been fully modified for wheelchair use..." style="width:100%;border:1.5px solid rgba(74,144,226,.3);border-radius:8px;padding:10px;font-size:.86rem;background:#fff;resize:vertical;box-sizing:border-box;"></textarea>
+    </div>
+  </div>`;
+}
+
+function initAccessibilityForms() {
+  var fEl = document.getElementById('f_access_placeholder');
+  var afEl = document.getElementById('af_access_placeholder');
+  if (fEl) fEl.innerHTML = buildAccessibilityForm('f');
+  if (afEl) afEl.innerHTML = buildAccessibilityForm('af');
+}
+
 // EMAIL VERIFICATION SCREEN
 // ════════════════════════════════════════════
 function showVerifyEmail(email) {
@@ -2476,11 +2561,25 @@ async function doAgentAddListing(){
       payload.reason_for_listing = afReason;
       payload.ideal_tenant = afIdeal;
     }
-    // Disability features
-    var afDaFields = ['wheelchair','ramp','wide_doors','bathroom','grab_rails','roll_shower','single_level','lift','parking','hearing'];
+    // Disability features — checkboxes
+    var afDaFields = ['step_free','ramp','single_level','lift','parking','path','roll_shower','shower_seat','grab_rails','bath_hoist','height_toilet','bathroom','ceiling_hoist','hoist_track','portable_hoist','hoist_bathroom','wide_doors','low_bench','hearing','visual_fire','sda','turning_space'];
     var afDaSelected = afDaFields.filter(function(f){var el=document.getElementById('af_da_'+f);return el&&el.checked;});
     payload.disability_features = afDaSelected;
-    payload.disability_friendly = document.getElementById('af_da_friendly').checked;
+    payload.disability_friendly = document.getElementById('af_da_friendly') ? document.getElementById('af_da_friendly').checked : false;
+    // Measurements
+    var agn = function(id){var el=document.getElementById(id);return el&&el.value?parseInt(el.value)||null:null;};
+    var ags = function(id){var el=document.getElementById(id);return el&&el.value?el.value:null;};
+    payload.access_door_width_main     = agn('af_da_door_main');
+    payload.access_door_width_bedroom  = agn('af_da_door_bedroom');
+    payload.access_door_width_bathroom = agn('af_da_door_bathroom');
+    payload.access_shower_width        = agn('af_da_shower_w');
+    payload.access_shower_length       = agn('af_da_shower_l');
+    payload.access_turning_radius      = agn('af_da_turning');
+    payload.access_hoist_track_length  = agn('af_da_hoist_len');
+    payload.access_ramp_gradient       = ags('af_da_ramp_grad');
+    payload.access_sda_category        = ags('af_da_sda_cat');
+    payload.access_ceiling_hoist       = document.getElementById('af_da_ceiling_hoist') ? document.getElementById('af_da_ceiling_hoist').checked : false;
+    payload.access_notes               = ags('af_da_notes');
     await sbq('POST','listings',payload);
     ['af_t','af_s','af_r','af_d','af_av'].forEach(function(id){document.getElementById(id).value='';});
     setRentalTerm('long-term');
@@ -2524,11 +2623,25 @@ async function doAddListing(){
       payload.reason_for_listing = reason;
       payload.ideal_tenant = ideal;
     }
-    // Disability features
-    var daFields = ['wheelchair','ramp','wide_doors','bathroom','grab_rails','roll_shower','single_level','lift','parking','hearing'];
+    // Disability features — checkboxes
+    var daFields = ['step_free','ramp','single_level','lift','parking','path','roll_shower','shower_seat','grab_rails','bath_hoist','height_toilet','bathroom','ceiling_hoist','hoist_track','portable_hoist','hoist_bathroom','wide_doors','low_bench','hearing','visual_fire','sda','turning_space'];
     var daSelected = daFields.filter(function(f){var el=document.getElementById('f_da_'+f);return el&&el.checked;});
     payload.disability_features = daSelected;
-    payload.disability_friendly = document.getElementById('f_da_friendly').checked;
+    payload.disability_friendly = document.getElementById('f_da_friendly') ? document.getElementById('f_da_friendly').checked : false;
+    // Measurements
+    var gn = function(id){var el=document.getElementById(id);return el&&el.value?parseInt(el.value)||null:null;};
+    var gs = function(id){var el=document.getElementById(id);return el&&el.value?el.value:null;};
+    payload.access_door_width_main     = gn('f_da_door_main');
+    payload.access_door_width_bedroom  = gn('f_da_door_bedroom');
+    payload.access_door_width_bathroom = gn('f_da_door_bathroom');
+    payload.access_shower_width        = gn('f_da_shower_w');
+    payload.access_shower_length       = gn('f_da_shower_l');
+    payload.access_turning_radius      = gn('f_da_turning');
+    payload.access_hoist_track_length  = gn('f_da_hoist_len');
+    payload.access_ramp_gradient       = gs('f_da_ramp_grad');
+    payload.access_sda_category        = gs('f_da_sda_cat');
+    payload.access_ceiling_hoist       = document.getElementById('f_da_ceiling_hoist') ? document.getElementById('f_da_ceiling_hoist').checked : false;
+    payload.access_notes               = gs('f_da_notes');
     await sbq('POST','listings',payload);
     ['f_t','f_s','f_r','f_d','f_av'].forEach(function(id){document.getElementById(id).value='';});
     ['f_c','f_ty','f_b','f_ba'].forEach(function(id){document.getElementById(id).selectedIndex=0;});
@@ -2840,12 +2953,36 @@ async function viewListing(id){
       (l.avail?'<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">From: '+esc(l.avail)+'</span>':'')+
       (l.disability_friendly?'<span style="background:rgba(74,144,226,.12);color:#2563EB;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:700;">♿ Disability Friendly</span>':'')+
       '</div>'+
-      (l.disability_friendly && l.disability_features && l.disability_features.length > 0 ?
-        '<div style="background:rgba(74,144,226,.06);border:1.5px solid rgba(74,144,226,.2);border-radius:14px;padding:14px 16px;margin-bottom:14px;">'+
-        '<div style="font-weight:700;color:#2563EB;margin-bottom:10px;font-size:.9rem;">♿ Accessibility Features</div>'+
-        '<div style="display:flex;flex-wrap:wrap;gap:7px;">'+
-        (function(){var labelMap={wheelchair:'Wheelchair accessible entry',ramp:'Ramp / step-free access',wide_doors:'Wide doorways (80cm+)',bathroom:'Accessible bathroom',grab_rails:'Grab rails',roll_shower:'Roll-in shower',single_level:'Single level / no stairs',lift:'Lift access',parking:'Accessible parking',hearing:'Hearing loop / visual alerts'};return l.disability_features.map(function(f){return '<span style="background:#fff;border:1px solid rgba(74,144,226,.3);color:#2563EB;padding:3px 10px;border-radius:10px;font-size:.78rem;">'+esc(labelMap[f]||f)+'</span>';}).join('');})()+ 
-        '</div></div>' : '')+
+      (l.disability_friendly ?
+        '<div style="background:linear-gradient(135deg,#EEF4FF,#F0F7FF);border:1.5px solid rgba(74,144,226,.25);border-radius:14px;padding:16px 18px;margin-bottom:14px;">'+
+        '<div style="font-weight:700;color:#1E40AF;margin-bottom:12px;font-size:.95rem;">♿ Accessibility Details</div>'+
+        (l.disability_features && l.disability_features.length > 0 ?
+          '<div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">'+
+          (function(){
+            var lm={step_free:'Step-free entry',ramp:'Ramp access',single_level:'Single level',lift:'Lift access',parking:'Accessible parking',path:'Accessible path',roll_shower:'Roll-in shower',shower_seat:'Shower seat',grab_rails:'Grab rails',bath_hoist:'Bath hoist',height_toilet:'Height-adj toilet',bathroom:'Accessible bathroom',ceiling_hoist:'Ceiling hoist',hoist_track:'Hoist track',portable_hoist:'Portable hoist space',hoist_bathroom:'Hoist to bathroom',wide_doors:'Wide doorways',low_bench:'Lowered benches',hearing:'Hearing loop',visual_fire:'Visual fire alarms',sda:'NDIS SDA eligible',turning_space:'1500mm turning space',wheelchair:'Wheelchair accessible',wheelchair_access:'Wheelchair accessible'};
+            return l.disability_features.map(function(f){return '<span style="background:#fff;border:1px solid rgba(74,144,226,.3);color:#1E40AF;padding:4px 10px;border-radius:10px;font-size:.78rem;font-weight:500;">'+esc(lm[f]||f)+'</span>';}).join('');
+          })()+
+          '</div>' : '')+
+        (function(){
+          var m=[];
+          if(l.access_door_width_main) m.push('Main door: <strong>'+l.access_door_width_main+'cm</strong>');
+          if(l.access_door_width_bedroom) m.push('Bedroom door: <strong>'+l.access_door_width_bedroom+'cm</strong>');
+          if(l.access_door_width_bathroom) m.push('Bathroom door: <strong>'+l.access_door_width_bathroom+'cm</strong>');
+          if(l.access_shower_width) m.push('Shower width: <strong>'+l.access_shower_width+'cm</strong>');
+          if(l.access_shower_length) m.push('Shower length: <strong>'+l.access_shower_length+'cm</strong>');
+          if(l.access_turning_radius) m.push('Turning space: <strong>'+l.access_turning_radius+'mm</strong>');
+          if(l.access_hoist_track_length) m.push('Hoist track: <strong>'+l.access_hoist_track_length+'cm</strong>');
+          if(l.access_ramp_gradient) m.push('Ramp gradient: <strong>'+esc(l.access_ramp_gradient)+'</strong>');
+          if(l.access_sda_category) m.push('SDA: <strong>'+esc(l.access_sda_category.replace(/_/g,' '))+'</strong>');
+          if(!m.length) return '';
+          return '<div style="background:#fff;border-radius:10px;padding:12px 14px;margin-bottom:10px;border:1px solid rgba(74,144,226,.15);">'+
+            '<div style="font-weight:700;color:#1E40AF;font-size:.8rem;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;">📐 Measurements</div>'+
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">'+
+            m.map(function(t){return '<div style="font-size:.82rem;color:#3B4FA8;">'+t+'</div>';}).join('')+
+            '</div></div>';
+        })()+
+        (l.access_notes ? '<div style="font-size:.84rem;color:#3B4FA8;font-style:italic;border-top:1px solid rgba(74,144,226,.15);padding-top:10px;margin-top:4px;">📝 '+esc(l.access_notes)+'</div>' : '')+
+        '</div>' : '')+
       '<p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;margin-bottom:16px;">'+esc(l.description)+'</p>'+
       (l.rental_term==='short-term' ? (
         '<div style="background:linear-gradient(135deg,#FFF8F4,#FAF0DC);border:1.5px solid #E8724A;border-radius:14px;padding:16px 18px;margin-bottom:14px;">'+
@@ -3486,6 +3623,7 @@ async function uploadAvatar(uid, bucket, folder) {
 document.addEventListener('DOMContentLoaded', function() {
   initPhotoUploader('ll_photos', 20);
   initPhotoUploader('al_photos', 20);
+  initAccessibilityForms();
   initPhotoUploader('rl_photos', 20);
   initAvatarUploader('fp_avatar', '?');
   initAvatarUploader('rs_avatar', '?');
