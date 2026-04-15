@@ -2,8 +2,8 @@ name: PropertyMe FTP Poll
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-  workflow_dispatch:
+    - cron: '*/5 * * * *'  # Every 5 minutes
+  workflow_dispatch:        # Allow manual trigger for testing
 
 jobs:
   poll-ftp:
@@ -11,25 +11,36 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - name: Poll FTP and send to FindMyNest
+      - name: Download XML files from DriveHQ FTP and send to FindMyNest
         run: |
+          # Install lftp — reliable FTP client
           sudo apt-get install -y lftp 2>/dev/null
+
+          # Create local dir for downloaded files
           mkdir -p /tmp/reaxml
 
-          lftp -u "${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }}" ftp.drivehq.com <<EOF
-          set ftp:passive-mode true
-          set net:timeout 30
-          cd "${{ secrets.FTP_DIR }}"
-          mget -E *.xml /tmp/reaxml/ 2>/dev/null || true
-          mget -E *.XML /tmp/reaxml/ 2>/dev/null || true
-          bye
-          EOF
+          lftp -u "${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }}" ftp.drivehq.com -e "set ftp:passive-mode true; set net:timeout 30; cd 'My Storage/listings'; mget -E *.xml -O /tmp/reaxml/; mget -E *.XML -O /tmp/reaxml/; bye"
 
-          for f in /tmp/reaxml/*.xml 2>/dev/null; do
-            [ -f "$f" ] || continue
-            curl -s -X POST \
+          shopt -s nullglob
+          files=(/tmp/reaxml/*.xml /tmp/reaxml/*.XML)
+
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No XML files found — nothing to process."
+            exit 0
+          fi
+
+          echo "Found ${#files[@]} file(s) to process."
+
+          for f in "${files[@]}"; do
+            echo "Sending: $f"
+            HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" \
+              -X POST \
               -H "Content-Type: application/xml" \
               -H "x-api-key: ${{ secrets.FINDMYNEST_API_KEY }}" \
               --data-binary "@$f" \
-              "https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/reaxml-ingest"
+              "https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/reaxml-ingest")
+            echo "Response $HTTP_CODE:"
+            cat /tmp/response.json
           done
+
+          echo "Done."
