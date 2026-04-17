@@ -510,8 +510,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <ul class="nls">
     <li><a id="navHow">How it works</a></li>
     <li><a id="navListings">Listings</a></li>
-    <li><a id="navShortTerm">Short-Term</a></li>
+    <li><a id="navShortTerm">Short-Term & Holiday</a></li>
     <li><a id="navFlatmates">Flatmates</a></li>
+    <li><a id="navAccessibility">Accessible Homes</a></li>
     <li><a id="navLandlords">For Landlords &amp; Agents</a></li>
     <li><a id="navContact" style="color:#E8724A;font-weight:600;">Contact Us</a></li>
     <li><button class="ncta" id="navBtn">Sign Up / Log In</button></li>
@@ -558,7 +559,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <div class="stit">🔍 Find your next nest</div>
   <div class="stabs">
     <button class="stab active" onclick="setTab(this,'rent')">Long-Term Rent</button>
-    <button class="stab" onclick="setTab(this,'shortterm')" style="position:relative;">Short-Term ✨<span style="position:absolute;top:-8px;right:-6px;background:#E8724A;color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:50px;">NEW</span></button>
+    <button class="stab" onclick="setTab(this,'shortterm')" style="position:relative;">Short-Term & Holiday ✨<span style="position:absolute;top:-8px;right:-6px;background:#E8724A;color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:50px;">NEW</span></button>
     <button class="stab" onclick="setTab(this,'flatmates')">Flatmates</button>
   </div>
   <div class="sbar" id="sbar-rent">
@@ -602,7 +603,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <div class="li">
     <div style="text-align:center;margin-bottom:40px;">
       <div class="slb">🗓️ Our Niche</div>
-      <h2 class="stl">NZ's home for short-term rentals</h2>
+      <h2 class="stl">NZ's home for short-term & holiday rentals</h2>
       <p class="ssb" style="text-align:center;margin:0 auto;">Other platforms weren't built for this. FindMyNest is built for Kiwis who need flexibility — whether you're going on your OE, relocating for work, or need a place for a fixed period.</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px;">
@@ -629,7 +630,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
         <button class="bp" onclick="setTab(document.querySelector('.stab:nth-child(2)'),'shortterm');document.querySelector('.ss').scrollIntoView({behavior:'smooth'});">Find Short-Term Nests →</button>
-        <button class="bs" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#FAF0DC;" id="stListBtn">List Short-Term Property →</button>
+        <button class="bs" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#FAF0DC;" id="stListBtn">List Short-Term or Holiday Property →</button>
       </div>
     </div>
   </div>
@@ -1011,12 +1012,12 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <div class="fp-content">
     <!-- HEADER -->
     <div style="background:linear-gradient(135deg,#E8724A,#C85A2E);border-radius:24px;padding:56px 48px;color:#fff;margin-bottom:40px;text-align:center;">
-      <div style="display:inline-block;background:rgba(255,255,255,.2);border-radius:50px;padding:6px 18px;font-size:.82rem;font-weight:700;margin-bottom:16px;">🗓️ NZ's Short-Term Rental Specialist</div>
-      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;margin-bottom:14px;">Short-term rentals,<br/>done properly</h1>
-      <p style="opacity:.9;font-size:.98rem;max-width:520px;margin:0 auto 28px;line-height:1.7;">FindMyNest connects Kiwis who need flexible housing with landlords who have it — whatever the situation.</p>
+      <div style="display:inline-block;background:rgba(255,255,255,.2);border-radius:50px;padding:6px 18px;font-size:.82rem;font-weight:700;margin-bottom:16px;">🗓️ NZ's Short-Term & Holiday Rental Specialist</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;margin-bottom:14px;">Short-term & holiday rentals,<br/>done properly</h1>
+      <p style="opacity:.9;font-size:.98rem;max-width:520px;margin:0 auto 28px;line-height:1.7;">FindMyNest connects Kiwis who need flexible housing with landlords and holiday home owners who have it — whatever the situation.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <button class="bw" id="stFindBtn" style="font-size:.95rem;">Browse Short-Term Listings →</button>
-        <button id="stListBtn2" style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:13px 26px;font-weight:700;cursor:pointer;font-size:.95rem;">List Short-Term Property →</button>
+        <button id="stListBtn2" style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:13px 26px;font-weight:700;cursor:pointer;font-size:.95rem;">List Short-Term or Holiday Property →</button>
       </div>
     </div>
 
@@ -1034,6 +1035,12 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <!-- WHO IS IT FOR -->
     <div style="text-align:center;margin-bottom:28px;"><div class="slb">Who it's for</div><h2 class="stl">Find the right match, whatever your situation</h2></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:40px;">
+      <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
+        <div style="font-size:2.2rem;margin-bottom:12px;">🏖️</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Holiday home or bach?</div>
+        <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Got a bach, holiday home or investment property sitting empty? List it here and reach genuine renters looking for short stays — without the platform fees of Airbnb.</p>
+        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">List my holiday home →</button>
+      </div>
       <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
         <div style="font-size:2.2rem;margin-bottom:12px;">✈️</div>
         <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Going on your OE?</div>
@@ -1062,7 +1069,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 
     <!-- HOW IT WORKS -->
     <div style="background:#F7F3EE;border-radius:24px;padding:40px;margin-bottom:32px;">
-      <div style="text-align:center;margin-bottom:28px;"><h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:8px;">How short-term listing works</h2><p style="color:#6B3A1F;font-size:.9rem;">For landlords, home owners and tenants listing a lease takeover</p></div>
+      <div style="text-align:center;margin-bottom:28px;"><h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:8px;">How short-term listing works</h2><p style="color:#6B3A1F;font-size:.9rem;">For landlords, home owners, holiday home owners and tenants</p></div>
       <div style="display:flex;flex-direction:column;gap:16px;max-width:560px;margin:0 auto;">
         <div style="display:flex;gap:16px;align-items:flex-start;"><div style="width:34px;height:34px;border-radius:50%;background:#E8724A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:.9rem;">1</div><div><div style="font-weight:700;margin-bottom:3px;">Create a free account</div><p style="color:#6B3A1F;font-size:.88rem;line-height:1.6;">Sign up as a landlord or agent in under 2 minutes.</p></div></div>
         <div style="display:flex;gap:16px;align-items:flex-start;"><div style="width:34px;height:34px;border-radius:50%;background:#E8724A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:.9rem;">2</div><div><div style="font-weight:700;margin-bottom:3px;">List as short-term</div><p style="color:#6B3A1F;font-size:.88rem;line-height:1.6;">Choose "Short-Term" when creating your listing. Set your dates, explain why you're listing, and tell us who you're looking for.</p></div></div>
@@ -1073,15 +1080,123 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 
     <!-- CTA -->
     <div style="background:#3D1F0D;border-radius:24px;padding:40px;text-align:center;">
-      <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#FAF0DC;margin-bottom:10px;">Ready to list your short-term rental?</h2>
-      <p style="color:rgba(250,240,220,.75);font-size:.93rem;margin-bottom:24px;max-width:420px;margin-left:auto;margin-right:auto;">It's completely free right now. Takes 5 minutes. Reach renters specifically looking for short-term options in your area.</p>
-      <button class="bp" id="stPageListBtn" style="font-size:1rem;padding:14px 36px;">List My Short-Term Property Free →</button>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#FAF0DC;margin-bottom:10px;">Ready to list your property?</h2>
+      <p style="color:rgba(250,240,220,.75);font-size:.93rem;margin-bottom:24px;max-width:420px;margin-left:auto;margin-right:auto;">Whether it's a holiday home, bach, short-term sublet or lease takeover — it's completely free to list. Takes 5 minutes.</p>
+      <button class="bp" id="stPageListBtn" style="font-size:1rem;padding:14px 36px;">List My Property Free →</button>
     </div>
 
     <!-- SHORT TERM LISTINGS PREVIEW -->
     <div style="margin-top:40px;">
       <div style="text-align:center;margin-bottom:24px;"><div class="slb">Currently available</div><h2 class="stl">Short-Term Nests in NZ</h2></div>
       <div id="stListingsGrid" class="lg"><div style="text-align:center;padding:32px;color:#6B3A1F;">Loading... 🥝</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ACCESSIBILITY PAGE -->
+<div class="fpage" id="accessibilityPage">
+  <div class="fp-nav">
+    <button class="fp-back" id="accessibilityBack"><span>←</span> Back to Home</button>
+    <span class="nlt" style="font-size:1rem;">FindMy<span style="color:#E8724A;">Nest</span>™</span>
+    <button class="ncta" id="accessibilityAuthBtn">Sign Up / Log In</button>
+  </div>
+  <div class="fp-content">
+
+    <!-- HERO -->
+    <div style="background:linear-gradient(135deg,#1E40AF,#2563EB);border-radius:24px;padding:56px 48px;color:#fff;margin-bottom:40px;text-align:center;">
+      <div style="display:inline-block;background:rgba(255,255,255,.2);border-radius:50px;padding:6px 18px;font-size:.82rem;font-weight:700;margin-bottom:16px;">♿ Accessible Housing in NZ</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;margin-bottom:14px;">Every Kiwi deserves<br/>a home they can live in</h1>
+      <p style="opacity:.9;font-size:.98rem;max-width:560px;margin:0 auto 28px;line-height:1.7;">FindMyNest is on a mission to make accessible housing easier to find in New Zealand. We believe disability should never be a barrier to finding a home.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <button class="bw" id="accessFindBtn" style="font-size:.95rem;">Browse Accessible Listings →</button>
+        <button id="accessListBtn" style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:13px 26px;font-weight:700;cursor:pointer;font-size:.95rem;" onclick="openAuth()">List an Accessible Property →</button>
+      </div>
+    </div>
+
+    <!-- MISSION STATEMENT -->
+    <div style="background:#EEF4FF;border-radius:24px;padding:40px 48px;margin-bottom:40px;text-align:center;">
+      <div style="font-size:3rem;margin-bottom:16px;">🏡</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#1E40AF;margin-bottom:16px;">Our Mission</h2>
+      <p style="color:#3B4FA8;font-size:1.05rem;line-height:1.8;max-width:680px;margin:0 auto 20px;">In New Zealand, finding accessible rental housing is one of the hardest challenges faced by disabled people and their whānau. Properties with grab rails, wide doorways, roll-in showers and ceiling hoists are almost invisible in the standard rental market.</p>
+      <p style="color:#3B4FA8;font-size:.95rem;line-height:1.8;max-width:680px;margin:0 auto 20px;">FindMyNest is changing that. We've built the most detailed accessibility search tool of any rental platform in NZ — so that renters with disabilities can filter by exactly what they need, and landlords with accessible properties can reach the people who actually need them.</p>
+
+    </div>
+
+    <!-- WHAT WE OFFER -->
+    <div style="text-align:center;margin-bottom:28px;"><div class="slb">What makes us different</div><h2 class="stl">Built for accessibility, from the ground up</h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-bottom:40px;">
+      <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid rgba(37,99,235,.2);">
+        <div style="font-size:2.2rem;margin-bottom:12px;">📐</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#1E40AF;margin-bottom:8px;">Detailed measurements</div>
+        <p style="color:#3B4FA8;font-size:.87rem;line-height:1.7;">Door widths, shower dimensions, turning radius, hoist track lengths — the details that matter for wheelchair users are right there on every accessible listing.</p>
+      </div>
+      <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid rgba(37,99,235,.2);">
+        <div style="font-size:2.2rem;margin-bottom:12px;">🔍</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#1E40AF;margin-bottom:8px;">Filter by your needs</div>
+        <p style="color:#3B4FA8;font-size:.87rem;line-height:1.7;">Search specifically for accessible properties. No more scrolling through hundreds of listings hoping to find one that works. Filter and find exactly what you need.</p>
+      </div>
+      <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid rgba(37,99,235,.2);">
+        <div style="font-size:2.2rem;margin-bottom:12px;">🏗️</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#1E40AF;margin-bottom:8px;">Whaikaha / DSS modified</div>
+        <p style="color:#3B4FA8;font-size:.87rem;line-height:1.7;">Landlords can flag if their property has previously had modifications funded through Disability Support Services — such as ramps, widened doorways or roll-in showers — giving renters useful context about what's already in place.</p>
+      </div>
+      <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid rgba(37,99,235,.2);">
+        <div style="font-size:2.2rem;margin-bottom:12px;">🤖</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#1E40AF;margin-bottom:8px;">AI-scored matching</div>
+        <p style="color:#3B4FA8;font-size:.87rem;line-height:1.7;">Our AI scoring system helps landlords identify the most compatible renters, reducing the back-and-forth and making the process faster and less stressful for everyone.</p>
+      </div>
+    </div>
+
+    <!-- ACCESSIBILITY FEATURES WE TRACK -->
+    <div style="background:#EEF4FF;border-radius:24px;padding:40px;margin-bottom:40px;">
+      <div style="text-align:center;margin-bottom:28px;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#1E40AF;margin-bottom:8px;">What we track on every accessible listing</h2>
+        <p style="color:#3B4FA8;font-size:.9rem;">Landlords fill in what they know — even partial information helps</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🚪</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Door widths (main, bedroom, bathroom)</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🚿</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Shower dimensions &amp; roll-in access</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🔄</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Wheelchair turning radius (1500mm+)</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🛗</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Ceiling hoist &amp; track length</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🅿️</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Accessible parking</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">📐</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Ramp gradient</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🪜</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Step-free entry</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🛁</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Bath hoist &amp; shower seat</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🤝</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Grab rails installed</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🔊</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Hearing loop &amp; visual fire alarms</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🏠</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Single level / no stairs</span></div>
+        <div style="background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(37,99,235,.15);"><span style="font-size:1.3rem;">🏗️</span><span style="font-size:.85rem;color:#1E40AF;font-weight:500;">Whaikaha / DSS modified</span></div>
+      </div>
+    </div>
+
+    <!-- FOR LANDLORDS -->
+    <div style="background:#fff;border-radius:24px;padding:40px;box-shadow:0 4px 20px rgba(61,31,13,.06);margin-bottom:40px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+        <div>
+          <div class="slb" style="margin-bottom:12px;">For landlords & property managers</div>
+          <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#1E40AF;margin-bottom:14px;">Got an accessible property?<br/>List it where it matters.</h2>
+          <p style="color:#3B4FA8;font-size:.9rem;line-height:1.8;margin-bottom:16px;">If your property has been modified for accessibility — whether through Whaikaha, DSS, ACC or your own investment — listing on FindMyNest connects you directly with renters who need exactly what you have.</p>
+          <p style="color:#3B4FA8;font-size:.9rem;line-height:1.8;margin-bottom:20px;">It's completely free to list, takes 5 minutes, and your accessible listing gets a dedicated ♿ badge making it stand out in search results.</p>
+          <button class="bp" onclick="openAuth()" style="background:#2563EB;">List My Accessible Property Free →</button>
+        </div>
+        <div style="background:linear-gradient(135deg,#EEF4FF,#F0F7FF);border-radius:18px;padding:28px;border:1.5px solid rgba(37,99,235,.2);">
+          <div style="font-weight:700;color:#1E40AF;margin-bottom:14px;font-size:.95rem;">Your accessible listing includes:</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.88rem;color:#3B4FA8;"><div style="width:20px;height:20px;border-radius:50%;background:#2563EB;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;">✓</div>♿ Disability Friendly badge on your listing</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.88rem;color:#3B4FA8;"><div style="width:20px;height:20px;border-radius:50%;background:#2563EB;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;">✓</div>Appears in accessibility-filtered searches</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.88rem;color:#3B4FA8;"><div style="width:20px;height:20px;border-radius:50%;background:#2563EB;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;">✓</div>Detailed feature checklist (20+ options)</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.88rem;color:#3B4FA8;"><div style="width:20px;height:20px;border-radius:50%;background:#2563EB;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;">✓</div>Measurement fields for key dimensions</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.88rem;color:#3B4FA8;"><div style="width:20px;height:20px;border-radius:50%;background:#2563EB;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;">✓</div>Free to list — no fees ever</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.88rem;color:#3B4FA8;"><div style="width:20px;height:20px;border-radius:50%;background:#2563EB;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;">✓</div>AI-scored enquiries from compatible renters</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div style="background:#EEF4FF;border-radius:24px;padding:40px;text-align:center;margin-bottom:40px;">
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#1E40AF;margin-bottom:10px;">Ready to find your accessible nest?</h2>
+      <p style="color:#3B4FA8;font-size:.93rem;margin-bottom:24px;max-width:420px;margin-left:auto;margin-right:auto;">Browse accessible listings in your area — filtered by the features that matter to you.</p>
+      <button class="bw" id="accessFindBtn2" style="font-size:1rem;padding:14px 36px;">Browse Accessible Listings →</button>
     </div>
 
   </div>
@@ -1255,7 +1370,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           </div>
           <!-- Short-term extra fields (shown inline in short-term mode) -->
           <div class="ff s2" id="f_reason_wrap" style="display:none;"><label>Why are you listing short-term? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (renters want to know!)</span></label>
-            <select id="f_reason"><option value="">Select a reason...</option><option value="Going on OE">✈️ Going on my OE / overseas trip</option><option value="Work relocation">💼 Relocating for work temporarily</option><option value="Seasonal rental">🌊 Seasonal rental (summer/winter)</option><option value="Broken lease">📋 Broken lease — need someone to take over</option><option value="Travelling NZ">🚐 Travelling around NZ</option><option value="Family stay">👨‍👩‍👦 Staying with family for a period</option><option value="Other">Other reason</option></select>
+            <select id="f_reason"><option value="">Select a reason...</option><option value="Holiday Home">🏖️ Holiday home / bach rental</option><option value="Going on OE">✈️ Going on my OE / overseas trip</option><option value="Work relocation">💼 Relocating for work temporarily</option><option value="Seasonal rental">🌊 Seasonal rental (summer/winter)</option><option value="Broken lease">📋 Broken lease — need someone to take over</option><option value="Travelling NZ">🚐 Travelling around NZ</option><option value="Family stay">👨‍👩‍👦 Staying with family for a period</option><option value="Other">Other reason</option></select>
           </div>
           <div class="ff s2" id="f_ideal_wrap" style="display:none;"><label>Who are you looking for? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (be specific — it helps!)</span></label>
             <textarea id="f_ideal" rows="3" placeholder="e.g. Working professional, couple welcome, no parties, must be comfortable with our cat, someone happy to water the garden..."></textarea>
@@ -1577,7 +1692,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           </div>
           <!-- Short-term extra fields (shown inline in short-term mode) -->
           <div class="ff s2" id="af_reason_wrap" style="display:none;"><label>Why are you listing short-term? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (renters want to know!)</span></label>
-            <select id="af_reason"><option value="">Select a reason...</option><option value="Going on OE">✈️ Going on my OE / overseas trip</option><option value="Work relocation">💼 Relocating for work temporarily</option><option value="Seasonal rental">🌊 Seasonal rental (summer/winter)</option><option value="Broken lease">📋 Broken lease — need someone to take over</option><option value="Travelling NZ">🚐 Travelling around NZ</option><option value="Family stay">👨‍👩‍👦 Staying with family for a period</option><option value="Other">Other reason</option></select>
+            <select id="af_reason"><option value="">Select a reason...</option><option value="Holiday Home">🏖️ Holiday home / bach rental</option><option value="Going on OE">✈️ Going on my OE / overseas trip</option><option value="Work relocation">💼 Relocating for work temporarily</option><option value="Seasonal rental">🌊 Seasonal rental (summer/winter)</option><option value="Broken lease">📋 Broken lease — need someone to take over</option><option value="Travelling NZ">🚐 Travelling around NZ</option><option value="Family stay">👨‍👩‍👦 Staying with family for a period</option><option value="Other">Other reason</option></select>
           </div>
           <div class="ff s2" id="af_ideal_wrap" style="display:none;"><label>Who are you looking for? *<span style="font-weight:400;color:#A07850;font-size:.8rem;"> (be specific — it helps!)</span></label>
             <textarea id="af_ideal" rows="3" placeholder="e.g. Working professional, couple welcome, no parties, happy to water the garden..."></textarea>
@@ -2859,13 +2974,16 @@ function applyFilters(){
 
   c.innerHTML = filtered.map(function(l,i){
     var isShortTerm = l.rental_term==='short-term';
+    var isHoliday = l.reason_for_listing === 'Holiday Home';
+    var stIcon = isHoliday ? '🏖️' : '🗓️';
+    var stLabel = isHoliday ? 'Holiday Home' : 'Short-Term';
     var thumbHtml = l.photo_urls&&l.photo_urls.length
       ? '<div style="position:relative;width:56px;height:56px;flex-shrink:0;"><img src="'+l.photo_urls[0]+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;" onerror="this.style.background=\x27#F2E4C4\x27"/>'+
-        (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;white-space:nowrap;">ST</div>':'')+'</div>'
+        (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;white-space:nowrap;">'+(isHoliday?'🏖️':'ST')+'</div>':'')+'</div>'
       : '<div style="position:relative;width:56px;height:56px;border-radius:12px;background:'+CLRS[i%CLRS.length]+';display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">🏡'+
-        (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;">ST</div>':'')+'</div>';
+        (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;">'+(isHoliday?'🏖️':'ST')+'</div>':'')+'</div>';
     var stBadge = isShortTerm
-      ? '<span style="background:#E8724A;color:#fff;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:6px;vertical-align:middle;">🗓️ Short-Term</span>'
+      ? '<span style="background:#E8724A;color:#fff;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:6px;vertical-align:middle;">'+stIcon+' '+stLabel+'</span>'
       : '';
     var daBadge = l.disability_friendly
       ? '<span style="background:rgba(74,144,226,.15);color:#2563EB;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:4px;vertical-align:middle;">♿ Accessible</span>'
@@ -3029,8 +3147,9 @@ async function renderListings(termFilter){
     grid.innerHTML=list.map(function(l,i){
       var hasPhoto=l.photo_urls&&l.photo_urls.length;
       var isShortTerm = l.rental_term==='short-term';
+      var isHoliday = l.reason_for_listing === 'Holiday Home';
       var stOverlay = isShortTerm
-        ? '<div style="position:absolute;top:10px;left:10px;background:#E8724A;color:#fff;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:50px;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.18);">🗓️ Short-Term</div>'
+        ? '<div style="position:absolute;top:10px;left:10px;background:#E8724A;color:#fff;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:50px;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.18);">'+(isHoliday?'🏖️ Holiday Home':'🗓️ Short-Term')+'</div>'
         : '';
       var photoHtml=hasPhoto
         ?'<div class="lim" style="padding:0;overflow:hidden;position:relative;"><img src="'+l.photo_urls[0]+'" style="width:100%;height:100%;object-fit:cover;display:block;"/>'+stOverlay+'</div>'
@@ -3338,6 +3457,11 @@ async function submitRoomListing(){
 
 
 // Wire up flatmates nav, page buttons and modals
+document.getElementById('navAccessibility').addEventListener('click',function(){showPage('accessibilityPage');});
+document.getElementById('accessibilityBack').addEventListener('click',hideAllPages);
+document.getElementById('accessibilityAuthBtn').addEventListener('click',openAuth);
+document.getElementById('accessFindBtn').addEventListener('click',function(){hideAllPages();loadAllListingsPage();showPage('listingsPage');setTimeout(function(){var el=document.getElementById('filt_disability');if(el){el.value='yes';applyFilters();}},500);});
+document.getElementById('accessFindBtn2').addEventListener('click',function(){hideAllPages();loadAllListingsPage();showPage('listingsPage');setTimeout(function(){var el=document.getElementById('filt_disability');if(el){el.value='yes';applyFilters();}},500);});
 document.getElementById('navFlatmates').addEventListener('click',function(){
   loadRoomListings();
   showPage('flatmatesPage');
