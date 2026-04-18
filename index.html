@@ -896,6 +896,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <select id="filt_disability" onchange="applyFilters()">
             <option value="">Any</option>
             <option value="yes">Disability Friendly only</option>
+            <option value="mods">Open to modifications</option>
           </select>
         </div>
       </div>
@@ -2426,6 +2427,15 @@ function buildAccessibilityForm(prefix) {
       </div>
     </label>
 
+    <!-- MODIFICATIONS WELCOME -->
+    <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding-bottom:14px;border-bottom:1px solid rgba(74,144,226,.2);margin-bottom:16px;">
+      <input type="checkbox" id="${p}_da_mods_welcome" style="width:20px;height:20px;accent-color:#2563EB;">
+      <div>
+        <div style="font-weight:700;color:#1E40AF;font-size:.95rem;">🔧 Open to Accessibility Modifications</div>
+        <div style="font-size:.78rem;color:#3B4FA8;">I would welcome tenants making accessibility modifications to this property</div>
+      </div>
+    </label>
+
     <!-- SECTION: ACCESS FEATURES -->
     <div style="font-weight:700;color:#1E40AF;font-size:.82rem;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;">Access Features</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;">
@@ -2683,6 +2693,7 @@ async function doAgentAddListing(){
     payload.access_ramp_gradient       = ags('af_da_ramp_grad');
     payload.access_ceiling_hoist       = document.getElementById('af_da_ceiling_hoist') ? document.getElementById('af_da_ceiling_hoist').checked : false;
     payload.access_notes               = ags('af_da_notes');
+    payload.access_modifications_welcome = document.getElementById('af_da_mods_welcome') ? document.getElementById('af_da_mods_welcome').checked : false;
     await sbq('POST','listings',payload);
     ['af_t','af_s','af_r','af_d','af_av'].forEach(function(id){document.getElementById(id).value='';});
     setRentalTerm('long-term');
@@ -2744,6 +2755,7 @@ async function doAddListing(){
     payload.access_ramp_gradient       = gs('f_da_ramp_grad');
     payload.access_ceiling_hoist       = document.getElementById('f_da_ceiling_hoist') ? document.getElementById('f_da_ceiling_hoist').checked : false;
     payload.access_notes               = gs('f_da_notes');
+    payload.access_modifications_welcome = document.getElementById('f_da_mods_welcome') ? document.getElementById('f_da_mods_welcome').checked : false;
     await sbq('POST','listings',payload);
     ['f_t','f_s','f_r','f_d','f_av'].forEach(function(id){document.getElementById(id).value='';});
     ['f_c','f_ty','f_b','f_ba'].forEach(function(id){document.getElementById(id).selectedIndex=0;});
@@ -2960,6 +2972,7 @@ function applyFilters(){
     if(pets   && l.pets   !== pets)    return false;
     if(furn   && l.furnished !== furn) return false;
     if(disab === 'yes' && !l.disability_friendly) return false;
+    if(disab === 'mods' && !l.access_modifications_welcome) return false;
     return true;
   });
 
@@ -2988,10 +3001,13 @@ function applyFilters(){
     var daBadge = l.disability_friendly
       ? '<span style="background:rgba(74,144,226,.15);color:#2563EB;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:4px;vertical-align:middle;">♿ Accessible</span>'
       : '';
+    var modsBadge = l.access_modifications_welcome && !l.disability_friendly
+      ? '<span style="background:rgba(74,144,226,.08);color:#2563EB;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:4px;vertical-align:middle;border:1px solid rgba(74,144,226,.25);">🔧 Modifications Welcome</span>'
+      : '';
     return '<div class="all-list-item" onclick="viewListing(\''+l.id+'\')">'+
       '<div style="display:flex;gap:16px;align-items:center;">'+
       thumbHtml+
-      '<div><div style="font-weight:700;margin-bottom:3px;">'+esc(l.title)+stBadge+daBadge+'</div>'+
+      '<div><div style="font-weight:700;margin-bottom:3px;">'+esc(l.title)+stBadge+daBadge+modsBadge+'</div>'+
       '<div style="font-size:.82rem;color:#6B3A1F;">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; 🚿 '+esc(l.baths)+' bath</div>'+
       '<div style="font-size:.78rem;color:#6B3A1F;margin-top:3px;">'+esc(l.type)+' &nbsp;•&nbsp; '+esc(l.furnished)+(l.pets==='Yes'?' &nbsp;•&nbsp; 🐾 Pets ok':'')+'</div></div></div>'+
       '<div style="text-align:right;flex-shrink:0;">'+
@@ -3085,6 +3101,7 @@ async function viewListing(id){
             m.map(function(t){return '<div style="font-size:.82rem;color:#3B4FA8;">'+t+'</div>';}).join('')+
             '</div></div>';
         })()+
+        (l.access_modifications_welcome ? '<div style="background:rgba(74,144,226,.08);border:1px solid rgba(74,144,226,.2);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.85rem;color:#1E40AF;">🔧 <strong>Landlord is open to accessibility modifications</strong> — ask about this in your enquiry.</div>' : '')+
         (l.access_notes ? '<div style="font-size:.84rem;color:#3B4FA8;font-style:italic;border-top:1px solid rgba(74,144,226,.15);padding-top:10px;margin-top:4px;">📝 '+esc(l.access_notes)+'</div>' : '')+
         '</div>' : '')+
       '<p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;margin-bottom:16px;">'+esc(l.description)+'</p>'+
