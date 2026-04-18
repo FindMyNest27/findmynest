@@ -2431,8 +2431,8 @@ function buildAccessibilityForm(prefix) {
     <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding-bottom:14px;border-bottom:1px solid rgba(74,144,226,.2);margin-bottom:16px;">
       <input type="checkbox" id="${p}_da_mods_welcome" style="width:20px;height:20px;accent-color:#2563EB;">
       <div>
-        <div style="font-weight:700;color:#1E40AF;font-size:.95rem;">🔧 Open to Accessibility Modifications</div>
-        <div style="font-size:.78rem;color:#3B4FA8;">I would welcome tenants making accessibility modifications to this property</div>
+        <div style="font-weight:700;color:#1E40AF;font-size:.95rem;">♿🔨 Open to Accessibility Modifications</div>
+        <div style="font-size:.78rem;color:#3B4FA8;">I would be open to discuss accessibility improvements or modifications</div>
       </div>
     </label>
 
@@ -3002,7 +3002,7 @@ function applyFilters(){
       ? '<span style="background:rgba(74,144,226,.15);color:#2563EB;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:4px;vertical-align:middle;">♿ Accessible</span>'
       : '';
     var modsBadge = l.access_modifications_welcome && !l.disability_friendly
-      ? '<span style="background:rgba(74,144,226,.08);color:#2563EB;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:4px;vertical-align:middle;border:1px solid rgba(74,144,226,.25);">🔧 Modifications Welcome</span>'
+      ? '<span style="background:rgba(74,144,226,.08);color:#2563EB;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:4px;vertical-align:middle;border:1px solid rgba(74,144,226,.25);cursor:help;" title="Open to Accessibility Modifications">♿🔨</span>'
       : '';
     return '<div class="all-list-item" onclick="viewListing(\''+l.id+'\')">'+
       '<div style="display:flex;gap:16px;align-items:center;">'+
@@ -3101,7 +3101,7 @@ async function viewListing(id){
             m.map(function(t){return '<div style="font-size:.82rem;color:#3B4FA8;">'+t+'</div>';}).join('')+
             '</div></div>';
         })()+
-        (l.access_modifications_welcome ? '<div style="background:rgba(74,144,226,.08);border:1px solid rgba(74,144,226,.2);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.85rem;color:#1E40AF;">🔧 <strong>Landlord is open to accessibility modifications</strong> — ask about this in your enquiry.</div>' : '')+
+        (l.access_modifications_welcome ? '<div style="background:rgba(74,144,226,.08);border:1px solid rgba(74,144,226,.2);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.85rem;color:#1E40AF;">♿🔨 <strong>Landlord is open to accessibility modifications</strong> — ask about this in your enquiry.</div>' : '')+
         (l.access_notes ? '<div style="font-size:.84rem;color:#3B4FA8;font-style:italic;border-top:1px solid rgba(74,144,226,.15);padding-top:10px;margin-top:4px;">📝 '+esc(l.access_notes)+'</div>' : '')+
         '</div>' : '')+
       '<p style="color:#6B3A1F;line-height:1.7;font-size:.9rem;margin-bottom:16px;">'+esc(l.description)+'</p>'+
