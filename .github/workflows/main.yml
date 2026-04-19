@@ -18,7 +18,6 @@ jobs:
             set ftp:passive-mode true;
             set net:timeout 30;
             set ftp:ssl-allow no;
-            cd /home/findmyne/findmynest.co.nz/listings;
             mget -E *.xml -O /tmp/reaxml/;
             mget -E *.XML -O /tmp/reaxml/;
             bye
