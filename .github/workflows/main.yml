@@ -14,8 +14,8 @@ jobs:
         run: |
           sudo apt-get install -y lftp 2>/dev/null
           mkdir -p /tmp/reaxml
-          lftp -u "${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }}" -p 21 ftp.findmynest.co.nz -e "
-            set ftp:passive-mode false;
+          lftp -u "${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }}" -p 21 103.96.117.109 -e "
+            set ftp:passive-mode true;
             set net:timeout 20;
             set ftp:ssl-allow no;
             mget -E *.xml -O /tmp/reaxml/;
