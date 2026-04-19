@@ -9,25 +9,27 @@ jobs:
   poll-ftp:
     runs-on: ubuntu-latest
     timeout-minutes: 4
-
     steps:
       - name: Poll FTP and send to FindMyNest
         run: |
           sudo apt-get install -y lftp 2>/dev/null
           mkdir -p /tmp/reaxml
-
-          lftp -u "${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }}" ftp.drivehq.com -e "set ftp:passive-mode true; set net:timeout 30; cd 'My Documents/listings'; mget -E *.xml -O /tmp/reaxml/; mget -E *.XML -O /tmp/reaxml/; bye"
-
+          lftp -u "${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }}" ftp.findmynest.co.nz -e "
+            set ftp:passive-mode true;
+            set net:timeout 30;
+            set ftp:ssl-allow no;
+            cd /home/findmyne/findmynest.co.nz/listings;
+            mget -E *.xml -O /tmp/reaxml/;
+            mget -E *.XML -O /tmp/reaxml/;
+            bye
+          "
           shopt -s nullglob
           files=(/tmp/reaxml/*.xml /tmp/reaxml/*.XML)
-
           if [ ${#files[@]} -eq 0 ]; then
             echo "No XML files found — nothing to process."
             exit 0
           fi
-
           echo "Found ${#files[@]} file(s) to process."
-
           for f in "${files[@]}"; do
             echo "Sending: $f"
             HTTP_CODE=$(curl -s -o /tmp/response.json -w "%{http_code}" \
@@ -39,5 +41,4 @@ jobs:
             echo "Response $HTTP_CODE:"
             cat /tmp/response.json
           done
-
           echo "Done."
