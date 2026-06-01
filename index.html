@@ -3977,7 +3977,7 @@ function acSuggest(input, listId) {
     var parts = suburb.split(', ');
     var item = document.createElement('div');
     item.className = 'ac-item';
-    item.innerHTML = '<strong>' + parts[0] + '</strong>' + (parts[1] ? '<div class="ac-sub">' + parts[1] + '</div>' : '');
+    item.innerHTML = '<strong>' + esc(parts[0]) + '</strong>' + (parts[1] ? '<div class="ac-sub">' + esc(parts[1]) + '</div>' : '');
     item.addEventListener('mousedown', function(e) {
       e.preventDefault();
       input.value = parts[0];
@@ -4899,7 +4899,7 @@ function renderInterestSuggestions() {
   if (!el) return;
   el.innerHTML = '<div style="font-size:.78rem;color:#6B3A1F;margin-bottom:6px;width:100%;">Quick add:</div>' +
     INTEREST_SUGGESTIONS.filter(function(s){ return !_renterInterests.includes(s); }).slice(0,12).map(function(s){
-      return '<button class="interest-suggest" onclick="addInterestItem(this.dataset.v)" data-v="'+s+'">'+s+'</button>';
+      return '<button class="interest-suggest" onclick="addInterestItem(this.dataset.v)" data-v="'+esc(s)+'">'+esc(s)+'</button>';
     }).join('');
 }
 
