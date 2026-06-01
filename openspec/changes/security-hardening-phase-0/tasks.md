@@ -81,10 +81,10 @@ Target file is single-page SPA `index.html` (~5000 lines). Existing `esc()` help
 - [x] D.0.2 Add an init point so dispatcher binds once after `DOMContentLoaded`; verify no double-binding.
 
 ### D.1 Auth group — login / signup / logout / forgot / reset (~15 handlers)
-- [ ] D.1.1 Identify auth handlers: `rg -n "on(click|submit|change)=" index.html | rg -i "auth|login|signup|logout|forgot|reset"`.
-- [ ] D.1.2 Convert each static handler to `data-action="<name>"` and add the corresponding entry to `ACTIONS`. Convert form handlers to `data-action` on the `<form>` (submit dispatcher).
+- [x] D.1.1 Identify auth handlers: `rg -n "on(click|submit|change)=" index.html | rg -i "auth|login|signup|logout|forgot|reset"`.
+- [x] D.1.2 Convert each static handler to `data-action="<name>"` and add the corresponding entry to `ACTIONS`. Convert form handlers to `data-action` on the `<form>` (submit dispatcher).
 - [ ] D.1.3 Smoke walk: open login form, submit; signup form, submit; logout button; forgot-password flow; reset flow. All work; DevTools Console clean.
-- [ ] D.1.4 Commit: `security: migrate auth inline handlers to data-action dispatcher`
+- [x] D.1.4 Commit: `security: migrate auth inline handlers to data-action dispatcher`
 
 ### D.2 Landlord listings CRUD group (~25 handlers)
 - [ ] D.2.1 Identify CRUD handlers including dynamic ones built in template literals (around `index.html:2783` `openEditListing`, `doRemove`, `viewListing`, etc.).

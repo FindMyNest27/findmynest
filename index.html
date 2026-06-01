@@ -465,7 +465,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div><div style="font-weight:700;color:#3D1F0D;margin-bottom:2px;">Come back and log in</div><div style="font-size:.86rem;color:#6B3A1F;">Once verified, log in and you're all set! 🥝</div></div>
         </div>
       </div>
-      <button class="bp" onclick="hideAllPages();openAuth();showStep('stepLL');" style="margin-bottom:14px;width:100%;justify-content:center;">Log In Now →</button>
+      <button class="bp" data-action="openAuthLogin" style="margin-bottom:14px;width:100%;justify-content:center;">Log In Now →</button>
       <p style="font-size:.82rem;color:#A07850;">Didn't get the email? Check your spam folder, or <a href="mailto:hello@findmynest.co.nz" style="color:#E8724A;font-weight:600;">contact us</a> for help.</p>
     </div>
   </div>
@@ -493,10 +493,10 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div style="font-weight:700;color:#3D1F0D;margin-bottom:6px;">Password updated!</div>
           <p style="font-size:.86rem;color:#6B3A1F;">You can now log in with your new password.</p>
         </div>
-        <button class="bp" id="rpBtn" onclick="doResetPassword()" style="width:100%;justify-content:center;">Update Password 🔑</button>
+        <button class="bp" id="rpBtn" data-action="doResetPassword" style="width:100%;justify-content:center;">Update Password 🔑</button>
       </div>
       <p style="margin-top:18px;font-size:.82rem;color:#A07850;">
-        <a onclick="hideAllPages();showPage('homePage');" style="color:#E8724A;font-weight:600;cursor:pointer;">← Back to FindMyNest</a>
+        <a data-action="backToHome" style="color:#E8724A;font-weight:600;cursor:pointer;">← Back to FindMyNest</a>
       </p>
     </div>
   </div>
@@ -1049,25 +1049,25 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div style="font-size:2.2rem;margin-bottom:12px;">🏖️</div>
         <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Holiday home or bach?</div>
         <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Got a bach, holiday home or investment property sitting empty? List it here and reach genuine renters looking for short stays — without the platform fees of Airbnb.</p>
-        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">List my holiday home →</button>
+        <button data-action="openAuth" class="bp" style="font-size:.8rem;padding:8px 16px;">List my holiday home →</button>
       </div>
       <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
         <div style="font-size:2.2rem;margin-bottom:12px;">✈️</div>
         <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Going on your OE?</div>
         <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Heading overseas for a few months? Sublet your place to a trusted renter, keep your home looked after, and cover your costs while you're away.</p>
-        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">List my place →</button>
+        <button data-action="openAuth" class="bp" style="font-size:.8rem;padding:8px 16px;">List my place →</button>
       </div>
       <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
         <div style="font-size:2.2rem;margin-bottom:12px;">📋</div>
         <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Need a lease takeover?</div>
         <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Need to exit your tenancy early? Find a qualified tenant to step in and take over. Your landlord stays happy, you move on without the hassle.</p>
-        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">Find a replacement →</button>
+        <button data-action="openAuth" class="bp" style="font-size:.8rem;padding:8px 16px;">Find a replacement →</button>
       </div>
       <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
         <div style="font-size:2.2rem;margin-bottom:12px;">🌊</div>
         <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Seasonal landlord?</div>
         <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Rent your place out for part of the year? List it here and reach renters who specifically want flexible stays — not long-term commitments.</p>
-        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">List seasonally →</button>
+        <button data-action="openAuth" class="bp" style="font-size:.8rem;padding:8px 16px;">List seasonally →</button>
       </div>
       <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
         <div style="font-size:2.2rem;margin-bottom:12px;">💼</div>
@@ -1120,7 +1120,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <p style="opacity:.9;font-size:.98rem;max-width:560px;margin:0 auto 28px;line-height:1.7;">FindMyNest is on a mission to make accessible housing easier to find in New Zealand. We believe disability should never be a barrier to finding a home.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <button class="bw" id="accessFindBtn" style="font-size:.95rem;">Browse Accessible Listings →</button>
-        <button id="accessListBtn" style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:13px 26px;font-weight:700;cursor:pointer;font-size:.95rem;" onclick="openAuth()">List an Accessible Property →</button>
+        <button id="accessListBtn" style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:13px 26px;font-weight:700;cursor:pointer;font-size:.95rem;" data-action="openAuth">List an Accessible Property →</button>
       </div>
     </div>
 
@@ -1188,7 +1188,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#1E40AF;margin-bottom:14px;">Got an accessible property?<br/>List it where it matters.</h2>
           <p style="color:#3B4FA8;font-size:.9rem;line-height:1.8;margin-bottom:16px;">If your property has been modified for accessibility — whether through Whaikaha, DSS, ACC or your own investment — listing on FindMyNest connects you directly with renters who need exactly what you have.</p>
           <p style="color:#3B4FA8;font-size:.9rem;line-height:1.8;margin-bottom:20px;">It's completely free to list, takes 5 minutes, and your accessible listing gets a dedicated ♿ badge making it stand out in search results.</p>
-          <button class="bp" onclick="openAuth()" style="background:#2563EB;">List My Accessible Property Free →</button>
+          <button class="bp" data-action="openAuth" style="background:#2563EB;">List My Accessible Property Free →</button>
         </div>
         <div style="background:linear-gradient(135deg,#EEF4FF,#F0F7FF);border-radius:18px;padding:28px;border:1.5px solid rgba(37,99,235,.2);">
           <div style="font-weight:700;color:#1E40AF;margin-bottom:14px;font-size:.95rem;">Your accessible listing includes:</div>
@@ -1994,6 +1994,13 @@ var ACTIONS = {
   //   openEditListing: function(el){ openEditListing(el.dataset.id); },
   //   doRemove:        function(el){ doRemove(el.dataset.id); },
   //   viewListing:     function(el){ viewListing(el.dataset.id); },
+
+  // ── D.1: Auth group ───────────────────────────────────────────────────────
+  openAuth:            function(el){ openAuth(); },
+  openAuthLogin:       function(el){ hideAllPages(); openAuth(); showStep('stepLL'); },
+  closeModalsOpenAuth: function(el){ closeAllModals(); openAuth(); },
+  doResetPassword:     function(el){ doResetPassword(); },
+  backToHome:          function(el){ hideAllPages(); showPage('homePage'); },
 };
 
 var _dispatcherBound = false;
@@ -2005,14 +2012,14 @@ function _initDispatcher() {
     var t = e.target.closest('[data-action]');
     if (!t) return;
     var fn = ACTIONS[t.dataset.action];
-    if (typeof fn === 'function') fn(t);
+    if (typeof fn === 'function') fn(t, e);
   });
 
   document.addEventListener('submit', function(e) {
     var t = e.target.closest('[data-action]');
     if (!t) return;
     var fn = ACTIONS[t.dataset.action];
-    if (typeof fn === 'function') { e.preventDefault(); fn(t); }
+    if (typeof fn === 'function') { e.preventDefault(); fn(t, e); }
   });
 }
 
@@ -3028,7 +3035,7 @@ async function loadAllListingsPage(){
     var list=await sbq('GET','listings',null,'?order=created_at.desc&status=eq.active');
     _allListingsCache = list || [];
     if(!_allListingsCache.length){
-      c.innerHTML='<div style="text-align:center;padding:56px;background:#fff;border-radius:20px;"><div style="font-size:3rem;margin-bottom:16px;">🏡</div><div style="font-size:1.4rem;font-weight:700;margin-bottom:10px;">No listings yet!</div><p style="color:#6B3A1F;margin-bottom:24px;">Be the first to list your property on FindMyNest.</p><button class="bp" onclick="openAuth()">List My Property Free →</button></div>';
+      c.innerHTML='<div style="text-align:center;padding:56px;background:#fff;border-radius:20px;"><div style="font-size:3rem;margin-bottom:16px;">🏡</div><div style="font-size:1.4rem;font-weight:700;margin-bottom:10px;">No listings yet!</div><p style="color:#6B3A1F;margin-bottom:24px;">Be the first to list your property on FindMyNest.</p><button class="bp" data-action="openAuth">List My Property Free →</button></div>';
       return;
     }
     applyFilters();
@@ -3135,7 +3142,7 @@ async function viewListing(id){
       '<div style="background:#F7F3EE;border-radius:13px;padding:16px;">'+
       '<div style="font-weight:700;margin-bottom:5px;">📞 '+(l.is_agency?'Contact Agent':'Contact Landlord')+'</div>'+
       '<p style="color:#6B3A1F;font-size:.86rem;margin-bottom:11px;">Sign up or log in as a renter to send an AI-scored enquiry directly.</p>'+
-      '<button class="bp" onclick="closeAllModals();openAuth();" style="width:100%;justify-content:center;">Sign up free to enquire 🥝</button>'+
+      '<button class="bp" data-action="closeModalsOpenAuth" style="width:100%;justify-content:center;">Sign up free to enquire 🥝</button>'+
       '</div>';
     document.getElementById('detailContent').innerHTML=
       renderListingPhotos(l.photo_urls)+
@@ -3600,7 +3607,7 @@ document.getElementById('fmListRoom').addEventListener('click',function(){
   var u=getUser();
   if(!u){
     showFmHint(
-      '🏠 <strong>To list a room, sign up as a Landlord.</strong> Landlord accounts can post both whole properties and flatmate rooms from their dashboard. <a onclick="openAuth()" style="color:#E8724A;font-weight:700;cursor:pointer;">Sign up or log in →</a>'
+      '🏠 <strong>To list a room, sign up as a Landlord.</strong> Landlord accounts can post both whole properties and flatmate rooms from their dashboard. <a data-action="openAuth" style="color:#E8724A;font-weight:700;cursor:pointer;">Sign up or log in →</a>'
     );
     return;
   }
