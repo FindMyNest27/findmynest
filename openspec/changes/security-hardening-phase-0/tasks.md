@@ -106,13 +106,21 @@ Target file is single-page SPA `index.html` (~5000 lines). Existing `esc()` help
 - [x] D.4.4 Commit: `security(csp): migrate enquiry inline handlers`
 
 ### D.5 AI panels + modals group (~20 handlers)
-- [ ] D.5.1 Identify handlers for rent-estimate panel, flatmate-match panel, modal close buttons, AI listing generation buttons.
-- [ ] D.5.2 Convert handlers; for any in-template `onclick`, replace with `data-action`.
+- [x] D.5.1 Identify handlers for rent-estimate panel, flatmate-match panel, modal close buttons, AI listing generation buttons.
+- [x] D.5.2 Convert handlers; for any in-template `onclick`, replace with `data-action`.
 - [ ] D.5.3 Smoke: open rent-estimate, run estimate, close. Open flatmate-match, run, close. Open any other modal, close. Console clean.
-- [ ] D.5.4 Commit: `security: migrate AI panels and modals inline handlers`
+- [x] D.5.4 Commit: `security: migrate AI panels and modals inline handlers`
+
+### D.5.x Photo gallery refactor (D.2.3 follow-up)
+- [x] D.5.x.1 Migrate 4 static photo-upload-area divs to data-action="triggerFileInput"
+- [x] D.5.x.2 Migrate renderPhotoGrid removePhoto + add-slot to data-action
+- [x] D.5.x.3 Migrate renderListingPhotos switchPhoto thumbnails to data-action="switchPhoto" data-url
+- [x] D.5.x.4 Fix switchPhoto() — replace querySelectorAll('[onclick*="switchPhoto"]') with querySelectorAll('[data-action="switchPhoto"]')
+- [x] D.5.x.5 Migrate renderEditCurrentPhotos / renderEditCurrentPhotosFromData / renderEditNewGrid to data-action
+- [ ] D.5.x.6 Smoke: photo gallery navigation, add/remove photos in edit modal. Console clean.
 
 ### D.6 Phase D verification (gates Phase E)
-- [ ] D.6.1 `rg -c "on(click|submit|change|load|input|keydown|keyup|mouseover|mouseout|focus|blur)=" index.html` MUST return 0.
+- [x] D.6.1 `rg -c "on(click|submit|change|load|input|keydown|keyup|mouseover|mouseout|focus|blur)=" index.html` MUST return 0. (Result: 1 match — JS property assignment `hcbtn.onclick=function`, not an HTML attribute — confirmed exempt)
 - [ ] D.6.2 Full smoke walk: home → signup → login → renter dashboard tabs → listing card → enquiry → landlord dashboard → listing CRUD → AI panels → logout. DevTools Console clean across all steps.
 
 ---
