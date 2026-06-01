@@ -128,19 +128,26 @@ Target file is single-page SPA `index.html` (~5000 lines). Existing `esc()` help
 ## Phase E — Battle 3b: CSP strict (~1-2 hours)
 
 ### E.1 Extract SHA-256 hashes for the two inline `<script>` blocks
-- [ ] E.1.1 Identify start and end line numbers for the main inline script (begins at `index.html:1916`, ends just before the next non-script line) and the DOM init script (around `index.html:4941`). JSON-LD at `index.html:33` is exempt (non-executable).
-- [ ] E.1.2 Extract block bodies (between `<script>` and `</script>`, NOT including the tags themselves per CSP spec) into temp files. Compute hashes: `openssl dgst -sha256 -binary <tempfile> | openssl base64 -A`. Record output as `sha256-<value>`.
-- [ ] E.1.3 Document the exact one-liner used in commit body so re-hashing is reproducible.
+- [x] E.1.1 Identify start and end line numbers for the main inline script (begins at `index.html:1916`, ends just before the next non-script line) and the DOM init script (around `index.html:4941`). JSON-LD at `index.html:33` is exempt (non-executable).
+      Block 1: lines 1917–5114 (main app, 189083 bytes incl. leading \n). Block 2: lines 5143–5222 (DOM init bird anim, 3136 bytes incl. leading \n). Actual closing tag for block 2 is on line 5223 (not 4941 as estimated).
+- [x] E.1.2 Extract block bodies (between `<script>` and `</script>`, NOT including the tags themselves per CSP spec) into temp files. Compute hashes: `openssl dgst -sha256 -binary <tempfile> | openssl base64 -A`. Record output as `sha256-<value>`.
+      Block 1: sha256-BOuMl/Zihzpvt3I904outzZq8XC97xmBHm4x9p1FLNE=
+      Block 2: sha256-AujzrY8eWcJP7/G3g+YJARz8jfBRXRt0inaUh0BYny0=
+- [x] E.1.3 Document the exact one-liner used in commit body so re-hashing is reproducible.
+      Extraction: `printf '\n' > /tmp/scriptN.txt && sed -n '<start>,<end>p' index.html >> /tmp/scriptN.txt`
+      Hashing: `openssl dgst -sha256 -binary /tmp/scriptN.txt | openssl base64 -A`
+      Cross-verified with dd byte-range method at offsets 207870 (block 1) and 398464 (block 2).
 
 ### E.2 Update `vercel.json` CSP
-- [ ] E.2.1 In `vercel.json:8` replace `script-src 'self' 'unsafe-inline'` with `script-src 'self' 'sha256-<hash1>' 'sha256-<hash2>'`. Keep all other directives (`default-src`, `style-src`, `font-src`, `img-src`, `connect-src`, `frame-ancestors`, `base-uri`, `form-action`) byte-for-byte unchanged.
-- [ ] E.2.2 Confirm `'unsafe-eval'` is NOT present anywhere in `script-src`.
+- [x] E.2.1 In `vercel.json:8` replace `script-src 'self' 'unsafe-inline'` with `script-src 'self' 'sha256-<hash1>' 'sha256-<hash2>'`. Keep all other directives (`default-src`, `style-src`, `font-src`, `img-src`, `connect-src`, `frame-ancestors`, `base-uri`, `form-action`) byte-for-byte unchanged.
+      Result: `script-src 'self' 'sha256-BOuMl/Zihzpvt3I904outzZq8XC97xmBHm4x9p1FLNE=' 'sha256-AujzrY8eWcJP7/G3g+YJARz8jfBRXRt0inaUh0BYny0='`
+- [x] E.2.2 Confirm `'unsafe-eval'` is NOT present anywhere in `script-src`. Verified: grep returns no match.
 
 ### E.3 Verification
 - [ ] E.3.1 Deploy to Vercel preview. Open preview URL in fresh browser profile (cache disabled). Verify NO CSP violation messages in DevTools Console during the full smoke walk (home → signup → login → dashboards → enquiry → AI panels → logout).
 - [ ] E.3.2 Run `curl -sI https://<preview-url>/ | rg -i "content-security-policy"` — output MUST show `script-src 'self' 'sha256-...' 'sha256-...'` with NO `'unsafe-inline'` and NO `'unsafe-eval'`.
-- [ ] E.3.3 Static audit re-run: `rg -c "on(click|submit|change|load|input|keydown|keyup|mouseover|mouseout|focus|blur)=" index.html` returns 0 (regression check).
-- [ ] E.3.4 Commit: `security: strict CSP with SHA-256 inline script hashes`
+- [x] E.3.3 Static audit re-run: `grep -cE "on(click|submit|change|load|input|keydown|keyup|mouseover|mouseout|focus|blur)=" index.html` → 1 (JS property assignment hcbtn.onclick= inside <script>, NOT an HTML attr). `grep -noE '<[^>]*\son(click|submit|change|input|keydown|load)=' index.html` → ZERO results. Regression PASS.
+- [x] E.3.4 Commit: `security(csp): strict CSP with SHA-256 inline script hashes`
 
 ---
 
