@@ -94,10 +94,10 @@ Target file is single-page SPA `index.html` (~5000 lines). Existing `esc()` help
 - [x] D.2.5 Commit: `security: migrate landlord listings inline handlers`
 
 ### D.3 Renter dashboard nav + listing cards group (~25 handlers)
-- [ ] D.3.1 Identify renter-side handlers: dashboard nav tabs, listing-card clicks, "view details".
-- [ ] D.3.2 Convert to `data-action` + `ACTIONS` entries. Tab switching keeps current URL-hash behavior if present.
+- [x] D.3.1 Identify renter-side handlers: dashboard nav tabs, listing-card clicks, "view details".
+- [x] D.3.2 Convert to `data-action` + `ACTIONS` entries. Tab switching keeps current URL-hash behavior if present.
 - [ ] D.3.3 Smoke: each nav tab switches, listing cards open detail, console clean.
-- [ ] D.3.4 Commit: `security: migrate renter dashboard inline handlers`
+- [x] D.3.4 Commit: `security(csp): migrate renter dashboard inline handlers`
 
 ### D.4 Enquiry flow group (~15 handlers)
 - [ ] D.4.1 Identify enquiry handlers (open enquiry, submit enquiry form, landlord reply, close).
