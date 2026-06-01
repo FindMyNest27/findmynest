@@ -2160,7 +2160,6 @@ function showStep(id){
 // USER SESSION
 function getUser(){try{return JSON.parse(localStorage.getItem('fmn_u'));}catch(e){return null;}}
 function setUser(u){localStorage.setItem('fmn_u',JSON.stringify(u));}
-function clearUser(){localStorage.removeItem('fmn_u');}
 
 function updateNav(){
   var btn=document.getElementById('navBtn');
