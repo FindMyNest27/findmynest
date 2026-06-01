@@ -1,0 +1,77 @@
+schema: spec-driven
+
+context: |
+  Project: FindMyNest — NZ rental marketplace (landlords + renters).
+  Stack: monolithic SPA (single `index.html`, ~5000 lines, inline JS/CSS), no build step.
+  Backend: Supabase BaaS (REST/Auth/Edge Functions/Storage).
+  Deploy: Vercel static hosting; security headers in `vercel.json`.
+  CI: GitHub Actions `.github/workflows/main.yml` (currently FTP deploy — flagged risk).
+  Conventions: no package manager, no test runner, no linter; vanilla JS + Supabase fetch.
+  Active concern: Stage 2 security hardening (XSS, token storage, CSP, edge auth).
+
+strict_tdd: false
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Identify affected sections of `index.html` by line ranges
+    - Map every security item to the source informe-vulnerabilidades report
+  specs:
+    - Use Given/When/Then format for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+    - Security acceptance criteria must be testable manually if no automated test exists
+  design:
+    - Document architecture decisions with rationale
+    - For each security fix, state the threat being mitigated and the residual risk
+    - Prefer minimal surface change (single-file SPA constraint)
+  tasks:
+    - Group tasks by phase (audit, mitigation, verification)
+    - Use hierarchical numbering (1.1, 1.2, etc.)
+    - Each task references file:line where applicable
+    - Keep tasks small enough to commit independently
+  apply:
+    - Follow existing vanilla JS patterns (no framework introduction in this change)
+    - Use the existing `esc()` helper for HTML escaping where applicable
+    - Never introduce new `innerHTML` with dynamic data without sanitization
+  verify:
+    - Manual verification documented per acceptance criterion (no test runner available)
+    - Re-grep for risky patterns (`innerHTML`, `localStorage` for tokens, `onclick=` inline)
+    - Validate CSP via browser devtools and security headers via curl
+  archive:
+    - Warn before merging destructive deltas (large removals)
+    - Update related security report with closed-risk evidence
+
+testing:
+  strict_tdd: false
+  reason: No test runner detected (vanilla HTML SPA without package.json or build tooling)
+  test_runner:
+    command: null
+    framework: null
+  layers:
+    unit:
+      available: false
+      tool: null
+    integration:
+      available: false
+      tool: null
+    e2e:
+      available: false
+      tool: null
+  coverage:
+    available: false
+    command: null
+  quality:
+    linter:
+      available: false
+      command: null
+    type_checker:
+      available: false
+      command: null
+    formatter:
+      available: false
+      command: null
+  verification_strategy: |
+    Manual verification with documented evidence per spec scenario.
+    Use browser devtools (Network, Application/Storage, Console).
+    Use `rg` to audit code patterns before/after changes.
+    Validate response headers via `curl -I`.
