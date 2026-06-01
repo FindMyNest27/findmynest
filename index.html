@@ -1940,6 +1940,45 @@ function safeImg(url){
   return i;
 }
 
+// ════════════════════════════════════════════
+// AUTH TOKEN STORAGE
+// sb_session lives in sessionStorage (cleared on tab close, persists on
+// same-tab reload). One-release localStorage read-fallback migrates legacy
+// blobs without forcing logout. fmn_u (non-sensitive profile blob) stays in
+// localStorage — it does NOT contain access_token / refresh_token.
+// Recovery token (password reset) is in-memory only — never persisted.
+// ════════════════════════════════════════════
+var sbSession = {
+  get: function() {
+    try {
+      var s = sessionStorage.getItem('sb_session');
+      if (s) return JSON.parse(s);
+      // Migration window: read legacy localStorage blob, move to sessionStorage, drop legacy.
+      var legacy = localStorage.getItem('sb_session');
+      if (legacy) {
+        sessionStorage.setItem('sb_session', legacy);
+        localStorage.removeItem('sb_session');
+        return JSON.parse(legacy);
+      }
+      return null;
+    } catch(e) { return null; }
+  },
+  set: function(blob) {
+    try { sessionStorage.setItem('sb_session', JSON.stringify(blob)); } catch(e) {}
+  },
+  clear: function() {
+    try {
+      sessionStorage.removeItem('sb_session');
+      localStorage.removeItem('sb_session'); // belt-and-suspenders during migration window
+    } catch(e) {}
+  }
+};
+
+var __recoveryToken = null;
+function setRecoveryToken(t) { __recoveryToken = t; }
+function getRecoveryToken() { return __recoveryToken; }
+function clearRecoveryToken() { __recoveryToken = null; }
+
 function showToast(msg){var t=document.getElementById('toastEl');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
 function setTab(el){document.querySelectorAll('.stab').forEach(function(t){t.classList.remove('active');});el.classList.add('active');}
 
@@ -2185,9 +2224,8 @@ async function sbq(method, table, data, filter) {
 // Supabase Auth helper — wraps the Auth REST API
 async function sbAuth(action, payload) {
   if (action === 'GET_SESSION') {
-    var stored = localStorage.getItem('sb_session');
-    if (!stored) return null;
-    var s = JSON.parse(stored);
+    var s = sbSession.get();
+    if (!s) return null;
     // Refresh if expiring within 60s
     if (s.expires_at && Date.now() / 1000 > s.expires_at - 60) {
       try {
@@ -2196,7 +2234,7 @@ async function sbAuth(action, payload) {
           headers: {'apikey': SB_KEY, 'Content-Type': 'application/json'},
           body: JSON.stringify({refresh_token: s.refresh_token})
         });
-        if (r.ok) { s = await r.json(); localStorage.setItem('sb_session', JSON.stringify(s)); }
+        if (r.ok) { s = await r.json(); sbSession.set(s); }
       } catch(e) {}
     }
     return s;
@@ -2209,7 +2247,7 @@ async function sbAuth(action, payload) {
     });
     var d = await r.json();
     if (!r.ok) throw new Error(d.error_description || d.msg || 'Signup failed');
-    if (d.access_token) localStorage.setItem('sb_session', JSON.stringify(d));
+    if (d.access_token) sbSession.set(d);
     return d;
   }
   if (action === 'LOGIN') {
@@ -2220,18 +2258,19 @@ async function sbAuth(action, payload) {
     });
     var d = await r.json();
     if (!r.ok) throw new Error(d.error_description || d.msg || 'Login failed');
-    localStorage.setItem('sb_session', JSON.stringify(d));
+    sbSession.set(d);
     return d;
   }
   if (action === 'LOGOUT') {
-    var s = JSON.parse(localStorage.getItem('sb_session') || '{}');
+    var s = sbSession.get() || {};
     if (s.access_token) {
       await fetch(SB_URL + '/auth/v1/logout', {
         method: 'POST',
         headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + s.access_token}
       }).catch(function(){});
     }
-    localStorage.removeItem('sb_session');
+    sbSession.clear();
+    clearRecoveryToken();
     return null;
   }
 }
@@ -2239,7 +2278,7 @@ async function sbAuth(action, payload) {
 // USER SESSION — backed by Supabase Auth session
 function getUser() { try { return JSON.parse(localStorage.getItem('fmn_u')); } catch(e) { return null; } }
 function setUser(u) { localStorage.setItem('fmn_u', JSON.stringify(u)); }
-function clearUser() { localStorage.removeItem('fmn_u'); localStorage.removeItem('sb_session'); }
+function clearUser() { localStorage.removeItem('fmn_u'); sbSession.clear(); clearRecoveryToken(); }
 
 // ════════════════════════════════════════════
 // LANDLORD SIGNUP
@@ -2345,7 +2384,7 @@ async function doResetPassword() {
   if (p.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; return; }
   if (p !== p2) { errEl.textContent = 'Passwords do not match.'; errEl.style.display = 'block'; return; }
 
-  var token = localStorage.getItem('fmn_reset_token');
+  var token = getRecoveryToken();
   if (!token) { errEl.textContent = 'Reset link has expired. Please request a new one.'; errEl.style.display = 'block'; return; }
 
   btn.textContent = 'Updating...'; btn.disabled = true;
@@ -2362,7 +2401,7 @@ async function doResetPassword() {
     var data = await res.json();
     if (!res.ok) throw new Error(data.message || data.error_description || 'Failed to update password');
     // Success
-    localStorage.removeItem('fmn_reset_token');
+    clearRecoveryToken();
     btn.style.display = 'none';
     successEl.style.display = 'block';
     // Redirect to login after 2 seconds
@@ -3799,8 +3838,9 @@ document.addEventListener('DOMContentLoaded', function() {
       params[parts[0]] = decodeURIComponent(parts[1] || '');
     });
     if (params.access_token) {
-      // Store the token temporarily so we can use it to update the password
-      localStorage.setItem('fmn_reset_token', params.access_token);
+      // Store the recovery token in-memory only — never persisted to disk.
+      // Recovery flow is single-page (capture → submit) so memory is sufficient.
+      setRecoveryToken(params.access_token);
       // Clear the hash from the URL so it's not visible
       history.replaceState(null, '', window.location.pathname);
       // Show the reset password screen
