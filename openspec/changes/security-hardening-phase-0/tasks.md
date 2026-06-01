@@ -100,10 +100,10 @@ Target file is single-page SPA `index.html` (~5000 lines). Existing `esc()` help
 - [x] D.3.4 Commit: `security(csp): migrate renter dashboard inline handlers`
 
 ### D.4 Enquiry flow group (~15 handlers)
-- [ ] D.4.1 Identify enquiry handlers (open enquiry, submit enquiry form, landlord reply, close).
-- [ ] D.4.2 Convert handlers; the enquiry render path also produced inline handlers inside template strings — kill those via `data-action` + `data-*` dataset attributes.
+- [x] D.4.1 Identify enquiry handlers (open enquiry, submit enquiry form, landlord reply, close).
+- [x] D.4.2 Convert handlers; the enquiry render path also produced inline handlers inside template strings — kill those via `data-action` + `data-*` dataset attributes.
 - [ ] D.4.3 Smoke: renter opens enquiry on a listing, submits; landlord views enquiry, replies. Console clean.
-- [ ] D.4.4 Commit: `security: migrate enquiry inline handlers`
+- [x] D.4.4 Commit: `security(csp): migrate enquiry inline handlers`
 
 ### D.5 AI panels + modals group (~20 handlers)
 - [ ] D.5.1 Identify handlers for rent-estimate panel, flatmate-match panel, modal close buttons, AI listing generation buttons.
