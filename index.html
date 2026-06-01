@@ -2996,7 +2996,7 @@ function applyFilters(){
     var stIcon = isHoliday ? '🏖️' : '🗓️';
     var stLabel = isHoliday ? 'Holiday Home' : 'Short-Term';
     var thumbHtml = l.photo_urls&&l.photo_urls.length
-      ? '<div style="position:relative;width:56px;height:56px;flex-shrink:0;"><img src="'+l.photo_urls[0]+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;" onerror="this.style.background=\x27#F2E4C4\x27"/>'+
+      ? '<div style="position:relative;width:56px;height:56px;flex-shrink:0;"><img src="'+esc(l.photo_urls[0])+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;" onerror="this.style.background=\x27#F2E4C4\x27"/>'+
         (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;white-space:nowrap;">'+(isHoliday?'🏖️':'ST')+'</div>':'')+'</div>'
       : '<div style="position:relative;width:56px;height:56px;border-radius:12px;background:'+CLRS[i%CLRS.length]+';display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">🏡'+
         (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;">'+(isHoliday?'🏖️':'ST')+'</div>':'')+'</div>';
@@ -3170,7 +3170,7 @@ async function renderListings(termFilter){
         ? '<div style="position:absolute;top:10px;left:10px;background:#E8724A;color:#fff;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:50px;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.18);">'+(isHoliday?'🏖️ Holiday Home':'🗓️ Short-Term')+'</div>'
         : '';
       var photoHtml=hasPhoto
-        ?'<div class="lim" style="padding:0;overflow:hidden;position:relative;"><img src="'+l.photo_urls[0]+'" style="width:100%;height:100%;object-fit:cover;display:block;"/>'+stOverlay+'</div>'
+        ?'<div class="lim" style="padding:0;overflow:hidden;position:relative;"><img src="'+esc(l.photo_urls[0])+'" style="width:100%;height:100%;object-fit:cover;display:block;"/>'+stOverlay+'</div>'
         :'<div class="lim" style="background:'+CLRS[i%CLRS.length]+';position:relative;"><div class="lt ltn">NEW</div>🏡'+stOverlay+'</div>';
       var termInfo = isShortTerm && l.term_from && l.term_to
         ? '<div style="font-size:.78rem;color:#E8724A;font-weight:600;margin-top:4px;">📅 '+formatDate(l.term_from)+' → '+formatDate(l.term_to)+'</div>'
@@ -3622,7 +3622,7 @@ async function loadShortTermListings() {
       var hasPhoto = l.photo_urls && l.photo_urls.length;
       var stOverlay = '<div style="position:absolute;top:10px;left:10px;background:#E8724A;color:#fff;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:50px;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.18);">🗓️ Short-Term</div>';
       var photoHtml = hasPhoto
-        ? '<div class="lim" style="padding:0;overflow:hidden;position:relative;"><img src="' + l.photo_urls[0] + '" style="width:100%;height:100%;object-fit:cover;display:block;"/>' + stOverlay + '</div>'
+        ? '<div class="lim" style="padding:0;overflow:hidden;position:relative;"><img src="' + esc(l.photo_urls[0]) + '" style="width:100%;height:100%;object-fit:cover;display:block;"/>' + stOverlay + '</div>'
         : '<div class="lim" style="background:' + CLRS[i % CLRS.length] + ';position:relative;"><div class="lt ltn">NEW</div>🏡' + stOverlay + '</div>';
       var termInfo = l.term_from && l.term_to ? '<div style="font-size:.78rem;color:#E8724A;font-weight:600;margin-top:4px;">📅 ' + formatDate(l.term_from) + ' → ' + formatDate(l.term_to) + '</div>' : '';
       var reasonBadge = l.reason_for_listing ? '<span style="font-size:.72rem;background:#FFF8F4;border:1px solid #F2D4C0;border-radius:6px;padding:2px 8px;color:#C85A2E;display:inline-block;margin-top:4px;">' + esc(l.reason_for_listing) + '</span>' : '';
@@ -3685,7 +3685,7 @@ function renderPhotoGrid(uid, maxPhotos) {
   files.forEach(function(f, i) {
     var url = URL.createObjectURL(f);
     html += '<div class="photo-thumb">' +
-      '<img src="' + url + '" alt="Photo ' + (i+1) + '"/>' +
+      '<img src="' + esc(url) + '" alt="Photo ' + (i+1) + '"/>' +
       '<button class="rm-photo" onclick="removePhoto(\x27' + uid + '\x27,' + i + ')">✕</button>' +
       '<div class="photo-num">' + (i+1) + '</div>' +
       '</div>';
@@ -3814,17 +3814,17 @@ function renderListingPhotos(photos) {
   if (!photos || !photos.length) return '';
   if (photos.length === 1) {
     return '<div style="margin-bottom:18px;border-radius:14px;overflow:hidden;aspect-ratio:16/9;">' +
-      '<img src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display=\x27none\x27"/></div>';
+      '<img src="' + esc(photos[0]) + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display=\x27none\x27"/></div>';
   }
   var html = '<div style="margin-bottom:18px;">';
   // Main photo
   html += '<div style="border-radius:14px;overflow:hidden;aspect-ratio:16/9;margin-bottom:8px;">' +
-    '<img id="mainPhoto" src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;"/></div>';
+    '<img id="mainPhoto" src="' + esc(photos[0]) + '" style="width:100%;height:100%;object-fit:cover;"/></div>';
   // Thumbnails
   html += '<div style="display:grid;grid-template-columns:repeat(' + Math.min(photos.length,5) + ',1fr);gap:6px;">';
   photos.slice(0, 5).forEach(function(url, i) {
     html += '<div style="aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid ' + (i===0?'#E8724A':'transparent') + ';" onclick="switchPhoto(\x27' + url + '\x27,this)">' +
-      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display=\x27none\x27"/></div>';
+      '<img src="' + esc(url) + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display=\x27none\x27"/></div>';
   });
   html += '</div></div>';
   return html;
@@ -3841,20 +3841,20 @@ function fmAvatar(url, name, size, fontSize) {
   var initial = name ? name.charAt(0).toUpperCase() : '?';
   var fallback = '<div style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:linear-gradient(135deg,#E8724A,#C85A2E);display:flex;align-items:center;justify-content:center;font-size:'+fontSize+';flex-shrink:0;color:#fff;">'+initial+'</div>';
   if (!url) return fallback;
-  return '<img src="'+url+'" style="width:'+size+'px;height:'+size+'px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\x27none\x27" />';
+  return '<img src="'+esc(url)+'" style="width:'+size+'px;height:'+size+'px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\x27none\x27" />';
 }
 
 // ── LISTING CARDS: show first photo as thumbnail ──────────────────────────────
 function listingCardPhoto(photos) {
   if (!photos || !photos.length) return '<div style="background:linear-gradient(135deg,#F2E4C4,#E8D5B0);height:160px;border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏡</div>';
   return '<div style="height:160px;border-radius:12px 12px 0 0;overflow:hidden;">' +
-    '<img src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\x27\x27"/></div>';
+    '<img src="' + esc(photos[0]) + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\x27\x27"/></div>';
 }
 
 function roomCardPhoto(photos) {
   if (!photos || !photos.length) return '<div style="background:linear-gradient(135deg,#F2E4C4,#E8D5B0);height:140px;border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center;font-size:2rem;">🏠</div>';
   return '<div style="height:140px;border-radius:12px 12px 0 0;overflow:hidden;">' +
-    '<img src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\x27\x27"/></div>';
+    '<img src="' + esc(photos[0]) + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\x27\x27"/></div>';
 }
 
 
@@ -4065,7 +4065,7 @@ function renderEditCurrentPhotos(urls) {
   }
   c.innerHTML = urls.map(function(url, i) {
     return '<div class="photo-thumb" style="position:relative;">' +
-      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" onerror="this.parentElement.style.display=\x27none\x27"/>' +
+      '<img src="' + esc(url) + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" onerror="this.parentElement.style.display=\x27none\x27"/>' +
       '<button class="rm-photo" onclick="removeEditPhoto(' + i + ')" title="Remove photo">✕</button>' +
       '<div class="photo-num">' + (i+1) + '</div>' +
       '</div>';
@@ -4098,7 +4098,7 @@ function renderEditCurrentPhotosFromData(urls) {
   }
   c.innerHTML = urls.map(function(url, i) {
     return '<div class="photo-thumb" style="position:relative;">' +
-      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" onerror="this.parentElement.style.display=\x27none\x27"/>' +
+      '<img src="' + esc(url) + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" onerror="this.parentElement.style.display=\x27none\x27"/>' +
       '<button class="rm-photo" onclick="removeEditPhoto(' + i + ')" title="Remove photo">✕</button>' +
       '<div class="photo-num">' + (i+1) + '</div>' +
       '</div>';
@@ -4115,7 +4115,7 @@ function renderEditNewGrid() {
   grid.innerHTML = files.map(function(f, i) {
     var url = URL.createObjectURL(f);
     return '<div class="photo-thumb">' +
-      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;"/>' +
+      '<img src="' + esc(url) + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;"/>' +
       '<button class="rm-photo" onclick="removeEditNewPhoto(' + i + ')">✕</button>' +
       '<div class="photo-num">+' + (i+1) + '</div>' +
       '</div>';
@@ -4235,7 +4235,7 @@ async function loadSavedRooms(u) {
     }
     c.innerHTML = rooms.map(function(r) {
       return '<div class="mlrow">' +
-        (r.photo_urls&&r.photo_urls.length?'<img src="'+r.photo_urls[0]+'" style="width:52px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\x27none\x27"/>':'') +
+        (r.photo_urls&&r.photo_urls.length?'<img src="'+esc(r.photo_urls[0])+'" style="width:52px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\x27none\x27"/>':'') +
         '<div style="flex:1;min-width:0;"><div class="mltit">'+esc(r.title)+'</div>' +
         '<div class="mlmet">📍 '+esc(r.suburb)+', '+esc(r.city)+' &nbsp;•&nbsp; $'+r.rent_per_week+'/wk &nbsp;•&nbsp; '+esc(r.room_type)+'</div></div>' +
         '<div style="display:flex;gap:8px;">' +
