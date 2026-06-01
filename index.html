@@ -1999,8 +1999,21 @@ var ACTIONS = {
   openAuth:            function(el){ openAuth(); },
   openAuthLogin:       function(el){ hideAllPages(); openAuth(); showStep('stepLL'); },
   closeModalsOpenAuth: function(el){ closeAllModals(); openAuth(); },
+  openAuthStopProp:    function(el, e){ if(e) e.stopPropagation(); openAuth(); },
   doResetPassword:     function(el){ doResetPassword(); },
   backToHome:          function(el){ hideAllPages(); showPage('homePage'); },
+
+  // ── D.2: Landlord listings CRUD group ─────────────────────────────────────
+  openEditListing: function(el){ openEditListing(el.dataset.id); },
+  doRemove:        function(el){ doRemove(el.dataset.id); },
+  viewListing:     function(el){ viewListing(el.dataset.id); },
+  toggleSaveListing: function(el){ toggleSaveListing(el.dataset.id); },
+  submitEnquiry:   function(el){ submitEnquiry(el.dataset.id); },
+  viewRoom:        function(el){ viewRoom(el.dataset.id); },
+  viewProfile:     function(el){ viewProfile(el.dataset.id); },
+  toggleSaveRoom:  function(el, e){ if(e) e.stopPropagation(); toggleSaveRoom(el.dataset.id, el); },
+  unsaveListing:   function(el, e){ if(e) e.stopPropagation(); unsaveListing(el.dataset.id); },
+  unsaveRoom:      function(el){ unsaveRoom(el.dataset.id); },
 };
 
 var _dispatcherBound = false;
@@ -2730,7 +2743,7 @@ async function loadAgentListings(){
       return '<div style="background:#FAF0DC;border-radius:14px;padding:18px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">'+
         '<div><div style="font-weight:700;color:#3D1F0D;margin-bottom:4px;">'+esc(l.title)+'</div>'+
         '<div style="font-size:.82rem;color:#6B3A1F;">'+esc(l.suburb)+', '+esc(l.city)+' · $'+l.rent+'/wk · '+esc(l.beds)+' bed · '+esc(l.type)+'</div></div>'+
-        '<div style="display:flex;gap:6px;"><button class="edb" onclick="openEditListing(\x27'+l.id+'\x27)">Edit ✏️</button><button class="rmb" onclick="doRemove(\x27'+l.id+'\x27)">Remove ✕</button></div>'+
+        '<div style="display:flex;gap:6px;"><button class="edb" data-action="openEditListing" data-id="'+esc(l.id)+'">Edit ✏️</button><button class="rmb" data-action="doRemove" data-id="'+esc(l.id)+'">Remove ✕</button></div>'+
         '</div>';
     }).join('');
   }catch(e){c.innerHTML='<div style="text-align:center;padding:18px;color:#C85A2E;">Error loading listings.</div>';}
@@ -2873,7 +2886,7 @@ async function loadMyListings(){
     document.getElementById('dashListingCount').textContent=list.length;
     if(!list.length){c.innerHTML='<div style="text-align:center;padding:32px;color:#6B3A1F;font-size:.9rem;">No listings yet — click Add Listing above! 🏠</div>';return;}
     c.innerHTML=list.map(function(l){
-      return '<div class="mlrow"><div><div class="mltit">'+esc(l.title)+'</div><div class="mlmet">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; '+esc(l.type)+'</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button class="edb" onclick="openEditListing(\x27'+l.id+'\x27)">Edit ✏️</button><button class="rmb" onclick="doRemove(\x27'+l.id+'\x27)">Remove ✕</button></div></div>';
+      return '<div class="mlrow"><div><div class="mltit">'+esc(l.title)+'</div><div class="mlmet">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; '+esc(l.type)+'</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button class="edb" data-action="openEditListing" data-id="'+esc(l.id)+'">Edit ✏️</button><button class="rmb" data-action="doRemove" data-id="'+esc(l.id)+'">Remove ✕</button></div></div>';
     }).join('');
   }catch(err){c.innerHTML='<div style="text-align:center;padding:18px;color:#6B3A1F;">Could not load listings.</div>';}
 }
@@ -3020,7 +3033,7 @@ async function loadRenterListings(){
     var list=await sbq('GET','listings',null,'?order=created_at.desc&status=eq.active&limit=6');
     if(!list||!list.length){c.innerHTML='<div style="text-align:center;padding:18px;color:#6B3A1F;">No listings yet — check back soon! 🥝</div>';return;}
     c.innerHTML=list.map(function(l,i){
-      return '<div class="mlrow" style="cursor:pointer;" onclick="viewListing(\''+l.id+'\')"><div><div class="mltit">'+esc(l.title)+'</div><div class="mlmet">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; 🚿 '+esc(l.baths)+' bath</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:1.1rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div><div style="font-size:.72rem;color:#6B3A1F;">/week</div></div></div>';
+      return '<div class="mlrow" style="cursor:pointer;" data-action="viewListing" data-id="'+esc(l.id)+'"><div><div class="mltit">'+esc(l.title)+'</div><div class="mlmet">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; 🚿 '+esc(l.baths)+' bath</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:1.1rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div><div style="font-size:.72rem;color:#6B3A1F;">/week</div></div></div>';
     }).join('');
   }catch(err){c.innerHTML='<div style="text-align:center;padding:18px;color:#6B3A1F;">Could not load listings.</div>';}
 }
@@ -3091,7 +3104,7 @@ function applyFilters(){
     var daBadge = l.disability_friendly
       ? '<span style="background:rgba(74,144,226,.15);color:#2563EB;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:4px;vertical-align:middle;">♿ Accessible</span>'
       : '';
-    return '<div class="all-list-item" onclick="viewListing(\''+l.id+'\')">'+
+    return '<div class="all-list-item" data-action="viewListing" data-id="'+esc(l.id)+'">'+
       '<div style="display:flex;gap:16px;align-items:center;">'+
       thumbHtml+
       '<div><div style="font-weight:700;margin-bottom:3px;">'+esc(l.title)+stBadge+daBadge+'</div>'+
@@ -3136,7 +3149,7 @@ async function viewListing(id){
       '<div style="font-weight:700;margin-bottom:5px;">✉️ Send an Enquiry</div>'+
       '<p style="color:#6B3A1F;font-size:.86rem;margin-bottom:11px;">Your profile will be shared with the '+(l.is_agency?'agent':'landlord')+'. AI will score your compatibility.</p>'+
       '<textarea id="enquiryMsg" placeholder="Hi, I\'m interested in this property. I\'m looking to move in..." style="width:100%;border:1.5px solid #D4B896;border-radius:12px;padding:10px;font-size:.86rem;background:#FAF0DC;min-height:80px;box-sizing:border-box;margin-bottom:10px;resize:vertical;"></textarea>'+
-      '<button class="bp" onclick="submitEnquiry(\''+l.id+'\')" id="enquiryBtn" style="width:100%;justify-content:center;">Send Enquiry 🥝</button>'+
+      '<button class="bp" data-action="submitEnquiry" data-id="'+esc(l.id)+'" id="enquiryBtn" style="width:100%;justify-content:center;">Send Enquiry 🥝</button>'+
       '<div id="enquirySuccess" style="display:none;text-align:center;padding:16px;"><div style="font-size:1.5rem;">✅</div><div style="font-weight:700;color:#3D1F0D;">Enquiry sent!</div><p style="font-size:.85rem;color:#6B3A1F;">The '+(l.is_agency?'agent':'landlord')+' will be in touch soon.</p></div>'+
       '</div>' :
       '<div style="background:#F7F3EE;border-radius:13px;padding:16px;">'+
@@ -3199,7 +3212,7 @@ async function viewListing(id){
         (l.ideal_tenant ? '<div style="font-size:.86rem;color:#6B3A1F;"><strong>Looking for:</strong> '+esc(l.ideal_tenant)+'</div>' : '')+
         '</div>'
       ) : '')+
-      (u && u.type==='renter' ? '<button id="saveListingBtn" onclick="toggleSaveListing(\''+l.id+'\')" style="width:100%;background:#FAF0DC;border:1.5px solid #D4B896;border-radius:50px;padding:10px;font-size:.86rem;font-weight:600;color:#6B3A1F;cursor:pointer;margin-bottom:12px;">💛 Save to Watchlist</button>' : '')+
+      (u && u.type==='renter' ? '<button id="saveListingBtn" data-action="toggleSaveListing" data-id="'+esc(l.id)+'" style="width:100%;background:#FAF0DC;border:1.5px solid #D4B896;border-radius:50px;padding:10px;font-size:.86rem;font-weight:600;color:#6B3A1F;cursor:pointer;margin-bottom:12px;">💛 Save to Watchlist</button>' : '')+
       enquiryForm+
       '<p style="font-size:.7rem;color:#6B3A1F;margin-top:9px;line-height:1.5;">FindMyNest is a listing platform only. Please get independent legal advice before signing any tenancy agreement.</p>';
     openModal('detailMod');
@@ -3260,7 +3273,7 @@ async function renderListings(termFilter){
       var termInfo = isShortTerm && l.term_from && l.term_to
         ? '<div style="font-size:.78rem;color:#E8724A;font-weight:600;margin-top:4px;">📅 '+formatDate(l.term_from)+' → '+formatDate(l.term_to)+'</div>'
         : '';
-      return '<div class="lc" onclick="viewListing(\''+l.id+'\')">'+photoHtml+
+      return '<div class="lc" data-action="viewListing" data-id="'+esc(l.id)+'">'+photoHtml+
         '<div class="lb"><div class="lpr">$'+Number(l.rent).toLocaleString()+'<span>/week</span></div>'+
         '<div class="ltit">'+esc(l.title)+'</div>'+
         '<div class="lloc">📍 '+esc(l.suburb)+', '+esc(l.city)+'</div>'+
@@ -3364,7 +3377,7 @@ async function loadLatestRooms(){
     cont.style.display='block';
     grid.innerHTML=rooms.map(function(r){
       var flatmates=r.current_flatmates!=null?r.current_flatmates:0;
-      return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);cursor:pointer;" onclick="viewRoom('+r.id+')">' + roomCardPhoto(r.photo_urls) +
+      return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);cursor:pointer;" data-action="viewRoom" data-id="'+esc(r.id)+'">' + roomCardPhoto(r.photo_urls) +
         '<div style="padding:18px;">' +
         '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">' +
         '<div style="font-weight:700;font-size:.95rem;color:#3D1F0D;line-height:1.3;">'+esc(r.title||'Room listing')+'</div>' +
@@ -3419,9 +3432,9 @@ async function loadRoomListings(){
       rooms.map(function(r){
         var flatmates=r.current_flatmates!=null?r.current_flatmates:0;
         var saveBtnHtml=u2
-          ?'<button onclick="event.stopPropagation();toggleSaveRoom('+r.id+',this)" data-saved="false" style="background:none;border:1px solid #D4B896;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.82rem;transition:all .2s;">🤍 Save</button>'
-          :'<button onclick="event.stopPropagation();openAuth()" style="background:none;border:1px solid #D4B896;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.82rem;">🤍 Save</button>';
-        return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);" onclick="viewRoom('+r.id+')">' + roomCardPhoto(r.photo_urls) +
+          ?'<button data-action="toggleSaveRoom" data-id="'+esc(r.id)+'" data-saved="false" style="background:none;border:1px solid #D4B896;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.82rem;transition:all .2s;">🤍 Save</button>'
+          :'<button data-action="openAuthStopProp" style="background:none;border:1px solid #D4B896;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.82rem;">🤍 Save</button>';
+        return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);" data-action="viewRoom" data-id="'+esc(r.id)+'">' + roomCardPhoto(r.photo_urls) +
           '<div style="padding:18px;cursor:pointer;">' +
           '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">' +
           '<div style="font-weight:700;font-size:.95rem;color:#3D1F0D;line-height:1.3;">'+(r.title||'Room listing')+'</div>' +
@@ -3459,7 +3472,7 @@ async function loadFlatmateProfiles(){
     }
     c.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">' +
       profiles.map(function(p){
-        return '<div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 4px 20px rgba(61,31,13,.08);cursor:pointer;" onclick="viewProfile('+p.id+')">' +
+        return '<div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 4px 20px rgba(61,31,13,.08);cursor:pointer;" data-action="viewProfile" data-id="'+esc(p.id)+'">' +
           '<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">' +
           fmAvatar(p.photo_url,p.name,52,'1.4rem') +
           '<div><div style="font-weight:700;color:#3D1F0D;">'+esc(p.name)+'</div><div style="font-size:.8rem;color:#6B3A1F;">'+p.age+' · '+esc(p.occupation)+'</div></div>' +
@@ -3711,7 +3724,7 @@ async function loadShortTermListings() {
         : '<div class="lim" style="background:' + CLRS[i % CLRS.length] + ';position:relative;"><div class="lt ltn">NEW</div>🏡' + stOverlay + '</div>';
       var termInfo = l.term_from && l.term_to ? '<div style="font-size:.78rem;color:#E8724A;font-weight:600;margin-top:4px;">📅 ' + formatDate(l.term_from) + ' → ' + formatDate(l.term_to) + '</div>' : '';
       var reasonBadge = l.reason_for_listing ? '<span style="font-size:.72rem;background:#FFF8F4;border:1px solid #F2D4C0;border-radius:6px;padding:2px 8px;color:#C85A2E;display:inline-block;margin-top:4px;">' + esc(l.reason_for_listing) + '</span>' : '';
-      return '<div class="lc" onclick="viewListing(\'' + l.id + '\')">' + photoHtml +
+      return '<div class="lc" data-action="viewListing" data-id="'+esc(l.id)+'">' + photoHtml +
         '<div class="lb">' +
         '<div class="lpr">$' + Number(l.rent).toLocaleString() + '<span>/week</span></div>' +
         '<div class="ltit">' + esc(l.title) + '</div>' +
@@ -4325,8 +4338,8 @@ async function loadSavedRooms(u) {
         '<div style="flex:1;min-width:0;"><div class="mltit">'+esc(r.title)+'</div>' +
         '<div class="mlmet">📍 '+esc(r.suburb)+', '+esc(r.city)+' &nbsp;•&nbsp; $'+r.rent_per_week+'/wk &nbsp;•&nbsp; '+esc(r.room_type)+'</div></div>' +
         '<div style="display:flex;gap:8px;">' +
-        '<button class="bp" style="font-size:.8rem;padding:8px 14px;" onclick="viewRoom('+r.id+')">View →</button>' +
-        '<button onclick="unsaveRoom('+r.id+')" style="background:none;border:1px solid #ffcccc;color:#c0392b;border-radius:8px;padding:5px 11px;cursor:pointer;font-size:.78rem;">Remove 💛</button>' +
+        '<button class="bp" style="font-size:.8rem;padding:8px 14px;" data-action="viewRoom" data-id="'+esc(r.id)+'">View →</button>' +
+        '<button data-action="unsaveRoom" data-id="'+esc(r.id)+'" style="background:none;border:1px solid #ffcccc;color:#c0392b;border-radius:8px;padding:5px 11px;cursor:pointer;font-size:.78rem;">Remove 💛</button>' +
         '</div></div>';
     }).join('');
   } catch(e) {
@@ -4913,9 +4926,9 @@ async function loadRenterDashboard() {
       var ids = saved.map(function(s){return s.listing_id;}).join(',');
       var listings = await sbq('GET','listings',null,'?id=in.('+ids+')&status=eq.active');
       sc2.innerHTML = listings && listings.length ? listings.map(function(l){
-        return '<div class="mlrow" style="cursor:pointer;" onclick="viewListing(\x27'+l.id+'\x27)">'+
+        return '<div class="mlrow" style="cursor:pointer;" data-action="viewListing" data-id="'+esc(l.id)+'">'+
           '<div><div class="mltit">'+esc(l.title)+'</div><div class="mlmet">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk</div></div>'+
-          '<button onclick="event.stopPropagation();unsaveListing(\x27'+l.id+'\x27)" style="background:none;border:none;cursor:pointer;font-size:1.1rem;flex-shrink:0;" title="Remove">💔</button></div>';
+          '<button data-action="unsaveListing" data-id="'+esc(l.id)+'" style="background:none;border:none;cursor:pointer;font-size:1.1rem;flex-shrink:0;" title="Remove">💔</button></div>';
       }).join('') : '<div style="text-align:center;padding:18px;color:#6B3A1F;font-size:.9rem;">Your saved listings have expired or been removed.</div>';
     }
   } catch(e) { console.error('Saved listings:', e); }

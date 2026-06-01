@@ -87,11 +87,11 @@ Target file is single-page SPA `index.html` (~5000 lines). Existing `esc()` help
 - [x] D.1.4 Commit: `security: migrate auth inline handlers to data-action dispatcher`
 
 ### D.2 Landlord listings CRUD group (~25 handlers)
-- [ ] D.2.1 Identify CRUD handlers including dynamic ones built in template literals (around `index.html:2783` `openEditListing`, `doRemove`, `viewListing`, etc.).
-- [ ] D.2.2 Replace dynamic `onclick="openEditListing('${l.id}')"` patterns with `data-action="openEditListing" data-id="${esc(l.id)}"`. Add corresponding `ACTIONS.openEditListing = function(el){ openEditListing(el.dataset.id); }`.
-- [ ] D.2.3 For complex closures (file uploaders / photo gallery), use direct `addEventListener` after element creation rather than delegation.
+- [x] D.2.1 Identify CRUD handlers including dynamic ones built in template literals (around `index.html:2783` `openEditListing`, `doRemove`, `viewListing`, etc.).
+- [x] D.2.2 Replace dynamic `onclick="openEditListing('${l.id}')"` patterns with `data-action="openEditListing" data-id="${esc(l.id)}"`. Add corresponding `ACTIONS.openEditListing = function(el){ openEditListing(el.dataset.id); }`.
+- [x] D.2.3 For complex closures (file uploaders / photo gallery), use direct `addEventListener` after element creation rather than delegation.
 - [ ] D.2.4 Smoke: add listing, edit listing, delete listing, upload photo, navigate photos. All work; Console clean.
-- [ ] D.2.5 Commit: `security: migrate landlord listings inline handlers`
+- [x] D.2.5 Commit: `security: migrate landlord listings inline handlers`
 
 ### D.3 Renter dashboard nav + listing cards group (~25 handlers)
 - [ ] D.3.1 Identify renter-side handlers: dashboard nav tabs, listing-card clicks, "view details".
