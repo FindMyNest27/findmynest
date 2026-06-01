@@ -1920,7 +1920,9 @@ var CLRS=['linear-gradient(135deg,#F9C784,#E8724A)','linear-gradient(135deg,#C8E
 
 // ════════════════════════════════════════════
 // XSS SANITISATION
-// Always use esc() when rendering user data via innerHTML
+// RULE: no innerHTML with ${...} unless every interpolated value is esc()'d.
+// For untrusted strings (Edge Fn output, free-text fields, URLs) prefer DOM API
+// (createElement + textContent + setAttribute / safeImg) over innerHTML.
 // ════════════════════════════════════════════
 function esc(str) {
   if (str === null || str === undefined) return '';
@@ -1930,6 +1932,12 @@ function esc(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#x27;');
+}
+
+function safeImg(url){
+  var i = document.createElement('img');
+  i.src = String(url || '');
+  return i;
 }
 
 function showToast(msg){var t=document.getElementById('toastEl');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
@@ -4606,7 +4614,21 @@ async function getRentEstimate(prefix) {
     }
 
     if (data.insight) {
-      insightEl.innerHTML = '<strong style="color:#3D1F0D;">🤖 AI Market Insight:</strong><br/>' + data.insight + '<br/><span style="font-size:.72rem;color:#A07850;display:block;margin-top:8px;">⚠️ Estimates only — based on general NZ market knowledge and FindMyNest listings. Always verify current market rates independently.</span>';
+      // data.insight is LLM output (untrusted) — render via DOM API, never innerHTML
+      insightEl.textContent = '';
+      var insightTitle = document.createElement('strong');
+      insightTitle.style.color = '#3D1F0D';
+      insightTitle.textContent = '🤖 AI Market Insight:';
+      var insightWarn = document.createElement('span');
+      insightWarn.style.cssText = 'font-size:.72rem;color:#A07850;display:block;margin-top:8px;';
+      insightWarn.textContent = '⚠️ Estimates only — based on general NZ market knowledge and FindMyNest listings. Always verify current market rates independently.';
+      insightEl.append(
+        insightTitle,
+        document.createElement('br'),
+        document.createTextNode(data.insight),
+        document.createElement('br'),
+        insightWarn
+      );
     }
 
     // Mark as done for this state — lock the button
