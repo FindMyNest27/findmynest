@@ -77,8 +77,8 @@ Target file is single-page SPA `index.html` (~5000 lines). Existing `esc()` help
 ## Phase D — Battle 3a: inline handler migration (~4-6 hours per group)
 
 ### D.0 Foundation: dispatcher + ACTIONS map
-- [ ] D.0.1 In the main script block, add the `ACTIONS` registry and the two delegated listeners (`click`, `submit`) exactly per `design.md` ADR-5 dispatcher pseudocode. Keep `ACTIONS` an explicit map (no `window[name]` lookup).
-- [ ] D.0.2 Add an init point so dispatcher binds once after `DOMContentLoaded`; verify no double-binding.
+- [x] D.0.1 In the main script block, add the `ACTIONS` registry and the two delegated listeners (`click`, `submit`) exactly per `design.md` ADR-5 dispatcher pseudocode. Keep `ACTIONS` an explicit map (no `window[name]` lookup).
+- [x] D.0.2 Add an init point so dispatcher binds once after `DOMContentLoaded`; verify no double-binding.
 
 ### D.1 Auth group — login / signup / logout / forgot / reset (~15 handlers)
 - [ ] D.1.1 Identify auth handlers: `rg -n "on(click|submit|change)=" index.html | rg -i "auth|login|signup|logout|forgot|reset"`.

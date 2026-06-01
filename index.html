@@ -1979,6 +1979,45 @@ function setRecoveryToken(t) { __recoveryToken = t; }
 function getRecoveryToken() { return __recoveryToken; }
 function clearRecoveryToken() { __recoveryToken = null; }
 
+// ════════════════════════════════════════════
+// DATA-ACTION DISPATCHER  (Battle 3a foundation — D.0)
+// RULE: ACTIONS must be an explicit object map — NO window[name] or string-to-
+//       function lookup (that would reintroduce an injection vector).
+// RULE: populate entries here during D.1-D.5; do NOT add window[name] fallback.
+// Dispatcher is DORMANT until ACTIONS has entries — all existing inline
+// handler attributes continue to work unchanged through D.1-D.5.
+// ════════════════════════════════════════════
+var ACTIONS = {
+  // Populated progressively in D.1-D.5 commits.
+  // Example shape (do not remove this comment — it documents the contract):
+  //   openAuth:        function(el){ openAuth(); },
+  //   openEditListing: function(el){ openEditListing(el.dataset.id); },
+  //   doRemove:        function(el){ doRemove(el.dataset.id); },
+  //   viewListing:     function(el){ viewListing(el.dataset.id); },
+};
+
+var _dispatcherBound = false;
+function _initDispatcher() {
+  if (_dispatcherBound) return;   // guard: never bind twice
+  _dispatcherBound = true;
+
+  document.addEventListener('click', function(e) {
+    var t = e.target.closest('[data-action]');
+    if (!t) return;
+    var fn = ACTIONS[t.dataset.action];
+    if (typeof fn === 'function') fn(t);
+  });
+
+  document.addEventListener('submit', function(e) {
+    var t = e.target.closest('[data-action]');
+    if (!t) return;
+    var fn = ACTIONS[t.dataset.action];
+    if (typeof fn === 'function') { e.preventDefault(); fn(t); }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', _initDispatcher);
+
 function showToast(msg){var t=document.getElementById('toastEl');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
 function setTab(el){document.querySelectorAll('.stab').forEach(function(t){t.classList.remove('active');});el.classList.add('active');}
 
