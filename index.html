@@ -4721,19 +4721,37 @@ async function checkCompatibility(roomId) {
     document.getElementById('compatSummary').textContent = data.summary || '';
     document.getElementById('compatVerdict').textContent = data.verdict || '';
 
-    // Positives
+    // Positives — data.positives is LLM output (untrusted), render via DOM API
     var posEl = document.getElementById('compatPositives');
+    posEl.textContent = '';
     if (data.positives && data.positives.length) {
-      posEl.innerHTML = '<div style="font-weight:700;font-size:.85rem;color:#3D1F0D;margin-bottom:6px;">✅ What works</div>' +
-        data.positives.map(function(p) { return '<div class="match-positive">✓ ' + p + '</div>'; }).join('');
-    } else posEl.innerHTML = '';
+      var posHeader = document.createElement('div');
+      posHeader.style.cssText = 'font-weight:700;font-size:.85rem;color:#3D1F0D;margin-bottom:6px;';
+      posHeader.textContent = '✅ What works';
+      posEl.appendChild(posHeader);
+      data.positives.forEach(function(p) {
+        var item = document.createElement('div');
+        item.className = 'match-positive';
+        item.textContent = '✓ ' + p;
+        posEl.appendChild(item);
+      });
+    }
 
-    // Concerns
+    // Concerns — data.concerns is LLM output (untrusted), render via DOM API
     var conEl = document.getElementById('compatConcerns');
+    conEl.textContent = '';
     if (data.concerns && data.concerns.length) {
-      conEl.innerHTML = '<div style="font-weight:700;font-size:.85rem;color:#3D1F0D;margin-bottom:6px;">⚠️ Things to consider</div>' +
-        data.concerns.map(function(c) { return '<div class="match-concern">✕ ' + c + '</div>'; }).join('');
-    } else conEl.innerHTML = '';
+      var conHeader = document.createElement('div');
+      conHeader.style.cssText = 'font-weight:700;font-size:.85rem;color:#3D1F0D;margin-bottom:6px;';
+      conHeader.textContent = '⚠️ Things to consider';
+      conEl.appendChild(conHeader);
+      data.concerns.forEach(function(c) {
+        var item = document.createElement('div');
+        item.className = 'match-concern';
+        item.textContent = '✕ ' + c;
+        conEl.appendChild(item);
+      });
+    }
 
     document.getElementById('compatLoading').style.display = 'none';
     document.getElementById('compatResult').style.display = 'block';
