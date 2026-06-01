@@ -9,60 +9,60 @@ Target file is single-page SPA `index.html` (~5000 lines). Existing `esc()` help
 
 ## Phase A — Audit & Setup (~1-2 hours)
 
-- [ ] A.1 Confirm baseline counts and save to working notes: `rg -c "innerHTML\s*=" index.html` (expect 64), `rg -c "on(click|submit|change|load|input|keydown|keyup|mouseover|mouseout|focus|blur)=" index.html` (expect 100), `rg -nc "localStorage\.setItem\(.*(access_token|refresh_token|sb_session|fmn_reset_token)" index.html` (expect 4 at L2191, L2204, L2215, L3795).
-- [ ] A.2 Create a branch from `main` (per repo convention) and confirm clean working tree with `git status`.
-- [ ] A.3 Read existing `esc()` helper at `index.html:1925` to confirm signature and behavior; no edit needed.
+- [x] A.1 Confirm baseline counts and save to working notes: `rg -c "innerHTML\s*=" index.html` (expect 64), `rg -c "on(click|submit|change|load|input|keydown|keyup|mouseover|mouseout|focus|blur)=" index.html` (expect 100), `rg -nc "localStorage\.setItem\(.*(access_token|refresh_token|sb_session|fmn_reset_token)" index.html` (expect 4 at L2191, L2204, L2215, L3795).
+- [x] A.2 Create a branch from `main` (per repo convention) and confirm clean working tree with `git status`.
+- [x] A.3 Read existing `esc()` helper at `index.html:1925` to confirm signature and behavior; no edit needed.
 
 ---
 
 ## Phase B — Battle 1: client-xss-defense (~4-6 hours)
 
 ### B.1 Centralize sanitization helpers
-- [ ] B.1.1 In the main script block (after `esc()` at `index.html:1925`), add comment-banner `// === XSS DEFENSE === keep all DOM-write helpers here`.
-- [ ] B.1.2 Add a small helper `function safeImg(url){ var i=document.createElement('img'); i.src=String(url||''); return i; }` so attribute interpolation paths can avoid `innerHTML`.
+- [x] B.1.1 In the main script block (after `esc()` at `index.html:1925`), add comment-banner `// === XSS DEFENSE === keep all DOM-write helpers here`.
+- [x] B.1.2 Add a small helper `function safeImg(url){ var i=document.createElement('img'); i.src=String(url||''); return i; }` so attribute interpolation paths can avoid `innerHTML`.
 
 ### B.2 Convert highest-risk paths to DOM API (ADR-1 item 2)
-- [ ] B.2.1 Convert `rent-estimate` insight render around `index.html:4599-4620` (the `insight` field): replace `innerHTML = '...${data.insight}...'` with `createElement` + `textContent` for the insight body. Keep structural markup as static `innerHTML`.
-- [ ] B.2.2 Convert `flatmate-match` result render around `index.html:4682-4720`: build result card via `createElement` + `textContent` per field; do NOT inline the raw response.
-- [ ] B.2.3 Convert any `<img src="${photo_url}">` interpolation in listing renders (search: `rg -n 'img[^>]*src="\$\{' index.html`) to `setAttribute('src', url)` via `safeImg(url)`. Verify with `rg -n 'img[^>]*src="\$\{' index.html` returning 0.
+- [x] B.2.1 Convert `rent-estimate` insight render around `index.html:4599-4620` (the `insight` field): replace `innerHTML = '...${data.insight}...'` with `createElement` + `textContent` for the insight body. Keep structural markup as static `innerHTML`.
+- [x] B.2.2 Convert `flatmate-match` result render around `index.html:4682-4720`: build result card via `createElement` + `textContent` per field; do NOT inline the raw response.
+- [x] B.2.3 Convert any `<img src="${photo_url}">` interpolation in listing renders (search: `rg -n 'img[^>]*src="\$\{' index.html`) to `setAttribute('src', url)` via `safeImg(url)`. Verify with `rg -n 'img[^>]*src="\$\{' index.html` returning 0.
 
 ### B.3 Enforce `esc()` on remaining `innerHTML` interpolations
-- [ ] B.3.1 Run `rg -n "innerHTML\s*=" index.html` and walk each hit. For each that contains `${...}`, confirm every interpolated value is wrapped in `esc(...)`. Wrap any unescaped value.
-- [ ] B.3.2 Pay special attention to dynamic `onclick=` strings built inside template literals (e.g. `index.html:2783` `openEditListing(\x27'+l.id+'\x27)`): leave these for Phase D (handler migration) — do NOT just `esc()` them, they are removed entirely later.
-- [ ] B.3.3 Add a project-standards code comment near `esc()`: `// RULE: no innerHTML with ${...} unless every interpolated value is esc()'d.`
+- [x] B.3.1 Run `rg -n "innerHTML\s*=" index.html` and walk each hit. For each that contains `${...}`, confirm every interpolated value is wrapped in `esc(...)`. Wrap any unescaped value.
+- [x] B.3.2 Pay special attention to dynamic `onclick=` strings built inside template literals (e.g. `index.html:2783` `openEditListing(\x27'+l.id+'\x27)`): leave these for Phase D (handler migration) — do NOT just `esc()` them, they are removed entirely later.
+- [x] B.3.3 Add a project-standards code comment near `esc()`: `// RULE: no innerHTML with ${...} unless every interpolated value is esc()'d.`
 
 ### B.4 Battle 1 verification
-- [ ] B.4.1 Static audit: `rg -n "innerHTML\s*=" index.html` — every interpolation hit is `esc()`-wrapped OR documented as static. `rg -n 'img[^>]*src="\$\{' index.html` returns 0.
+- [x] B.4.1 Static audit: `rg -n "innerHTML\s*=" index.html` — every interpolation hit is `esc()`-wrapped OR documented as static. `rg -n 'img[^>]*src="\$\{' index.html` returns 0.
 - [ ] B.4.2 Manual smoke per `client-xss-defense/spec.md` scenarios:
   - Listing fixture with title `<img src=x onerror=alert('xss')>` renders as escaped text, no alert.
   - Enquiry message with `<script>alert(1)</script>` renders escaped, no alert.
   - Edge function `insight` containing `<iframe src=javascript:...>` renders as escaped text, no iframe element in DOM tree.
   - `photo_url` containing `" onerror="alert(1)` does not fire `onerror`.
-- [ ] B.4.3 Commit: `security: harden DOM XSS via centralized sanitization`
+- [x] B.4.3 Commit: `security: harden DOM XSS via centralized sanitization`
 
 ---
 
 ## Phase C — Battle 2: auth-token-storage (~3-4 hours)
 
 ### C.1 Add `sbSession` wrapper with read-fallback (one-release migration)
-- [ ] C.1.1 In `index.html` near the auth helpers (around L2180), add the `sbSession` object exactly per `design.md` Interfaces section: `get()` reads `sessionStorage` first, falls back to `localStorage` (copy across and delete legacy); `set()` writes only to `sessionStorage`; `clear()` removes from BOTH.
-- [ ] C.1.2 Add in-memory recovery-token helpers: `var __recoveryToken = null; setRecoveryToken(t); getRecoveryToken(); clearRecoveryToken();` per design Interfaces.
-- [ ] C.1.3 Add code comment near `sbSession`: `// fmn_u (non-sensitive profile blob) stays in localStorage — it does not contain access_token / refresh_token.`
+- [x] C.1.1 In `index.html` near the auth helpers (around L2180), add the `sbSession` object exactly per `design.md` Interfaces section: `get()` reads `sessionStorage` first, falls back to `localStorage` (copy across and delete legacy); `set()` writes only to `sessionStorage`; `clear()` removes from BOTH.
+- [x] C.1.2 Add in-memory recovery-token helpers: `var __recoveryToken = null; setRecoveryToken(t); getRecoveryToken(); clearRecoveryToken();` per design Interfaces.
+- [x] C.1.3 Add code comment near `sbSession`: `// fmn_u (non-sensitive profile blob) stays in localStorage — it does not contain access_token / refresh_token.`
 
 ### C.2 Replace `sessionStorage`/`localStorage` reads with wrapper
-- [ ] C.2.1 Update `index.html:2180` and `index.html:2219` (and `:2226` if applicable) reads to call `sbSession.get()` instead of direct `localStorage.getItem('sb_session')`.
-- [ ] C.2.2 Confirm token-refresh path at `index.html:2186` calls `sbSession.set(blob)` on every successful refresh (rotation: full replace, no append).
+- [x] C.2.1 Update `index.html:2180` and `index.html:2219` (and `:2226` if applicable) reads to call `sbSession.get()` instead of direct `localStorage.getItem('sb_session')`.
+- [x] C.2.2 Confirm token-refresh path at `index.html:2186` calls `sbSession.set(blob)` on every successful refresh (rotation: full replace, no append).
 
 ### C.3 Remove `localStorage` write path for tokens
-- [ ] C.3.1 Replace `localStorage.setItem('sb_session', JSON.stringify(s))` at `index.html:2191` with `sbSession.set(s)`.
-- [ ] C.3.2 Replace `localStorage.setItem('sb_session', JSON.stringify(d))` at `index.html:2204` with `sbSession.set(d)`.
-- [ ] C.3.3 Replace `localStorage.setItem('sb_session', JSON.stringify(d))` at `index.html:2215` with `sbSession.set(d)`.
-- [ ] C.3.4 Replace `localStorage.setItem('fmn_reset_token', params.access_token)` at `index.html:3795` with `setRecoveryToken(params.access_token)`.
-- [ ] C.3.5 Replace the corresponding recovery-token read at `index.html:2340` (and any other read sites — confirm with `rg -n "fmn_reset_token" index.html`) with `getRecoveryToken()`.
-- [ ] C.3.6 In the logout path, call `sbSession.clear()` and `clearRecoveryToken()`; confirm no remaining `localStorage.removeItem('sb_session')` calls drift out of the wrapper.
+- [x] C.3.1 Replace `localStorage.setItem('sb_session', JSON.stringify(s))` at `index.html:2191` with `sbSession.set(s)`.
+- [x] C.3.2 Replace `localStorage.setItem('sb_session', JSON.stringify(d))` at `index.html:2204` with `sbSession.set(d)`.
+- [x] C.3.3 Replace `localStorage.setItem('sb_session', JSON.stringify(d))` at `index.html:2215` with `sbSession.set(d)`.
+- [x] C.3.4 Replace `localStorage.setItem('fmn_reset_token', params.access_token)` at `index.html:3795` with `setRecoveryToken(params.access_token)`.
+- [x] C.3.5 Replace the corresponding recovery-token read at `index.html:2340` (and any other read sites — confirm with `rg -n "fmn_reset_token" index.html`) with `getRecoveryToken()`.
+- [x] C.3.6 In the logout path, call `sbSession.clear()` and `clearRecoveryToken()`; confirm no remaining `localStorage.removeItem('sb_session')` calls drift out of the wrapper.
 
 ### C.4 Battle 2 verification
-- [ ] C.4.1 Static audit: `rg -n "localStorage\.setItem\(.*(access_token|refresh_token|sb_session|recovery|fmn_reset_token)" index.html` returns 0.
+- [x] C.4.1 Static audit: `rg -n "localStorage\.setItem\(.*(access_token|refresh_token|sb_session|recovery|fmn_reset_token)" index.html` returns 0.
 - [ ] C.4.2 Manual smoke per `auth-token-storage/spec.md`:
   - Fresh profile: login → DevTools Application shows `sessionStorage.sb_session` present, `localStorage` has NO `sb_session`/`access_token`/`refresh_token`/`recovery` key.
   - Token-refresh: trigger refresh, confirm `localStorage` unchanged for auth keys before/after.
@@ -70,7 +70,7 @@ Target file is single-page SPA `index.html` (~5000 lines). Existing `esc()` help
   - Same-tab reload: still logged in. New tab / browser restart: logged out.
   - Migration: pre-seed `localStorage['sb_session']` with a valid blob, reload, confirm it moves to `sessionStorage` and is removed from `localStorage` without re-login prompt.
   - DevTools Console: `Object.keys(localStorage).filter(k=>/access_token|refresh_token|sb_session|recovery/i.test(k))` returns `[]`.
-- [ ] C.4.3 Commit: `security: migrate auth tokens to sessionStorage`
+- [x] C.4.3 Commit: `security: migrate auth tokens to sessionStorage`
 
 ---
 
