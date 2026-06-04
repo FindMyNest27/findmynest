@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'sha256-xHVw7Qrr/swUiW48/dtrMWcvpea3CjuFoB/45F0jBO4=' 'sha256-AujzrY8eWcJP7/G3g+YJARz8jfBRXRt0inaUh0BYny0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://vbkmfloxweczyvpfbsdh.supabase.co; connect-src 'self' https://vbkmfloxweczyvpfbsdh.supabase.co https://formspree.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+          "value": "default-src 'self'; script-src 'self' 'sha256-J3z01n50Pp442GfhjY3ax4jfPYQEDpLBvM7dQAyUXw8=' 'sha256-AujzrY8eWcJP7/G3g+YJARz8jfBRXRt0inaUh0BYny0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://vbkmfloxweczyvpfbsdh.supabase.co; connect-src 'self' https://vbkmfloxweczyvpfbsdh.supabase.co https://formspree.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
         },
         {
           "key": "X-Frame-Options",

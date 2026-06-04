@@ -2427,8 +2427,7 @@ async function doLandlordSignup() {
     // 2. Insert profile row linked to auth user
     await sbq('POST', 'landlords', {auth_id: uid, name: n, email: e, phone: ph, status: 'active'});
     await sbq('POST', 'user_profiles', {id: uid, user_type: 'landlord'});
-    // Send confirmation email via Resend edge function
-    await sendEmail('signup', e, 'https://www.findmynest.co.nz');
+    // Signup confirmation email is sent by Supabase Auth natively (ADR-3, phase-1).
     closeAllModals();
     showVerifyEmail(e);
   } catch(err) {
@@ -2746,7 +2745,7 @@ async function doRenterSignup() {
     // 2. Insert renter profile
     await sbq('POST', 'renters', {auth_id: uid, name: n, email: e, phone: phone, city: c, budget_min: bmin, budget_max: bmax, beds_needed: beds, move_date: document.getElementById('rs_d').value || null, pets: document.getElementById('rs_pt').value, photo_url: rsAvatarUrl || null, status: 'active'});
     await sbq('POST', 'user_profiles', {id: uid, user_type: 'renter'});
-    await sendEmail('signup', e, 'https://www.findmynest.co.nz');
+    // Signup confirmation email is sent by Supabase Auth natively (ADR-3, phase-1).
     closeAllModals();
     showVerifyEmail(e);
   } catch(err) {
@@ -2784,7 +2783,7 @@ async function doAgentSignup() {
     // 2. Insert agent profile
     await sbq('POST', 'agents', {auth_id: uid, name: n, email: e, phone: ph, company: co, role: role, licence: lic, website: web, pm_range: pm, status: 'active'});
     await sbq('POST', 'user_profiles', {id: uid, user_type: 'agent'});
-    await sendEmail('signup', e, 'https://www.findmynest.co.nz');
+    // Signup confirmation email is sent by Supabase Auth natively (ADR-3, phase-1).
     closeAllModals();
     showVerifyEmail(e);
   } catch(err) {
@@ -3288,15 +3287,12 @@ async function submitEnquiry(listingId) {
   var btn = document.getElementById('enquiryBtn');
   btn.textContent = 'Sending...'; btn.disabled = true;
   try {
+    var token = await getAuthToken();
     var res = await fetch(SB_URL + '/functions/v1/submit-enquiry', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json', 'apikey': SB_KEY},
+      headers: {'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token},
       body: JSON.stringify({
         listing_id: listingId,
-        renter_id: u.auth_id || u.id,
-        renter_name: u.name,
-        renter_email: u.email,
-        renter_phone: u.phone || null,
         message: msg
       })
     });
@@ -4747,7 +4743,7 @@ async function getRentEstimate(prefix) {
   try {
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/rent-estimate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY },
       body: JSON.stringify({ suburb: suburb || null, city: city, type: type || null, park: park, furnished: furn, beds: beds, baths: baths })
     });
     var data = await res.json();
@@ -4853,10 +4849,11 @@ async function checkCompatibility(roomId) {
   document.getElementById('compatError').style.display = 'none';
 
   try {
+    var token = await getAuthToken();
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/flatmate-match', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ renter: renter, room: room })
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ room_id: room.id })
     });
     var data = await res.json();
 
