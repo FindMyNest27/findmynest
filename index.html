@@ -887,13 +887,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           </select>
         </div>
         <div class="ff" style="margin:0;">
-          <label>Pets</label>
-          <select id="filt_pets" data-action="applyFilters">
-            <option value="">Any</option>
-            <option value="Yes">Pets OK</option>
-          </select>
-        </div>
-        <div class="ff" style="margin:0;">
           <label>Furnished</label>
           <select id="filt_furn" data-action="applyFilters">
             <option value="">Any</option>
@@ -969,7 +962,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div style="background:#fff;border-radius:16px;padding:20px;border:1px solid #F2D4C0;">
         <div style="font-size:1.4rem;margin-bottom:8px;">🔍</div>
         <div style="font-weight:700;color:#3D1F0D;margin-bottom:4px;">Smart search & filters</div>
-        <p style="font-size:.83rem;color:#6B3A1F;line-height:1.6;margin:0;">Filter by city, suburb, bedrooms, bathrooms, type, rent, pets and furnished status. Find exactly what you're looking for fast.</p>
+        <p style="font-size:.83rem;color:#6B3A1F;line-height:1.6;margin:0;">Filter by city, suburb, bedrooms, bathrooms, type, rent and furnished status. Find exactly what you're looking for fast.</p>
       </div>
     </div>
 
@@ -1357,7 +1350,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Bedrooms *</label><select id="f_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
           <div class="ff"><label>Bathrooms *</label><select id="f_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
           <div class="ff"><label>Parking</label><select id="f_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
-          <div class="ff"><label>Pets</label><select id="f_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
           <div class="ff"><label>Furnished</label><select id="f_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
           <!-- Standard available from (hidden in short-term mode) -->
           <div class="ff" id="f_av_wrap"><label>Available From *</label><input id="f_av" type="date"/></div>
@@ -1679,7 +1671,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Bedrooms *</label><select id="af_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
           <div class="ff"><label>Bathrooms *</label><select id="af_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
           <div class="ff"><label>Parking</label><select id="af_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
-          <div class="ff"><label>Pets</label><select id="af_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
           <div class="ff"><label>Furnished</label><select id="af_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
           <!-- Standard available from (hidden in short-term mode) -->
           <div class="ff" id="af_av_wrap"><label>Available From *</label><input id="af_av" type="date"/></div>
@@ -1768,7 +1759,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
     <div class="ff"><label>Preferred Gender</label><select id="rl_gender"><option value="Any">No preference</option><option value="Male">Male preferred</option><option value="Female">Female preferred</option><option value="Non-binary">Non-binary preferred</option></select></div>
     <div class="ff"><label>Age Range</label><select id="rl_age"><option value="Any">No preference</option><option value="18-25">18–25</option><option value="25-35">25–35</option><option value="35+">35+</option></select></div>
-    <div class="ff"><label>Pets OK?</label><select id="rl_pets"><option value="No">No pets</option><option value="Yes">Pets welcome</option><option value="Discuss">Open to discussion</option></select></div>
     <div class="ff"><label>Smoking OK?</label><select id="rl_smoke"><option value="No">No smoking</option><option value="Outside">Outside only</option><option value="Yes">Yes</option></select></div>
     <div class="ff"><label>Couples OK?</label><select id="rl_couples"><option value="No">No couples</option><option value="Yes">Couples welcome</option></select></div>
     <div class="ff"><label>Students OK?</label><select id="rl_students"><option value="Yes">Yes</option><option value="No">No students</option></select></div>
@@ -1812,7 +1802,6 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div class="ff"><label>Bathrooms *</label><select id="el_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
     <div class="ff"><label>Parking</label><select id="el_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
     <div class="ff"><label>Available From</label><input id="el_av" type="date"/></div>
-    <div class="ff"><label>Pets</label><select id="el_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
     <div class="ff"><label>Furnished</label><select id="el_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
     <div class="ff s2">
       <label style="display:flex;align-items:center;justify-content:space-between;">
@@ -2850,7 +2839,7 @@ async function doAgentAddListing(){
   var btn=document.getElementById('agentAddListingSubmit');btn.textContent='Listing...';btn.disabled=true;
   try{
     var alPhotoUrls = await uploadPhotos('al_photos','listing-photos','listings/'+u.id);
-    var payload = {name:u.name,email:u.email,phone:u.phone||'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('af_pk').value,avail:isShort?afTermFrom:av,pets:document.getElementById('af_pt').value,furnished:document.getElementById('af_fu').value,description:d,status:'active',landlord_id:u.id,is_agency:true,agency_name:u.company,photo_urls:alPhotoUrls,rental_term:rentalTerm};
+    var payload = {name:u.name,email:u.email,phone:u.phone||'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('af_pk').value,avail:isShort?afTermFrom:av,furnished:document.getElementById('af_fu').value,description:d,status:'active',landlord_id:u.id,is_agency:true,agency_name:u.company,photo_urls:alPhotoUrls,rental_term:rentalTerm};
     if(isShort){
       payload.term_from = afTermFrom;
       payload.term_to = afTermTo;
@@ -2911,7 +2900,7 @@ async function doAddListing(){
   var btn=document.getElementById('addListingSubmit');btn.textContent='Listing...';btn.disabled=true;
   try{
     var llPhotoUrls = await uploadPhotos('ll_photos','listing-photos','listings/'+u.id);
-    var payload = {name:u.name,email:u.email,phone:'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('f_pk').value,avail:isShort?termFrom:av,pets:document.getElementById('f_pt').value,furnished:document.getElementById('f_fu').value,description:d,status:'active',landlord_id:u.id,photo_urls:llPhotoUrls,rental_term:rentalTerm};
+    var payload = {name:u.name,email:u.email,phone:'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('f_pk').value,avail:isShort?termFrom:av,furnished:document.getElementById('f_fu').value,description:d,status:'active',landlord_id:u.id,photo_urls:llPhotoUrls,rental_term:rentalTerm};
     if(isShort){
       payload.term_from = termFrom;
       payload.term_to = termTo;
@@ -3138,7 +3127,6 @@ function applyFilters(){
   var baths  = (document.getElementById('filt_baths')||{}).value||'';
   var type   = (document.getElementById('filt_type')||{}).value||'';
   var rent   = (document.getElementById('filt_rent')||{}).value||'';
-  var pets   = (document.getElementById('filt_pets')||{}).value||'';
   var furn   = (document.getElementById('filt_furn')||{}).value||'';
   var disab  = (document.getElementById('filt_disability')||{}).value||'';
 
@@ -3149,7 +3137,6 @@ function applyFilters(){
     if(baths  && l.baths  !== baths)   return false;
     if(type   && l.type   !== type)    return false;
     if(rent   && Number(l.rent) > Number(rent)) return false;
-    if(pets   && l.pets   !== pets)    return false;
     if(furn   && l.furnished !== furn) return false;
     if(disab === 'yes' && !l.disability_friendly) return false;
     return true;
@@ -3185,7 +3172,7 @@ function applyFilters(){
       thumbHtml+
       '<div><div style="font-weight:700;margin-bottom:3px;">'+esc(l.title)+stBadge+daBadge+'</div>'+
       '<div style="font-size:.82rem;color:#6B3A1F;">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; 🚿 '+esc(l.baths)+' bath</div>'+
-      '<div style="font-size:.78rem;color:#6B3A1F;margin-top:3px;">'+esc(l.type)+' &nbsp;•&nbsp; '+esc(l.furnished)+(l.pets==='Yes'?' &nbsp;•&nbsp; 🐾 Pets ok':'')+'</div></div></div>'+
+      '<div style="font-size:.78rem;color:#6B3A1F;margin-top:3px;">'+esc(l.type)+' &nbsp;•&nbsp; '+esc(l.furnished)+'</div></div></div>'+
       '<div style="text-align:right;flex-shrink:0;">'+
       '<div style="font-size:1.3rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div>'+
       '<div style="font-size:.74rem;color:#6B3A1F;">/week</div>'+
@@ -3195,7 +3182,7 @@ function applyFilters(){
 }
 
 function clearFilters(){
-  ['filt_city','filt_suburb','filt_beds','filt_baths','filt_type','filt_rent','filt_pets','filt_furn','filt_disability'].forEach(function(id){
+  ['filt_city','filt_suburb','filt_beds','filt_baths','filt_type','filt_rent','filt_furn','filt_disability'].forEach(function(id){
     var el=document.getElementById(id);if(el)el.selectedIndex=0;
   });
   applyFilters();
@@ -3245,7 +3232,6 @@ async function viewListing(id){
       '<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px;">'+
       '<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">'+esc(l.type)+'</span>'+
       '<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">'+esc(l.furnished)+'</span>'+
-      '<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">Pets: '+esc(l.pets)+'</span>'+
       (l.park&&l.park!=='0'?'<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">'+esc(l.park)+' car park</span>':'')+
       (l.avail?'<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">From: '+esc(l.avail)+'</span>':'')+
       (l.disability_friendly?'<span style="background:rgba(74,144,226,.12);color:#2563EB;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:700;">♿ Disability Friendly</span>':'')+
@@ -3354,7 +3340,7 @@ async function renderListings(termFilter){
         '<div class="ltit">'+esc(l.title)+'</div>'+
         '<div class="lloc">📍 '+esc(l.suburb)+', '+esc(l.city)+'</div>'+
         termInfo+
-        '<div class="lft"><span>🛏 '+esc(l.beds)+'</span><span>🚿 '+esc(l.baths)+'</span>'+(l.pets==='Yes'?'<span>🐾 Pets ok</span>':'')+(l.disability_friendly?'<span style="color:#2563EB;">♿ Accessible</span>':'')+'</div></div></div>';
+        '<div class="lft"><span>🛏 '+esc(l.beds)+'</span><span>🚿 '+esc(l.baths)+'</span>'+(l.disability_friendly?'<span style="color:#2563EB;">♿ Accessible</span>':'')+'</div></div></div>';
     }).join('');
     initHero(list);
   }catch(err){empty.style.display='block';grid.style.display='none';}
@@ -3591,7 +3577,6 @@ async function viewRoom(id){
       '<div style="font-weight:700;font-size:.88rem;margin-bottom:10px;color:#3D1F0D;">Ideal flatmate</div>'+
       '<div style="display:flex;flex-wrap:wrap;gap:8px;">'+
       '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">👤 '+esc(r.flatmate_gender)+'</span>'+
-      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🐾 Pets: '+esc(r.pets_ok)+'</span>'+
       '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🚬 Smoking: '+esc(r.smoking_ok)+'</span>'+
       '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">💑 Couples: '+esc(r.couples_ok)+'</span>'+
       '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🎓 Students: '+esc(r.students_ok)+'</span>'+
@@ -3661,7 +3646,6 @@ async function submitRoomListing(){
       current_flatmates:parseInt(document.getElementById('rl_flatmates').value)||0,
       flatmate_gender:document.getElementById('rl_gender').value,
       flatmate_age_min:null,flatmate_age_max:null,
-      pets_ok:document.getElementById('rl_pets').value,
       smoking_ok:document.getElementById('rl_smoke').value,
       couples_ok:document.getElementById('rl_couples').value,
       students_ok:document.getElementById('rl_students').value,
@@ -3806,7 +3790,7 @@ async function loadShortTermListings() {
         '<div class="ltit">' + esc(l.title) + '</div>' +
         '<div class="lloc">📍 ' + esc(l.suburb) + ', ' + esc(l.city) + '</div>' +
         termInfo + (reasonBadge ? '<div>' + reasonBadge + '</div>' : '') +
-        '<div class="lft" style="margin-top:6px;"><span>🛏 ' + esc(l.beds) + '</span><span>🚿 ' + esc(l.baths) + '</span>' + (l.pets === 'Yes' ? '<span>🐾 Pets ok</span>' : '') + '</div>' +
+        '<div class="lft" style="margin-top:6px;"><span>🛏 ' + esc(l.beds) + '</span><span>🚿 ' + esc(l.baths) + '</span>' + '</div>' +
         '</div></div>';
     }).join('');
   } catch(err) {
@@ -4214,7 +4198,6 @@ async function openEditListing(id) {
     setSelectVal('el_b',  l.beds      || '');
     setSelectVal('el_ba', l.baths     || '');
     setSelectVal('el_pk', l.park      || 'None');
-    setSelectVal('el_pt', l.pets      || 'No');
     setSelectVal('el_fu', l.furnished || 'Unfurnished');
     setSelectVal('el_st', l.status    || 'active');
     // Load existing photos — store URLs in data attribute for tracking
@@ -4361,7 +4344,6 @@ async function doEditListing() {
       type:ty, beds:b, baths:ba,
       park:document.getElementById('el_pk').value,
       avail:av||null,
-      pets:document.getElementById('el_pt').value,
       furnished:document.getElementById('el_fu').value,
       description:d,
       status:st,
@@ -4604,9 +4586,9 @@ document.getElementById('agentsSignupBtn2').addEventListener('click', function()
 
 async function generateDescription(prefix) {
   var fields = {
-    f:  { title:'f_t', suburb:'f_s', city:'f_c', rent:'f_r', type:'f_ty', beds:'f_b', baths:'f_ba', park:'f_pk', pets:'f_pt', furn:'f_fu', desc:'f_d', btn:'f_ai_gen', hint:'f_ai_hint' },
-    af: { title:'af_t', suburb:'af_s', city:'af_c', rent:'af_r', type:'af_ty', beds:'af_b', baths:'af_ba', park:'af_pk', pets:'af_pt', furn:'af_fu', desc:'af_d', btn:'af_ai_gen', hint:'af_ai_hint' },
-    el: { title:'el_t', suburb:'el_s', city:'el_c', rent:'el_r', type:'el_ty', beds:'el_b', baths:'el_ba', park:'el_pk', pets:'el_pt', furn:'el_fu', desc:'el_d', btn:'el_ai_gen', hint:'el_ai_hint' }
+    f:  { title:'f_t', suburb:'f_s', city:'f_c', rent:'f_r', type:'f_ty', beds:'f_b', baths:'f_ba', park:'f_pk', furn:'f_fu', desc:'f_d', btn:'f_ai_gen', hint:'f_ai_hint' },
+    af: { title:'af_t', suburb:'af_s', city:'af_c', rent:'af_r', type:'af_ty', beds:'af_b', baths:'af_ba', park:'af_pk', furn:'af_fu', desc:'af_d', btn:'af_ai_gen', hint:'af_ai_hint' },
+    el: { title:'el_t', suburb:'el_s', city:'el_c', rent:'el_r', type:'el_ty', beds:'el_b', baths:'el_ba', park:'el_pk', furn:'el_fu', desc:'el_d', btn:'el_ai_gen', hint:'el_ai_hint' }
   };
 
   var f = fields[prefix];
@@ -4630,14 +4612,13 @@ async function generateDescription(prefix) {
     var beds      = document.getElementById(f.beds).value;
     var baths     = document.getElementById(f.baths).value;
     var park      = document.getElementById(f.park).value;
-    var pets      = document.getElementById(f.pets).value;
     var furnished = document.getElementById(f.furn).value;
     var title     = document.getElementById(f.title).value.trim() || type + ' in ' + suburb;
-    var prompt    = 'Write a warm 80-120 word New Zealand rental listing description in a friendly Kiwi tone. No bullet points, no price, no address. Just the paragraph.\nProperty: ' + title + ', ' + suburb + ', ' + city + '. ' + type + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. Pets: ' + pets + '. ' + furnished + '. $' + rent + '/week.';
+    var prompt    = 'Write a warm 80-120 word New Zealand rental listing description in a friendly Kiwi tone. No bullet points, no price, no address. Just the paragraph.\nProperty: ' + title + ', ' + suburb + ', ' + city + '. ' + type + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. ' + furnished + '. $' + rent + '/week.';
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/ai-listing', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: document.getElementById(f.title).value.trim(), suburb: suburb, city: city, rent: rent, type: type, beds: document.getElementById(f.beds).value, baths: document.getElementById(f.baths).value, park: document.getElementById(f.park).value, pets: document.getElementById(f.pets).value, furnished: document.getElementById(f.furn).value })
+      body: JSON.stringify({ title: document.getElementById(f.title).value.trim(), suburb: suburb, city: city, rent: rent, type: type, beds: document.getElementById(f.beds).value, baths: document.getElementById(f.baths).value, park: document.getElementById(f.park).value, furnished: document.getElementById(f.furn).value })
     });
     var rawText = await res.text();
     var data = {};
@@ -4671,7 +4652,6 @@ async function generateRoomDescription() {
   var rooms   = document.getElementById('rl_rooms').value;
   var flatmates = document.getElementById('rl_flatmates').value;
   var vibe    = document.getElementById('rl_vibe').value;
-  var pets    = document.getElementById('rl_pets').value;
   var smoke   = document.getElementById('rl_smoke').value;
 
   if (!suburb || !city || !rent || !rtype) {
@@ -4698,7 +4678,6 @@ async function generateRoomDescription() {
         beds: flatmates + ' current flatmates in a ' + rooms + '-bedroom home',
         baths: 'shared',
         park: 'not specified',
-        pets: pets,
         furnished: furn + '. Bills: ' + bills + '. House vibe: ' + vibe + '. Smoking: ' + smoke
       })
     });
@@ -4729,15 +4708,14 @@ var estState = {};
 
 async function getRentEstimate(prefix) {
   var fieldMap = {
-    f:  { suburb: 'f_s', city: 'f_c', type: 'f_ty', park: 'f_pk', pets: 'f_pt', furn: 'f_fu', beds: 'f_b', baths: 'f_ba', btn: 'f_est_btn', panel: 'f_est_panel', location: 'f_est_location', stats: 'f_est_stats', insight: 'f_est_insight' },
-    af: { suburb: 'af_s', city: 'af_c', type: 'af_ty', park: 'af_pk', pets: 'af_pt', furn: 'af_fu', beds: 'af_b', baths: 'af_ba', btn: 'af_est_btn', panel: 'af_est_panel', location: 'af_est_location', stats: 'af_est_stats', insight: 'af_est_insight' }
+    f:  { suburb: 'f_s', city: 'f_c', type: 'f_ty', park: 'f_pk', furn: 'f_fu', beds: 'f_b', baths: 'f_ba', btn: 'f_est_btn', panel: 'f_est_panel', location: 'f_est_location', stats: 'f_est_stats', insight: 'f_est_insight' },
+    af: { suburb: 'af_s', city: 'af_c', type: 'af_ty', park: 'af_pk', furn: 'af_fu', beds: 'af_b', baths: 'af_ba', btn: 'af_est_btn', panel: 'af_est_panel', location: 'af_est_location', stats: 'af_est_stats', insight: 'af_est_insight' }
   };
   var f = fieldMap[prefix];
   var suburb = document.getElementById(f.suburb).value.trim();
   var city   = document.getElementById(f.city).value;
   var type   = document.getElementById(f.type).value;
   var park   = document.getElementById(f.park).value;
-  var pets   = document.getElementById(f.pets).value;
   var furn   = document.getElementById(f.furn).value;
   var beds   = document.getElementById(f.beds).value;
   var baths  = document.getElementById(f.baths).value;
@@ -4745,7 +4723,7 @@ async function getRentEstimate(prefix) {
   if (!city) { showToast('⚠️ Please select a city first!'); return; }
 
   // Build a signature of current form state
-  var sig = [suburb, city, type, park, pets, furn, beds, baths].join('|');
+  var sig = [suburb, city, type, park, furn, beds, baths].join('|');
 
   // If estimate already generated for same details — don't regenerate
   if (estState[prefix] && estState[prefix].sig === sig && estState[prefix].done) {
@@ -4770,7 +4748,7 @@ async function getRentEstimate(prefix) {
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/rent-estimate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ suburb: suburb || null, city: city, type: type || null, park: park, pets: pets, furnished: furn, beds: beds, baths: baths })
+      body: JSON.stringify({ suburb: suburb || null, city: city, type: type || null, park: park, furnished: furn, beds: beds, baths: baths })
     });
     var data = await res.json();
 
@@ -4811,7 +4789,7 @@ async function getRentEstimate(prefix) {
     btn.textContent = '✅ Estimate loaded — change details to refresh';
 
     // Watch for form changes to re-enable the button
-    ['suburb','city','type','park','pets','furn','beds','baths'].forEach(function(key) {
+    ['suburb','city','type','park','furn','beds','baths'].forEach(function(key) {
       var el = document.getElementById(f[key]);
       if (el) el.addEventListener('change', function() {
         var newSig = [
@@ -4819,7 +4797,6 @@ async function getRentEstimate(prefix) {
           document.getElementById(f.city).value,
           document.getElementById(f.type).value,
           document.getElementById(f.park).value,
-          document.getElementById(f.pets).value,
           document.getElementById(f.furn).value,
           document.getElementById(f.beds).value,
           document.getElementById(f.baths).value
