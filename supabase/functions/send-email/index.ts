@@ -7,152 +7,104 @@ const SITE_URL = 'https://www.findmynest.co.nz';
 const SB_URL = 'https://vbkmfloxweczyvpfbsdh.supabase.co';
 const SB_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 
-// B4.5: signup branch REMOVED entirely (ADR-3). send-email serves ONLY recovery.
-// Supabase Auth native confirmation email (branded via dashboard SMTP/template) handles signup.
-// verify_jwt = false in config.toml — pre-auth function, no session exists at call time.
-// ADR-5: CORS locked to the production origin — no wildcard.
-const CORS = {
-  'Access-Control-Allow-Origin': 'https://www.findmynest.co.nz',
-  'Access-Control-Allow-Headers': 'authorization, apikey, content-type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS'
+// B4.5 (ADR-3): the type:'signup' branch and its client-supplied confirmationUrl are REMOVED.
+// send-email serves ONLY recovery, whose link is generated server-side via admin.generateLink
+// (so a client-supplied URL can never be relayed). Signup confirmation is now delivered by
+// Supabase Auth natively, branded via the dashboard Resend SMTP + template.
+// verify_jwt = false in supabase/config.toml — this is a pre-auth flow. ADR-5: CORS locked. ADR-6: env secrets.
+const corsHeaders = {
+  'Access-Control-Allow-Origin': SITE_URL,
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, apikey, x-client-info',
 };
 
-Deno.serve(async (req) => {
-  // Handle CORS preflight
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS });
+Deno.serve(async (req: Request) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: corsHeaders });
+  }
 
   try {
     const { type, email } = await req.json();
 
-    // ADR-3: send-email now serves ONLY recovery.
-    // The type:'signup' branch has been REMOVED entirely.
-    // Signup confirmation emails are delivered by Supabase Auth natively
-    // via the dashboard-configured Resend SMTP + branded template.
-    if (type !== 'recovery') {
-      return new Response(
-        JSON.stringify({ error: 'Unsupported email type. Only recovery is handled here.' }),
-        { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } }
-      );
-    }
-
     if (!email) {
-      return new Response(
-        JSON.stringify({ error: 'email is required' }),
-        { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Missing email' }), {
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    const supabase = createClient(SB_URL, SB_SERVICE_KEY);
-
-    // Link is always server-generated via admin.generateLink — client-supplied URLs are never trusted.
-    const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
-      type: 'recovery',
-      email,
-      options: { redirectTo: SITE_URL }
-    });
-
-    if (linkError || !linkData?.properties?.action_link) {
-      console.error('generateLink error:', linkError);
-      return new Response(
-        JSON.stringify({ error: 'Failed to generate recovery link' }),
-        { status: 500, headers: { ...CORS, 'Content-Type': 'application/json' } }
-      );
+    // ADR-3: only recovery is handled here. Signup is delivered by Supabase Auth's native email.
+    if (type !== 'recovery') {
+      return new Response(JSON.stringify({ error: 'Unsupported type. Signup confirmation is handled by Supabase Auth.' }), {
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    const resetLink = linkData.properties.action_link;
+    // Recovery link is ALWAYS generated server-side via the Admin API — never trust a client URL.
+    let resetLink = SITE_URL;
+    if (!SB_SERVICE_KEY) {
+      return new Response(JSON.stringify({ error: 'Server not configured' }), {
+        status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+    try {
+      const supabase = createClient(SB_URL, SB_SERVICE_KEY);
+      const { data, error } = await supabase.auth.admin.generateLink({
+        type: 'recovery',
+        email: email,
+        options: { redirectTo: SITE_URL }
+      });
+      if (!error && data?.properties?.action_link) {
+        resetLink = data.properties.action_link;
+      } else if (error) {
+        console.error('generateLink error:', error);
+        return new Response(JSON.stringify({ error: 'Failed to generate recovery link' }), {
+          status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+    } catch (e) {
+      console.error('generateLink error:', e);
+      return new Response(JSON.stringify({ error: 'Failed to generate recovery link' }), {
+        status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
 
-    const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reset Your FindMyNest Password</title>
-</head>
-<body style="margin:0;padding:0;background:#FAF0DC;font-family:Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#FAF0DC;padding:40px 0;">
-    <tr>
-      <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
-          <!-- Header -->
-          <tr>
-            <td style="background:linear-gradient(135deg,#E8724A,#C85A2E);padding:32px 40px;text-align:center;">
-              <div style="font-size:28px;font-weight:800;color:#FFFFFF;letter-spacing:-0.5px;">🏡 FindMyNest</div>
-              <div style="font-size:13px;color:rgba(255,255,255,0.85);margin-top:4px;">New Zealand's Flatmate & Room Finder</div>
-            </td>
-          </tr>
-          <!-- Body -->
-          <tr>
-            <td style="padding:40px;">
-              <h1 style="margin:0 0 16px;font-size:22px;font-weight:700;color:#3D1F0D;">Reset your password</h1>
-              <p style="margin:0 0 24px;font-size:15px;color:#6B3A1F;line-height:1.6;">
-                We received a request to reset the password for your FindMyNest account. Click the button below to choose a new password.
-              </p>
-              <table cellpadding="0" cellspacing="0" style="margin:0 0 24px;">
-                <tr>
-                  <td>
-                    <a href="${resetLink}" style="display:inline-block;background:linear-gradient(135deg,#E8724A,#C85A2E);color:#FFFFFF;font-size:15px;font-weight:700;text-decoration:none;padding:14px 32px;border-radius:50px;">
-                      Reset Password
-                    </a>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin:0 0 8px;font-size:13px;color:#A07850;line-height:1.5;">
-                If you didn't request a password reset, you can safely ignore this email — your password won't change.
-              </p>
-              <p style="margin:0;font-size:13px;color:#A07850;line-height:1.5;">
-                This link will expire shortly for your security.
-              </p>
-            </td>
-          </tr>
-          <!-- Footer -->
-          <tr>
-            <td style="background:#FAF0DC;padding:20px 40px;text-align:center;border-top:1px solid #E8D5B0;">
-              <p style="margin:0;font-size:12px;color:#A07850;">
-                &copy; ${new Date().getFullYear()} FindMyNest &mdash; New Zealand's Flatmate &amp; Room Finder
-              </p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
+    const subject = 'Reset your FindMyNest password 🔑';
+    const html = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:40px 24px;background:#FAF0DC;">
+        <h1 style="color:#3D1F0D;text-align:center;">FindMy<span style="color:#E8724A;">Nest</span>™ 🥝</h1>
+        <div style="background:#fff;border-radius:20px;padding:32px;">
+          <h2 style="color:#3D1F0D;">Reset your password</h2>
+          <p style="color:#6B3A1F;line-height:1.7;">We received a request to reset your FindMyNest password. Click the button below to set a new one.</p>
+          <div style="text-align:center;margin:32px 0;">
+            <a href="${resetLink}" style="background:#E8724A;color:#fff;padding:16px 40px;border-radius:50px;text-decoration:none;font-weight:700;font-size:1rem;display:inline-block;">Reset my password 🔑</a>
+          </div>
+          <p style="color:#A07850;font-size:.85rem;">This link expires in 1 hour. If you didn't request this, you can safely ignore this email.</p>
+        </div>
+        <p style="color:#A07850;font-size:.8rem;text-align:center;margin-top:24px;">FindMyNest™ · NZ's Rental Marketplace · <a href="${SITE_URL}" style="color:#E8724A;">findmynest.co.nz</a></p>
+      </div>`;
 
-    const resendRes = await fetch('https://api.resend.com/emails', {
+    const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        from: FROM,
-        to: [email],
-        subject: 'Reset your FindMyNest password',
-        html
-      })
+      headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from: FROM, to: [email], subject, html })
     });
 
-    if (!resendRes.ok) {
-      const err = await resendRes.text();
-      console.error('Resend error:', err);
-      return new Response(
-        JSON.stringify({ error: 'Failed to send email' }),
-        { status: 502, headers: { ...CORS, 'Content-Type': 'application/json' } }
-      );
+    const data = await res.json();
+    console.log('Resend response:', JSON.stringify(data));
+
+    if (!res.ok) {
+      return new Response(JSON.stringify({ error: data }), {
+        status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    return new Response(
-      JSON.stringify({ success: true }),
-      { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ success: true, id: data.id }), {
+      status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
 
   } catch (err) {
-    console.error('send-email error:', err);
-    return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: { ...CORS, 'Content-Type': 'application/json' } }
-    );
+    console.error('Function error:', (err as Error).message);
+    return new Response(JSON.stringify({ error: (err as Error).message }), {
+      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
   }
 });

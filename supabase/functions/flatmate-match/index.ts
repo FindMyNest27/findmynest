@@ -4,172 +4,67 @@ import { createClient } from 'jsr:@supabase/supabase-js@2';
 const SB_URL = 'https://vbkmfloxweczyvpfbsdh.supabase.co';
 const SB_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY') ?? '';
 const SB_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
-const GROQ_API_KEY = Deno.env.get('GROQ_API_KEY') ?? '';
+const GROQ_KEY = Deno.env.get('GROQ_API_KEY') ?? '';
 
-// B4.1: server JWT auth + identity from auth.uid() (ADR-1) + room re-fetch from listings (ADR-2).
-// verify_jwt = true is set in supabase/config.toml — gateway rejects missing/invalid JWTs.
-// ADR-5: CORS locked to the production origin — no wildcard.
-const CORS = {
+// B4.1: server-side JWT auth (ADR-1) + server-side room re-fetch (ADR-2).
+// renter is resolved from flatmate_profiles via the JWT email; room is re-fetched from room_listings
+// by room_id. NEITHER side of the prompt comes from the client body anymore.
+// verify_jwt = true in supabase/config.toml. ADR-5: CORS locked. ADR-6: GROQ key via env.
+// The Groq prompt + output contract are preserved verbatim from the original.
+const cors = {
   'Access-Control-Allow-Origin': 'https://www.findmynest.co.nz',
-  'Access-Control-Allow-Headers': 'authorization, apikey, content-type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS'
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, apikey',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
-Deno.serve(async (req) => {
-  // Handle CORS preflight
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS });
-
-  // ADR-1: extract and validate JWT — identity is NEVER taken from the request body.
-  const authHeader = req.headers.get('Authorization');
-  if (!authHeader) {
-    return new Response(
-      JSON.stringify({ error: 'Unauthorized' }),
-      { status: 401, headers: { ...CORS, 'Content-Type': 'application/json' } }
-    );
-  }
-
-  const jwt = authHeader.replace('Bearer ', '');
-
-  // ADR-1: auth client with the caller's JWT — used only to verify identity.
-  const authClient = createClient(SB_URL, SB_ANON_KEY, {
-    global: { headers: { Authorization: authHeader } }
-  });
-
-  const { data: { user }, error: userError } = await authClient.auth.getUser(jwt);
-  if (userError || !user) {
-    return new Response(
-      JSON.stringify({ error: 'Unauthorized' }),
-      { status: 401, headers: { ...CORS, 'Content-Type': 'application/json' } }
-    );
-  }
-
-  // ADR-1: service client for all privileged DB operations.
-  const serviceClient = createClient(SB_URL, SB_SERVICE_KEY);
-
-  // ADR-1: resolve renter from verified auth.uid() — NEVER from body.
-  const { data: renter, error: renterError } = await serviceClient
-    .from('renters')
-    .select('*')
-    .eq('auth_id', user.id)
-    .single();
-
-  if (renterError || !renter) {
-    return new Response(
-      JSON.stringify({ error: 'Forbidden: no renter profile found for this user' }),
-      { status: 403, headers: { ...CORS, 'Content-Type': 'application/json' } }
-    );
-  }
-
+Deno.serve(async (req: Request) => {
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   try {
-    // Parse body — client sends { room_id } only.
-    // The client-supplied 'renter' / 'renter_id' body fields are READ and DISCARDED.
-    const body = await req.json();
-    const { room_id } = body;
-    // body.renter and body.renter_id are deliberately ignored.
+    // ADR-1: validate JWT — renter identity is derived from it, never from the body.
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } });
+    }
+    const authClient = createClient(SB_URL, SB_ANON_KEY, { global: { headers: { Authorization: authHeader } } });
+    const { data: { user }, error: userErr } = await authClient.auth.getUser();
+    if (userErr || !user) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { ...cors, 'Content-Type': 'application/json' } });
+    }
 
+    // ADR-2: client now sends only { room_id }. The client-supplied renter/room objects are IGNORED.
+    const { room_id } = await req.json();
     if (!room_id) {
-      return new Response(
-        JSON.stringify({ error: 'room_id is required' }),
-        { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'room_id is required' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    // ADR-2: re-fetch room from listings by id — NEVER trust the client-supplied room object.
-    const { data: room, error: roomError } = await serviceClient
-      .from('listings')
-      .select('*')
-      .eq('id', room_id)
-      .single();
+    const service = createClient(SB_URL, SB_SERVICE_KEY);
 
-    if (roomError || !room) {
-      return new Response(
-        JSON.stringify({ error: 'Room not found' }),
-        { status: 404, headers: { ...CORS, 'Content-Type': 'application/json' } }
-      );
+    // ADR-1: renter profile from flatmate_profiles keyed by the JWT email (mirrors the client lookup,
+    // but the email now comes from the validated token, not the request body).
+    const { data: renter } = await service.from('flatmate_profiles').select('*').eq('email', user.email).single();
+    if (!renter) {
+      return new Response(JSON.stringify({ error: 'Forbidden: no flatmate profile for this user' }), { status: 403, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
-    // Build prompt from SERVER-fetched renter + room.
-    // Neither side comes from the client body — ADR-1 + ADR-2 guarantee this.
-    const prompt = `You are a NZ flatmate compatibility expert. Assess compatibility between this renter and room listing.
+    // ADR-2: room re-fetched server-side from room_listings by id — never trust a client room object.
+    const { data: room } = await service.from('room_listings').select('*').eq('id', room_id).single();
+    if (!room) {
+      return new Response(JSON.stringify({ error: 'Room not found' }), { status: 404, headers: { ...cors, 'Content-Type': 'application/json' } });
+    }
 
-RENTER PROFILE (from database):
-Name: ${renter.name || renter.full_name || 'Not specified'}
-Age: ${renter.age || 'Not specified'}
-Budget (weekly): $${renter.budget_min || '?'}–$${renter.budget_max || '?'}
-Occupation: ${renter.occupation || 'Not specified'}
-Lifestyle: ${renter.lifestyle || 'Not specified'}
-Pets: ${renter.has_pets ? 'Yes' : 'No'}
-Smoker: ${renter.is_smoker ? 'Yes' : 'No'}
-Move-in date: ${renter.move_in_date || 'Flexible'}
-
-ROOM LISTING (from database):
-Title: ${room.title || 'Unnamed listing'}
-Location: ${room.suburb || ''}, ${room.city || ''}
-Rent: $${room.price || '?'}/week
-Type: ${room.property_type || room.type || 'Not specified'}
-Bedrooms: ${room.bedrooms || 'Not specified'}
-Bathrooms: ${room.bathrooms || 'Not specified'}
-Furnished: ${room.furnished || 'Not specified'}
-Parking: ${room.parking || 'Not specified'}
-Pets allowed: ${room.pets_allowed ? 'Yes' : 'No'}
-Smoking allowed: ${room.smoking_allowed ? 'Yes' : 'No'}
-Available from: ${room.available_from || 'Not specified'}
-Description: ${room.description || 'No description provided'}
-
-Respond with a JSON object containing:
-- score: number 0-100 (compatibility percentage)
-- summary: string (1-2 sentences overall assessment)
-- verdict: string ("Great match", "Good potential", "Some concerns", or "Not recommended")
-- positives: string[] (up to 3 key compatibility strengths)
-- concerns: string[] (up to 3 key concerns or mismatches)
-
-Respond ONLY with valid JSON, no markdown.`;
-
-    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const prompt = `You are a flatmate compatibility expert. Score how well this person matches this room listing on a scale of 0-100.\n\nRENTER PROFILE:\n- Name: ${renter.name}\n- Age: ${renter.age || 'not specified'}\n- Gender: ${renter.gender || 'not specified'}\n- Occupation: ${renter.occupation || 'not specified'}\n- Budget: $${renter.budget_min || 0}-$${renter.budget_max}/week\n- Move date: ${renter.move_date || 'flexible'}\n- Has pets: ${renter.has_pets || 'No'}\n- Smoker: ${renter.smoker || 'No'}\n- Couple: ${renter.couple || 'No'}\n- About me: ${renter.about_me || 'not provided'}\n- Ideal flatmates: ${renter.ideal_flatmates || 'not provided'}\n\nROOM LISTING:\n- Title: ${room.title}\n- Location: ${room.suburb}, ${room.city}\n- Rent: $${room.rent_per_week}/week\n- Bills included: ${room.bills_included || 'No'}\n- Room type: ${room.room_type || 'not specified'}\n- Furnished: ${room.furnished || 'Unfurnished'}\n- Total rooms in house: ${room.total_rooms || 'not specified'}\n- Current flatmates: ${room.current_flatmates || 'not specified'}\n- Preferred flatmate gender: ${room.flatmate_gender || 'Any'}\n- Age range preferred: ${room.flatmate_age_min || 'any'}-${room.flatmate_age_max || 'any'}\n- Pets OK: ${room.pets_ok || 'No'}\n- Smoking OK: ${room.smoking_ok || 'No'}\n- Couples OK: ${room.couples_ok || 'No'}\n- Students OK: ${room.students_ok || 'Yes'}\n- House vibe: ${room.house_vibe || 'not specified'}\n- About flatmates: ${room.about_flatmates || 'not provided'}\n\nRespond ONLY with valid JSON in this exact format, no other text:\n{\n  "score": 85,\n  "summary": "One sentence overview of the match",\n  "positives": ["reason 1", "reason 2", "reason 3"],\n  "concerns": ["concern 1"],\n  "verdict": "One punchy sentence verdict"\n}`;
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${GROQ_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'llama-3.1-8b-instant',
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 400,
-        temperature: 0.3
-      })
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
+      body: JSON.stringify({ model: 'llama-3.1-8b-instant', messages: [{ role: 'user', content: prompt }], temperature: 0.3, max_tokens: 400 })
     });
-
-    if (!groqRes.ok) {
-      const errText = await groqRes.text();
-      console.error('Groq error:', errText);
-      return new Response(
-        JSON.stringify({ error: 'AI service unavailable. Please try again.' }),
-        { status: 502, headers: { ...CORS, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    const groqData = await groqRes.json();
-    const rawContent = groqData?.choices?.[0]?.message?.content ?? '{}';
-
-    let result;
-    try {
-      result = JSON.parse(rawContent);
-    } catch {
-      // Groq occasionally returns markdown-wrapped JSON — strip fences.
-      const stripped = rawContent.replace(/```(?:json)?\n?/g, '').trim();
-      result = JSON.parse(stripped);
-    }
-
-    return new Response(
-      JSON.stringify(result),
-      { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } }
-    );
-
+    const data = await res.json();
+    const text = data?.choices?.[0]?.message?.content?.trim();
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('No JSON in response');
+    const result = JSON.parse(jsonMatch[0]);
+    return new Response(JSON.stringify(result), { headers: { ...cors, 'Content-Type': 'application/json' } });
   } catch (err) {
-    console.error('flatmate-match error:', err);
-    return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: { ...CORS, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: String(err) }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
   }
 });
