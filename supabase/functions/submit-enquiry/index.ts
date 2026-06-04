@@ -8,6 +8,8 @@ const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY') ?? '';
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY') ?? '';
 const FROM = 'FindMyNest <noreply@findmynest.co.nz>';
 
+// B4.2: server JWT auth + identity from auth.uid() (ADR-1).
+// verify_jwt = true is set in supabase/config.toml — gateway rejects missing/invalid JWTs.
 // ADR-5: CORS locked to the production origin — no wildcard.
 const CORS = {
   'Access-Control-Allow-Origin': 'https://www.findmynest.co.nz',
