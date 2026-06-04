@@ -12,6 +12,7 @@ const CORS = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS'
 };
 
+// B4.3: verify_jwt = true is set in supabase/config.toml — the gateway validates the JWT.
 // ADR-3/4: verify_jwt = true is set in config.toml — the gateway validates the JWT.
 // This function is public (accepts anon key JWT); no user-level identity check is performed.
 // No getUser() call here — rent-estimate is intentionally public for the discovery flow.
