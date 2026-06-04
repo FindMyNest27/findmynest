@@ -6,6 +6,8 @@ const SB_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY') ?? '';
 const SB_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 const GROQ_API_KEY = Deno.env.get('GROQ_API_KEY') ?? '';
 
+// B4.1: server JWT auth + identity from auth.uid() (ADR-1) + room re-fetch from listings (ADR-2).
+// verify_jwt = true is set in supabase/config.toml — gateway rejects missing/invalid JWTs.
 // ADR-5: CORS locked to the production origin — no wildcard.
 const CORS = {
   'Access-Control-Allow-Origin': 'https://www.findmynest.co.nz',
