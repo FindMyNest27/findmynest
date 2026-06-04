@@ -7,6 +7,9 @@ const SITE_URL = 'https://www.findmynest.co.nz';
 const SB_URL = 'https://vbkmfloxweczyvpfbsdh.supabase.co';
 const SB_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
 
+// B4.5: signup branch REMOVED entirely (ADR-3). send-email serves ONLY recovery.
+// Supabase Auth native confirmation email (branded via dashboard SMTP/template) handles signup.
+// verify_jwt = false in config.toml — pre-auth function, no session exists at call time.
 // ADR-5: CORS locked to the production origin — no wildcard.
 const CORS = {
   'Access-Control-Allow-Origin': 'https://www.findmynest.co.nz',
