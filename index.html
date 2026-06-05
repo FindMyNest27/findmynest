@@ -420,6 +420,24 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   from { transform: rotate(30deg); }
   to   { transform: rotate(-10deg) scaleY(0.65); }
 }
+/* Global form-control baseline — homologate all text/date/select/textarea fields.
+   Element-level specificity, so .ff / .sf contextual rules still override it. */
+input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]):not([type=color]),
+select, textarea {
+  width: 100%;
+  padding: 10px 13px;
+  border: 2px solid #F2E4C4;
+  border-radius: 10px;
+  font-size: .9rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #3D1F0D;
+  background: #F7F3EE;
+  outline: none;
+  transition: border-color .2s;
+  box-sizing: border-box;
+}
+input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]):not([type=color]):focus,
+select:focus, textarea:focus { border-color: #E8724A; }
 </style>
 </head>
 <body>
@@ -578,9 +596,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;">
-        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Location</label><input type="text" placeholder="e.g. Auckland, Queenstown..." style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"/></div>
-        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Available From</label><input type="date" style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"/></div>
-        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Duration</label><select style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
+        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Location</label><input type="text" placeholder="e.g. Auckland, Queenstown..."/></div>
+        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Available From</label><input type="date"/></div>
+        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Duration</label><select><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
         <button class="sbtn" style="background:#fff;color:#E8724A;white-space:nowrap;" data-action="searchShortTerm">Search →</button>
       </div>
     </div>
@@ -1028,9 +1046,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:0 4px 20px rgba(61,31,13,.08);margin-bottom:40px;">
       <div style="font-weight:700;color:#3D1F0D;margin-bottom:14px;font-size:.95rem;">🔍 Find a short-term nest</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;">
-        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Location</label><input id="st_loc" type="text" placeholder="e.g. Auckland, Queenstown..." style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"/></div>
-        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Available From</label><input id="st_from" type="date" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"/></div>
-        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Duration</label><select id="st_dur" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
+        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Location</label><input id="st_loc" type="text" placeholder="e.g. Auckland, Queenstown..."/></div>
+        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Available From</label><input id="st_from" type="date"/></div>
+        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Duration</label><select id="st_dur"><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
         <button class="bp" data-action="doShortTermSearch" style="white-space:nowrap;">Search →</button>
       </div>
     </div>
