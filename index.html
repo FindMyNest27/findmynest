@@ -112,7 +112,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 /* ADD LISTING FORM */
 .add-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
 .ff label{display:block;font-size:.72rem;font-weight:700;color:#6B3A1F;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
-.ff input,.ff select,.ff textarea{width:100%;padding:10px 13px;border:2px solid #F2E4C4;border-radius:10px;font-size:.9rem;font-family:"Plus Jakarta Sans",sans-serif;color:#3D1F0D;background:#F7F3EE;outline:none;transition:border-color .2s;box-sizing:border-box}
+.ff input,.ff select,.ff textarea{width:100%;padding:12px 15px;border:2px solid #F2E4C4;border-radius:11px;font-size:.9rem;font-family:"Plus Jakarta Sans",sans-serif;color:#3D1F0D;background:#F7F3EE;outline:none;transition:border-color .2s;box-sizing:border-box}
 .ff input:focus,.ff select:focus,.ff textarea:focus{border-color:#E8724A}
 .ff.s2{grid-column:span 2}
 .bful{width:100%;text-align:center;display:block;padding:13px;border-radius:50px;font-size:.95rem;font-weight:600;cursor:pointer;border:none;background:#E8724A;color:#fff;transition:background .2s,transform .15s;margin-top:8px}
@@ -420,6 +420,24 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   from { transform: rotate(30deg); }
   to   { transform: rotate(-10deg) scaleY(0.65); }
 }
+/* Global form-control baseline — homologate all text/date/select/textarea fields.
+   Element-level specificity, so .ff / .sf contextual rules still override it. */
+input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]):not([type=color]),
+select, textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #F2E4C4;
+  border-radius: 11px;
+  font-size: .9rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #3D1F0D;
+  background: #F7F3EE;
+  outline: none;
+  transition: border-color .2s;
+  box-sizing: border-box;
+}
+input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]):not([type=color]):focus,
+select:focus, textarea:focus { border-color: #E8724A; }
 </style>
 </head>
 <body>
@@ -578,9 +596,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;">
-        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Location</label><input type="text" placeholder="e.g. Auckland, Queenstown..." style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"/></div>
-        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Available From</label><input type="date" style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"/></div>
-        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Duration</label><select style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
+        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Location</label><input type="text" placeholder="e.g. Auckland, Queenstown..."/></div>
+        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Available From</label><input type="date"/></div>
+        <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Duration</label><select><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
         <button class="sbtn" style="background:#fff;color:#E8724A;white-space:nowrap;" data-action="searchShortTerm">Search →</button>
       </div>
     </div>
@@ -1028,9 +1046,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:0 4px 20px rgba(61,31,13,.08);margin-bottom:40px;">
       <div style="font-weight:700;color:#3D1F0D;margin-bottom:14px;font-size:.95rem;">🔍 Find a short-term nest</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;">
-        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Location</label><input id="st_loc" type="text" placeholder="e.g. Auckland, Queenstown..." style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"/></div>
-        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Available From</label><input id="st_from" type="date" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"/></div>
-        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Duration</label><select id="st_dur" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
+        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Location</label><input id="st_loc" type="text" placeholder="e.g. Auckland, Queenstown..."/></div>
+        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Available From</label><input id="st_from" type="date"/></div>
+        <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Duration</label><select id="st_dur"><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
         <button class="bp" data-action="doShortTermSearch" style="white-space:nowrap;">Search →</button>
       </div>
     </div>
@@ -3287,7 +3305,8 @@ async function submitEnquiry(listingId) {
   var btn = document.getElementById('enquiryBtn');
   btn.textContent = 'Sending...'; btn.disabled = true;
   try {
-    var token = await getAuthToken();
+    var token = await getUserToken();
+    if (!token) { showToast('⚠️ Please log in again to send an enquiry.'); btn.textContent = 'Send Enquiry 🥝'; btn.disabled = false; return; }
     var res = await fetch(SB_URL + '/functions/v1/submit-enquiry', {
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token},
@@ -3495,17 +3514,17 @@ async function loadRoomListings(){
         return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);" data-action="viewRoom" data-id="'+esc(r.id)+'">' + roomCardPhoto(r.photo_urls) +
           '<div style="padding:18px;cursor:pointer;">' +
           '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">' +
-          '<div style="font-weight:700;font-size:.95rem;color:#3D1F0D;line-height:1.3;">'+(r.title||'Room listing')+'</div>' +
+          '<div style="font-weight:700;font-size:.95rem;color:#3D1F0D;line-height:1.3;">'+esc(r.title||'Room listing')+'</div>' +
           '<div style="font-size:1.3rem;font-weight:700;color:#E8724A;white-space:nowrap;margin-left:8px;">$'+(r.rent_per_week||'—')+'<span style="font-size:.7rem;font-weight:400;color:#6B3A1F;">/wk</span></div>' +
           '</div>' +
-          '<div style="font-size:.8rem;color:#6B3A1F;margin-bottom:10px;">📍 '+(r.suburb||'')+(r.city?', '+r.city:'')+'</div>' +
+          '<div style="font-size:.8rem;color:#6B3A1F;margin-bottom:10px;">📍 '+esc(r.suburb||'')+(r.city?', '+esc(r.city):'')+'</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">' +
           (r.room_type?'<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+esc(r.room_type)+'</span>':'')+
           '<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+flatmates+' flatmate'+(flatmates!=1?'s':'')+'</span>' +
           '<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+(r.bills_included==='Yes'?'Bills incl.':'Bills excl.')+'</span>' +
           (r.house_vibe?'<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+esc(r.house_vibe)+'</span>':'')+
           '</div>' +
-          '<div style="font-size:.82rem;color:#6B3A1F;line-height:1.5;margin-bottom:12px;">'+(r.description?r.description.substring(0,100)+'...':'')+'</div>' +
+          '<div style="font-size:.82rem;color:#6B3A1F;line-height:1.5;margin-bottom:12px;">'+(r.description?esc(r.description.substring(0,100))+'...':'')+'</div>' +
           '<div style="display:flex;justify-content:space-between;align-items:center;">' +
           '<div style="font-size:.75rem;color:#6B3A1F;">Available: '+(r.available_from?new Date(r.available_from).toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric'}):'Now')+'</div>' +
           '<div style="display:flex;gap:6px;align-items:center;">' +
@@ -3891,6 +3910,12 @@ function initAvatarUploader(uid, initialChar) {
 // ── UPLOAD FILES TO SUPABASE STORAGE ─────────────────────────────────────────
 async function getAuthToken() {
   try { var s = await sbAuth('GET_SESSION'); return (s && s.access_token) ? s.access_token : SB_KEY; } catch(e) { return SB_KEY; }
+}
+
+// Like getAuthToken, but FAILS CLOSED: returns the user's access token or null (never the anon key).
+// Use for authenticated Edge Function calls so a missing session can't send an anon-key request.
+async function getUserToken() {
+  try { var s = await sbAuth('GET_SESSION'); return (s && s.access_token) ? s.access_token : null; } catch(e) { return null; }
 }
 
 async function uploadPhotos(uid, bucket, folder) {
@@ -4849,7 +4874,13 @@ async function checkCompatibility(roomId) {
   document.getElementById('compatError').style.display = 'none';
 
   try {
-    var token = await getAuthToken();
+    var token = await getUserToken();
+    if (!token) {
+      document.getElementById('compatLoading').style.display = 'none';
+      document.getElementById('compatError').style.display = 'block';
+      document.getElementById('compatError').textContent = 'Please log in again to check compatibility.';
+      return;
+    }
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/flatmate-match', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token },
