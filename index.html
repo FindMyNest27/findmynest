@@ -3287,7 +3287,8 @@ async function submitEnquiry(listingId) {
   var btn = document.getElementById('enquiryBtn');
   btn.textContent = 'Sending...'; btn.disabled = true;
   try {
-    var token = await getAuthToken();
+    var token = await getUserToken();
+    if (!token) { showToast('⚠️ Please log in again to send an enquiry.'); btn.textContent = 'Send Enquiry 🥝'; btn.disabled = false; return; }
     var res = await fetch(SB_URL + '/functions/v1/submit-enquiry', {
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token},
@@ -3495,17 +3496,17 @@ async function loadRoomListings(){
         return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);" data-action="viewRoom" data-id="'+esc(r.id)+'">' + roomCardPhoto(r.photo_urls) +
           '<div style="padding:18px;cursor:pointer;">' +
           '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">' +
-          '<div style="font-weight:700;font-size:.95rem;color:#3D1F0D;line-height:1.3;">'+(r.title||'Room listing')+'</div>' +
+          '<div style="font-weight:700;font-size:.95rem;color:#3D1F0D;line-height:1.3;">'+esc(r.title||'Room listing')+'</div>' +
           '<div style="font-size:1.3rem;font-weight:700;color:#E8724A;white-space:nowrap;margin-left:8px;">$'+(r.rent_per_week||'—')+'<span style="font-size:.7rem;font-weight:400;color:#6B3A1F;">/wk</span></div>' +
           '</div>' +
-          '<div style="font-size:.8rem;color:#6B3A1F;margin-bottom:10px;">📍 '+(r.suburb||'')+(r.city?', '+r.city:'')+'</div>' +
+          '<div style="font-size:.8rem;color:#6B3A1F;margin-bottom:10px;">📍 '+esc(r.suburb||'')+(r.city?', '+esc(r.city):'')+'</div>' +
           '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">' +
           (r.room_type?'<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+esc(r.room_type)+'</span>':'')+
           '<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+flatmates+' flatmate'+(flatmates!=1?'s':'')+'</span>' +
           '<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+(r.bills_included==='Yes'?'Bills incl.':'Bills excl.')+'</span>' +
           (r.house_vibe?'<span style="background:#FAF0DC;border-radius:50px;padding:3px 10px;font-size:.75rem;font-weight:600;color:#6B3A1F;">'+esc(r.house_vibe)+'</span>':'')+
           '</div>' +
-          '<div style="font-size:.82rem;color:#6B3A1F;line-height:1.5;margin-bottom:12px;">'+(r.description?r.description.substring(0,100)+'...':'')+'</div>' +
+          '<div style="font-size:.82rem;color:#6B3A1F;line-height:1.5;margin-bottom:12px;">'+(r.description?esc(r.description.substring(0,100))+'...':'')+'</div>' +
           '<div style="display:flex;justify-content:space-between;align-items:center;">' +
           '<div style="font-size:.75rem;color:#6B3A1F;">Available: '+(r.available_from?new Date(r.available_from).toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric'}):'Now')+'</div>' +
           '<div style="display:flex;gap:6px;align-items:center;">' +
@@ -3891,6 +3892,12 @@ function initAvatarUploader(uid, initialChar) {
 // ── UPLOAD FILES TO SUPABASE STORAGE ─────────────────────────────────────────
 async function getAuthToken() {
   try { var s = await sbAuth('GET_SESSION'); return (s && s.access_token) ? s.access_token : SB_KEY; } catch(e) { return SB_KEY; }
+}
+
+// Like getAuthToken, but FAILS CLOSED: returns the user's access token or null (never the anon key).
+// Use for authenticated Edge Function calls so a missing session can't send an anon-key request.
+async function getUserToken() {
+  try { var s = await sbAuth('GET_SESSION'); return (s && s.access_token) ? s.access_token : null; } catch(e) { return null; }
 }
 
 async function uploadPhotos(uid, bucket, folder) {
@@ -4849,7 +4856,13 @@ async function checkCompatibility(roomId) {
   document.getElementById('compatError').style.display = 'none';
 
   try {
-    var token = await getAuthToken();
+    var token = await getUserToken();
+    if (!token) {
+      document.getElementById('compatLoading').style.display = 'none';
+      document.getElementById('compatError').style.display = 'block';
+      document.getElementById('compatError').textContent = 'Please log in again to check compatibility.';
+      return;
+    }
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/flatmate-match', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token },
