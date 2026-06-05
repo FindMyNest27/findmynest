@@ -1,0 +1,13 @@
+
+# Local handoff guide — never commit (may reference keys)
+GUIA-DEPLOY-SUPABASE.md
+EMAIL-CONFIRM-SIGNUP.html
+OWNER-GUIDE-SUPABASE-*.md
+EMAIL-CONFIRM-PREVIEW.html
+OWNER-GUIDE-SUPABASE.md
+
+# Scratch/editor drafts — may contain plaintext secrets, never commit
+Untitled*
+**/Untitled*
+.DS_Store
+supabase/.temp/

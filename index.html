@@ -465,7 +465,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div><div style="font-weight:700;color:#3D1F0D;margin-bottom:2px;">Come back and log in</div><div style="font-size:.86rem;color:#6B3A1F;">Once verified, log in and you're all set! 🥝</div></div>
         </div>
       </div>
-      <button class="bp" onclick="hideAllPages();openAuth();showStep('stepLL');" style="margin-bottom:14px;width:100%;justify-content:center;">Log In Now →</button>
+      <button class="bp" data-action="openAuthLogin" style="margin-bottom:14px;width:100%;justify-content:center;">Log In Now →</button>
       <p style="font-size:.82rem;color:#A07850;">Didn't get the email? Check your spam folder, or <a href="mailto:hello@findmynest.co.nz" style="color:#E8724A;font-weight:600;">contact us</a> for help.</p>
     </div>
   </div>
@@ -493,10 +493,10 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div style="font-weight:700;color:#3D1F0D;margin-bottom:6px;">Password updated!</div>
           <p style="font-size:.86rem;color:#6B3A1F;">You can now log in with your new password.</p>
         </div>
-        <button class="bp" id="rpBtn" onclick="doResetPassword()" style="width:100%;justify-content:center;">Update Password 🔑</button>
+        <button class="bp" id="rpBtn" data-action="doResetPassword" style="width:100%;justify-content:center;">Update Password 🔑</button>
       </div>
       <p style="margin-top:18px;font-size:.82rem;color:#A07850;">
-        <a onclick="hideAllPages();showPage('homePage');" style="color:#E8724A;font-weight:600;cursor:pointer;">← Back to FindMyNest</a>
+        <a data-action="backToHome" style="color:#E8724A;font-weight:600;cursor:pointer;">← Back to FindMyNest</a>
       </p>
     </div>
   </div>
@@ -558,9 +558,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 <div class="ss">
   <div class="stit">🔍 Find your next nest</div>
   <div class="stabs">
-    <button class="stab active" onclick="setTab(this,'rent')">Long-Term Rent</button>
-    <button class="stab" onclick="setTab(this,'shortterm')" style="position:relative;">Short-Term & Holiday ✨<span style="position:absolute;top:-8px;right:-6px;background:#E8724A;color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:50px;">NEW</span></button>
-    <button class="stab" onclick="setTab(this,'flatmates')">Flatmates</button>
+    <button class="stab active" data-action="setSearchTab" data-tab="rent">Long-Term Rent</button>
+    <button class="stab" data-action="setSearchTab" data-tab="shortterm" style="position:relative;">Short-Term & Holiday ✨<span style="position:absolute;top:-8px;right:-6px;background:#E8724A;color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:50px;">NEW</span></button>
+    <button class="stab" data-action="setSearchTab" data-tab="flatmates">Flatmates</button>
   </div>
   <div class="sbar" id="sbar-rent">
     <div class="sf"><label>Location</label><input type="text" placeholder="e.g. Tauranga, Auckland..."/></div>
@@ -581,7 +581,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Location</label><input type="text" placeholder="e.g. Auckland, Queenstown..." style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"/></div>
         <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Available From</label><input type="date" style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"/></div>
         <div><label style="font-size:.78rem;font-weight:600;opacity:.85;display:block;margin-bottom:4px;">Duration</label><select style="width:100%;padding:10px 14px;border-radius:10px;border:none;font-size:.9rem;box-sizing:border-box;"><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
-        <button class="sbtn" style="background:#fff;color:#E8724A;white-space:nowrap;" onclick="searchShortTerm()">Search →</button>
+        <button class="sbtn" style="background:#fff;color:#E8724A;white-space:nowrap;" data-action="searchShortTerm">Search →</button>
       </div>
     </div>
   </div>
@@ -629,7 +629,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <p style="color:rgba(250,240,220,.75);font-size:.95rem;line-height:1.7;max-width:480px;">FindMyNest connects short-term landlords with renters who actually want what you're offering. No scrolling through irrelevant posts. No ghosting. Just the right match.</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
-        <button class="bp" onclick="setTab(document.querySelector('.stab:nth-child(2)'),'shortterm');document.querySelector('.ss').scrollIntoView({behavior:'smooth'});">Find Short-Term Nests →</button>
+        <button class="bp" data-action="showShortTermAndScroll">Find Short-Term Nests →</button>
         <button class="bs" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#FAF0DC;" id="stListBtn">List Short-Term or Holiday Property →</button>
       </div>
     </div>
@@ -656,7 +656,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div id="latestRoomsCont" style="margin-top:48px;display:none;">
       <div class="lh">
         <div><div class="slb">Rooms available</div><h2 class="stl">Latest Rooms & Flatmates</h2></div>
-        <a class="llk" onclick="loadRoomListings();showPage('flatmatesPage');" style="cursor:pointer;">View all rooms →</a>
+        <a class="llk" data-action="showFlatmatesPage" style="cursor:pointer;">View all rooms →</a>
       </div>
       <div id="latestRoomsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-top:20px;"></div>
     </div>
@@ -782,7 +782,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 
     <!-- TABS -->
     <div style="display:flex;gap:0;background:#F2E4C4;border-radius:14px;padding:4px;margin-bottom:32px;max-width:200px;">
-      <button id="fmTabRooms" onclick="fmTab('rooms')" style="flex:1;padding:10px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.88rem;background:#E8724A;color:#fff;transition:all .2s;">🏠 Rooms</button>
+      <button id="fmTabRooms" data-action="fmTabSwitch" data-tab="rooms" style="flex:1;padding:10px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.88rem;background:#E8724A;color:#fff;transition:all .2s;">🏠 Rooms</button>
     </div>
 
     <!-- POST BUTTONS -->
@@ -824,12 +824,12 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div id="filterPanel" style="background:#fff;border-radius:18px;padding:20px 24px;margin-bottom:24px;box-shadow:0 4px 20px rgba(61,31,13,.06);">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
         <div style="font-weight:700;font-size:.95rem;color:#3D1F0D;">🔍 Refine Search</div>
-        <button onclick="clearFilters()" style="background:none;border:none;color:#E8724A;font-size:.82rem;font-weight:600;cursor:pointer;">Clear all</button>
+        <button data-action="clearFilters" style="background:none;border:none;color:#E8724A;font-size:.82rem;font-weight:600;cursor:pointer;">Clear all</button>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
         <div class="ff" style="margin:0;">
           <label>City</label>
-          <select id="filt_city" onchange="onCityFilterChange()">
+          <select id="filt_city" data-action="onCityFilterChange">
             <option value="">Any city</option>
             <option>Auckland</option><option>Wellington</option><option>Christchurch</option>
             <option>Tauranga</option><option>Hamilton</option><option>Dunedin</option>
@@ -842,13 +842,13 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         </div>
         <div class="ff" style="margin:0;">
           <label>Suburb</label>
-          <select id="filt_suburb" onchange="applyFilters()">
+          <select id="filt_suburb" data-action="applyFilters">
             <option value="">Any suburb</option>
           </select>
         </div>
         <div class="ff" style="margin:0;">
           <label>Bedrooms</label>
-          <select id="filt_beds" onchange="applyFilters()">
+          <select id="filt_beds" data-action="applyFilters">
             <option value="">Any</option>
             <option value="1">1 bedroom</option>
             <option value="2">2 bedrooms</option>
@@ -859,7 +859,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         </div>
         <div class="ff" style="margin:0;">
           <label>Bathrooms</label>
-          <select id="filt_baths" onchange="applyFilters()">
+          <select id="filt_baths" data-action="applyFilters">
             <option value="">Any</option>
             <option value="1">1 bathroom</option>
             <option value="2">2 bathrooms</option>
@@ -868,7 +868,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         </div>
         <div class="ff" style="margin:0;">
           <label>Type</label>
-          <select id="filt_type" onchange="applyFilters()">
+          <select id="filt_type" data-action="applyFilters">
             <option value="">Any type</option>
             <option>House</option><option>Apartment</option><option>Townhouse</option>
             <option>Unit</option><option>Studio</option><option>Room</option>
@@ -876,7 +876,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         </div>
         <div class="ff" style="margin:0;">
           <label>Max Rent $/wk</label>
-          <select id="filt_rent" onchange="applyFilters()">
+          <select id="filt_rent" data-action="applyFilters">
             <option value="">Any price</option>
             <option value="300">Under $300</option>
             <option value="400">Under $400</option>
@@ -887,15 +887,8 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           </select>
         </div>
         <div class="ff" style="margin:0;">
-          <label>Pets</label>
-          <select id="filt_pets" onchange="applyFilters()">
-            <option value="">Any</option>
-            <option value="Yes">Pets OK</option>
-          </select>
-        </div>
-        <div class="ff" style="margin:0;">
           <label>Furnished</label>
-          <select id="filt_furn" onchange="applyFilters()">
+          <select id="filt_furn" data-action="applyFilters">
             <option value="">Any</option>
             <option value="Furnished">Furnished</option>
             <option value="Unfurnished">Unfurnished</option>
@@ -903,7 +896,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         </div>
         <div class="ff" style="margin:0;">
           <label>♿ Accessibility</label>
-          <select id="filt_disability" onchange="applyFilters()">
+          <select id="filt_disability" data-action="applyFilters">
             <option value="">Any</option>
             <option value="yes">Disability Friendly only</option>
           </select>
@@ -969,7 +962,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <div style="background:#fff;border-radius:16px;padding:20px;border:1px solid #F2D4C0;">
         <div style="font-size:1.4rem;margin-bottom:8px;">🔍</div>
         <div style="font-weight:700;color:#3D1F0D;margin-bottom:4px;">Smart search & filters</div>
-        <p style="font-size:.83rem;color:#6B3A1F;line-height:1.6;margin:0;">Filter by city, suburb, bedrooms, bathrooms, type, rent, pets and furnished status. Find exactly what you're looking for fast.</p>
+        <p style="font-size:.83rem;color:#6B3A1F;line-height:1.6;margin:0;">Filter by city, suburb, bedrooms, bathrooms, type, rent and furnished status. Find exactly what you're looking for fast.</p>
       </div>
     </div>
 
@@ -1038,7 +1031,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Location</label><input id="st_loc" type="text" placeholder="e.g. Auckland, Queenstown..." style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"/></div>
         <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Available From</label><input id="st_from" type="date" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"/></div>
         <div><label style="font-size:.78rem;font-weight:600;color:#6B3A1F;display:block;margin-bottom:5px;">Duration</label><select id="st_dur" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D4B896;font-size:.9rem;box-sizing:border-box;"><option>Any duration</option><option>Under 1 month</option><option>1–3 months</option><option>3–6 months</option><option>6–11 months</option></select></div>
-        <button class="bp" onclick="doShortTermSearch()" style="white-space:nowrap;">Search →</button>
+        <button class="bp" data-action="doShortTermSearch" style="white-space:nowrap;">Search →</button>
       </div>
     </div>
 
@@ -1049,25 +1042,25 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div style="font-size:2.2rem;margin-bottom:12px;">🏖️</div>
         <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Holiday home or bach?</div>
         <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Got a bach, holiday home or investment property sitting empty? List it here and reach genuine renters looking for short stays — without the platform fees of Airbnb.</p>
-        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">List my holiday home →</button>
+        <button data-action="openAuth" class="bp" style="font-size:.8rem;padding:8px 16px;">List my holiday home →</button>
       </div>
       <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
         <div style="font-size:2.2rem;margin-bottom:12px;">✈️</div>
         <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Going on your OE?</div>
         <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Heading overseas for a few months? Sublet your place to a trusted renter, keep your home looked after, and cover your costs while you're away.</p>
-        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">List my place →</button>
+        <button data-action="openAuth" class="bp" style="font-size:.8rem;padding:8px 16px;">List my place →</button>
       </div>
       <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
         <div style="font-size:2.2rem;margin-bottom:12px;">📋</div>
         <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Need a lease takeover?</div>
         <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Need to exit your tenancy early? Find a qualified tenant to step in and take over. Your landlord stays happy, you move on without the hassle.</p>
-        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">Find a replacement →</button>
+        <button data-action="openAuth" class="bp" style="font-size:.8rem;padding:8px 16px;">Find a replacement →</button>
       </div>
       <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
         <div style="font-size:2.2rem;margin-bottom:12px;">🌊</div>
         <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#3D1F0D;margin-bottom:8px;">Seasonal landlord?</div>
         <p style="color:#6B3A1F;font-size:.87rem;line-height:1.7;margin-bottom:12px;">Rent your place out for part of the year? List it here and reach renters who specifically want flexible stays — not long-term commitments.</p>
-        <button onclick="openAuth()" class="bp" style="font-size:.8rem;padding:8px 16px;">List seasonally →</button>
+        <button data-action="openAuth" class="bp" style="font-size:.8rem;padding:8px 16px;">List seasonally →</button>
       </div>
       <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 4px 20px rgba(61,31,13,.06);border:1.5px solid #F2D4C0;">
         <div style="font-size:2.2rem;margin-bottom:12px;">💼</div>
@@ -1120,7 +1113,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <p style="opacity:.9;font-size:.98rem;max-width:560px;margin:0 auto 28px;line-height:1.7;">FindMyNest is on a mission to make accessible housing easier to find in New Zealand. We believe disability should never be a barrier to finding a home.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <button class="bw" id="accessFindBtn" style="font-size:.95rem;">Browse Accessible Listings →</button>
-        <button id="accessListBtn" style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:13px 26px;font-weight:700;cursor:pointer;font-size:.95rem;" onclick="openAuth()">List an Accessible Property →</button>
+        <button id="accessListBtn" style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:13px 26px;font-weight:700;cursor:pointer;font-size:.95rem;" data-action="openAuth">List an Accessible Property →</button>
       </div>
     </div>
 
@@ -1188,7 +1181,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#1E40AF;margin-bottom:14px;">Got an accessible property?<br/>List it where it matters.</h2>
           <p style="color:#3B4FA8;font-size:.9rem;line-height:1.8;margin-bottom:16px;">If your property has been modified for accessibility — whether through Whaikaha, DSS, ACC or your own investment — listing on FindMyNest connects you directly with renters who need exactly what you have.</p>
           <p style="color:#3B4FA8;font-size:.9rem;line-height:1.8;margin-bottom:20px;">It's completely free to list, takes 5 minutes, and your accessible listing gets a dedicated ♿ badge making it stand out in search results.</p>
-          <button class="bp" onclick="openAuth()" style="background:#2563EB;">List My Accessible Property Free →</button>
+          <button class="bp" data-action="openAuth" style="background:#2563EB;">List My Accessible Property Free →</button>
         </div>
         <div style="background:linear-gradient(135deg,#EEF4FF,#F0F7FF);border-radius:18px;padding:28px;border:1.5px solid rgba(37,99,235,.2);">
           <div style="font-weight:700;color:#1E40AF;margin-bottom:14px;font-size:.95rem;">Your accessible listing includes:</div>
@@ -1229,8 +1222,8 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 
     <!-- TABS -->
     <div style="display:flex;gap:0;background:#F2E4C4;border-radius:14px;padding:4px;margin-bottom:40px;max-width:440px;">
-      <button id="llTab" onclick="llTab('landlord')" style="flex:1;padding:11px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.9rem;background:#3D1F0D;color:#FAF0DC;transition:all .2s;">🏠 Landlords</button>
-      <button id="laTab" onclick="llTab('agent')" style="flex:1;padding:11px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.9rem;background:transparent;color:#6B3A1F;transition:all .2s;">🏢 Agents</button>
+      <button id="llTab" data-action="llTabSwitch" data-tab="landlord" style="flex:1;padding:11px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.9rem;background:#3D1F0D;color:#FAF0DC;transition:all .2s;">🏠 Landlords</button>
+      <button id="laTab" data-action="llTabSwitch" data-tab="agent" style="flex:1;padding:11px;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.9rem;background:transparent;color:#6B3A1F;transition:all .2s;">🏢 Agents</button>
     </div>
 
     <!-- LANDLORD TAB -->
@@ -1322,8 +1315,8 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div class="dash-section">
       <div class="dash-section-title">📬 Enquiry Inbox <span id="newEnquiryBadge" style="display:none;background:#E8724A;color:#fff;border-radius:50px;padding:2px 10px;font-size:.72rem;font-weight:700;margin-left:8px;"></span></div>
       <div style="display:flex;gap:8px;margin-bottom:14px;">
-        <button id="llEnqTabAll" onclick="switchEnqTab('landlord','all')" style="padding:7px 18px;border-radius:50px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;font-size:.82rem;cursor:pointer;">All Enquiries</button>
-        <button id="llEnqTabShortlist" onclick="switchEnqTab('landlord','shortlisted')" style="padding:7px 18px;border-radius:50px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;font-size:.82rem;cursor:pointer;">⭐ Shortlisted</button>
+        <button id="llEnqTabAll" data-action="switchEnqTab" data-dash="landlord" data-filter="all" style="padding:7px 18px;border-radius:50px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;font-size:.82rem;cursor:pointer;">All Enquiries</button>
+        <button id="llEnqTabShortlist" data-action="switchEnqTab" data-dash="landlord" data-filter="shortlisted" style="padding:7px 18px;border-radius:50px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;font-size:.82rem;cursor:pointer;">⭐ Shortlisted</button>
       </div>
       <div id="landlordEnquiries"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No enquiries yet — they'll appear here once renters start messaging. 🥝</div></div>
     </div>
@@ -1342,8 +1335,8 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div style="font-weight:700;margin-bottom:14px;color:#3D1F0D;">New Listing</div>
         <!-- RENTAL TERM SELECTOR -->
         <div style="display:flex;gap:10px;margin-bottom:18px;">
-          <button type="button" id="termLong" onclick="setRentalTerm('long-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;cursor:pointer;font-size:.88rem;">🏠 Standard Rental</button>
-          <button type="button" id="termShort" onclick="setRentalTerm('short-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;cursor:pointer;font-size:.88rem;">🗓️ Short-Term Rental</button>
+          <button type="button" id="termLong" data-action="setRentalTerm" data-term="long-term" style="flex:1;padding:12px;border-radius:12px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;cursor:pointer;font-size:.88rem;">🏠 Standard Rental</button>
+          <button type="button" id="termShort" data-action="setRentalTerm" data-term="short-term" style="flex:1;padding:12px;border-radius:12px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;cursor:pointer;font-size:.88rem;">🗓️ Short-Term Rental</button>
         </div>
         <div id="shortTermBanner" style="display:none;background:linear-gradient(135deg,#FFF8F4,#FAF0DC);border:1.5px solid #E8724A;border-radius:14px;padding:16px 20px;margin-bottom:16px;">
           <div style="font-weight:700;color:#E8724A;margin-bottom:4px;">🗓️ Short-Term Rental</div>
@@ -1351,13 +1344,12 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         </div>
         <div class="add-form-grid">
           <div class="ff s2"><label>Title *</label><input id="f_t" placeholder="e.g. Sunny 3BR House in Tauranga"/></div>
-          <div class="ff"><label>Suburb *</label><input id="f_s" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'f_s_list')"/><datalist id="f_s_list"></datalist></div>
+          <div class="ff"><label>Suburb *</label><input id="f_s" placeholder="e.g. Mount Maunganui" autocomplete="off" data-action="acSuggest" data-field="f_s_list"/><datalist id="f_s_list"></datalist></div>
           <div class="ff"><label>City *</label><select id="f_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
           <div class="ff"><label>Type *</label><select id="f_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
           <div class="ff"><label>Bedrooms *</label><select id="f_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
           <div class="ff"><label>Bathrooms *</label><select id="f_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
           <div class="ff"><label>Parking</label><select id="f_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
-          <div class="ff"><label>Pets</label><select id="f_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
           <div class="ff"><label>Furnished</label><select id="f_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
           <!-- Standard available from (hidden in short-term mode) -->
           <div class="ff" id="f_av_wrap"><label>Available From *</label><input id="f_av" type="date"/></div>
@@ -1366,7 +1358,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff" id="f_term_to_wrap" style="display:none;"><label>Available Until *</label><input id="f_term_to" type="date"/></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="f_r" type="number" placeholder="550"/></div>
           <div class="ff s2" style="margin-top:4px;">
-            <button type="button" class="rent-est-btn" id="f_est_btn" onclick="getRentEstimate('f')">📊 Get AI Rent Estimate for this Area</button>
+            <button type="button" class="rent-est-btn" id="f_est_btn" data-action="getRentEstimate" data-mode="f">📊 Get AI Rent Estimate for this Area</button>
             <div class="rent-est" id="f_est_panel">
               <div class="rent-est-title" id="f_est_location">📍 Area Rental Insights</div>
               <div class="rent-est-stats" id="f_est_stats" style="display:none;"></div>
@@ -1388,7 +1380,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff s2">
             <label style="display:flex;align-items:center;justify-content:space-between;">
               Description *
-              <button type="button" class="ai-btn" id="f_ai_gen" onclick="generateDescription('f')">✨ AI Generate</button>
+              <button type="button" class="ai-btn" id="f_ai_gen" data-action="generateDescription" data-mode="f">✨ AI Generate</button>
             </label>
             <textarea id="f_d" rows="4" placeholder="Describe your property — or click ✨ AI Generate to write it for you!"></textarea>
             <div class="ai-hint" id="f_ai_hint">✨ AI is writing your description...</div>
@@ -1401,7 +1393,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 
     <div class="ff s2">
       <label>Property Photos</label>
-      <div class="photo-upload-area" onclick="document.getElementById('ll_photos_input').click()">
+      <div class="photo-upload-area" data-action="triggerFileInput" data-target="ll_photos_input">
         <div style="font-size:2rem;margin-bottom:6px;">📷</div>
         <div style="font-weight:600;color:#6B3A1F;font-size:.88rem;">Click to add photos</div>
         <div style="font-size:.75rem;color:#A07850;margin-top:4px;">Max 5MB each · JPEG, PNG or WEBP</div>
@@ -1438,16 +1430,16 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <span id="renterAvatarInitial">?</span>
         </div>
         <label for="renterAvatarUpload" style="position:absolute;bottom:-2px;right:-2px;background:#E8724A;border:2px solid #fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7rem;" title="Change photo">📷</label>
-        <input type="file" id="renterAvatarUpload" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="uploadRenterAvatar(this)"/>
+        <input type="file" id="renterAvatarUpload" accept="image/jpeg,image/png,image/webp" style="display:none;" data-action="uploadRenterAvatar"/>
       </div>
       <div style="flex:1;min-width:180px;">
         <div id="renterWelcomeName" style="font-size:1.4rem;font-weight:700;margin-bottom:4px;">Kia ora! 🥝</div>
         <div id="renterProfileCity" style="font-size:.88rem;opacity:.8;margin-bottom:6px;"></div>
         <div id="renterInterestDisplay" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;"></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button onclick="renterTab('profile')" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:6px 14px;font-size:.78rem;font-weight:600;cursor:pointer;">✏️ Edit Profile</button>
-          <button onclick="renterTab('saved')" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:6px 14px;font-size:.78rem;font-weight:600;cursor:pointer;">💛 Saved</button>
-          <button onclick="renterTab('browse')" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:6px 14px;font-size:.78rem;font-weight:600;cursor:pointer;">🏡 Browse</button>
+          <button data-action="renterTabSwitch" data-tab="profile" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:6px 14px;font-size:.78rem;font-weight:600;cursor:pointer;">✏️ Edit Profile</button>
+          <button data-action="renterTabSwitch" data-tab="saved" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:6px 14px;font-size:.78rem;font-weight:600;cursor:pointer;">💛 Saved</button>
+          <button data-action="renterTabSwitch" data-tab="browse" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:50px;padding:6px 14px;font-size:.78rem;font-weight:600;cursor:pointer;">🏡 Browse</button>
         </div>
       </div>
       <div style="display:flex;gap:16px;flex-shrink:0;">
@@ -1459,9 +1451,9 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 
     <!-- TAB NAVIGATION -->
     <div style="display:flex;gap:4px;margin-bottom:20px;background:#F7F3EE;border-radius:12px;padding:4px;">
-      <button id="rtab-profile" onclick="renterTab('profile')" class="rtab active-rtab">🧑 My Profile</button>
-      <button id="rtab-saved" onclick="renterTab('saved')" class="rtab">💛 Saved</button>
-      <button id="rtab-browse" onclick="renterTab('browse')" class="rtab">🏡 Browse</button>
+      <button id="rtab-profile" data-action="renterTabSwitch" data-tab="profile" class="rtab active-rtab">🧑 My Profile</button>
+      <button id="rtab-saved" data-action="renterTabSwitch" data-tab="saved" class="rtab">💛 Saved</button>
+      <button id="rtab-browse" data-action="renterTabSwitch" data-tab="browse" class="rtab">🏡 Browse</button>
     </div>
 
     <!-- TAB: MY PROFILE -->
@@ -1479,7 +1471,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff"><label>Move Date</label><input id="rp_move" type="date"/></div>
           <div class="ff"><label>Pets</label><select id="rp_pets"><option value="No">No pets</option><option value="Yes">Have pets</option></select></div>
         </div>
-        <button class="bful" onclick="saveRenterProfile()" style="max-width:200px;margin-top:16px;">Save Changes ✅</button>
+        <button class="bful" data-action="saveRenterProfile" style="max-width:200px;margin-top:16px;">Save Changes ✅</button>
       </div>
 
       <!-- INTERESTS -->
@@ -1488,11 +1480,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <p style="font-size:.84rem;color:#6B3A1F;margin-bottom:14px;">Tap to add interests — help landlords get to know you a little better. 🥝</p>
         <div id="interestTags" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;"></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <input id="interestInput" placeholder="Add an interest..." style="border:1.5px solid #D4B896;border-radius:50px;padding:8px 14px;font-size:.82rem;outline:none;background:#FAF0DC;width:200px;" onkeydown="if(event.key==='Enter'){addInterest();event.preventDefault();}"/>
-          <button onclick="addInterest()" style="background:#E8724A;color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">+ Add</button>
+          <input id="interestInput" placeholder="Add an interest..." style="border:1.5px solid #D4B896;border-radius:50px;padding:8px 14px;font-size:.82rem;outline:none;background:#FAF0DC;width:200px;"/>
+          <button data-action="addInterest" style="background:#E8724A;color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">+ Add</button>
         </div>
         <div style="margin-bottom:12px;display:flex;flex-wrap:wrap;gap:6px;" id="interestSuggestions"></div>
-        <button class="bful" onclick="saveInterests()" style="max-width:200px;">Save Interests ✅</button>
+        <button class="bful" data-action="saveInterests" style="max-width:200px;">Save Interests ✅</button>
       </div>
     </div>
 
@@ -1648,8 +1640,8 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div class="dash-section">
       <div class="dash-section-title">📬 Enquiry Inbox <span id="agentEnquiryBadge" style="display:none;background:#E8724A;color:#fff;border-radius:50px;padding:2px 10px;font-size:.72rem;font-weight:700;margin-left:8px;"></span></div>
       <div style="display:flex;gap:8px;margin-bottom:14px;">
-        <button id="agEnqTabAll" onclick="switchEnqTab('agent','all')" style="padding:7px 18px;border-radius:50px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;font-size:.82rem;cursor:pointer;">All Enquiries</button>
-        <button id="agEnqTabShortlist" onclick="switchEnqTab('agent','shortlisted')" style="padding:7px 18px;border-radius:50px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;font-size:.82rem;cursor:pointer;">⭐ Shortlisted</button>
+        <button id="agEnqTabAll" data-action="switchEnqTab" data-dash="agent" data-filter="all" style="padding:7px 18px;border-radius:50px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;font-size:.82rem;cursor:pointer;">All Enquiries</button>
+        <button id="agEnqTabShortlist" data-action="switchEnqTab" data-dash="agent" data-filter="shortlisted" style="padding:7px 18px;border-radius:50px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;font-size:.82rem;cursor:pointer;">⭐ Shortlisted</button>
       </div>
       <div id="agentEnquiries"><div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No enquiries yet — they'll appear here once renters start messaging. 🥝</div></div>
     </div>
@@ -1664,8 +1656,8 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         <div style="font-weight:700;margin-bottom:14px;color:#3D1F0D;">New Listing</div>
         <!-- RENTAL TERM SELECTOR (shared via setRentalTerm) -->
         <div style="display:flex;gap:10px;margin-bottom:18px;">
-          <button type="button" id="af_termLong" onclick="setRentalTerm('long-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;cursor:pointer;font-size:.88rem;">🏠 Standard Rental</button>
-          <button type="button" id="af_termShort" onclick="setRentalTerm('short-term')" style="flex:1;padding:12px;border-radius:12px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;cursor:pointer;font-size:.88rem;">🗓️ Short-Term Rental</button>
+          <button type="button" id="af_termLong" data-action="setRentalTerm" data-term="long-term" style="flex:1;padding:12px;border-radius:12px;border:2px solid #E8724A;background:#E8724A;color:#fff;font-weight:700;cursor:pointer;font-size:.88rem;">🏠 Standard Rental</button>
+          <button type="button" id="af_termShort" data-action="setRentalTerm" data-term="short-term" style="flex:1;padding:12px;border-radius:12px;border:2px solid #D4B896;background:#fff;color:#6B3A1F;font-weight:700;cursor:pointer;font-size:.88rem;">🗓️ Short-Term Rental</button>
         </div>
         <div id="af_shortTermBanner" style="display:none;background:linear-gradient(135deg,#FFF8F4,#FAF0DC);border:1.5px solid #E8724A;border-radius:14px;padding:16px 20px;margin-bottom:16px;">
           <div style="font-weight:700;color:#E8724A;margin-bottom:4px;">🗓️ Short-Term Rental</div>
@@ -1673,13 +1665,12 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
         </div>
         <div class="add-form-grid">
           <div class="ff s2"><label>Title *</label><input id="af_t" placeholder="e.g. Modern 2BR in Mount Maunganui"/></div>
-          <div class="ff"><label>Suburb *</label><input id="af_s" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'af_s_list')"/><datalist id="af_s_list"></datalist></div>
+          <div class="ff"><label>Suburb *</label><input id="af_s" placeholder="e.g. Mount Maunganui" autocomplete="off" data-action="acSuggest" data-field="af_s_list"/><datalist id="af_s_list"></datalist></div>
           <div class="ff"><label>City *</label><select id="af_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
           <div class="ff"><label>Type *</label><select id="af_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
           <div class="ff"><label>Bedrooms *</label><select id="af_b"><option value="">Select...</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
           <div class="ff"><label>Bathrooms *</label><select id="af_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
           <div class="ff"><label>Parking</label><select id="af_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
-          <div class="ff"><label>Pets</label><select id="af_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
           <div class="ff"><label>Furnished</label><select id="af_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
           <!-- Standard available from (hidden in short-term mode) -->
           <div class="ff" id="af_av_wrap"><label>Available From *</label><input id="af_av" type="date"/></div>
@@ -1688,7 +1679,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff" id="af_term_to_wrap" style="display:none;"><label>Available Until *</label><input id="af_term_to" type="date"/></div>
           <div class="ff"><label>Weekly Rent ($) *</label><input id="af_r" type="number" placeholder="550"/></div>
           <div class="ff s2" style="margin-top:4px;">
-            <button type="button" class="rent-est-btn" id="af_est_btn" onclick="getRentEstimate('af')">📊 Get AI Rent Estimate for this Area</button>
+            <button type="button" class="rent-est-btn" id="af_est_btn" data-action="getRentEstimate" data-mode="af">📊 Get AI Rent Estimate for this Area</button>
             <div class="rent-est" id="af_est_panel">
               <div class="rent-est-title" id="af_est_location">📍 Area Rental Insights</div>
               <div class="rent-est-stats" id="af_est_stats" style="display:none;"></div>
@@ -1710,7 +1701,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff s2">
             <label style="display:flex;align-items:center;justify-content:space-between;">
               Description *
-              <button type="button" class="ai-btn" id="af_ai_gen" onclick="generateDescription('af')">✨ AI Generate</button>
+              <button type="button" class="ai-btn" id="af_ai_gen" data-action="generateDescription" data-mode="af">✨ AI Generate</button>
             </label>
             <textarea id="af_d" rows="4" placeholder="Describe the property — or click ✨ AI Generate to write it for you!"></textarea>
             <div class="ai-hint" id="af_ai_hint">✨ AI is writing your description...</div>
@@ -1722,7 +1713,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
           <div class="ff s2" id="af_access_section">
             <div id="af_access_placeholder"></div>
           </div>
-      <div class="photo-upload-area" onclick="document.getElementById('al_photos_input').click()">
+      <div class="photo-upload-area" data-action="triggerFileInput" data-target="al_photos_input">
         <div style="font-size:2rem;margin-bottom:6px;">📷</div>
         <div style="font-weight:600;color:#6B3A1F;font-size:.88rem;">Click to add photos</div>
         <div style="font-size:.75rem;color:#A07850;margin-top:4px;">Max 5MB each · JPEG, PNG or WEBP</div>
@@ -1751,7 +1742,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <p class="msub">Free to list during our launch. 🥝</p>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
     <div class="ff s2"><label>Listing Title *</label><input id="rl_title" placeholder="e.g. Sunny room in shared Tauranga house"/></div>
-    <div class="ff"><label>Suburb *</label><input id="rl_suburb" placeholder="e.g. Mount Maunganui" autocomplete="off" oninput="acSuggest(this,'rl_suburb_list')"/><datalist id="rl_suburb_list"></datalist></div>
+    <div class="ff"><label>Suburb *</label><input id="rl_suburb" placeholder="e.g. Mount Maunganui" autocomplete="off" data-action="acSuggest" data-field="rl_suburb_list"/><datalist id="rl_suburb_list"></datalist></div>
     <div class="ff"><label>City *</label><select id="rl_city"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
     <div class="ff"><label>Weekly Rent $ *</label><input id="rl_rent" type="number" placeholder="e.g. 200"/></div>
     <div class="ff"><label>Bills Included?</label><select id="rl_bills"><option value="No">Not included</option><option value="Yes">All included</option><option value="Partial">Partially included</option></select></div>
@@ -1768,20 +1759,19 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
     <div class="ff"><label>Preferred Gender</label><select id="rl_gender"><option value="Any">No preference</option><option value="Male">Male preferred</option><option value="Female">Female preferred</option><option value="Non-binary">Non-binary preferred</option></select></div>
     <div class="ff"><label>Age Range</label><select id="rl_age"><option value="Any">No preference</option><option value="18-25">18–25</option><option value="25-35">25–35</option><option value="35+">35+</option></select></div>
-    <div class="ff"><label>Pets OK?</label><select id="rl_pets"><option value="No">No pets</option><option value="Yes">Pets welcome</option><option value="Discuss">Open to discussion</option></select></div>
     <div class="ff"><label>Smoking OK?</label><select id="rl_smoke"><option value="No">No smoking</option><option value="Outside">Outside only</option><option value="Yes">Yes</option></select></div>
     <div class="ff"><label>Couples OK?</label><select id="rl_couples"><option value="No">No couples</option><option value="Yes">Couples welcome</option></select></div>
     <div class="ff"><label>Students OK?</label><select id="rl_students"><option value="Yes">Yes</option><option value="No">No students</option></select></div>
     <div class="ff s2"><label>House Vibe</label><select id="rl_vibe"><option value="Quiet & tidy">Quiet & tidy</option><option value="Social & outgoing">Social & outgoing</option><option value="Professional & working">Professional & working</option><option value="Mixed & relaxed">Mixed & relaxed</option><option value="Student house">Student house</option></select></div>
     <div class="ff s2"><label>About Your Current Flatmates</label><textarea id="rl_about_fm" rows="2" placeholder="e.g. We're two working professionals who enjoy cooking together on weekends and keeping the house clean. Looking for someone with a similar vibe..."></textarea></div>
     <div class="ff s2">
-      <label style="display:flex;align-items:center;justify-content:space-between;">Property Description * <button type="button" class="ai-btn" id="rl_ai_gen" onclick="generateRoomDescription()">✨ AI Generate</button></label>
+      <label style="display:flex;align-items:center;justify-content:space-between;">Property Description * <button type="button" class="ai-btn" id="rl_ai_gen" data-action="generateRoomDescription">✨ AI Generate</button></label>
       <textarea id="rl_desc" rows="3" placeholder="Describe the room and house — or click ✨ AI Generate!"></textarea>
       <div class="ai-hint" id="rl_ai_hint">✨ AI is writing your description...</div>
     </div>
     <div class="ff s2">
       <label>Room &amp; House Photos</label>
-      <div class="photo-upload-area" onclick="document.getElementById('rl_photos_input').click()">
+      <div class="photo-upload-area" data-action="triggerFileInput" data-target="rl_photos_input">
         <div style="font-size:2rem;margin-bottom:6px;">📷</div>
         <div style="font-weight:600;color:#6B3A1F;font-size:.88rem;">Click to add photos</div>
         <div style="font-size:.75rem;color:#A07850;margin-top:4px;">Max 5MB each · JPEG, PNG or WEBP</div>
@@ -1804,7 +1794,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
   <p class="msub" style="margin-bottom:16px;">Update any details below and save.</p>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
     <div class="ff s2"><label>Title *</label><input id="el_t" placeholder="e.g. Sunny 3BR House in Tauranga"/></div>
-    <div class="ff"><label>Suburb *</label><input id="el_s" placeholder="e.g. Mount Maunganui" oninput="acSuggest(this,'el_s_list')" autocomplete="off"/><datalist id="el_s_list"></datalist></div>
+    <div class="ff"><label>Suburb *</label><input id="el_s" placeholder="e.g. Mount Maunganui" data-action="acSuggest" data-field="el_s_list" autocomplete="off"/><datalist id="el_s_list"></datalist></div>
     <div class="ff"><label>City *</label><select id="el_c"><option value="">Select city...</option><option>Auckland</option><option>Wellington</option><option>Christchurch</option><option>Tauranga</option><option>Hamilton</option><option>Dunedin</option><option>Queenstown</option><option>Whangarei</option><option>Kaitaia</option><option>Kerikeri</option><option>Whanganui</option><option>Palmerston North</option><option>Napier</option><option>Hastings</option><option>New Plymouth</option><option>Nelson</option><option>Blenheim</option><option>Invercargill</option><option>Timaru</option><option>Gisborne</option><option>Rotorua</option><option>Other</option></select></div>
     <div class="ff"><label>Weekly Rent ($) *</label><input id="el_r" type="number" placeholder="550"/></div>
     <div class="ff"><label>Type *</label><select id="el_ty"><option value="">Select...</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Unit</option><option>Studio</option><option>Room</option></select></div>
@@ -1812,12 +1802,11 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
     <div class="ff"><label>Bathrooms *</label><select id="el_ba"><option value="">Select...</option><option>1</option><option>2</option><option>3+</option></select></div>
     <div class="ff"><label>Parking</label><select id="el_pk"><option value="None">No parking</option><option value="1 car">1 car</option><option value="2 cars">2 cars</option><option value="Garage">Garage</option></select></div>
     <div class="ff"><label>Available From</label><input id="el_av" type="date"/></div>
-    <div class="ff"><label>Pets</label><select id="el_pt"><option value="No">No pets</option><option value="Yes">Pets considered</option></select></div>
     <div class="ff"><label>Furnished</label><select id="el_fu"><option value="Unfurnished">Unfurnished</option><option value="Furnished">Furnished</option><option value="Partially">Partially furnished</option></select></div>
     <div class="ff s2">
       <label style="display:flex;align-items:center;justify-content:space-between;">
         Description *
-        <button type="button" class="ai-btn" id="el_ai_gen" onclick="generateDescription('el')">✨ AI Generate</button>
+        <button type="button" class="ai-btn" id="el_ai_gen" data-action="generateDescription" data-mode="el">✨ AI Generate</button>
       </label>
       <textarea id="el_d" rows="4" placeholder="Describe your property — or click ✨ AI Generate to write it for you!"></textarea>
       <div class="ai-hint" id="el_ai_hint">✨ AI is writing your description...</div>
@@ -1828,7 +1817,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
       <label>Current Photos</label>
       <div id="el_current_photos" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;"></div>
       <label style="margin-top:8px;">Add New Photos</label>
-      <div class="photo-upload-area" onclick="document.getElementById('el_new_photos_input').click()" style="padding:14px;">
+      <div class="photo-upload-area" data-action="triggerFileInput" data-target="el_new_photos_input" style="padding:14px;">
         <div style="font-size:1.5rem;margin-bottom:4px;">📷</div>
         <div style="font-weight:600;color:#6B3A1F;font-size:.82rem;">Click to add more photos</div>
         <div style="font-size:.72rem;color:#A07850;margin-top:2px;">Max 5MB each · JPEG, PNG or WEBP</div>
@@ -1879,7 +1868,7 @@ footer{background:#3D1F0D;padding:52px 48px 26px;color:rgba(250,240,220,.6)}
 </div>
 <div class="mod" id="rentingMod"><button class="mcl" id="rentingClose">✕</button><div class="mbadge">📖 For Renters</div><div class="mtit">Renting Guide</div><div class="mbody"><p><strong>🔍 Searching</strong><br/>Filter by location, price, bedrooms and type.</p><hr class="mdiv"/><p><strong>📋 Your Rights</strong><br/>Under the Residential Tenancies Act you have strong rights as a renter in NZ.</p><hr class="mdiv"/><p><strong>💰 Bond & Rent</strong><br/>Bond is capped at 4 weeks rent. Rent can only increase once every 12 months.</p><hr class="mdiv"/><p style="font-size:.8rem;color:#6B3A1F;">Visit <a href="https://www.tenancy.govt.nz" target="_blank" style="color:#E8724A;">tenancy.govt.nz</a> for official info.</p></div></div>
 <div class="mod" id="landlordMod"><button class="mcl" id="landlordClose">✕</button><div class="mbadge">🏠 For Landlords</div><div class="mtit">Landlord Guide</div><div class="mbody"><p><strong>📸 Great Photos</strong><br/>Use natural light. Listings with 6+ photos get far more enquiries.</p><hr class="mdiv"/><p><strong>✅ Healthy Homes</strong><br/>All rentals must comply with Healthy Homes Standards. Non-compliance = fines up to $7,200.</p><hr class="mdiv"/><p style="font-size:.8rem;color:#6B3A1F;">Visit <a href="https://www.tenancy.govt.nz" target="_blank" style="color:#E8724A;">tenancy.govt.nz</a> for official info.</p></div></div>
-<div class="mod" id="regionMod"><button class="mcl" id="regionClose">✕</button><div class="mbadge">📍 Browse by Region</div><div class="mtit">Search by Region</div><div class="mbody"><p>Listings coming soon across all NZ regions! 🥝</p><hr class="mdiv"/><div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:8px;"><div onclick="showToast('Auckland coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Auckland</div><div onclick="showToast('Wellington coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Wellington</div><div onclick="showToast('Christchurch coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Christchurch</div><div onclick="showToast('Tauranga coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Tauranga</div><div onclick="showToast('Hamilton coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Hamilton</div><div onclick="showToast('Dunedin coming soon! 🏠')" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Dunedin</div></div></div></div>
+<div class="mod" id="regionMod"><button class="mcl" id="regionClose">✕</button><div class="mbadge">📍 Browse by Region</div><div class="mtit">Search by Region</div><div class="mbody"><p>Listings coming soon across all NZ regions! 🥝</p><hr class="mdiv"/><div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:8px;"><div data-action="showToast" data-msg="Auckland coming soon! 🏠" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Auckland</div><div data-action="showToast" data-msg="Wellington coming soon! 🏠" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Wellington</div><div data-action="showToast" data-msg="Christchurch coming soon! 🏠" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Christchurch</div><div data-action="showToast" data-msg="Tauranga coming soon! 🏠" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Tauranga</div><div data-action="showToast" data-msg="Hamilton coming soon! 🏠" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Hamilton</div><div data-action="showToast" data-msg="Dunedin coming soon! 🏠" style="background:#F7F3EE;border-radius:11px;padding:13px;cursor:pointer;font-weight:500;">📍 Dunedin</div></div></div></div>
 <div class="mod" id="flatmatesMod"><button class="mcl" id="flatmatesClose">✕</button><div class="mbadge">🏠 Flatmates</div><div class="mtit">Find a Flatmate</div><div class="mbody"><p>Our flatmates section is coming very soon! 🚀</p><hr class="mdiv"/><ul style="margin:12px 0 12px 20px;line-height:2;"><li>List a room in your home</li><li>Find flatmates in your city</li><li>Search by suburb & price</li></ul><hr class="mdiv"/><p style="font-size:.84rem;color:#6B3A1F;">Email <a href="mailto:hello@findmynest.co.nz" style="color:#E8724A;">hello@findmynest.co.nz</a> to be notified!</p></div></div>
 <div class="mod" id="privacyMod" style="max-width:560px;width:95%;max-height:88vh;overflow-y:auto;"><button class="mcl" id="privacyClose">✕</button><div class="mbadge">🔒 Privacy</div><div class="mtit">Privacy Policy</div><div class="mbody">
 <p><strong>Last updated: 2026</strong></p>
@@ -1920,7 +1909,9 @@ var CLRS=['linear-gradient(135deg,#F9C784,#E8724A)','linear-gradient(135deg,#C8E
 
 // ════════════════════════════════════════════
 // XSS SANITISATION
-// Always use esc() when rendering user data via innerHTML
+// RULE: no innerHTML with ${...} unless every interpolated value is esc()'d.
+// For untrusted strings (Edge Fn output, free-text fields, URLs) prefer DOM API
+// (createElement + textContent + setAttribute / safeImg) over innerHTML.
 // ════════════════════════════════════════════
 function esc(str) {
   if (str === null || str === undefined) return '';
@@ -1931,6 +1922,187 @@ function esc(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#x27;');
 }
+
+function safeImg(url){
+  var i = document.createElement('img');
+  i.src = String(url || '');
+  return i;
+}
+
+// ════════════════════════════════════════════
+// AUTH TOKEN STORAGE
+// sb_session lives in sessionStorage (cleared on tab close, persists on
+// same-tab reload). One-release localStorage read-fallback migrates legacy
+// blobs without forcing logout. fmn_u (non-sensitive profile blob) stays in
+// localStorage — it does NOT contain access_token / refresh_token.
+// Recovery token (password reset) is in-memory only — never persisted.
+// ════════════════════════════════════════════
+var sbSession = {
+  get: function() {
+    try {
+      var s = sessionStorage.getItem('sb_session');
+      if (s) return JSON.parse(s);
+      // Migration window: read legacy localStorage blob, move to sessionStorage, drop legacy.
+      var legacy = localStorage.getItem('sb_session');
+      if (legacy) {
+        sessionStorage.setItem('sb_session', legacy);
+        localStorage.removeItem('sb_session');
+        return JSON.parse(legacy);
+      }
+      return null;
+    } catch(e) { return null; }
+  },
+  set: function(blob) {
+    try { sessionStorage.setItem('sb_session', JSON.stringify(blob)); } catch(e) {}
+  },
+  clear: function() {
+    try {
+      sessionStorage.removeItem('sb_session');
+      localStorage.removeItem('sb_session'); // belt-and-suspenders during migration window
+    } catch(e) {}
+  }
+};
+
+var __recoveryToken = null;
+function setRecoveryToken(t) { __recoveryToken = t; }
+function getRecoveryToken() { return __recoveryToken; }
+function clearRecoveryToken() { __recoveryToken = null; }
+
+// ════════════════════════════════════════════
+// DATA-ACTION DISPATCHER  (Battle 3a foundation — D.0)
+// RULE: ACTIONS must be an explicit object map — NO window[name] or string-to-
+//       function lookup (that would reintroduce an injection vector).
+// RULE: populate entries here during D.1-D.5; do NOT add window[name] fallback.
+// Dispatcher is DORMANT until ACTIONS has entries — all existing inline
+// handler attributes continue to work unchanged through D.1-D.5.
+// ════════════════════════════════════════════
+var ACTIONS = {
+  // Populated progressively in D.1-D.5 commits.
+  // Example shape (do not remove this comment — it documents the contract):
+  //   openAuth:        function(el){ openAuth(); },
+  //   openEditListing: function(el){ openEditListing(el.dataset.id); },
+  //   doRemove:        function(el){ doRemove(el.dataset.id); },
+  //   viewListing:     function(el){ viewListing(el.dataset.id); },
+
+  // ── D.1: Auth group ───────────────────────────────────────────────────────
+  openAuth:            function(el){ openAuth(); },
+  openAuthLogin:       function(el){ hideAllPages(); openAuth(); showStep('stepLL'); },
+  closeModalsOpenAuth: function(el){ closeAllModals(); openAuth(); },
+  openAuthStopProp:    function(el, e){ if(e) e.stopPropagation(); openAuth(); },
+  doResetPassword:     function(el){ doResetPassword(); },
+  backToHome:          function(el){ hideAllPages(); showPage('homePage'); },
+
+  // ── D.2: Landlord listings CRUD group ─────────────────────────────────────
+  openEditListing: function(el){ openEditListing(el.dataset.id); },
+  doRemove:        function(el){ doRemove(el.dataset.id); },
+  viewListing:     function(el){ viewListing(el.dataset.id); },
+  toggleSaveListing: function(el){ toggleSaveListing(el.dataset.id); },
+  submitEnquiry:   function(el){ submitEnquiry(el.dataset.id); },
+  viewRoom:        function(el){ viewRoom(el.dataset.id); },
+  viewProfile:     function(el){ viewProfile(el.dataset.id); },
+  toggleSaveRoom:  function(el, e){ if(e) e.stopPropagation(); toggleSaveRoom(el.dataset.id, el); },
+  unsaveListing:   function(el, e){ if(e) e.stopPropagation(); unsaveListing(el.dataset.id); },
+  unsaveRoom:      function(el){ unsaveRoom(el.dataset.id); },
+
+  // ── D.3: Renter dashboard nav + listing cards ─────────────────────────────
+  setSearchTab:       function(el){ setTab(el, el.dataset.tab); },
+  searchShortTerm:    function(el){ searchShortTerm(); },
+  showShortTermAndScroll: function(el){ var btn=document.querySelector('.stab:nth-child(2)'); setTab(btn,'shortterm'); document.querySelector('.ss').scrollIntoView({behavior:'smooth'}); },
+  showFlatmatesPage:  function(el){ loadRoomListings(); showPage('flatmatesPage'); },
+  fmTabSwitch:        function(el){ fmTab(el.dataset.tab); },
+  clearFilters:       function(el){ clearFilters(); },
+  applyFilters:       function(el){ applyFilters(); },
+  onCityFilterChange: function(el){ onCityFilterChange(); },
+  doShortTermSearch:  function(el){ doShortTermSearch(); },
+  renterTabSwitch:    function(el){ renterTab(el.dataset.tab); },
+  saveRenterProfile:  function(el){ saveRenterProfile(); },
+  addInterest:        function(el){ addInterest(); },
+  saveInterests:      function(el){ saveInterests(); },
+  uploadRenterAvatar: function(el){ uploadRenterAvatar(el); },
+  removeMyRoom:       function(el){ removeMyRoom(el.dataset.id); },
+  checkCompatibility: function(el){ checkCompatibility(el.dataset.id); },
+  clickFmListRoom:    function(el){ var b=document.getElementById('fmListRoom'); if(b) b.click(); },
+  addInterestItem:    function(el){ addInterestItem(el.dataset.v); },
+  removeInterest:     function(el){ removeInterest(parseInt(el.dataset.idx, 10)); },
+
+  // ── D.4: Enquiry flow ─────────────────────────────────────────────────────
+  llTabSwitch:            function(el){ llTab(el.dataset.tab); },
+  switchEnqTab:           function(el){ switchEnqTab(el.dataset.dash, el.dataset.filter); },
+  setRentalTerm:          function(el){ setRentalTerm(el.dataset.term); },
+  updateEnquiryShortlist: function(el){ updateEnquiryStatus(el.dataset.id, 'shortlisted'); },
+  updateEnquiryUnsave:    function(el){ updateEnquiryStatus(el.dataset.id, 'new'); },
+  confirmDeclineEnquiry:  function(el){ confirmDeclineEnquiry(el.dataset.id); },
+
+  // ── D.5: AI panels + modals ───────────────────────────────────────────────
+  acSuggest:              function(el){ acSuggest(el, el.dataset.field); },
+  getRentEstimate:        function(el){ getRentEstimate(el.dataset.mode); },
+  generateDescription:    function(el){ generateDescription(el.dataset.mode); },
+  generateRoomDescription:function(el){ generateRoomDescription(); },
+  showToast:              function(el){ showToast(el.dataset.msg); },
+
+  // ── Photo gallery (D.2.3 follow-up) ──────────────────────────────────────
+  triggerFileInput: function(el){ var i=document.getElementById(el.dataset.target); if(i) i.click(); },
+  removePhoto:      function(el){ removePhoto(el.dataset.uid, Number(el.dataset.index)); },
+  removeEditPhoto:  function(el){ removeEditPhoto(Number(el.dataset.index)); },
+  removeEditNewPhoto: function(el){ removeEditNewPhoto(Number(el.dataset.index)); },
+  switchPhoto:      function(el){ switchPhoto(el.dataset.url, el); },
+};
+
+var _dispatcherBound = false;
+function _initDispatcher() {
+  if (_dispatcherBound) return;   // guard: never bind twice
+  _dispatcherBound = true;
+
+  document.addEventListener('click', function(e) {
+    var t = e.target.closest('[data-action]');
+    if (!t) return;
+    var fn = ACTIONS[t.dataset.action];
+    if (typeof fn === 'function') fn(t, e);
+  });
+
+  document.addEventListener('submit', function(e) {
+    var t = e.target.closest('[data-action]');
+    if (!t) return;
+    var fn = ACTIONS[t.dataset.action];
+    if (typeof fn === 'function') { e.preventDefault(); fn(t, e); }
+  });
+
+  document.addEventListener('change', function(e) {
+    var t = e.target.closest('[data-action]');
+    if (!t) return;
+    var fn = ACTIONS[t.dataset.action];
+    if (typeof fn === 'function') fn(t, e);
+  });
+
+  document.addEventListener('input', function(e) {
+    var t = e.target.closest('[data-action]');
+    if (!t) return;
+    var fn = ACTIONS[t.dataset.action];
+    if (typeof fn === 'function') fn(t, e);
+  });
+
+  // CSP-safe image fallback — error events do NOT bubble, so capture phase (true) is required.
+  document.addEventListener('error', function(e) {
+    var t = e.target;
+    if (!t || t.tagName !== 'IMG' || !t.dataset.imgFallback) return;
+    switch (t.dataset.imgFallback) {
+      case 'bg':          t.style.background = '#F2E4C4'; break;
+      case 'hide-parent': if (t.parentElement) t.parentElement.style.display = 'none'; break;
+      case 'hide-self':   t.style.display = 'none'; break;
+      case 'clear-src':
+        t.removeAttribute('data-img-fallback'); // prevent re-entry: remove before setting src
+        t.src = '';
+        break;
+    }
+  }, true);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  _initDispatcher();
+  // D.3: interest input — keydown Enter (keydown not covered by dispatcher)
+  var _intInput = document.getElementById('interestInput');
+  if (_intInput) _intInput.addEventListener('keydown', function(e){ if(e.key==='Enter'){ addInterest(); e.preventDefault(); } });
+});
 
 function showToast(msg){var t=document.getElementById('toastEl');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
 function setTab(el){document.querySelectorAll('.stab').forEach(function(t){t.classList.remove('active');});el.classList.add('active');}
@@ -1977,7 +2149,6 @@ function showStep(id){
 // USER SESSION
 function getUser(){try{return JSON.parse(localStorage.getItem('fmn_u'));}catch(e){return null;}}
 function setUser(u){localStorage.setItem('fmn_u',JSON.stringify(u));}
-function clearUser(){localStorage.removeItem('fmn_u');}
 
 function updateNav(){
   var btn=document.getElementById('navBtn');
@@ -2177,9 +2348,8 @@ async function sbq(method, table, data, filter) {
 // Supabase Auth helper — wraps the Auth REST API
 async function sbAuth(action, payload) {
   if (action === 'GET_SESSION') {
-    var stored = localStorage.getItem('sb_session');
-    if (!stored) return null;
-    var s = JSON.parse(stored);
+    var s = sbSession.get();
+    if (!s) return null;
     // Refresh if expiring within 60s
     if (s.expires_at && Date.now() / 1000 > s.expires_at - 60) {
       try {
@@ -2188,7 +2358,7 @@ async function sbAuth(action, payload) {
           headers: {'apikey': SB_KEY, 'Content-Type': 'application/json'},
           body: JSON.stringify({refresh_token: s.refresh_token})
         });
-        if (r.ok) { s = await r.json(); localStorage.setItem('sb_session', JSON.stringify(s)); }
+        if (r.ok) { s = await r.json(); sbSession.set(s); }
       } catch(e) {}
     }
     return s;
@@ -2201,7 +2371,7 @@ async function sbAuth(action, payload) {
     });
     var d = await r.json();
     if (!r.ok) throw new Error(d.error_description || d.msg || 'Signup failed');
-    if (d.access_token) localStorage.setItem('sb_session', JSON.stringify(d));
+    if (d.access_token) sbSession.set(d);
     return d;
   }
   if (action === 'LOGIN') {
@@ -2212,18 +2382,19 @@ async function sbAuth(action, payload) {
     });
     var d = await r.json();
     if (!r.ok) throw new Error(d.error_description || d.msg || 'Login failed');
-    localStorage.setItem('sb_session', JSON.stringify(d));
+    sbSession.set(d);
     return d;
   }
   if (action === 'LOGOUT') {
-    var s = JSON.parse(localStorage.getItem('sb_session') || '{}');
+    var s = sbSession.get() || {};
     if (s.access_token) {
       await fetch(SB_URL + '/auth/v1/logout', {
         method: 'POST',
         headers: {'apikey': SB_KEY, 'Authorization': 'Bearer ' + s.access_token}
       }).catch(function(){});
     }
-    localStorage.removeItem('sb_session');
+    sbSession.clear();
+    clearRecoveryToken();
     return null;
   }
 }
@@ -2231,7 +2402,7 @@ async function sbAuth(action, payload) {
 // USER SESSION — backed by Supabase Auth session
 function getUser() { try { return JSON.parse(localStorage.getItem('fmn_u')); } catch(e) { return null; } }
 function setUser(u) { localStorage.setItem('fmn_u', JSON.stringify(u)); }
-function clearUser() { localStorage.removeItem('fmn_u'); localStorage.removeItem('sb_session'); }
+function clearUser() { localStorage.removeItem('fmn_u'); sbSession.clear(); clearRecoveryToken(); }
 
 // ════════════════════════════════════════════
 // LANDLORD SIGNUP
@@ -2256,8 +2427,7 @@ async function doLandlordSignup() {
     // 2. Insert profile row linked to auth user
     await sbq('POST', 'landlords', {auth_id: uid, name: n, email: e, phone: ph, status: 'active'});
     await sbq('POST', 'user_profiles', {id: uid, user_type: 'landlord'});
-    // Send confirmation email via Resend edge function
-    await sendEmail('signup', e, 'https://www.findmynest.co.nz');
+    // Signup confirmation email is sent by Supabase Auth natively (ADR-3, phase-1).
     closeAllModals();
     showVerifyEmail(e);
   } catch(err) {
@@ -2337,7 +2507,7 @@ async function doResetPassword() {
   if (p.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; return; }
   if (p !== p2) { errEl.textContent = 'Passwords do not match.'; errEl.style.display = 'block'; return; }
 
-  var token = localStorage.getItem('fmn_reset_token');
+  var token = getRecoveryToken();
   if (!token) { errEl.textContent = 'Reset link has expired. Please request a new one.'; errEl.style.display = 'block'; return; }
 
   btn.textContent = 'Updating...'; btn.disabled = true;
@@ -2354,7 +2524,7 @@ async function doResetPassword() {
     var data = await res.json();
     if (!res.ok) throw new Error(data.message || data.error_description || 'Failed to update password');
     // Success
-    localStorage.removeItem('fmn_reset_token');
+    clearRecoveryToken();
     btn.style.display = 'none';
     successEl.style.display = 'block';
     // Redirect to login after 2 seconds
@@ -2575,7 +2745,7 @@ async function doRenterSignup() {
     // 2. Insert renter profile
     await sbq('POST', 'renters', {auth_id: uid, name: n, email: e, phone: phone, city: c, budget_min: bmin, budget_max: bmax, beds_needed: beds, move_date: document.getElementById('rs_d').value || null, pets: document.getElementById('rs_pt').value, photo_url: rsAvatarUrl || null, status: 'active'});
     await sbq('POST', 'user_profiles', {id: uid, user_type: 'renter'});
-    await sendEmail('signup', e, 'https://www.findmynest.co.nz');
+    // Signup confirmation email is sent by Supabase Auth natively (ADR-3, phase-1).
     closeAllModals();
     showVerifyEmail(e);
   } catch(err) {
@@ -2613,7 +2783,7 @@ async function doAgentSignup() {
     // 2. Insert agent profile
     await sbq('POST', 'agents', {auth_id: uid, name: n, email: e, phone: ph, company: co, role: role, licence: lic, website: web, pm_range: pm, status: 'active'});
     await sbq('POST', 'user_profiles', {id: uid, user_type: 'agent'});
-    await sendEmail('signup', e, 'https://www.findmynest.co.nz');
+    // Signup confirmation email is sent by Supabase Auth natively (ADR-3, phase-1).
     closeAllModals();
     showVerifyEmail(e);
   } catch(err) {
@@ -2637,7 +2807,7 @@ async function loadAgentListings(){
       return '<div style="background:#FAF0DC;border-radius:14px;padding:18px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">'+
         '<div><div style="font-weight:700;color:#3D1F0D;margin-bottom:4px;">'+esc(l.title)+'</div>'+
         '<div style="font-size:.82rem;color:#6B3A1F;">'+esc(l.suburb)+', '+esc(l.city)+' · $'+l.rent+'/wk · '+esc(l.beds)+' bed · '+esc(l.type)+'</div></div>'+
-        '<div style="display:flex;gap:6px;"><button class="edb" onclick="openEditListing(\x27'+l.id+'\x27)">Edit ✏️</button><button class="rmb" onclick="doRemove(\x27'+l.id+'\x27)">Remove ✕</button></div>'+
+        '<div style="display:flex;gap:6px;"><button class="edb" data-action="openEditListing" data-id="'+esc(l.id)+'">Edit ✏️</button><button class="rmb" data-action="doRemove" data-id="'+esc(l.id)+'">Remove ✕</button></div>'+
         '</div>';
     }).join('');
   }catch(e){c.innerHTML='<div style="text-align:center;padding:18px;color:#C85A2E;">Error loading listings.</div>';}
@@ -2668,7 +2838,7 @@ async function doAgentAddListing(){
   var btn=document.getElementById('agentAddListingSubmit');btn.textContent='Listing...';btn.disabled=true;
   try{
     var alPhotoUrls = await uploadPhotos('al_photos','listing-photos','listings/'+u.id);
-    var payload = {name:u.name,email:u.email,phone:u.phone||'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('af_pk').value,avail:isShort?afTermFrom:av,pets:document.getElementById('af_pt').value,furnished:document.getElementById('af_fu').value,description:d,status:'active',landlord_id:u.id,is_agency:true,agency_name:u.company,photo_urls:alPhotoUrls,rental_term:rentalTerm};
+    var payload = {name:u.name,email:u.email,phone:u.phone||'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('af_pk').value,avail:isShort?afTermFrom:av,furnished:document.getElementById('af_fu').value,description:d,status:'active',landlord_id:u.id,is_agency:true,agency_name:u.company,photo_urls:alPhotoUrls,rental_term:rentalTerm};
     if(isShort){
       payload.term_from = afTermFrom;
       payload.term_to = afTermTo;
@@ -2729,7 +2899,7 @@ async function doAddListing(){
   var btn=document.getElementById('addListingSubmit');btn.textContent='Listing...';btn.disabled=true;
   try{
     var llPhotoUrls = await uploadPhotos('ll_photos','listing-photos','listings/'+u.id);
-    var payload = {name:u.name,email:u.email,phone:'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('f_pk').value,avail:isShort?termFrom:av,pets:document.getElementById('f_pt').value,furnished:document.getElementById('f_fu').value,description:d,status:'active',landlord_id:u.id,photo_urls:llPhotoUrls,rental_term:rentalTerm};
+    var payload = {name:u.name,email:u.email,phone:'',title:t,suburb:s,city:c,rent:parseFloat(r),type:ty,beds:b,baths:ba,park:document.getElementById('f_pk').value,avail:isShort?termFrom:av,furnished:document.getElementById('f_fu').value,description:d,status:'active',landlord_id:u.id,photo_urls:llPhotoUrls,rental_term:rentalTerm};
     if(isShort){
       payload.term_from = termFrom;
       payload.term_to = termTo;
@@ -2780,7 +2950,7 @@ async function loadMyListings(){
     document.getElementById('dashListingCount').textContent=list.length;
     if(!list.length){c.innerHTML='<div style="text-align:center;padding:32px;color:#6B3A1F;font-size:.9rem;">No listings yet — click Add Listing above! 🏠</div>';return;}
     c.innerHTML=list.map(function(l){
-      return '<div class="mlrow"><div><div class="mltit">'+esc(l.title)+'</div><div class="mlmet">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; '+esc(l.type)+'</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button class="edb" onclick="openEditListing(\x27'+l.id+'\x27)">Edit ✏️</button><button class="rmb" onclick="doRemove(\x27'+l.id+'\x27)">Remove ✕</button></div></div>';
+      return '<div class="mlrow"><div><div class="mltit">'+esc(l.title)+'</div><div class="mlmet">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; '+esc(l.type)+'</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button class="edb" data-action="openEditListing" data-id="'+esc(l.id)+'">Edit ✏️</button><button class="rmb" data-action="doRemove" data-id="'+esc(l.id)+'">Remove ✕</button></div></div>';
     }).join('');
   }catch(err){c.innerHTML='<div style="text-align:center;padding:18px;color:#6B3A1F;">Could not load listings.</div>';}
 }
@@ -2854,9 +3024,9 @@ async function loadEnquiries(u, statusFilter) {
         // Action buttons
         '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">'+
         '<a href="mailto:'+esc(e.renter_email)+'" class="bp" style="font-size:.82rem;padding:8px 18px;text-decoration:none;">✓ Reply</a>'+
-        (!isShortlisted?'<button onclick="updateEnquiryStatus(\''+e.id+'\',\'shortlisted\')" style="background:#22c55e;color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">⭐ Shortlist</button>':
-        '<button onclick="updateEnquiryStatus(\''+e.id+'\',\'new\')" style="background:#F7F3EE;color:#6B3A1F;border:1.5px solid #D4B896;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">✕ Remove from Shortlist</button>')+
-        '<button onclick="confirmDeclineEnquiry(\''+e.id+'\')" style="background:#f1f5f9;color:#6B3A1F;border:none;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">✕ Decline</button>'+
+        (!isShortlisted?'<button data-action="updateEnquiryShortlist" data-id="'+esc(e.id)+'" style="background:#22c55e;color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">⭐ Shortlist</button>':
+        '<button data-action="updateEnquiryUnsave" data-id="'+esc(e.id)+'" style="background:#F7F3EE;color:#6B3A1F;border:1.5px solid #D4B896;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">✕ Remove from Shortlist</button>')+
+        '<button data-action="confirmDeclineEnquiry" data-id="'+esc(e.id)+'" style="background:#f1f5f9;color:#6B3A1F;border:none;border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;cursor:pointer;">✕ Decline</button>'+
         '</div>'+
         '<div style="font-size:.7rem;color:#A07850;margin-top:8px;">Received '+new Date(e.created_at).toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})+'</div>'+
         '</div>';
@@ -2927,7 +3097,7 @@ async function loadRenterListings(){
     var list=await sbq('GET','listings',null,'?order=created_at.desc&status=eq.active&limit=6');
     if(!list||!list.length){c.innerHTML='<div style="text-align:center;padding:18px;color:#6B3A1F;">No listings yet — check back soon! 🥝</div>';return;}
     c.innerHTML=list.map(function(l,i){
-      return '<div class="mlrow" style="cursor:pointer;" onclick="viewListing(\''+l.id+'\')"><div><div class="mltit">'+esc(l.title)+'</div><div class="mlmet">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; 🚿 '+esc(l.baths)+' bath</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:1.1rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div><div style="font-size:.72rem;color:#6B3A1F;">/week</div></div></div>';
+      return '<div class="mlrow" style="cursor:pointer;" data-action="viewListing" data-id="'+esc(l.id)+'"><div><div class="mltit">'+esc(l.title)+'</div><div class="mlmet">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; 🚿 '+esc(l.baths)+' bath</div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:1.1rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div><div style="font-size:.72rem;color:#6B3A1F;">/week</div></div></div>';
     }).join('');
   }catch(err){c.innerHTML='<div style="text-align:center;padding:18px;color:#6B3A1F;">Could not load listings.</div>';}
 }
@@ -2942,7 +3112,7 @@ async function loadAllListingsPage(){
     var list=await sbq('GET','listings',null,'?order=created_at.desc&status=eq.active');
     _allListingsCache = list || [];
     if(!_allListingsCache.length){
-      c.innerHTML='<div style="text-align:center;padding:56px;background:#fff;border-radius:20px;"><div style="font-size:3rem;margin-bottom:16px;">🏡</div><div style="font-size:1.4rem;font-weight:700;margin-bottom:10px;">No listings yet!</div><p style="color:#6B3A1F;margin-bottom:24px;">Be the first to list your property on FindMyNest.</p><button class="bp" onclick="openAuth()">List My Property Free →</button></div>';
+      c.innerHTML='<div style="text-align:center;padding:56px;background:#fff;border-radius:20px;"><div style="font-size:3rem;margin-bottom:16px;">🏡</div><div style="font-size:1.4rem;font-weight:700;margin-bottom:10px;">No listings yet!</div><p style="color:#6B3A1F;margin-bottom:24px;">Be the first to list your property on FindMyNest.</p><button class="bp" data-action="openAuth">List My Property Free →</button></div>';
       return;
     }
     applyFilters();
@@ -2956,7 +3126,6 @@ function applyFilters(){
   var baths  = (document.getElementById('filt_baths')||{}).value||'';
   var type   = (document.getElementById('filt_type')||{}).value||'';
   var rent   = (document.getElementById('filt_rent')||{}).value||'';
-  var pets   = (document.getElementById('filt_pets')||{}).value||'';
   var furn   = (document.getElementById('filt_furn')||{}).value||'';
   var disab  = (document.getElementById('filt_disability')||{}).value||'';
 
@@ -2967,7 +3136,6 @@ function applyFilters(){
     if(baths  && l.baths  !== baths)   return false;
     if(type   && l.type   !== type)    return false;
     if(rent   && Number(l.rent) > Number(rent)) return false;
-    if(pets   && l.pets   !== pets)    return false;
     if(furn   && l.furnished !== furn) return false;
     if(disab === 'yes' && !l.disability_friendly) return false;
     return true;
@@ -2988,7 +3156,7 @@ function applyFilters(){
     var stIcon = isHoliday ? '🏖️' : '🗓️';
     var stLabel = isHoliday ? 'Holiday Home' : 'Short-Term';
     var thumbHtml = l.photo_urls&&l.photo_urls.length
-      ? '<div style="position:relative;width:56px;height:56px;flex-shrink:0;"><img src="'+l.photo_urls[0]+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;" onerror="this.style.background=\x27#F2E4C4\x27"/>'+
+      ? '<div style="position:relative;width:56px;height:56px;flex-shrink:0;"><img src="'+esc(l.photo_urls[0])+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;" data-img-fallback="bg"/>'+
         (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;white-space:nowrap;">'+(isHoliday?'🏖️':'ST')+'</div>':'')+'</div>'
       : '<div style="position:relative;width:56px;height:56px;border-radius:12px;background:'+CLRS[i%CLRS.length]+';display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">🏡'+
         (isShortTerm?'<div style="position:absolute;top:-4px;right:-4px;background:#E8724A;color:#fff;font-size:.55rem;font-weight:700;padding:2px 5px;border-radius:50px;">'+(isHoliday?'🏖️':'ST')+'</div>':'')+'</div>';
@@ -2998,12 +3166,12 @@ function applyFilters(){
     var daBadge = l.disability_friendly
       ? '<span style="background:rgba(74,144,226,.15);color:#2563EB;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-left:4px;vertical-align:middle;">♿ Accessible</span>'
       : '';
-    return '<div class="all-list-item" onclick="viewListing(\''+l.id+'\')">'+
+    return '<div class="all-list-item" data-action="viewListing" data-id="'+esc(l.id)+'">'+
       '<div style="display:flex;gap:16px;align-items:center;">'+
       thumbHtml+
       '<div><div style="font-weight:700;margin-bottom:3px;">'+esc(l.title)+stBadge+daBadge+'</div>'+
       '<div style="font-size:.82rem;color:#6B3A1F;">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; 🚿 '+esc(l.baths)+' bath</div>'+
-      '<div style="font-size:.78rem;color:#6B3A1F;margin-top:3px;">'+esc(l.type)+' &nbsp;•&nbsp; '+esc(l.furnished)+(l.pets==='Yes'?' &nbsp;•&nbsp; 🐾 Pets ok':'')+'</div></div></div>'+
+      '<div style="font-size:.78rem;color:#6B3A1F;margin-top:3px;">'+esc(l.type)+' &nbsp;•&nbsp; '+esc(l.furnished)+'</div></div></div>'+
       '<div style="text-align:right;flex-shrink:0;">'+
       '<div style="font-size:1.3rem;font-weight:700;color:#E8724A;">$'+Number(l.rent).toLocaleString()+'</div>'+
       '<div style="font-size:.74rem;color:#6B3A1F;">/week</div>'+
@@ -3013,7 +3181,7 @@ function applyFilters(){
 }
 
 function clearFilters(){
-  ['filt_city','filt_suburb','filt_beds','filt_baths','filt_type','filt_rent','filt_pets','filt_furn','filt_disability'].forEach(function(id){
+  ['filt_city','filt_suburb','filt_beds','filt_baths','filt_type','filt_rent','filt_furn','filt_disability'].forEach(function(id){
     var el=document.getElementById(id);if(el)el.selectedIndex=0;
   });
   applyFilters();
@@ -3043,13 +3211,13 @@ async function viewListing(id){
       '<div style="font-weight:700;margin-bottom:5px;">✉️ Send an Enquiry</div>'+
       '<p style="color:#6B3A1F;font-size:.86rem;margin-bottom:11px;">Your profile will be shared with the '+(l.is_agency?'agent':'landlord')+'. AI will score your compatibility.</p>'+
       '<textarea id="enquiryMsg" placeholder="Hi, I\'m interested in this property. I\'m looking to move in..." style="width:100%;border:1.5px solid #D4B896;border-radius:12px;padding:10px;font-size:.86rem;background:#FAF0DC;min-height:80px;box-sizing:border-box;margin-bottom:10px;resize:vertical;"></textarea>'+
-      '<button class="bp" onclick="submitEnquiry(\''+l.id+'\')" id="enquiryBtn" style="width:100%;justify-content:center;">Send Enquiry 🥝</button>'+
+      '<button class="bp" data-action="submitEnquiry" data-id="'+esc(l.id)+'" id="enquiryBtn" style="width:100%;justify-content:center;">Send Enquiry 🥝</button>'+
       '<div id="enquirySuccess" style="display:none;text-align:center;padding:16px;"><div style="font-size:1.5rem;">✅</div><div style="font-weight:700;color:#3D1F0D;">Enquiry sent!</div><p style="font-size:.85rem;color:#6B3A1F;">The '+(l.is_agency?'agent':'landlord')+' will be in touch soon.</p></div>'+
       '</div>' :
       '<div style="background:#F7F3EE;border-radius:13px;padding:16px;">'+
       '<div style="font-weight:700;margin-bottom:5px;">📞 '+(l.is_agency?'Contact Agent':'Contact Landlord')+'</div>'+
       '<p style="color:#6B3A1F;font-size:.86rem;margin-bottom:11px;">Sign up or log in as a renter to send an AI-scored enquiry directly.</p>'+
-      '<button class="bp" onclick="closeAllModals();openAuth();" style="width:100%;justify-content:center;">Sign up free to enquire 🥝</button>'+
+      '<button class="bp" data-action="closeModalsOpenAuth" style="width:100%;justify-content:center;">Sign up free to enquire 🥝</button>'+
       '</div>';
     document.getElementById('detailContent').innerHTML=
       renderListingPhotos(l.photo_urls)+
@@ -3063,7 +3231,6 @@ async function viewListing(id){
       '<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px;">'+
       '<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">'+esc(l.type)+'</span>'+
       '<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">'+esc(l.furnished)+'</span>'+
-      '<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">Pets: '+esc(l.pets)+'</span>'+
       (l.park&&l.park!=='0'?'<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">'+esc(l.park)+' car park</span>':'')+
       (l.avail?'<span style="background:rgba(232,114,74,.1);color:#C85A2E;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:600;">From: '+esc(l.avail)+'</span>':'')+
       (l.disability_friendly?'<span style="background:rgba(74,144,226,.12);color:#2563EB;padding:3px 10px;border-radius:16px;font-size:.78rem;font-weight:700;">♿ Disability Friendly</span>':'')+
@@ -3106,7 +3273,7 @@ async function viewListing(id){
         (l.ideal_tenant ? '<div style="font-size:.86rem;color:#6B3A1F;"><strong>Looking for:</strong> '+esc(l.ideal_tenant)+'</div>' : '')+
         '</div>'
       ) : '')+
-      (u && u.type==='renter' ? '<button id="saveListingBtn" onclick="toggleSaveListing(\''+l.id+'\')" style="width:100%;background:#FAF0DC;border:1.5px solid #D4B896;border-radius:50px;padding:10px;font-size:.86rem;font-weight:600;color:#6B3A1F;cursor:pointer;margin-bottom:12px;">💛 Save to Watchlist</button>' : '')+
+      (u && u.type==='renter' ? '<button id="saveListingBtn" data-action="toggleSaveListing" data-id="'+esc(l.id)+'" style="width:100%;background:#FAF0DC;border:1.5px solid #D4B896;border-radius:50px;padding:10px;font-size:.86rem;font-weight:600;color:#6B3A1F;cursor:pointer;margin-bottom:12px;">💛 Save to Watchlist</button>' : '')+
       enquiryForm+
       '<p style="font-size:.7rem;color:#6B3A1F;margin-top:9px;line-height:1.5;">FindMyNest is a listing platform only. Please get independent legal advice before signing any tenancy agreement.</p>';
     openModal('detailMod');
@@ -3120,15 +3287,12 @@ async function submitEnquiry(listingId) {
   var btn = document.getElementById('enquiryBtn');
   btn.textContent = 'Sending...'; btn.disabled = true;
   try {
+    var token = await getAuthToken();
     var res = await fetch(SB_URL + '/functions/v1/submit-enquiry', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json', 'apikey': SB_KEY},
+      headers: {'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token},
       body: JSON.stringify({
         listing_id: listingId,
-        renter_id: u.auth_id || u.id,
-        renter_name: u.name,
-        renter_email: u.email,
-        renter_phone: u.phone || null,
         message: msg
       })
     });
@@ -3162,17 +3326,17 @@ async function renderListings(termFilter){
         ? '<div style="position:absolute;top:10px;left:10px;background:#E8724A;color:#fff;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:50px;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.18);">'+(isHoliday?'🏖️ Holiday Home':'🗓️ Short-Term')+'</div>'
         : '';
       var photoHtml=hasPhoto
-        ?'<div class="lim" style="padding:0;overflow:hidden;position:relative;"><img src="'+l.photo_urls[0]+'" style="width:100%;height:100%;object-fit:cover;display:block;"/>'+stOverlay+'</div>'
+        ?'<div class="lim" style="padding:0;overflow:hidden;position:relative;"><img src="'+esc(l.photo_urls[0])+'" style="width:100%;height:100%;object-fit:cover;display:block;"/>'+stOverlay+'</div>'
         :'<div class="lim" style="background:'+CLRS[i%CLRS.length]+';position:relative;"><div class="lt ltn">NEW</div>🏡'+stOverlay+'</div>';
       var termInfo = isShortTerm && l.term_from && l.term_to
         ? '<div style="font-size:.78rem;color:#E8724A;font-weight:600;margin-top:4px;">📅 '+formatDate(l.term_from)+' → '+formatDate(l.term_to)+'</div>'
         : '';
-      return '<div class="lc" onclick="viewListing(\''+l.id+'\')">'+photoHtml+
+      return '<div class="lc" data-action="viewListing" data-id="'+esc(l.id)+'">'+photoHtml+
         '<div class="lb"><div class="lpr">$'+Number(l.rent).toLocaleString()+'<span>/week</span></div>'+
         '<div class="ltit">'+esc(l.title)+'</div>'+
         '<div class="lloc">📍 '+esc(l.suburb)+', '+esc(l.city)+'</div>'+
         termInfo+
-        '<div class="lft"><span>🛏 '+esc(l.beds)+'</span><span>🚿 '+esc(l.baths)+'</span>'+(l.pets==='Yes'?'<span>🐾 Pets ok</span>':'')+(l.disability_friendly?'<span style="color:#2563EB;">♿ Accessible</span>':'')+'</div></div></div>';
+        '<div class="lft"><span>🛏 '+esc(l.beds)+'</span><span>🚿 '+esc(l.baths)+'</span>'+(l.disability_friendly?'<span style="color:#2563EB;">♿ Accessible</span>':'')+'</div></div></div>';
     }).join('');
     initHero(list);
   }catch(err){empty.style.display='block';grid.style.display='none';}
@@ -3271,7 +3435,7 @@ async function loadLatestRooms(){
     cont.style.display='block';
     grid.innerHTML=rooms.map(function(r){
       var flatmates=r.current_flatmates!=null?r.current_flatmates:0;
-      return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);cursor:pointer;" onclick="viewRoom('+r.id+')">' + roomCardPhoto(r.photo_urls) +
+      return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);cursor:pointer;" data-action="viewRoom" data-id="'+esc(r.id)+'">' + roomCardPhoto(r.photo_urls) +
         '<div style="padding:18px;">' +
         '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">' +
         '<div style="font-weight:700;font-size:.95rem;color:#3D1F0D;line-height:1.3;">'+esc(r.title||'Room listing')+'</div>' +
@@ -3317,7 +3481,7 @@ async function loadRoomListings(){
         '<div style="font-size:3.2rem;margin-bottom:13px;">🏠</div>'+
         '<div style="font-size:1.45rem;font-weight:700;margin-bottom:10px;color:#3D1F0D;">Be the first to list a room!</div>'+
         '<p style="color:#6B3A1F;font-size:.92rem;line-height:1.7;max-width:400px;margin:0 auto 26px;">Got a spare room? List it free and find your next flatmate on FindMyNest. 🥝</p>'+
-        '<button class="bp" onclick="document.getElementById(\\x27fmListRoom\\x27).click()">List a Room Free →</button>'+
+        '<button class="bp" data-action="clickFmListRoom">List a Room Free →</button>'+
         '</div>';
       return;
     }
@@ -3326,9 +3490,9 @@ async function loadRoomListings(){
       rooms.map(function(r){
         var flatmates=r.current_flatmates!=null?r.current_flatmates:0;
         var saveBtnHtml=u2
-          ?'<button onclick="event.stopPropagation();toggleSaveRoom('+r.id+',this)" data-saved="false" style="background:none;border:1px solid #D4B896;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.82rem;transition:all .2s;">🤍 Save</button>'
-          :'<button onclick="event.stopPropagation();openAuth()" style="background:none;border:1px solid #D4B896;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.82rem;">🤍 Save</button>';
-        return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);" onclick="viewRoom('+r.id+')">' + roomCardPhoto(r.photo_urls) +
+          ?'<button data-action="toggleSaveRoom" data-id="'+esc(r.id)+'" data-saved="false" style="background:none;border:1px solid #D4B896;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.82rem;transition:all .2s;">🤍 Save</button>'
+          :'<button data-action="openAuthStopProp" style="background:none;border:1px solid #D4B896;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.82rem;">🤍 Save</button>';
+        return '<div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(61,31,13,.08);" data-action="viewRoom" data-id="'+esc(r.id)+'">' + roomCardPhoto(r.photo_urls) +
           '<div style="padding:18px;cursor:pointer;">' +
           '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">' +
           '<div style="font-weight:700;font-size:.95rem;color:#3D1F0D;line-height:1.3;">'+(r.title||'Room listing')+'</div>' +
@@ -3351,7 +3515,7 @@ async function loadRoomListings(){
       }).join('') + '</div>';
   }catch(e){
     console.error('Room listings error:',e);
-    c.innerHTML='<div style="text-align:center;padding:56px;background:#fff;border-radius:20px;"><div style="font-size:3.2rem;margin-bottom:13px;">🏠</div><div style="font-weight:700;font-size:1.1rem;margin-bottom:10px;color:#3D1F0D;">Be the first to list a room!</div><p style="color:#6B3A1F;font-size:.92rem;line-height:1.7;max-width:400px;margin:0 auto 26px;">Got a spare room? List it free and find your next flatmate on FindMyNest. 🥝</p><button class="bp" onclick="document.getElementById(\x27fmListRoom\x27).click()">List a Room Free →</button></div>';
+    c.innerHTML='<div style="text-align:center;padding:56px;background:#fff;border-radius:20px;"><div style="font-size:3.2rem;margin-bottom:13px;">🏠</div><div style="font-weight:700;font-size:1.1rem;margin-bottom:10px;color:#3D1F0D;">Be the first to list a room!</div><p style="color:#6B3A1F;font-size:.92rem;line-height:1.7;max-width:400px;margin:0 auto 26px;">Got a spare room? List it free and find your next flatmate on FindMyNest. 🥝</p><button class="bp" data-action="clickFmListRoom">List a Room Free →</button></div>';
   }
 }
 
@@ -3366,7 +3530,7 @@ async function loadFlatmateProfiles(){
     }
     c.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">' +
       profiles.map(function(p){
-        return '<div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 4px 20px rgba(61,31,13,.08);cursor:pointer;" onclick="viewProfile('+p.id+')">' +
+        return '<div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 4px 20px rgba(61,31,13,.08);cursor:pointer;" data-action="viewProfile" data-id="'+esc(p.id)+'">' +
           '<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">' +
           fmAvatar(p.photo_url,p.name,52,'1.4rem') +
           '<div><div style="font-weight:700;color:#3D1F0D;">'+esc(p.name)+'</div><div style="font-size:.8rem;color:#6B3A1F;">'+p.age+' · '+esc(p.occupation)+'</div></div>' +
@@ -3409,7 +3573,6 @@ async function viewRoom(id){
       '<div style="font-weight:700;font-size:.88rem;margin-bottom:10px;color:#3D1F0D;">Ideal flatmate</div>'+
       '<div style="display:flex;flex-wrap:wrap;gap:8px;">'+
       '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">👤 '+esc(r.flatmate_gender)+'</span>'+
-      '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🐾 Pets: '+esc(r.pets_ok)+'</span>'+
       '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🚬 Smoking: '+esc(r.smoking_ok)+'</span>'+
       '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">💑 Couples: '+esc(r.couples_ok)+'</span>'+
       '<span style="background:#fff;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#6B3A1F;">🎓 Students: '+esc(r.students_ok)+'</span>'+
@@ -3449,7 +3612,7 @@ async function viewProfile(id){
       (p.references_available==='Yes'?'<span style="background:#E8F5E9;border-radius:50px;padding:4px 12px;font-size:.78rem;font-weight:600;color:#2e7d32;">✓ References available</span>':'')+
       '</div></div>'+
       '<a href="mailto:'+esc(p.email)+'?subject=Room enquiry from FindMyNest" style="display:block;background:#3D1F0D;color:#FAF0DC;text-align:center;padding:13px;border-radius:50px;font-weight:700;text-decoration:none;font-size:.95rem;">📧 Contact '+esc(p.name)+'</a>'+
-      (window._fmUser && window._fmUser.type === 'renter' ? '<button class="match-btn" style="width:100%;justify-content:center;margin-top:10px;" onclick="checkCompatibility('+p.id+')">🤝 Check My Compatibility</button>' : '');
+      (window._fmUser && window._fmUser.type === 'renter' ? '<button class="match-btn" style="width:100%;justify-content:center;margin-top:10px;" data-action="checkCompatibility" data-id="'+esc(p.id)+'">🤝 Check My Compatibility</button>' : '');
     openModal('detailMod');
   }catch(e){showToast('Error loading profile.');}
 }
@@ -3479,7 +3642,6 @@ async function submitRoomListing(){
       current_flatmates:parseInt(document.getElementById('rl_flatmates').value)||0,
       flatmate_gender:document.getElementById('rl_gender').value,
       flatmate_age_min:null,flatmate_age_max:null,
-      pets_ok:document.getElementById('rl_pets').value,
       smoking_ok:document.getElementById('rl_smoke').value,
       couples_ok:document.getElementById('rl_couples').value,
       students_ok:document.getElementById('rl_students').value,
@@ -3514,7 +3676,7 @@ document.getElementById('fmListRoom').addEventListener('click',function(){
   var u=getUser();
   if(!u){
     showFmHint(
-      '🏠 <strong>To list a room, sign up as a Landlord.</strong> Landlord accounts can post both whole properties and flatmate rooms from their dashboard. <a onclick="openAuth()" style="color:#E8724A;font-weight:700;cursor:pointer;">Sign up or log in →</a>'
+      '🏠 <strong>To list a room, sign up as a Landlord.</strong> Landlord accounts can post both whole properties and flatmate rooms from their dashboard. <a data-action="openAuth" style="color:#E8724A;font-weight:700;cursor:pointer;">Sign up or log in →</a>'
     );
     return;
   }
@@ -3614,17 +3776,17 @@ async function loadShortTermListings() {
       var hasPhoto = l.photo_urls && l.photo_urls.length;
       var stOverlay = '<div style="position:absolute;top:10px;left:10px;background:#E8724A;color:#fff;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:50px;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.18);">🗓️ Short-Term</div>';
       var photoHtml = hasPhoto
-        ? '<div class="lim" style="padding:0;overflow:hidden;position:relative;"><img src="' + l.photo_urls[0] + '" style="width:100%;height:100%;object-fit:cover;display:block;"/>' + stOverlay + '</div>'
+        ? '<div class="lim" style="padding:0;overflow:hidden;position:relative;"><img src="' + esc(l.photo_urls[0]) + '" style="width:100%;height:100%;object-fit:cover;display:block;"/>' + stOverlay + '</div>'
         : '<div class="lim" style="background:' + CLRS[i % CLRS.length] + ';position:relative;"><div class="lt ltn">NEW</div>🏡' + stOverlay + '</div>';
       var termInfo = l.term_from && l.term_to ? '<div style="font-size:.78rem;color:#E8724A;font-weight:600;margin-top:4px;">📅 ' + formatDate(l.term_from) + ' → ' + formatDate(l.term_to) + '</div>' : '';
       var reasonBadge = l.reason_for_listing ? '<span style="font-size:.72rem;background:#FFF8F4;border:1px solid #F2D4C0;border-radius:6px;padding:2px 8px;color:#C85A2E;display:inline-block;margin-top:4px;">' + esc(l.reason_for_listing) + '</span>' : '';
-      return '<div class="lc" onclick="viewListing(\'' + l.id + '\')">' + photoHtml +
+      return '<div class="lc" data-action="viewListing" data-id="'+esc(l.id)+'">' + photoHtml +
         '<div class="lb">' +
         '<div class="lpr">$' + Number(l.rent).toLocaleString() + '<span>/week</span></div>' +
         '<div class="ltit">' + esc(l.title) + '</div>' +
         '<div class="lloc">📍 ' + esc(l.suburb) + ', ' + esc(l.city) + '</div>' +
         termInfo + (reasonBadge ? '<div>' + reasonBadge + '</div>' : '') +
-        '<div class="lft" style="margin-top:6px;"><span>🛏 ' + esc(l.beds) + '</span><span>🚿 ' + esc(l.baths) + '</span>' + (l.pets === 'Yes' ? '<span>🐾 Pets ok</span>' : '') + '</div>' +
+        '<div class="lft" style="margin-top:6px;"><span>🛏 ' + esc(l.beds) + '</span><span>🚿 ' + esc(l.baths) + '</span>' + '</div>' +
         '</div></div>';
     }).join('');
   } catch(err) {
@@ -3677,14 +3839,14 @@ function renderPhotoGrid(uid, maxPhotos) {
   files.forEach(function(f, i) {
     var url = URL.createObjectURL(f);
     html += '<div class="photo-thumb">' +
-      '<img src="' + url + '" alt="Photo ' + (i+1) + '"/>' +
-      '<button class="rm-photo" onclick="removePhoto(\x27' + uid + '\x27,' + i + ')">✕</button>' +
+      '<img src="' + esc(url) + '" alt="Photo ' + (i+1) + '"/>' +
+      '<button class="rm-photo" data-action="removePhoto" data-uid="' + esc(uid) + '" data-index="' + i + '">✕</button>' +
       '<div class="photo-num">' + (i+1) + '</div>' +
       '</div>';
   });
   // Add slot if under max
   if (files.length < maxPhotos) {
-    html += '<div class="photo-thumb" style="border:2px dashed #E8D5B0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#FDFAF5;" onclick="document.getElementById(\x27' + uid + '_input\x27).click()">' +
+    html += '<div class="photo-thumb" style="border:2px dashed #E8D5B0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#FDFAF5;" data-action="triggerFileInput" data-target="' + esc(uid) + '_input">' +
       '<div style="text-align:center;color:#A07850;font-size:.75rem;"><div style="font-size:1.4rem;">+</div>Add</div></div>';
   }
   grid.innerHTML = html;
@@ -3791,8 +3953,9 @@ document.addEventListener('DOMContentLoaded', function() {
       params[parts[0]] = decodeURIComponent(parts[1] || '');
     });
     if (params.access_token) {
-      // Store the token temporarily so we can use it to update the password
-      localStorage.setItem('fmn_reset_token', params.access_token);
+      // Store the recovery token in-memory only — never persisted to disk.
+      // Recovery flow is single-page (capture → submit) so memory is sufficient.
+      setRecoveryToken(params.access_token);
       // Clear the hash from the URL so it's not visible
       history.replaceState(null, '', window.location.pathname);
       // Show the reset password screen
@@ -3806,17 +3969,17 @@ function renderListingPhotos(photos) {
   if (!photos || !photos.length) return '';
   if (photos.length === 1) {
     return '<div style="margin-bottom:18px;border-radius:14px;overflow:hidden;aspect-ratio:16/9;">' +
-      '<img src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display=\x27none\x27"/></div>';
+      '<img src="' + esc(photos[0]) + '" style="width:100%;height:100%;object-fit:cover;" data-img-fallback="hide-parent"/></div>';
   }
   var html = '<div style="margin-bottom:18px;">';
   // Main photo
   html += '<div style="border-radius:14px;overflow:hidden;aspect-ratio:16/9;margin-bottom:8px;">' +
-    '<img id="mainPhoto" src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;"/></div>';
+    '<img id="mainPhoto" src="' + esc(photos[0]) + '" style="width:100%;height:100%;object-fit:cover;"/></div>';
   // Thumbnails
   html += '<div style="display:grid;grid-template-columns:repeat(' + Math.min(photos.length,5) + ',1fr);gap:6px;">';
   photos.slice(0, 5).forEach(function(url, i) {
-    html += '<div style="aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid ' + (i===0?'#E8724A':'transparent') + ';" onclick="switchPhoto(\x27' + url + '\x27,this)">' +
-      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.display=\x27none\x27"/></div>';
+    html += '<div style="aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid ' + (i===0?'#E8724A':'transparent') + ';" data-action="switchPhoto" data-url="' + esc(url) + '">' +
+      '<img src="' + esc(url) + '" style="width:100%;height:100%;object-fit:cover;" data-img-fallback="hide-parent"/></div>';
   });
   html += '</div></div>';
   return html;
@@ -3824,7 +3987,7 @@ function renderListingPhotos(photos) {
 
 function switchPhoto(url, thumb) {
   document.getElementById('mainPhoto').src = url;
-  document.querySelectorAll('[onclick*="switchPhoto"]').forEach(function(t) { t.style.borderColor = 'transparent'; });
+  document.querySelectorAll('[data-action="switchPhoto"]').forEach(function(t) { t.style.borderColor = 'transparent'; });
   thumb.style.borderColor = '#E8724A';
 }
 
@@ -3833,20 +3996,20 @@ function fmAvatar(url, name, size, fontSize) {
   var initial = name ? name.charAt(0).toUpperCase() : '?';
   var fallback = '<div style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:linear-gradient(135deg,#E8724A,#C85A2E);display:flex;align-items:center;justify-content:center;font-size:'+fontSize+';flex-shrink:0;color:#fff;">'+initial+'</div>';
   if (!url) return fallback;
-  return '<img src="'+url+'" style="width:'+size+'px;height:'+size+'px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\x27none\x27" />';
+  return '<img src="'+esc(url)+'" style="width:'+size+'px;height:'+size+'px;border-radius:50%;object-fit:cover;flex-shrink:0;" data-img-fallback="hide-self" />';
 }
 
 // ── LISTING CARDS: show first photo as thumbnail ──────────────────────────────
 function listingCardPhoto(photos) {
   if (!photos || !photos.length) return '<div style="background:linear-gradient(135deg,#F2E4C4,#E8D5B0);height:160px;border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏡</div>';
   return '<div style="height:160px;border-radius:12px 12px 0 0;overflow:hidden;">' +
-    '<img src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\x27\x27"/></div>';
+    '<img src="' + esc(photos[0]) + '" style="width:100%;height:100%;object-fit:cover;" data-img-fallback="clear-src"/></div>';
 }
 
 function roomCardPhoto(photos) {
   if (!photos || !photos.length) return '<div style="background:linear-gradient(135deg,#F2E4C4,#E8D5B0);height:140px;border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center;font-size:2rem;">🏠</div>';
   return '<div style="height:140px;border-radius:12px 12px 0 0;overflow:hidden;">' +
-    '<img src="' + photos[0] + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.src=\x27\x27"/></div>';
+    '<img src="' + esc(photos[0]) + '" style="width:100%;height:100%;object-fit:cover;" data-img-fallback="clear-src"/></div>';
 }
 
 
@@ -3969,7 +4132,7 @@ function acSuggest(input, listId) {
     var parts = suburb.split(', ');
     var item = document.createElement('div');
     item.className = 'ac-item';
-    item.innerHTML = '<strong>' + parts[0] + '</strong>' + (parts[1] ? '<div class="ac-sub">' + parts[1] + '</div>' : '');
+    item.innerHTML = '<strong>' + esc(parts[0]) + '</strong>' + (parts[1] ? '<div class="ac-sub">' + esc(parts[1]) + '</div>' : '');
     item.addEventListener('mousedown', function(e) {
       e.preventDefault();
       input.value = parts[0];
@@ -4031,7 +4194,6 @@ async function openEditListing(id) {
     setSelectVal('el_b',  l.beds      || '');
     setSelectVal('el_ba', l.baths     || '');
     setSelectVal('el_pk', l.park      || 'None');
-    setSelectVal('el_pt', l.pets      || 'No');
     setSelectVal('el_fu', l.furnished || 'Unfurnished');
     setSelectVal('el_st', l.status    || 'active');
     // Load existing photos — store URLs in data attribute for tracking
@@ -4057,8 +4219,8 @@ function renderEditCurrentPhotos(urls) {
   }
   c.innerHTML = urls.map(function(url, i) {
     return '<div class="photo-thumb" style="position:relative;">' +
-      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" onerror="this.parentElement.style.display=\x27none\x27"/>' +
-      '<button class="rm-photo" onclick="removeEditPhoto(' + i + ')" title="Remove photo">✕</button>' +
+      '<img src="' + esc(url) + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" data-img-fallback="hide-parent"/>' +
+      '<button class="rm-photo" data-action="removeEditPhoto" data-index="' + i + '" title="Remove photo">✕</button>' +
       '<div class="photo-num">' + (i+1) + '</div>' +
       '</div>';
   }).join('');
@@ -4090,8 +4252,8 @@ function renderEditCurrentPhotosFromData(urls) {
   }
   c.innerHTML = urls.map(function(url, i) {
     return '<div class="photo-thumb" style="position:relative;">' +
-      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" onerror="this.parentElement.style.display=\x27none\x27"/>' +
-      '<button class="rm-photo" onclick="removeEditPhoto(' + i + ')" title="Remove photo">✕</button>' +
+      '<img src="' + esc(url) + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" data-img-fallback="hide-parent"/>' +
+      '<button class="rm-photo" data-action="removeEditPhoto" data-index="' + i + '" title="Remove photo">✕</button>' +
       '<div class="photo-num">' + (i+1) + '</div>' +
       '</div>';
   }).join('');
@@ -4107,8 +4269,8 @@ function renderEditNewGrid() {
   grid.innerHTML = files.map(function(f, i) {
     var url = URL.createObjectURL(f);
     return '<div class="photo-thumb">' +
-      '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;"/>' +
-      '<button class="rm-photo" onclick="removeEditNewPhoto(' + i + ')">✕</button>' +
+      '<img src="' + esc(url) + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px;"/>' +
+      '<button class="rm-photo" data-action="removeEditNewPhoto" data-index="' + i + '">✕</button>' +
       '<div class="photo-num">+' + (i+1) + '</div>' +
       '</div>';
   }).join('');
@@ -4178,7 +4340,6 @@ async function doEditListing() {
       type:ty, beds:b, baths:ba,
       park:document.getElementById('el_pk').value,
       avail:av||null,
-      pets:document.getElementById('el_pt').value,
       furnished:document.getElementById('el_fu').value,
       description:d,
       status:st,
@@ -4216,7 +4377,7 @@ async function loadSavedRooms(u) {
     var countEl = document.getElementById('renterSavedRoomsCount');
     if (countEl) countEl.textContent = saved.length;
     if (!saved.length) {
-      c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved rooms yet — browse the <a onclick="showPage(\x27flatmatesPage\x27);loadRoomListings();" style="color:#E8724A;cursor:pointer;font-weight:600;">Flatmates page</a> and tap 💛 to wishlist rooms!</div>';
+      c.innerHTML = '<div style="text-align:center;padding:24px;color:#6B3A1F;font-size:.9rem;">No saved rooms yet — browse the <a data-action="showFlatmatesPage" style="color:#E8724A;cursor:pointer;font-weight:600;">Flatmates page</a> and tap 💛 to wishlist rooms!</div>';
       return;
     }
     var ids = saved.map(function(s){ return s.room_id; });
@@ -4227,12 +4388,12 @@ async function loadSavedRooms(u) {
     }
     c.innerHTML = rooms.map(function(r) {
       return '<div class="mlrow">' +
-        (r.photo_urls&&r.photo_urls.length?'<img src="'+r.photo_urls[0]+'" style="width:52px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\x27none\x27"/>':'') +
+        (r.photo_urls&&r.photo_urls.length?'<img src="'+esc(r.photo_urls[0])+'" style="width:52px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0;" data-img-fallback="hide-self"/>':'') +
         '<div style="flex:1;min-width:0;"><div class="mltit">'+esc(r.title)+'</div>' +
         '<div class="mlmet">📍 '+esc(r.suburb)+', '+esc(r.city)+' &nbsp;•&nbsp; $'+r.rent_per_week+'/wk &nbsp;•&nbsp; '+esc(r.room_type)+'</div></div>' +
         '<div style="display:flex;gap:8px;">' +
-        '<button class="bp" style="font-size:.8rem;padding:8px 14px;" onclick="viewRoom('+r.id+')">View →</button>' +
-        '<button onclick="unsaveRoom('+r.id+')" style="background:none;border:1px solid #ffcccc;color:#c0392b;border-radius:8px;padding:5px 11px;cursor:pointer;font-size:.78rem;">Remove 💛</button>' +
+        '<button class="bp" style="font-size:.8rem;padding:8px 14px;" data-action="viewRoom" data-id="'+esc(r.id)+'">View →</button>' +
+        '<button data-action="unsaveRoom" data-id="'+esc(r.id)+'" style="background:none;border:1px solid #ffcccc;color:#c0392b;border-radius:8px;padding:5px 11px;cursor:pointer;font-size:.78rem;">Remove 💛</button>' +
         '</div></div>';
     }).join('');
   } catch(e) {
@@ -4320,7 +4481,7 @@ async function loadMyRoomListings() {
     c.innerHTML = rooms.map(function(r) {
       return '<div class="mlrow"><div><div class="mltit">'+esc(r.title)+'</div>' +
         '<div class="mlmet">📍 '+esc(r.suburb)+', '+esc(r.city)+' &nbsp;•&nbsp; $'+r.rent_per_week+'/wk &nbsp;•&nbsp; '+esc(r.room_type)+'</div></div>' +
-        '<button class="rmb" onclick="removeMyRoom('+r.id+')">Remove ✕</button></div>';
+        '<button class="rmb" data-action="removeMyRoom" data-id="'+esc(r.id)+'">Remove ✕</button></div>';
     }).join('');
   } catch(e) {
     c.innerHTML = '<div style="text-align:center;padding:18px;color:#C85A2E;">Error loading room listings.</div>';
@@ -4421,9 +4582,9 @@ document.getElementById('agentsSignupBtn2').addEventListener('click', function()
 
 async function generateDescription(prefix) {
   var fields = {
-    f:  { title:'f_t', suburb:'f_s', city:'f_c', rent:'f_r', type:'f_ty', beds:'f_b', baths:'f_ba', park:'f_pk', pets:'f_pt', furn:'f_fu', desc:'f_d', btn:'f_ai_gen', hint:'f_ai_hint' },
-    af: { title:'af_t', suburb:'af_s', city:'af_c', rent:'af_r', type:'af_ty', beds:'af_b', baths:'af_ba', park:'af_pk', pets:'af_pt', furn:'af_fu', desc:'af_d', btn:'af_ai_gen', hint:'af_ai_hint' },
-    el: { title:'el_t', suburb:'el_s', city:'el_c', rent:'el_r', type:'el_ty', beds:'el_b', baths:'el_ba', park:'el_pk', pets:'el_pt', furn:'el_fu', desc:'el_d', btn:'el_ai_gen', hint:'el_ai_hint' }
+    f:  { title:'f_t', suburb:'f_s', city:'f_c', rent:'f_r', type:'f_ty', beds:'f_b', baths:'f_ba', park:'f_pk', furn:'f_fu', desc:'f_d', btn:'f_ai_gen', hint:'f_ai_hint' },
+    af: { title:'af_t', suburb:'af_s', city:'af_c', rent:'af_r', type:'af_ty', beds:'af_b', baths:'af_ba', park:'af_pk', furn:'af_fu', desc:'af_d', btn:'af_ai_gen', hint:'af_ai_hint' },
+    el: { title:'el_t', suburb:'el_s', city:'el_c', rent:'el_r', type:'el_ty', beds:'el_b', baths:'el_ba', park:'el_pk', furn:'el_fu', desc:'el_d', btn:'el_ai_gen', hint:'el_ai_hint' }
   };
 
   var f = fields[prefix];
@@ -4447,14 +4608,13 @@ async function generateDescription(prefix) {
     var beds      = document.getElementById(f.beds).value;
     var baths     = document.getElementById(f.baths).value;
     var park      = document.getElementById(f.park).value;
-    var pets      = document.getElementById(f.pets).value;
     var furnished = document.getElementById(f.furn).value;
     var title     = document.getElementById(f.title).value.trim() || type + ' in ' + suburb;
-    var prompt    = 'Write a warm 80-120 word New Zealand rental listing description in a friendly Kiwi tone. No bullet points, no price, no address. Just the paragraph.\nProperty: ' + title + ', ' + suburb + ', ' + city + '. ' + type + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. Pets: ' + pets + '. ' + furnished + '. $' + rent + '/week.';
+    var prompt    = 'Write a warm 80-120 word New Zealand rental listing description in a friendly Kiwi tone. No bullet points, no price, no address. Just the paragraph.\nProperty: ' + title + ', ' + suburb + ', ' + city + '. ' + type + '. ' + beds + ' bed, ' + baths + ' bath. Parking: ' + park + '. ' + furnished + '. $' + rent + '/week.';
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/ai-listing', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: document.getElementById(f.title).value.trim(), suburb: suburb, city: city, rent: rent, type: type, beds: document.getElementById(f.beds).value, baths: document.getElementById(f.baths).value, park: document.getElementById(f.park).value, pets: document.getElementById(f.pets).value, furnished: document.getElementById(f.furn).value })
+      body: JSON.stringify({ title: document.getElementById(f.title).value.trim(), suburb: suburb, city: city, rent: rent, type: type, beds: document.getElementById(f.beds).value, baths: document.getElementById(f.baths).value, park: document.getElementById(f.park).value, furnished: document.getElementById(f.furn).value })
     });
     var rawText = await res.text();
     var data = {};
@@ -4488,7 +4648,6 @@ async function generateRoomDescription() {
   var rooms   = document.getElementById('rl_rooms').value;
   var flatmates = document.getElementById('rl_flatmates').value;
   var vibe    = document.getElementById('rl_vibe').value;
-  var pets    = document.getElementById('rl_pets').value;
   var smoke   = document.getElementById('rl_smoke').value;
 
   if (!suburb || !city || !rent || !rtype) {
@@ -4515,7 +4674,6 @@ async function generateRoomDescription() {
         beds: flatmates + ' current flatmates in a ' + rooms + '-bedroom home',
         baths: 'shared',
         park: 'not specified',
-        pets: pets,
         furnished: furn + '. Bills: ' + bills + '. House vibe: ' + vibe + '. Smoking: ' + smoke
       })
     });
@@ -4546,15 +4704,14 @@ var estState = {};
 
 async function getRentEstimate(prefix) {
   var fieldMap = {
-    f:  { suburb: 'f_s', city: 'f_c', type: 'f_ty', park: 'f_pk', pets: 'f_pt', furn: 'f_fu', beds: 'f_b', baths: 'f_ba', btn: 'f_est_btn', panel: 'f_est_panel', location: 'f_est_location', stats: 'f_est_stats', insight: 'f_est_insight' },
-    af: { suburb: 'af_s', city: 'af_c', type: 'af_ty', park: 'af_pk', pets: 'af_pt', furn: 'af_fu', beds: 'af_b', baths: 'af_ba', btn: 'af_est_btn', panel: 'af_est_panel', location: 'af_est_location', stats: 'af_est_stats', insight: 'af_est_insight' }
+    f:  { suburb: 'f_s', city: 'f_c', type: 'f_ty', park: 'f_pk', furn: 'f_fu', beds: 'f_b', baths: 'f_ba', btn: 'f_est_btn', panel: 'f_est_panel', location: 'f_est_location', stats: 'f_est_stats', insight: 'f_est_insight' },
+    af: { suburb: 'af_s', city: 'af_c', type: 'af_ty', park: 'af_pk', furn: 'af_fu', beds: 'af_b', baths: 'af_ba', btn: 'af_est_btn', panel: 'af_est_panel', location: 'af_est_location', stats: 'af_est_stats', insight: 'af_est_insight' }
   };
   var f = fieldMap[prefix];
   var suburb = document.getElementById(f.suburb).value.trim();
   var city   = document.getElementById(f.city).value;
   var type   = document.getElementById(f.type).value;
   var park   = document.getElementById(f.park).value;
-  var pets   = document.getElementById(f.pets).value;
   var furn   = document.getElementById(f.furn).value;
   var beds   = document.getElementById(f.beds).value;
   var baths  = document.getElementById(f.baths).value;
@@ -4562,7 +4719,7 @@ async function getRentEstimate(prefix) {
   if (!city) { showToast('⚠️ Please select a city first!'); return; }
 
   // Build a signature of current form state
-  var sig = [suburb, city, type, park, pets, furn, beds, baths].join('|');
+  var sig = [suburb, city, type, park, furn, beds, baths].join('|');
 
   // If estimate already generated for same details — don't regenerate
   if (estState[prefix] && estState[prefix].sig === sig && estState[prefix].done) {
@@ -4586,8 +4743,8 @@ async function getRentEstimate(prefix) {
   try {
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/rent-estimate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ suburb: suburb || null, city: city, type: type || null, park: park, pets: pets, furnished: furn, beds: beds, baths: baths })
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY },
+      body: JSON.stringify({ suburb: suburb || null, city: city, type: type || null, park: park, furnished: furn, beds: beds, baths: baths })
     });
     var data = await res.json();
 
@@ -4606,7 +4763,21 @@ async function getRentEstimate(prefix) {
     }
 
     if (data.insight) {
-      insightEl.innerHTML = '<strong style="color:#3D1F0D;">🤖 AI Market Insight:</strong><br/>' + data.insight + '<br/><span style="font-size:.72rem;color:#A07850;display:block;margin-top:8px;">⚠️ Estimates only — based on general NZ market knowledge and FindMyNest listings. Always verify current market rates independently.</span>';
+      // data.insight is LLM output (untrusted) — render via DOM API, never innerHTML
+      insightEl.textContent = '';
+      var insightTitle = document.createElement('strong');
+      insightTitle.style.color = '#3D1F0D';
+      insightTitle.textContent = '🤖 AI Market Insight:';
+      var insightWarn = document.createElement('span');
+      insightWarn.style.cssText = 'font-size:.72rem;color:#A07850;display:block;margin-top:8px;';
+      insightWarn.textContent = '⚠️ Estimates only — based on general NZ market knowledge and FindMyNest listings. Always verify current market rates independently.';
+      insightEl.append(
+        insightTitle,
+        document.createElement('br'),
+        document.createTextNode(data.insight),
+        document.createElement('br'),
+        insightWarn
+      );
     }
 
     // Mark as done for this state — lock the button
@@ -4614,7 +4785,7 @@ async function getRentEstimate(prefix) {
     btn.textContent = '✅ Estimate loaded — change details to refresh';
 
     // Watch for form changes to re-enable the button
-    ['suburb','city','type','park','pets','furn','beds','baths'].forEach(function(key) {
+    ['suburb','city','type','park','furn','beds','baths'].forEach(function(key) {
       var el = document.getElementById(f[key]);
       if (el) el.addEventListener('change', function() {
         var newSig = [
@@ -4622,7 +4793,6 @@ async function getRentEstimate(prefix) {
           document.getElementById(f.city).value,
           document.getElementById(f.type).value,
           document.getElementById(f.park).value,
-          document.getElementById(f.pets).value,
           document.getElementById(f.furn).value,
           document.getElementById(f.beds).value,
           document.getElementById(f.baths).value
@@ -4679,10 +4849,11 @@ async function checkCompatibility(roomId) {
   document.getElementById('compatError').style.display = 'none';
 
   try {
+    var token = await getAuthToken();
     var res = await fetch('https://vbkmfloxweczyvpfbsdh.supabase.co/functions/v1/flatmate-match', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ renter: renter, room: room })
+      headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ room_id: room.id })
     });
     var data = await res.json();
 
@@ -4699,19 +4870,37 @@ async function checkCompatibility(roomId) {
     document.getElementById('compatSummary').textContent = data.summary || '';
     document.getElementById('compatVerdict').textContent = data.verdict || '';
 
-    // Positives
+    // Positives — data.positives is LLM output (untrusted), render via DOM API
     var posEl = document.getElementById('compatPositives');
+    posEl.textContent = '';
     if (data.positives && data.positives.length) {
-      posEl.innerHTML = '<div style="font-weight:700;font-size:.85rem;color:#3D1F0D;margin-bottom:6px;">✅ What works</div>' +
-        data.positives.map(function(p) { return '<div class="match-positive">✓ ' + p + '</div>'; }).join('');
-    } else posEl.innerHTML = '';
+      var posHeader = document.createElement('div');
+      posHeader.style.cssText = 'font-weight:700;font-size:.85rem;color:#3D1F0D;margin-bottom:6px;';
+      posHeader.textContent = '✅ What works';
+      posEl.appendChild(posHeader);
+      data.positives.forEach(function(p) {
+        var item = document.createElement('div');
+        item.className = 'match-positive';
+        item.textContent = '✓ ' + p;
+        posEl.appendChild(item);
+      });
+    }
 
-    // Concerns
+    // Concerns — data.concerns is LLM output (untrusted), render via DOM API
     var conEl = document.getElementById('compatConcerns');
+    conEl.textContent = '';
     if (data.concerns && data.concerns.length) {
-      conEl.innerHTML = '<div style="font-weight:700;font-size:.85rem;color:#3D1F0D;margin-bottom:6px;">⚠️ Things to consider</div>' +
-        data.concerns.map(function(c) { return '<div class="match-concern">✕ ' + c + '</div>'; }).join('');
-    } else conEl.innerHTML = '';
+      var conHeader = document.createElement('div');
+      conHeader.style.cssText = 'font-weight:700;font-size:.85rem;color:#3D1F0D;margin-bottom:6px;';
+      conHeader.textContent = '⚠️ Things to consider';
+      conEl.appendChild(conHeader);
+      data.concerns.forEach(function(c) {
+        var item = document.createElement('div');
+        item.className = 'match-concern';
+        item.textContent = '✕ ' + c;
+        conEl.appendChild(item);
+      });
+    }
 
     document.getElementById('compatLoading').style.display = 'none';
     document.getElementById('compatResult').style.display = 'block';
@@ -4787,9 +4976,9 @@ async function loadRenterDashboard() {
       var ids = saved.map(function(s){return s.listing_id;}).join(',');
       var listings = await sbq('GET','listings',null,'?id=in.('+ids+')&status=eq.active');
       sc2.innerHTML = listings && listings.length ? listings.map(function(l){
-        return '<div class="mlrow" style="cursor:pointer;" onclick="viewListing(\x27'+l.id+'\x27)">'+
+        return '<div class="mlrow" style="cursor:pointer;" data-action="viewListing" data-id="'+esc(l.id)+'">'+
           '<div><div class="mltit">'+esc(l.title)+'</div><div class="mlmet">📍 '+esc(l.suburb)+', '+esc(l.city)+' &nbsp;•&nbsp; 🛏 '+esc(l.beds)+' bed &nbsp;•&nbsp; $'+Number(l.rent).toLocaleString()+'/wk</div></div>'+
-          '<button onclick="event.stopPropagation();unsaveListing(\x27'+l.id+'\x27)" style="background:none;border:none;cursor:pointer;font-size:1.1rem;flex-shrink:0;" title="Remove">💔</button></div>';
+          '<button data-action="unsaveListing" data-id="'+esc(l.id)+'" style="background:none;border:none;cursor:pointer;font-size:1.1rem;flex-shrink:0;" title="Remove">💔</button></div>';
       }).join('') : '<div style="text-align:center;padding:18px;color:#6B3A1F;font-size:.9rem;">Your saved listings have expired or been removed.</div>';
     }
   } catch(e) { console.error('Saved listings:', e); }
@@ -4859,7 +5048,7 @@ function renderInterestSuggestions() {
   if (!el) return;
   el.innerHTML = '<div style="font-size:.78rem;color:#6B3A1F;margin-bottom:6px;width:100%;">Quick add:</div>' +
     INTEREST_SUGGESTIONS.filter(function(s){ return !_renterInterests.includes(s); }).slice(0,12).map(function(s){
-      return '<button class="interest-suggest" onclick="addInterestItem(this.dataset.v)" data-v="'+s+'">'+s+'</button>';
+      return '<button class="interest-suggest" data-action="addInterestItem" data-v="'+esc(s)+'">'+esc(s)+'</button>';
     }).join('');
 }
 
@@ -4867,7 +5056,7 @@ function renderInterestTags() {
   var el = document.getElementById('interestTags');
   if (el) {
     el.innerHTML = _renterInterests.length ? _renterInterests.map(function(tag,i){
-      return '<div class="interest-tag">'+esc(tag)+'<button onclick="removeInterest('+i+')" title="Remove">✕</button></div>';
+      return '<div class="interest-tag">'+esc(tag)+'<button data-action="removeInterest" data-idx="'+i+'" title="Remove">✕</button></div>';
     }).join('') : '<div style="font-size:.84rem;color:#A07850;">No interests added yet.</div>';
   }
   // Also update the header display

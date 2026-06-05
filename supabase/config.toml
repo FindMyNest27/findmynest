@@ -1,0 +1,11 @@
+[functions.submit-enquiry]
+verify_jwt = true
+
+[functions.flatmate-match]
+verify_jwt = true
+
+[functions.rent-estimate]
+verify_jwt = true
+
+[functions.send-email]
+verify_jwt = false
